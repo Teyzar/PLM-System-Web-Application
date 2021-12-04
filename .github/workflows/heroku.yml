@@ -26,5 +26,3 @@ jobs:
           heroku_app_name: 'plms-clz'
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-        env:
-          HD_APP_KEY: ${{secrets.APP_KEY}}
