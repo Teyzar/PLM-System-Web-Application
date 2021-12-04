@@ -1,6 +1,7 @@
 {
     "private": true,
     "scripts": {
+        "setup": "composer install && npm ci && copy .env.example .env && php artisan key:generate",
         "serve": "php artisan serve",
         "build": "npm run production",
         "dev": "npm run development",
