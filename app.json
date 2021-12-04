@@ -1,5 +1,11 @@
 {
-    "addons": ["heroku-redis", "scheduler"],
+    "addons": ["heroku-postgresql", "heroku-redis", "scheduler"],
+    "scripts": {
+        "postdeploy": [
+            "php artisan db:seed",
+            "php artisan passport:client --personal"
+        ]
+    },
     "buildpacks": [
         {
             "url": "heroku/php"
@@ -16,6 +22,7 @@
         },
         "APP_DEBUG": "false",
         "LOG_CHANNEL": "errorlog",
+        "DB_CONNECTION": "pgsql",
         "CACHE_DRIVER": "redis",
         "QUEUE_CONNECTION": "redis",
         "SESSION_DRIVER": "redis"
