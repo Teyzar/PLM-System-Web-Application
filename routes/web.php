@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LoginController;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -15,14 +13,6 @@ use App\Http\Controllers\LoginController;
 |
 */
 
-Route::get('/main', [LoginController::class, 'index']);
-Route::post('/main/checklogin', [LoginController::class, 'checklogin']);
-
-
 Route::get('/', function () {
-    return view('pages.default');
-});
-
-Route::get('/login', function () {
-    return view('pages.login');
+    return view('welcome');
 });
