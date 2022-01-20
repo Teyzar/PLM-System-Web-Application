@@ -1,5 +1,8 @@
 {
     "private": true,
+    "engines": {
+        "node": "16.x"
+    },
     "scripts": {
         "setup": "composer install && npm ci && copy .env.example .env && php artisan key:generate",
         "serve": "php artisan serve",
