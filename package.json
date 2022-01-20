@@ -4,7 +4,8 @@
         "node": "16.x"
     },
     "scripts": {
-        "setup": "composer install && npm ci && copy .env.example .env && php artisan key:generate",
+        "setup": "composer install && npm ci && npm run sqlite && copy .env.example .env && php artisan key:generate",
+        "sqlite": "echo off > ./database/database.sqlite && php artisan migrate",
         "serve": "php artisan serve",
         "build": "npm run production",
         "dev": "npm run development",
