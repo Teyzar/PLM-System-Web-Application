@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.home')
 
 @section('head')
     <script src="{{ asset('js/home.js') }}" defer></script>
@@ -6,5 +6,5 @@
 @endsection
 
 @section('content')
-        <div id="map"></div>
+        <div id="map" class="h-100 w-100"></div>
 @endsection

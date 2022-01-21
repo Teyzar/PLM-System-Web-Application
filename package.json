@@ -16,7 +16,8 @@
         "production": "mix --production"
     },
     "dependencies": {
-        "@googlemaps/js-api-loader": "^1.13.2"
+        "@googlemaps/js-api-loader": "^1.13.2",
+        "bootstrap-icons": "^1.7.2"
     },
     "devDependencies": {
         "@popperjs/core": "^2.10.2",
