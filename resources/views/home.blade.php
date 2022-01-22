@@ -6,5 +6,11 @@
 @endsection
 
 @section('content')
-        <div id="map"></div>
+    @auth
+    <div class="alert alert-success" role="alert">
+        A simple success alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+    </div>
+    @endauth
+
+    <div id="map"></div>
 @endsection

@@ -45,11 +45,11 @@
 
                         @auth
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Accounts') }}</a>
+                                <a class="nav-link" href="{{ route('accounts') }}">{{ __('Accounts') }}</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Units') }}</a>
+                                <a class="nav-link" href="{{ route('units') }}">{{ __('Units') }}</a>
                             </li>
                         @endauth
                     </ul>
