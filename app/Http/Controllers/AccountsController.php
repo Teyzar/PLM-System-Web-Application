@@ -15,7 +15,7 @@ class AccountsController extends Controller
 
     public function index()
     {
-        $accounts = User::get();
+        $accounts = User::paginate(10);
 
 
         return view('accounts')->with('users', $accounts);

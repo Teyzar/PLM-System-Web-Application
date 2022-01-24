@@ -19,7 +19,7 @@
                     </div>
                 </div>
             </div>
-            <a href="" class="btn text-light a:hover bg-danger" style="width:20%" data-bs-toggle="modal"
+            <a href="" class="btn text-light a:hover bg-danger" style="width:22%" data-bs-toggle="modal"
                 data-bs-target="#modalForm">
                 Register Accounts
             </a>
@@ -27,30 +27,32 @@
     </div>
     <div class="container m-auto">
         <div class="table-responsive">
-            <table class="table">
+            <table class="table table-bordered bg-white" border="3">
                 <thead>
                     <tr>
                         <th>Id</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Password</th>
-
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($users as $user)
                         <tr>
-                            <td>{{$user->id}}</td>
-                            <td>{{$user->name}}</td>
-                            <td>{{$user->email}}</td>
-                            <td>{{$user->password}}</td>
+                            <td>{{ $user->id }}</td>
+                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->email }}</td>
+                            <td>{{ $user->password }}</td>
                             <td class="justify-content-end d-flex">
-                                <button type="button" class="btn btn-outline-danger">Delete</button>
+                                <button type="button" class="btn btn-outline-primary">Edit</button>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
+            <div class="d-flex justify-content-center fs-7">
+                {!! $users->links() !!}
+            </div>
 
         </div>
     </div>
