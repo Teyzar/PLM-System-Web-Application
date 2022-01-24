@@ -6,14 +6,55 @@
 @endsection
 
 @section('body')
-    <div class="container mt-5 ">
-        <div class="card align-items-center w-auto flex-row justify-content-between p-2 fs-5 px-3">
-            Accounts
-            <a href="" class="btn bg-danger text-light a:hover bg-dark" data-bs-toggle="modal" data-bs-target="#modalForm">
+    <div class="container mt-4">
+        <div class="card-header">{{ __('Accounts') }}</div>
+        <div class="card align-items-center flex-row justify-content-center fs-5 px-3 bg-light">
+            <i class="bi bi-search p-1 bg-light"></i>
+            <div class="container p-2">
+                <div class="row height d-flex justify-content-start flex-row navbar navbar-expand-sm">
+                    <div class="col-md-8">
+                        <div class="search d-flex"><input type="text" class="form-control"
+                                placeholder="Search Accounts..."> <button class="btn btn-secondary">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="" class="btn text-light a:hover bg-danger" style="width:20%" data-bs-toggle="modal"
+                data-bs-target="#modalForm">
                 Register Accounts
             </a>
         </div>
     </div>
+    <div class="container m-auto">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Password</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($users as $user)
+                        <tr>
+                            <td>{{$user->id}}</td>
+                            <td>{{$user->name}}</td>
+                            <td>{{$user->email}}</td>
+                            <td>{{$user->password}}</td>
+                            <td class="justify-content-end d-flex">
+                                <button type="button" class="btn btn-outline-danger">Delete</button>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
 
     <div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
