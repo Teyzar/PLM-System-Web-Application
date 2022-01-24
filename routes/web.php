@@ -1,13 +1,10 @@
 <?php
 
+use App\Http\Controllers\AccountsController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UnitsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-
-use App\Http\Controllers\MainController;
-
-
-use RealRashid\SweetAlert\Facades\Alert;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -20,20 +17,10 @@ use RealRashid\SweetAlert\Facades\Alert;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
-
-
 Auth::routes();
 
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/accounts', [AccountsController::class, 'index'])->name('accounts');
 
-// Route::get('/dashboard', [MainController::class, 'main'])->name('dashboard');
-
-
-Route::middleware('auth')->group(function () {
-    Route::get('/accounts', [MainController::class, 'accounts'])->name('accounts');
-    Route::get('/units', [MainController::class, 'units'])->name('units');
-});
+Route::get('/units', [UnitsController::class, 'index'])->name('units');

@@ -5,6 +5,6 @@
     <link href="{{ asset('css/home.css') }}" rel="stylesheet">
 @endsection
 
-@section('content')
+@section('body')
     <div id="map"></div>
 @endsection

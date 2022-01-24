@@ -5,16 +5,16 @@
     <link href="{{ asset('css/home.css') }}" rel="stylesheet">
 @endsection
 
-
 @section('body')
     <div class="container mt-5 ">
         <div class="card align-items-center w-auto flex-row justify-content-between p-2 fs-5 px-3">
-            Units<a href="" class="btn bg-danger text-light a:hover bg-dark" data-bs-toggle="modal"
-                data-bs-target="#modalForm">
+            Units
+            <a href="" class="btn bg-danger text-light a:hover bg-dark" data-bs-toggle="modal" data-bs-target="#modalForm">
                 Register Unit
             </a>
         </div>
     </div>
+
     <div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -36,5 +36,4 @@
             </div>
         </div>
     </div>
-
 @endsection
