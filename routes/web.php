@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\MainController;
 
 
+use RealRashid\SweetAlert\Facades\Alert;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -34,5 +37,3 @@ Route::middleware('auth')->group(function () {
     Route::get('/accounts', [MainController::class, 'accounts'])->name('accounts');
     Route::get('/units', [MainController::class, 'units'])->name('units');
 });
-
-
