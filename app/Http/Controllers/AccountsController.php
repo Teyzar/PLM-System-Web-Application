@@ -56,7 +56,7 @@ class AccountsController extends Controller
     {
         $rules = [
             'name' => 'required',
-            'email'    => 'required|email|unique:users',
+            'email'    => 'required|email|unique:accounts',
             'password' => [
                 'required',
                 'required_with:confirmpass',
@@ -115,7 +115,7 @@ class AccountsController extends Controller
     public function update(Request $request, $id)
     {
         $rules = [
-            'email'    => 'required|email|unique:users',
+            'email'    => 'required|email|unique:accounts',
             'baranggay' => 'required'
         ];
 
@@ -148,7 +148,7 @@ class AccountsController extends Controller
 
         $delete = Accounts::where('id', $id)->delete();
 
-        toast('deleted', 'success');
+        toast('Successfully delete!', 'success');
         return redirect('/accounts');
     }
 }
