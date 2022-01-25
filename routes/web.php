@@ -21,6 +21,10 @@ Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/accounts', [AccountsController::class, 'index'])->name('accounts');
+// Route::get('/accounts', [AccountsController::class, 'index'])->name('accounts');
+
+
+Route::resource('/accounts', AccountsController::class);
+
 
 Route::get('/units', [UnitsController::class, 'index'])->name('units');

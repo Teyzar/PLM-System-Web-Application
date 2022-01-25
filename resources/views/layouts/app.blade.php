@@ -46,7 +46,7 @@
 
                         @auth
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('accounts') }}">{{ __('Accounts') }}</a>
+                                <a class="nav-link" href="/accounts">{{ __('Accounts') }}</a>
                             </li>
 
                             <li class="nav-item">
