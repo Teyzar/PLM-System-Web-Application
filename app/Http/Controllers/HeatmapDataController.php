@@ -25,46 +25,37 @@ class HeatmapDataController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $fields = $request->validate([
             'latitude' => 'required',
             'longitude' => 'required',
             'phone_number' => 'required'
         ]);
 
-        return HeatmapData::create($request->all());
-    }
+        $unit = HeatmapData::where('phone_number', $fields['phone_number'])->first();;
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\HeatmapData  $heatmapData
-     * @return \Illuminate\Http\Response
-     */
-    public function show(HeatmapData $heatmapData)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\HeatmapData  $heatmapData
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, HeatmapData $heatmapData)
-    {
-        //
+        if ($unit) {
+            return $unit->update($request->all());
+        } else {
+            return HeatmapData::create($request->all());
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\HeatmapData  $heatmapData
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy(HeatmapData $heatmapData)
+    public function destroy(Request $request)
     {
-        //
+        $fields = $request->validate([
+            'phone_number' => 'required'
+        ]);
+
+        $unit = HeatmapData::where('phone_number', $fields['phone_number'])->first();
+
+        if ($unit) HeatmapData::destroy($unit->id);
+
+        return response('');
     }
 }
