@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container py-4" style = "margin-top: 9%">
+    <div class="container py-4" style="margin-top: 9%">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
@@ -18,12 +18,16 @@
                                 <div class="col-md-6">
                                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
                                         name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                    @if ($errors->has('email'))
+                                        <div class="error text-danger">{{ $errors->first('email') }}</div>
 
-                                    @error('email')
+                                    @endif
+
+                                    {{-- @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
-                                    @enderror
+                                    @enderror --}}
                                 </div>
                             </div>
 
@@ -34,13 +38,17 @@
                                 <div class="col-md-6">
                                     <input id="password" type="password"
                                         class="form-control @error('password') is-invalid @enderror" name="password"
-                                        required autocomplete="current-password">
+                                        required autocomplete="current-password" value = "{{old('password')}}">
+                                    @if ($errors->has('password'))
+                                        <div class="error text-danger">{{ $errors->first('password') }}</div>
 
-                                    @error('password')
+                                    @endif
+
+                                    {{-- @error('password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
-                                    @enderror
+                                    @enderror --}}
                                 </div>
                             </div>
 

@@ -3,59 +3,101 @@
 @section('head')
     <script src="{{ asset('js/home.js') }}" defer></script>
     <link href="{{ asset('css/home.css') }}" rel="stylesheet">
+    <meta name="_token" content="{{ csrf_token() }}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
         integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 @endsection
 
 @section('body')
     <div class="container mt-4">
-        <div class="card-header">{{ __('Accounts') }}</div>
+        <div class="card-header">{{ __('Accounts') }}
+
+            <span class="fs-6 text-danger float-end">{{ count($users) }}</span>
+
+        </div>
         <div class="card align-items-center flex-row justify-content-center fs-5 px-3 bg-light">
             <i class="bi bi-search p-1 bg-light"></i>
             <div class="container p-2">
                 <div class="row height d-flex justify-content-start flex-row navbar navbar-expand-sm">
                     <div class="col-md-8">
-                        <div class="search d-flex"><input type="text" class="form-control"
-                                placeholder="Search Accounts..."> <button class="btn btn-secondary">Search</button>
+                        <div class="search d-flex"><input type="text" class="form-control" placeholder="Search Accounts..."
+                                name="search" id="search">
                         </div>
                     </div>
                 </div>
             </div>
-            <a href="/accounts" class="btn text-light a:hover bg-danger" data-bs-toggle="modal"
-                data-bs-target="#modalForm">
-                Register Account
+            <a href="" class="btn text-light bg-danger py-2 px-5 w-auto" data-bs-toggle="modal" data-bs-target="#modalForm">
+                <span class="text-light align-items-center w-0">Register</span>
             </a>
         </div>
     </div>
     <div class="container m-auto">
-        <div class="table-responsive">
+        <div class="table-responsive table-bordered border-dark">
             @if (count($users) > 0)
-                <table class="table bg-white" border="3">
+                <table class="table bg-white table-bordered table-hover">
                     <thead>
-                        <tr>
+                        <tr style="font-family: sans-serif">
                             <th>Name</th>
                             <th>Email</th>
                             <th>Baranggay</th>
-                            <th>created_at</th>
-                            <th>updated_at</th>
+                            <th>Created_at</th>
+                            <th>Updated_at</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="searchbody" id="tb">
                         @foreach ($users as $user)
-                            <tr>
-                                <td>{{ $user->name }}</td>
+                            <tr style="font-family: sans-serif">
+                                <td><a href="/accounts/{{ $user->id }}/edit"
+                                        class="fs-6 text-decoration-none text-capitalize text-muted">{{ ucfirst($user->name) }}</a>
+                                </td>
                                 <td>{{ $user->email }}</td>
-                                <td>{{ $user->baranggay }}</td>
+                                <td class="text-capitalize">{{ $user->baranggay }}</td>
                                 <td>{{ $user->created_at }}</td>
                                 <td>{{ $user->updated_at }}</td>
 
                                 <td class="justify-content-end d-flex">
-                                    <a href="/accounts/{{ $user->id }}/edit" class="btn btn-outline-primary">Edit</a>
+                                    <a href="/accounts/{{ $user->id }}/edit"
+                                        class="btn btn-outline-primary fs-6 py-1 px-4">Edit</a>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
+                    <script>
+                        $('#search').on('keyup', function() {
+                            $value = $(this).val();
+
+                            $.ajax({
+                                type: 'get',
+                                url: '{{ URL::to('search') }}',
+                                data: {
+                                    'search': $value
+                                },
+                                success: function(data) {
+                                    if ($value.length > 0) {
+                                        $('.searchbody').html(data);
+                                    } else {
+                                        $('.searchbody').html(`@foreach ($users as $user)
+                                            <tr style="font-family: sans-serif">
+                                                <td><a href="/accounts/{{ $user->id }}/edit"
+                                                        class="fs-6 text-decoration-none text-capitalize text-muted">{{ ucfirst($user->name) }}</a>
+                                                </td>
+                                                <td>{{ $user->email }}</td>
+                                                <td class="text-capitalize">{{ $user->baranggay }}</td>
+                                                <td>{{ $user->created_at }}</td>
+                                                <td>{{ $user->updated_at }}</td>
+
+                                                <td class="justify-content-end d-flex">
+                                                    <a href="/accounts/{{ $user->id }}/edit" class="btn btn-outline-primary fs-6 py-1 px-4">Edit</a>
+                                                </td>
+                                            </tr>
+                                        @endforeach`);
+                                    }
+                                }
+                            });
+                        })
+                    </script>
                 </table>
                 <div class="d-flex justify-content-center fs-7">
                     {!! $users->links() !!}
@@ -64,11 +106,9 @@
             @if (count($users) <= 0)
                 <table class="table table-bordered" border="3">
                     <tbody>
-
-                        <div class = "center justify-content-center d-flex mt-5">
+                        <div class="center justify-content-center d-flex mt-5">
                             No account Registered
                         </div>
-
                     </tbody>
                 </table>
             @endif

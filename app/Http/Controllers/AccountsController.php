@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Validation\Rule;
 
 
 class AccountsController extends Controller
@@ -114,8 +115,10 @@ class AccountsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $user = Accounts::find($id);
         $rules = [
-            'email'    => 'required|email|unique:accounts',
+            'name' => 'required',
+            'email'  => Rule::unique('accounts')->ignore($id),
             'baranggay' => 'required'
         ];
 
@@ -124,15 +127,12 @@ class AccountsController extends Controller
         if ($validation->fails()) {
             return back()->withErrors($validation)->withInput();
         } else {
-
-            $user = Accounts::find($id);
             $user->name = $request->input('name');
             $user->email = $request->input('email');
             $user->baranggay = $request->input('baranggay');
-
             $user->update();
 
-            Alert::success($request->input('name'), 'Successfully updated');
+            Alert::success('', 'Successfully updated');
             return redirect('/accounts');
         }
     }
@@ -148,7 +148,8 @@ class AccountsController extends Controller
 
         $delete = Accounts::where('id', $id)->delete();
 
-        toast('Successfully delete!', 'success');
+        toast('Successfully deleted!', 'success');
         return redirect('/accounts');
     }
+
 }

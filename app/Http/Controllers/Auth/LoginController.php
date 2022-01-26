@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -66,10 +67,19 @@ class LoginController extends Controller
 
     protected function sendFailedLoginResponse(Request $request)
     {
-        Alert::error('', 'Login Failed');
-        throw ValidationException::withMessages([
-            $this->username() => [trans('auth.failed')],
-        ]);
+        // throw ValidationException::withMessages([
+        //     $this->username() => [trans('auth.failed')],
+        // ]);
+
+        $users = User::get();
+
+        foreach ($users as $user) {
+            if ($user->email !== $request->email) {
+                return back()->withErrors(['email' => 'Email does not match to our records'])->withInput();
+            } else if ($user->email === $request->email && $user->password !== $request->password) {
+                return back()->withErrors(['password' => 'You have entered wrong password'])->withInput();
+            }
+        }
     }
 
     public function logout(Request $request)
