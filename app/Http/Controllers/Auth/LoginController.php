@@ -10,6 +10,8 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 
 
 
@@ -67,19 +69,46 @@ class LoginController extends Controller
 
     protected function sendFailedLoginResponse(Request $request)
     {
-        // throw ValidationException::withMessages([
-        //     $this->username() => [trans('auth.failed')],
+
+        // $users = User::get();
+        // if ($users) {
+        //     foreach ($users as $user) {
+        //         if ($user->email !== $request->email) {
+        //             return back()->withErrors(['email' => 'Email does not match to our records'])->withInput();
+        //         } else if ($user->email === $request->email && $user->password !== $request->password) {
+        //             return back()->withErrors(['password' => 'You have entered wrong password'])->withInput();
+        //         }
+        //     }
+        // }
+        $fields = $request->validate([
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'password' => ['required', 'string'],
+        ]);
+
+        $user = User::where('email', $fields['email'])->first();
+        if (!$user) {
+            return back()->withErrors(['email' => 'These credentials do not match our records.'])->withInput();
+        }
+
+        if (!Hash::check($fields['password'], $user->password)) {
+            return back()->withErrors(['password' => 'The provided password is incorrect.'])->withInput();
+        }
+
+        //Request from API
+
+        // $response = Http::post('https://plms-clz.herokuapp.com/api/auth/login', [
+        //     'email' => $request->email,
+        //     'password' => $request->password,
         // ]);
 
-        $users = User::get();
+        // $message = $response->getBody()->getContents();
+        // $message = json_decode($message);
 
-        foreach ($users as $user) {
-            if ($user->email !== $request->email) {
-                return back()->withErrors(['email' => 'Email does not match to our records'])->withInput();
-            } else if ($user->email === $request->email && $user->password !== $request->password) {
-                return back()->withErrors(['password' => 'You have entered wrong password'])->withInput();
-            }
-        }
+        // if ($response->clientError() && strpos(json_encode($message), "password") == true) {
+        //     return back()->withErrors(['password' => $message])->withInput();
+        // } else if ($response->clientError() && strpos(json_encode($message), "credentials") == true) {
+        //     return back()->withErrors(['email' => $message])->withInput();
+        // }
     }
 
     public function logout(Request $request)
