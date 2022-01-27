@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\HeatmapUpdate;
 use App\Models\HeatmapData;
 use Illuminate\Http\Request;
 
@@ -31,13 +32,19 @@ class HeatmapDataController extends Controller
             'phone_number' => 'required'
         ]);
 
-        $unit = HeatmapData::where('phone_number', $fields['phone_number'])->first();;
+        $unit = HeatmapData::where('phone_number', $fields['phone_number'])->first();
 
         if ($unit) {
-            return $unit->update($request->all());
+            $unit->update($request->all());
         } else {
-            return HeatmapData::create($request->all());
+            HeatmapData::create($request->all());
         }
+
+        $unit = HeatmapData::where('phone_number', $fields['phone_number'])->first();
+
+        event(new HeatmapUpdate($unit, 'set'));
+
+        return $unit;
     }
 
     /**
@@ -54,7 +61,10 @@ class HeatmapDataController extends Controller
 
         $unit = HeatmapData::where('phone_number', $fields['phone_number'])->first();
 
-        if ($unit) HeatmapData::destroy($unit->id);
+        if ($unit) {
+            event(new HeatmapUpdate($unit, 'del'));
+            HeatmapData::destroy($unit->id);
+        }
 
         return response('');
     }
