@@ -28,9 +28,16 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
         env:
           HD_APP_KEY: ${{secrets.APP_KEY}}
-          HD_LOG_CHANNEL: 'errorlog'
-          HD_DB_CONNECTION: 'pgsql'
-          HD_REDIS_CLIENT: 'predis'
-          HD_CACHE_DRIVER: 'redis'
-          HD_QUEUE_CONNECTION: 'redis'
-          HD_SESSION_DRIVER: 'redis'
+          HD_LOG_CHANNEL: "errorlog"
+          HD_DB_CONNECTION: "pgsql"
+          HD_REDIS_CLIENT: "predis"
+          HD_CACHE_DRIVER: "redis"
+          HD_QUEUE_CONNECTION: "redis"
+          HD_SESSION_DRIVER: "redis"
+          HD_BROADCAST_DRIVER: "pusher"
+          HD_PUSHER_APP_ID: "plms-clz"
+          HD_PUSHER_APP_KEY: "powerlinemonitoringsystems"
+          HD_PUSHER_APP_SECRET: "chavezlorenzozaragoza"
+          HD_PUSHER_APP_CLUSTER: "mt1"
+          HD_MIX_PUSHER_APP_KEY: 'powerlinemonitoringsystems'
+          HD_MIX_PUSHER_APP_CLUSTER: 'mt1'
