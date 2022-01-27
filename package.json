@@ -6,7 +6,7 @@
     "scripts": {
         "setup": "composer install && npm ci && npm run sqlite && copy .env.example .env && php artisan key:generate",
         "sqlite": "echo off > ./database/database.sqlite && php artisan migrate",
-        "serve": "php artisan serve",
+        "serve": "php artisan serve && php artisan websockets:serve",
         "build": "npm run production",
         "dev": "npm run development",
         "development": "mix",
