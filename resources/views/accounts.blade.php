@@ -4,9 +4,6 @@
     <script src="{{ asset('js/home.js') }}" defer></script>
     <link href="{{ asset('css/home.css') }}" rel="stylesheet">
     <meta name="_token" content="{{ csrf_token() }}">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
-        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 @endsection
 
@@ -14,7 +11,7 @@
     <div class="container mt-4">
         <div class="card-header">{{ __('Accounts') }}
 
-            <span class="fs-6 text-danger float-end">{{ count($users) }}</span>
+            <span class="fs-6 text-danger float-end"><div class = "count">{{count($users)}}</div></span>
 
         </div>
         <div class="card align-items-center flex-row justify-content-center fs-5 px-3 bg-light">
@@ -47,6 +44,9 @@
                         </tr>
                     </thead>
                     <tbody class="searchbody" id="tb">
+                        <tr class ="no-data">
+                            <td colspan="4">No Record Found</td>
+                        </tr>
                         @foreach ($users as $user)
                             <tr style="font-family: sans-serif">
                                 <td><a href="/accounts/{{ $user->id }}/edit"
@@ -57,45 +57,55 @@
                                 <td>{{ $user->created_at }}</td>
                                 <td>{{ $user->updated_at }}</td>
 
-                                <td class="justify-content-end d-flex">
+                                <td class="justify-content-center d-flex p-1">
                                     <a href="/accounts/{{ $user->id }}/edit"
                                         class="btn btn-outline-primary fs-6 py-1 px-4">Edit</a>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
+                    <div class = "d">
+
+                    </div>
                     <script>
-                        $('#search').on('keyup', function() {
-                            $value = $(this).val();
+                        $(document).ready(function() {
+                            $('.no-data').hide();
+                            $('#search').on('keyup', function() {
+                                $value = $(this).val();
 
-                            $.ajax({
-                                type: 'get',
-                                url: '{{ URL::to('search') }}',
-                                data: {
-                                    'search': $value
-                                },
-                                success: function(data) {
-                                    if ($value.length > 0) {
-                                        $('.searchbody').html(data);
-                                    } else {
-                                        $('.searchbody').html(`@foreach ($users as $user)
-                                            <tr style="font-family: sans-serif">
-                                                <td><a href="/accounts/{{ $user->id }}/edit"
-                                                        class="fs-6 text-decoration-none text-capitalize text-muted">{{ ucfirst($user->name) }}</a>
-                                                </td>
-                                                <td>{{ $user->email }}</td>
-                                                <td class="text-capitalize">{{ $user->baranggay }}</td>
-                                                <td>{{ $user->created_at }}</td>
-                                                <td>{{ $user->updated_at }}</td>
+                                $.ajax({
+                                    type: 'get',
+                                    url: '{{ URL::to('search') }}',
+                                    data: {
+                                        'search': $value
+                                    },
+                                    dataType: 'json',
+                                    success: function(data) {
+                                        if ($value.length > 0) {
+                                            $('.searchbody').html(data.success);
+                                            $('.count').html(data.count);
 
-                                                <td class="justify-content-end d-flex">
-                                                    <a href="/accounts/{{ $user->id }}/edit" class="btn btn-outline-primary fs-6 py-1 px-4">Edit</a>
-                                                </td>
-                                            </tr>
-                                        @endforeach`);
+                                        } else {
+                                            $('.searchbody').html(`@foreach ($users as $user)
+                                                <tr style="font-family: sans-serif">
+                                                    <td><a href="/accounts/{{ $user->id }}/edit"
+                                                            class="fs-6 text-decoration-none text-capitalize text-muted">{{ ucfirst($user->name) }}</a>
+                                                    </td>
+                                                    <td>{{ $user->email }}</td>
+                                                    <td class="text-capitalize">{{ $user->baranggay }}</td>
+                                                    <td>{{ $user->created_at }}</td>
+                                                    <td>{{ $user->updated_at }}</td>
+
+                                                    <td class="justify-content-center d-flex p-1">
+                                                        <a href="/accounts/{{ $user->id }}/edit" class="btn btn-outline-primary fs-6 py-1 px-4">Edit</a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach`);
+                                            $('.count').html('<div class = "count">{{count($users)}}</div>');
+                                        }
                                     }
-                                }
-                            });
+                                });
+                            })
                         })
                     </script>
                 </table>
@@ -112,9 +122,6 @@
                     </tbody>
                 </table>
             @endif
-
-
-
         </div>
     </div>
     @if (count($errors) > 0)

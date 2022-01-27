@@ -8,11 +8,8 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Http;
-
 
 
 
@@ -69,17 +66,6 @@ class LoginController extends Controller
 
     protected function sendFailedLoginResponse(Request $request)
     {
-
-        // $users = User::get();
-        // if ($users) {
-        //     foreach ($users as $user) {
-        //         if ($user->email !== $request->email) {
-        //             return back()->withErrors(['email' => 'Email does not match to our records'])->withInput();
-        //         } else if ($user->email === $request->email && $user->password !== $request->password) {
-        //             return back()->withErrors(['password' => 'You have entered wrong password'])->withInput();
-        //         }
-        //     }
-        // }
         $fields = $request->validate([
             'email' => ['required', 'string', 'email', 'max:255'],
             'password' => ['required', 'string'],

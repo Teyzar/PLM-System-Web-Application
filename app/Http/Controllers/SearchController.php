@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Accounts;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class SearchController extends Controller
 {
@@ -15,26 +14,37 @@ class SearchController extends Controller
 
         if ($request->ajax()) {
             $output = "";
-            $products = Accounts::where('name', 'LIKE', '%' . $request->search . "%")->get();
+            $accounts = Accounts::where('name', 'LIKE', '%' . $request->search . "%")
+                ->orWhere('email', 'LIKE', '%' . $request->search . "%")
+                ->orWhere('baranggay', 'LIKE', '%' . $request->search . "%")
+                ->orWhere('created_at', 'LIKE', '%' . $request->search . "%")
+                ->orderBy('name', 'asc')
+                ->get();
+                $trow = $accounts->count();
 
-
-            if ($products) {
-                foreach ($products as $key => $product) {
-                    return $output .= '<tr style="font-family: sans-serif">' .
-                        '<td><a href="/accounts/' . $product->id . '/edit"
-                        class="fs-6 text-decoration-none text-capitalize text-muted">' . ucfirst($product->name) . '</a></td>' .
-                        '<td>' . $product->email . '</td>' .
-                        '<td class="text-capitalize">' . $product->baranggay . '</td>' .
-                        '<td>' . $product->created_at . '</td>' .
-                        '<td>' . $product->updated_at . '</td>' .
-                        '<td class="justify-content-end d-flex">' . "<a class = 'btn btn-outline-primary fs-6 py-1 px-4' href=" . "./accounts/" . "$product->id/edit >Edit" . '</a></td>' .
+            if ($accounts) {
+                foreach ($accounts as $key => $acc) {
+                    $output .= '<tr style="font-family: sans-serif">' .
+                        '<td><a href="/accounts/' . $acc->id . '/edit"
+                        class="fs-6 text-decoration-none text-capitalize text-muted">' . ucfirst($acc->name) . '</a></td>' .
+                        '<td>' . $acc->email . '</td>' .
+                        '<td class="text-capitalize">' . $acc->baranggay . '</td>' .
+                        '<td>' . $acc->created_at . '</td>' .
+                        '<td>' . $acc->updated_at . '</td>' .
+                        '<td class="justify-content-center d-flex p-1">' . "<a class = 'btn btn-outline-primary fs-6 py-1 px-4' href=" . "./accounts/" . "$acc->id/edit >Edit" . '</a></td>' .
                         '</tr>';
                 }
+               if ($trow <= 0) {
+                    $output = '<tr><td class = "text-center fs-6 text-danger p-4" colspan ="5">No Record Found</td></tr>';
+                }
+
             }
-            return $output .= '
-                <div class="center">
-                    <span class = "d-flex fs-5 text-muted text-capitalize">No record found</span>
-                </div>';
+            $data = array(
+                'success' => $output,
+                'count' => $trow
+            );
+            echo json_encode($data);
+
         }
     }
 }

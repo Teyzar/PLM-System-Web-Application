@@ -74,10 +74,11 @@ class AccountsController extends Controller
         } else {
             $data = $request->all();
 
+
+
             $data['password'] = Hash::make($data['password']);
 
             Accounts::create($data);
-            // ->withSuccess('Account Succesfully Created!')
             toast('Account Succesfully Created!', 'success');
             return redirect()->back();
         }
@@ -151,5 +152,4 @@ class AccountsController extends Controller
         toast('Successfully deleted!', 'success');
         return redirect('/accounts');
     }
-
 }
