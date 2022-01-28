@@ -30,7 +30,7 @@ class LinemanController extends Controller
     {
         $accounts = Lineman::paginate(10);
 
-        return view('accounts')->with('users', $accounts);
+        return view('lineman')->with('users', $accounts);
     }
 
     /**
