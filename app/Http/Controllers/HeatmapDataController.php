@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\HeatmapUpdate;
+use App\Events\HeatmapDel;
+use App\Events\HeatmapSet;
 use App\Models\HeatmapData;
 use Illuminate\Http\Request;
 
@@ -42,7 +43,7 @@ class HeatmapDataController extends Controller
 
         $unit = HeatmapData::where('phone_number', $fields['phone_number'])->first();
 
-        event(new HeatmapUpdate($unit, 'set'));
+        event(new HeatmapSet($unit));
 
         return $unit;
     }
@@ -62,7 +63,7 @@ class HeatmapDataController extends Controller
         $unit = HeatmapData::where('phone_number', $fields['phone_number'])->first();
 
         if ($unit) {
-            event(new HeatmapUpdate(clone $unit, 'del'));
+            event(new HeatmapDel($fields['phone_number']));
             HeatmapData::destroy($unit->id);
         }
 

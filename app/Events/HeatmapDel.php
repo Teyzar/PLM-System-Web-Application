@@ -2,7 +2,6 @@
 
 namespace App\Events;
 
-use App\Models\HeatmapData;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -11,22 +10,20 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class HeatmapUpdate implements ShouldBroadcast
+class HeatmapDel implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $data;
-    public $state;
+    public $phone_number;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(HeatmapData $data, string $state)
+    public function __construct(string $phone_number)
     {
-        $this->data = $data;
-        $this->state = $state;
+        $this->phone_number = $phone_number;
     }
 
     /**
@@ -37,5 +34,15 @@ class HeatmapUpdate implements ShouldBroadcast
     public function broadcastOn()
     {
         return new Channel('heatmap-updates');
+    }
+
+    public function broadcastAs()
+    {
+        return 'App\\Events\\HeatmapUpdate';
+    }
+
+    public function broadcastWith()
+    {
+        return ['data' => ['phone_number' => $this->phone_number], 'state' => 'del'];
     }
 }
