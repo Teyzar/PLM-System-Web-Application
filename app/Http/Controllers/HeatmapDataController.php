@@ -62,7 +62,7 @@ class HeatmapDataController extends Controller
         $unit = HeatmapData::where('phone_number', $fields['phone_number'])->first();
 
         if ($unit) {
-            event(new HeatmapUpdate($unit, 'del'));
+            event(new HeatmapUpdate(clone $unit, 'del'));
             HeatmapData::destroy($unit->id);
         }
 
