@@ -68,10 +68,11 @@ loader.load().then(async (google) => {
         broadcaster: "pusher",
         key: process.env.MIX_PUSHER_APP_KEY,
         cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-        wsHost: window.location.hostname,
-        wsPort: 6001,
-        forceTLS: false,
-        disableStats: true,
+        encrypted: process.env.MIX_APP_DEBUG ? false : true,
+        wsPort: process.env.MIX_APP_DEBUG ? 6001 : undefined,
+        wsHost: process.env.MIX_APP_DEBUG
+            ? window.location.hostname
+            : undefined,
     });
 
     // Listen to heatmap updates
