@@ -10,7 +10,6 @@ class Lineman extends Model
 {
     use HasFactory;
 
-
     protected $table = 'Lineman';
 
     protected $dateFormat = 'Y/m/d h:i:s';

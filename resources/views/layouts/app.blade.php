@@ -46,9 +46,7 @@
 
                         @auth
                             <li class="nav-item">
-
                                 <a class="nav-link" href="/lineman">{{ __('Accounts') }}</a>
-
                             </li>
 
                             <li class="nav-item">
