@@ -69,6 +69,7 @@ loader.load().then(async (google) => {
         key: process.env.MIX_PUSHER_APP_KEY,
         cluster: process.env.MIX_PUSHER_APP_CLUSTER,
         encrypted: process.env.MIX_APP_DEBUG ? false : true,
+        forceTLS: process.env.MIX_APP_DEBUG ? false : undefined,
         wsPort: process.env.MIX_APP_DEBUG ? 6001 : undefined,
         wsHost: process.env.MIX_APP_DEBUG
             ? window.location.hostname
