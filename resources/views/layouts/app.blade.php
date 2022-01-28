@@ -46,7 +46,7 @@
 
                         @auth
                             <li class="nav-item">
-                                <a class="nav-link" href="/accounts">{{ __('Accounts') }}</a>
+                                <a class="nav-link" href="/lineman">{{ __('Accounts') }}</a>
                             </li>
 
                             <li class="nav-item">
@@ -94,7 +94,6 @@
                 </div>
             </div>
         </nav>
-
         <main>
             @yield("content")
         </main>

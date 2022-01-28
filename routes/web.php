@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AccountsController;
+use App\Http\Controllers\LinemanController;
 use App\Http\Controllers\SearchController;
 
 use App\Http\Controllers\HomeController;
@@ -23,9 +23,7 @@ Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// Route::get('/accounts', [AccountsController::class, 'index'])->name('accounts');
-
-Route::resource('/accounts', AccountsController::class);
+Route::resource('/lineman', LinemanController::class);
 Route::get('/search', [SearchController::class, 'search']);
 
 Route::get('/units', [UnitsController::class, 'index'])->name('units');

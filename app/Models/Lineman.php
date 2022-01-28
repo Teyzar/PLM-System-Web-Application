@@ -5,14 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-use Carbon\Carbon;
 
-class Accounts extends Model
+class Lineman extends Model
 {
     use HasFactory;
 
 
-    protected $table = 'accounts';
+    protected $table = 'Lineman';
 
     protected $dateFormat = 'Y/m/d h:i:s';
 

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Accounts;
+use App\Models\Lineman;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -11,7 +11,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Validation\Rule;
 
 
-class AccountsController extends Controller
+class LinemanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -28,7 +28,7 @@ class AccountsController extends Controller
 
     public function index()
     {
-        $accounts = Accounts::paginate(10);
+        $accounts = Lineman::paginate(10);
 
         return view('accounts')->with('users', $accounts);
     }
@@ -57,7 +57,7 @@ class AccountsController extends Controller
     {
         $rules = [
             'name' => 'required',
-            'email'    => 'required|email|unique:accounts',
+            'email'    => 'required|email|unique:Lineman',
             'password' => [
                 'required',
                 'required_with:confirmpass',
@@ -78,7 +78,7 @@ class AccountsController extends Controller
 
             $data['password'] = Hash::make($data['password']);
 
-            Accounts::create($data);
+            Lineman::create($data);
             toast('Account Succesfully Created!', 'success');
             return redirect()->back();
         }
@@ -102,7 +102,7 @@ class AccountsController extends Controller
      */
     public function edit($id)
     {
-        $person = Accounts::get()->where('id', $id);
+        $person = Lineman::get()->where('id', $id);
 
         return view('profile')->with('data', $person);
     }
@@ -116,10 +116,10 @@ class AccountsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = Accounts::find($id);
+        $user = Lineman::find($id);
         $rules = [
             'name' => 'required',
-            'email'  => Rule::unique('accounts')->ignore($id),
+            'email'  => Rule::unique('Lineman')->ignore($id),
             'baranggay' => 'required'
         ];
 
@@ -134,7 +134,7 @@ class AccountsController extends Controller
             $user->update();
 
             Alert::success('', 'Successfully updated');
-            return redirect('/accounts');
+            return redirect('/lineman');
         }
     }
 
@@ -147,9 +147,9 @@ class AccountsController extends Controller
     public function destroy($id)
     {
 
-        $delete = Accounts::where('id', $id)->delete();
+        $delete = Lineman::where('id', $id)->delete();
 
         toast('Successfully deleted!', 'success');
-        return redirect('/accounts');
+        return redirect('/lineman');
     }
 }

@@ -44,12 +44,9 @@
                         </tr>
                     </thead>
                     <tbody class="searchbody" id="tb">
-                        <tr class ="no-data">
-                            <td colspan="4">No Record Found</td>
-                        </tr>
                         @foreach ($users as $user)
                             <tr style="font-family: sans-serif">
-                                <td><a href="/accounts/{{ $user->id }}/edit"
+                                <td><a href="/lineman/{{ $user->id }}/edit"
                                         class="fs-6 text-decoration-none text-capitalize text-muted">{{ ucfirst($user->name) }}</a>
                                 </td>
                                 <td>{{ $user->email }}</td>
@@ -58,15 +55,12 @@
                                 <td>{{ $user->updated_at }}</td>
 
                                 <td class="justify-content-center d-flex p-1">
-                                    <a href="/accounts/{{ $user->id }}/edit"
+                                    <a href="/lineman/{{ $user->id }}/edit"
                                         class="btn btn-outline-primary fs-6 py-1 px-4">Edit</a>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
-                    <div class = "d">
-
-                    </div>
                     <script>
                         $(document).ready(function() {
                             $('.no-data').hide();
@@ -88,7 +82,7 @@
                                         } else {
                                             $('.searchbody').html(`@foreach ($users as $user)
                                                 <tr style="font-family: sans-serif">
-                                                    <td><a href="/accounts/{{ $user->id }}/edit"
+                                                    <td><a href="/lineman/{{ $user->id }}/edit"
                                                             class="fs-6 text-decoration-none text-capitalize text-muted">{{ ucfirst($user->name) }}</a>
                                                     </td>
                                                     <td>{{ $user->email }}</td>
@@ -97,7 +91,7 @@
                                                     <td>{{ $user->updated_at }}</td>
 
                                                     <td class="justify-content-center d-flex p-1">
-                                                        <a href="/accounts/{{ $user->id }}/edit" class="btn btn-outline-primary fs-6 py-1 px-4">Edit</a>
+                                                        <a href="/lineman/{{ $user->id }}/edit" class="btn btn-outline-primary fs-6 py-1 px-4">Edit</a>
                                                     </td>
                                                 </tr>
                                             @endforeach`);
@@ -140,7 +134,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('accounts.store') }}" method="POST">
+                    <form action="{{ route('lineman.store') }}" method="POST">
                         @csrf
 
                         <div class="mb-3">

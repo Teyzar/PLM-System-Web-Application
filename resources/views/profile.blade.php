@@ -8,7 +8,7 @@
 
                     @foreach ($data as $d)
                         <div class="card-header text-capitalize">{{ __(ucfirst($d->name)) }}
-                            <form method="post" action="{{ route('accounts.destroy', $d->id) }}"
+                            <form method="post" action="{{ route('lineman.destroy', $d->id) }}"
                                 onclick="return confirm('Are you sure you want to delete this account?')"
                                 class="float-end">
                                 @method('delete')
@@ -18,7 +18,7 @@
                             </form>
                         </div>
                         <div class="card-body ">
-                            <form method="post" action="{{ route('accounts.update', $d->id) }}">
+                            <form method="post" action="{{ route('lineman.update', $d->id) }}">
                                 @csrf
                                 @method('PUT')
 
