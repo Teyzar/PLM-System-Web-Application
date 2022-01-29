@@ -57,7 +57,7 @@ class LinemanController extends Controller
     {
         $rules = [
             'name' => 'required',
-            'email'    => 'required|email|unique:Lineman',
+            'email'    => 'required|email|unique:linemen',
             'password' => [
                 'required',
                 'required_with:confirmpass',
@@ -119,7 +119,7 @@ class LinemanController extends Controller
         $user = Lineman::find($id);
         $rules = [
             'name' => 'required',
-            'email'  => Rule::unique('Lineman')->ignore($id),
+            'email'  => Rule::unique('linemen')->ignore($id),
             'baranggay' => 'required'
         ];
 
