@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class ChangePasswordController extends Controller
 {
@@ -28,7 +29,8 @@ class ChangePasswordController extends Controller
             'new-password' => [
                 'required',
                 'string',
-                'min:8-20',
+                'min:8',
+                'max:20',
                 'required_with:verify'
             ],
             'verify' => ['required', 'same:new-password', 'string']
@@ -48,7 +50,7 @@ class ChangePasswordController extends Controller
             return back()->withErrors($valid)->withInput();
         } else {
             $user = Auth::user();
-            $disUser = User::where('id', $user->id)->first();
+            $disUser = User::where('email', $user->email)->first();
 
             $hash = Hash::make($request['new-password']);
 
@@ -58,7 +60,9 @@ class ChangePasswordController extends Controller
 
             toast('Password successfully changed!', 'success');
 
-            return redirect('/');
+            Auth::logout();
+            Session::flush();
+            return redirect('/login');
         }
     }
 }
