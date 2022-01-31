@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\LinemanController;
 use App\Http\Controllers\SearchController;
-
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UnitsController;
 use Illuminate\Support\Facades\Route;
@@ -27,3 +27,9 @@ Route::resource('/lineman', LinemanController::class);
 Route::get('/search', [SearchController::class, 'search']);
 
 Route::get('/units', [UnitsController::class, 'index'])->name('units');
+
+
+Route::middleware('auth')->group(function() {
+    Route::get('/password', [ChangePasswordController::class, 'index'])->name('c-password');
+    Route::post('/', [ChangePasswordController::class, 'ChangePass'])->name('save-password');
+});

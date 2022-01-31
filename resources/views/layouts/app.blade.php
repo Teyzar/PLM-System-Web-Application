@@ -78,9 +78,12 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                    <a class="dropdown-item" href="/password">
+                                        <i class = "bi bi-key fs-5 px-2"></i>{{ __('Password') }}
+                                    </a>
+                                    <a class="dropdown-item" href=""
                                         onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        <i class = "bi bi-box-arrow-right fs-5 px-2"></i>{{ __('Logout') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST"
