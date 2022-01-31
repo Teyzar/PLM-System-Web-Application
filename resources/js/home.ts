@@ -4,11 +4,9 @@ import { Loader } from "@googlemaps/js-api-loader";
 
 type HeatmapData = {
     id: string;
+    active: boolean;
     latitude: number;
     longitude: number;
-    phone_number: string;
-    created_at: string;
-    updated_at: string;
 };
 
 type WeightedLocationWithId = google.maps.visualization.WeightedLocation & {
@@ -56,8 +54,10 @@ loader.load().then(async (google) => {
 
     // Push all the data
     for (const data of result) {
+        if (!data.active) continue;
+
         heatmapData.push({
-            id: data.phone_number,
+            id: data.id,
             weight: 1,
             location: new google.maps.LatLng(data.latitude, data.longitude),
         });
@@ -77,52 +77,45 @@ loader.load().then(async (google) => {
     });
 
     // Listen to heatmap updates
-    echo.channel("heatmap-updates").listen("HeatmapUpdate", (update) =>
-        updateHeatmap(update.data, update.state)
-    );
+    echo.channel("Heatmap").listen("HeatmapUpdate", updateHeatmap);
 });
 
-async function updateHeatmap(data: HeatmapData, state: "set" | "del") {
-    switch (state) {
-        case "set": {
-            // Construct the data
-            const value = {
-                id: data.phone_number,
-                weight: 1,
-                location: new google.maps.LatLng(data.latitude, data.longitude),
-            };
+async function updateHeatmap(data: HeatmapData) {
+    if (data.active) {
+        // Construct the data
+        const value = {
+            id: data.id,
+            weight: 1,
+            location: new google.maps.LatLng(data.latitude, data.longitude),
+        };
 
-            // Get the current index if existing
-            let currentIndex;
-            for (let i = 0; i < heatmapData.getLength(); i++) {
-                const thisData = heatmapData.getAt(i);
-                if (thisData.id === data.phone_number) {
-                    currentIndex = i;
-                    break;
-                }
+        // Get the current index if existing
+        let currentIndex;
+        for (let i = 0; i < heatmapData.getLength(); i++) {
+            const thisData = heatmapData.getAt(i);
+            if (thisData.id === data.id) {
+                currentIndex = i;
+                break;
             }
-
-            // Remove existing data
-            if (typeof currentIndex === "number") {
-                heatmapData.removeAt(currentIndex);
-            }
-
-            // Push the new data
-            heatmapData.push(value);
-            break;
         }
-        case "del": {
-            // Loop through all the elements
-            for (let i = 0; i < heatmapData.getLength(); i++) {
-                const thisData = heatmapData.getAt(i);
 
-                // Remove element if the phone number matches
-                if (thisData.id === data.phone_number) {
-                    heatmapData.removeAt(i);
-                    break;
-                }
+        // Remove existing data
+        if (typeof currentIndex === "number") {
+            heatmapData.removeAt(currentIndex);
+        }
+
+        // Push the new data
+        heatmapData.push(value);
+    } else {
+        // Loop through all the elements
+        for (let i = 0; i < heatmapData.getLength(); i++) {
+            const thisData = heatmapData.getAt(i);
+
+            // Remove element if the phone number matches
+            if (thisData.id === data.id) {
+                heatmapData.removeAt(i);
+                break;
             }
-            break;
         }
     }
 }

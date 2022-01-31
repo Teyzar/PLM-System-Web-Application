@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHeatmapDataTable extends Migration
+class CreateUnitsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateHeatmapDataTable extends Migration
      */
     public function up()
     {
-        Schema::create('heatmap_data', function (Blueprint $table) {
+        Schema::create('units', function (Blueprint $table) {
             $table->id();
-            $table->double('latitude');
-            $table->double('longitude');
+            $table->boolean('active');
+            $table->double('latitude')->nullable();
+            $table->double('longitude')->nullable();
             $table->string('phone_number');
             $table->timestamps();
         });
@@ -29,6 +30,6 @@ class CreateHeatmapDataTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('heatmap_data');
+        Schema::dropIfExists('units');
     }
 }
