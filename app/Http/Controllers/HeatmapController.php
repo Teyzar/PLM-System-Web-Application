@@ -27,7 +27,7 @@ class HeatmapController extends Controller
      */
     public function update(Request $request, String $phone_number)
     {
-        $statusCode = 500;
+        $statusCode = 400;
 
         $fields = $request->validate([
             'active' => 'required|boolean',
@@ -49,6 +49,6 @@ class HeatmapController extends Controller
             $statusCode = 200;
         }
 
-        return response('', $statusCode);
+        return response('Unit is not registered.', $statusCode);
     }
 }
