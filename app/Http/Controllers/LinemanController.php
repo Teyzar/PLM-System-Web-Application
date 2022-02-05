@@ -55,7 +55,6 @@ class LinemanController extends Controller
         if ($validation->fails()) {
             return back()->withErrors($validation)->withInput();
         } else {
-            $request->password = Hash::make("plmsystem");
 
             $data = [
                 'name' => $request->name,
