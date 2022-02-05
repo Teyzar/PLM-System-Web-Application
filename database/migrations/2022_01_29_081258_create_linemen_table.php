@@ -18,7 +18,7 @@ class CreateLinemenTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('baranggay');
+            $table->string('barangay');
             $table->timestamps();
         });
     }

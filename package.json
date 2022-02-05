@@ -20,6 +20,7 @@
         "@googlemaps/js-api-loader": "^1.13.2",
         "bootstrap-icons": "^1.7.2",
         "laravel-echo": "^1.11.3",
+        "popper.js": "^1.16.1",
         "pusher-js": "^7.0.4"
     },
     "devDependencies": {

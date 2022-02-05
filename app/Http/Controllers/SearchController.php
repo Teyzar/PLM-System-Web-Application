@@ -12,37 +12,43 @@ class SearchController extends Controller
 
         if ($request->ajax()) {
             $output = "";
-            $accounts = Lineman::where('name', 'LIKE', '%' . $request->search . "%")
-                ->orWhere('email', 'LIKE', '%' . $request->search . "%")
-                ->orWhere('baranggay', 'LIKE', '%' . $request->search . "%")
-                ->orWhere('created_at', 'LIKE', '%' . $request->search . "%")
-                ->orderBy('name', 'asc')
-                ->get();
-                $trow = $accounts->count();
+            $accounts = Lineman::paginate(10);
+
+            if (!empty($request->search)) {
+                $accounts = Lineman::where('name', 'LIKE', '%' . $request->search . "%")
+                    ->orWhere('email', 'LIKE', '%' . $request->search . "%")
+                    ->orWhere('baranggay', 'LIKE', '%' . $request->search . "%")
+                    ->orWhere('created_at', 'LIKE', '%' . $request->search . "%")
+                    ->orderBy('name', 'asc')
+                    ->paginate(10);
+            }
+
+            $trow = $accounts->count();
 
             if ($accounts) {
                 foreach ($accounts as $key => $acc) {
-                    $output .= '<tr style="font-family: sans-serif">' .
-                        '<td><a href="/lineman/' . $acc->id . '/edit"
-                        class="fs-6 text-decoration-none text-capitalize text-muted">' . ucfirst($acc->name) . '</a></td>' .
-                        '<td>' . $acc->email . '</td>' .
-                        '<td class="text-capitalize">' . $acc->baranggay . '</td>' .
-                        '<td>' . $acc->created_at . '</td>' .
-                        '<td>' . $acc->updated_at . '</td>' .
-                        '<td class="justify-content-center d-flex p-1">' . "<a class = 'btn btn-outline-primary fs-6 py-1 px-4' href=" . "./lineman/" . "$acc->id/edit >Edit" . '</a></td>' .
+                    $output .= "<tr style='font-family: 'Montserrat', sans-serif; border-width: 1px;' class = 'trbody border-warning border-top'>" .
+                        '<td class="fs-6 text-muted border-warning border-top fw-bolder">' . ucfirst($acc->name) . '</td>' .
+                        '<td class="text-black fs-6 border-warning border-top fw-bolder">' . $acc->email . '</td>' .
+                        '<td class="text-black fs-6 text-capitalize border-warning border-top fw-bolder">' . $acc->barangay . '</td>' .
+                        '<td class="text-black fs-6 text-capitalize border-warning border-top fw-bolder">' . \Carbon\Carbon::parse($acc->created_at)->toDayDateTimeString() . '</td>' .
+                        '<td>' . "<a id= 'resetbtn' class = 'resetbtn' data-bs-toggle='modal'
+                        data-bs-target='#modalDelete' onclick='Destroy($acc->id)' ><i class='fas fa-sync-alt text-success fs-6' data-toggle='tooltip' title='password reset' ></i>" . '</a></td>' .
+                        '<td>' . "<a class = 'editbtn' onclick='LoadAccountDetails($acc->id)'
+                        data-bs-toggle='modal' data-bs-target='#modalForm2'><i class='fas fa-user-edit text-primary fs-6' data-toggle='tooltip' title='edit'></i>" . '</a></td>' .
+                        '<td>' . "<a id= 'delbtn' class = 'deletebtn' data-bs-toggle='modal'
+                        data-bs-target='#modalDelete' onclick='Destroy($acc->id)' ><i class='fas fa-trash fs-6 text-danger' data-toggle='tooltip' title='delete'></i>" . '</a></td>' .
                         '</tr>';
                 }
-               if ($trow <= 0) {
-                    $output = '<tr><td class = "text-center fs-6 text-danger p-4" colspan ="5">No Record Found</td></tr>';
+                if ($trow <= 0) {
+                    $output = '<tr><td class = "text-center fs-6 border-warning border-top fw-bolder text-danger p-4" colspan ="6">No Record Found</td></tr>';
                 }
-
             }
             $data = array(
                 'success' => $output,
                 'count' => $trow
             );
             echo json_encode($data);
-
         }
     }
 }

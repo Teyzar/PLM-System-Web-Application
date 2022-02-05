@@ -10,12 +10,10 @@ class Lineman extends Model
 {
     use HasFactory;
 
-    protected $dateFormat = 'Y/m/d h:i:s';
-
     protected $fillable = [
         'name',
         'email',
         'password',
-        'baranggay'
+        'barangay'
     ];
 }

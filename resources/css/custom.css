@@ -1,0 +1,67 @@
+
+.trbody {
+    cursor: pointer;
+}
+.trbody:hover .editbtn {
+    display: block;
+    opacity: 0.60;
+
+}
+.trbody:hover .deletebtn {
+    display: block;
+    opacity: 0.60;
+
+}
+.trbody:hover .resetbtn {
+    display: block;
+    opacity: 0.60;
+}
+.trbody:hover .resetbtn:hover {
+    display: block;
+    opacity: 1;
+}
+.trbody:hover .editbtn:hover {
+    display: block;
+    opacity: 1;
+}
+.trbody:hover .deletebtn:hover {
+    display: block;
+    opacity: 1;
+}
+
+.editbtn {
+    display: none ;
+}
+.deletebtn {
+    display: none ;
+}
+.resetbtn {
+    display: none ;
+}
+
+@media (max-width: 767.98px) {
+    .editbtn {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        display: block;
+    }
+    .deletebtn {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        display: block;
+    }
+    .resetbtn {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        display: block;
+    }
+}
+.addicon:hover {
+    color: red;
+    opacity: 0.76;
+    transition: 0.2s ease-in-out;
+}
+
+
+
+

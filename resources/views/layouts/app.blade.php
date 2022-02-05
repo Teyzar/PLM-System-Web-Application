@@ -39,18 +39,19 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
+                    <ul class="navbar-nav me-auto fs-6">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Past Incidents') }}</a>
+                            <a class="nav-link text-muted" href="{{ route('login') }}">{{ __('Past Incidents') }}</a>
                         </li>
 
                         @auth
                             <li class="nav-item">
-                                <a class="nav-link" href="/lineman">{{ __('Accounts') }}</a>
+                                <a class="nav-link text-muted" href="/lineman">{{ __('Accounts') }}</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('units') }}">{{ __('Units') }}</a>
+                                <a class="nav-link text-muted hover-zoom"
+                                    href="{{ route('units') }}">{{ __('Units') }}</a>
                             </li>
                         @endauth
                     </ul>
@@ -71,7 +72,7 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item dropdown">
+                            <li class="nav-item dropdown ">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
@@ -79,11 +80,11 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="/password">
-                                        <i class = "bi bi-key fs-5 px-2"></i>{{ __('Password') }}
+                                        <i class="bi bi-key fs-5 px-2"></i>{{ __('Password') }}
                                     </a>
                                     <a class="dropdown-item" href=""
                                         onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                                        <i class = "bi bi-box-arrow-right fs-5 px-2"></i>{{ __('Logout') }}
+                                        <i class="bi bi-box-arrow-right fs-5 px-2"></i>{{ __('Logout') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST"

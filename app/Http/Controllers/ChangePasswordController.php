@@ -36,11 +36,10 @@ class ChangePasswordController extends Controller
             'verify' => ['required', 'same:new-password', 'string']
         ];
 
-
         $valid = Validator::make($request->all(), $rules);
 
         if (!Hash::check($request['password'], $password)) {
-            return back()->withErrors(['pass' => 'The Current Password is Wrong.'])->withInput();
+            return back()->withErrors(['pass' => 'Password not match'])->withInput();
         }
         if (Hash::check($request['new-password'], $password)) {
             return back()->withErrors(['newpass' => 'New Password Must not match to the Current Password.'])->withInput();
@@ -56,7 +55,7 @@ class ChangePasswordController extends Controller
 
             $disUser->password = $hash;
 
-            $disUser->update();
+            $disUser->save();
 
             toast('Password successfully changed!', 'success');
 

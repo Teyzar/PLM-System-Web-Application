@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade pt-5" id="modalForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -36,4 +36,9 @@
             </div>
         </div>
     </div>
+    <style>
+        .modal-open .container-fluid, .modal-open  .container {
+                -webkit-filter: blur(5px) grayscale(90%);
+            }
+    </style>
 @endsection

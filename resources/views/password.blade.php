@@ -4,7 +4,7 @@
 
     <div class="container mt-5 py-4">
         <div class="row justify-content-center">
-            <div class="col-md-7">
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-header w-100 justify-content-start responsive">
                         <i class="bi bi-shield-lock fs-5 px-1"></i>Change Password

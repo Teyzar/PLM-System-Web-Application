@@ -14,5 +14,6 @@ const mix = require("laravel-mix");
 mix.js("resources/js/app.js", "public/js")
     .sass("resources/sass/app.scss", "public/css")
     .ts("resources/js/home.ts", "public/js")
-    .copy("resources/css/home.css", "public/css")
+    .copy("resources/css/", "public/css")
+    .copy("resources/img/", "public/img")
     .sourceMaps();
