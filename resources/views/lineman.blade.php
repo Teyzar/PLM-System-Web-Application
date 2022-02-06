@@ -145,7 +145,6 @@
             } catch (error) {
                 console.log(error);
             }
-
         });
 
         function Destroy(id) {
@@ -162,9 +161,13 @@
                 dataType: 'json',
                 data: params,
                 success: function(data) {
-                    $('input#updatename').val(data.name);
-                    $('input#updatebarangay').val(data.barangay);
-                    $('input#updateemail').val(data.email);
+                    const name = $('input#updatename');
+                    const barangay = $('input#updatebarangay');
+                    const email = $('input#updateemail');
+
+                    name.val(data.name);
+                    barangay.val(data.barangay);
+                    email.val(data.email);
                     $('#form-id').attr('action', `lineman/${data.id}`);
                 }
             });
