@@ -22,7 +22,7 @@ class UnitsController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'phone_number' => 'required|string',
+            'phone_number' => 'required|string|unique:units',
         ];
 
         $validation = Validator::make($request->all(), $rules);
