@@ -115,7 +115,6 @@
             });
         </script>
     @endif
-    @include('modals.modal')
     <style>
         .modal-open .container-fluid,
         .modal-open .container {
@@ -126,7 +125,6 @@
     <script>
         $(document).ready(function() {
             $('[data-toggle="tooltip"]').tooltip();
-
             try {
                 $('#search').on('keyup', function() {
                     $value = $(this).val();
@@ -172,4 +170,5 @@
             });
         }
     </script>
+    @include('modals.modal')
 @endsection
