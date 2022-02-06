@@ -30,6 +30,8 @@ Route::resource('/lineman', LinemanController::class)->only(['index', 'store', '
 Route::get('/search', [SearchController::class, 'search']);
 
 Route::get('/units', [UnitsController::class, 'index'])->name('units');
+Route::post('/units', [UnitsController::class, 'store'])->name('add_unit');
+
 
 
 Route::middleware('auth')->group(function() {

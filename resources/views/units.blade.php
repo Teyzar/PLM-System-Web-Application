@@ -14,6 +14,40 @@
             </a>
         </div>
     </div>
+    <div class="container">
+        <div class="card-header">
+            <div class="row">
+                <table class ="table-bordered">
+                    <tr class =>
+                        <th>
+                            phone_number
+                        </th>
+                        <th>
+                            longitude
+                        </th>
+                        <th>
+                            latitude
+                        </th>
+                    </tr>
+                        @foreach ($units as $unit)
+                            <tr>
+                                <td>
+                                    {{ $unit->phone_number }}
+                                </td>
+                                <td>
+                                    {{ $unit->longitude }}
+                                </td>
+                                <td>
+                                    {{ $unit->latitude }}
+                                </td>
+                            </tr>
+                        @endforeach
+
+                </table>
+            </div>
+        </div>
+    </div>
+
 
     <div class="modal fade pt-5" id="modalForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -23,10 +57,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form action="{{ route('add_unit') }}" method="POST">
+                        @csrf
                         <div class="mb-3">
-                            <label class="form-label"><i class="fs-2 bi bi-sim px-1"></i>Mobile No.</label>
-                            <input type="tel" class="form-control" id="username" name="username" placeholder="#" />
+                            <label class="phone_number"><i class="fs-2 bi bi-sim px-1"></i>Mobile No.</label>
+                            <input type="tel" class="form-control" id="phone_number" name="phone_number"
+                                placeholder="#" />
                         </div>
                         <div class="modal-footer d-block">
                             <button type="submit" class="btn btn-warning float-end">Submit</button>
@@ -37,8 +73,10 @@
         </div>
     </div>
     <style>
-        .modal-open .container-fluid, .modal-open  .container {
-                -webkit-filter: blur(5px) grayscale(90%);
-            }
+        .modal-open .container-fluid,
+        .modal-open .container {
+            -webkit-filter: blur(5px) grayscale(90%);
+        }
+
     </style>
 @endsection

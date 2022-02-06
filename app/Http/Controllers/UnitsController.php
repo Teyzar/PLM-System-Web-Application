@@ -15,7 +15,8 @@ class UnitsController extends Controller
 
     public function index()
     {
-        return view('units');
+        $units = Unit::get();
+        return view('units')->with('units', $units);
     }
 
     public function store(Request $request)
@@ -31,7 +32,7 @@ class UnitsController extends Controller
         } else {
             Unit::create([
                 'active' => false,
-                'phone_number' => $request->all('phone_number')
+                'phone_number' => $request->phone_number
             ]);
 
             toast('Unit Succesfully Registered!', 'success');
