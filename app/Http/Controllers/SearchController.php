@@ -12,14 +12,14 @@ class SearchController extends Controller
 
         if ($request->ajax()) {
             $output = "";
-            $accounts = Lineman::paginate(10);
+            $accounts = Lineman::orderBy('created_at', 'desc')->paginate(10);
 
             if (!empty($request->search)) {
                 $accounts = Lineman::where('name', 'LIKE', '%' . $request->search . "%")
                     ->orWhere('email', 'LIKE', '%' . $request->search . "%")
-                    ->orWhere('baranggay', 'LIKE', '%' . $request->search . "%")
+                    ->orWhere('barangay', 'LIKE', '%' . $request->search . "%")
                     ->orWhere('created_at', 'LIKE', '%' . $request->search . "%")
-                    ->orderBy('name', 'asc')
+                    ->orderBy('created_at', 'desc')
                     ->paginate(10);
             }
 
@@ -28,7 +28,7 @@ class SearchController extends Controller
             if ($accounts) {
                 foreach ($accounts as $key => $acc) {
                     $output .= "<tr style='font-family: 'Montserrat', sans-serif; border-width: 1px;' class = 'trbody border-warning border-top'>" .
-                        '<td class="fs-6 text-muted border-warning border-top fw-bolder">' . ucfirst($acc->name) . '</td>' .
+                        '<td class="fs-6 text-black border-warning border-top fw-bolder">' . ucfirst($acc->name) . '</td>' .
                         '<td class="text-black fs-6 border-warning border-top fw-bolder">' . $acc->email . '</td>' .
                         '<td class="text-black fs-6 text-capitalize border-warning border-top fw-bolder">' . $acc->barangay . '</td>' .
                         '<td class="text-black fs-6 text-capitalize border-warning border-top fw-bolder">' . \Carbon\Carbon::parse($acc->created_at)->toDayDateTimeString() . '</td>' .
@@ -41,7 +41,7 @@ class SearchController extends Controller
                         '</tr>';
                 }
                 if ($trow <= 0) {
-                    $output = '<tr><td class = "text-center fs-6 border-warning border-top fw-bolder text-danger p-4" colspan ="6">No Record Found</td></tr>';
+                    $output = '<tr><td class = "text-center fs-6 border-warning border-top fw-bolder text-danger p-4" colspan ="7">No Record Found</td></tr>';
                 }
             }
             $data = array(

@@ -6,19 +6,17 @@
 @endsection
 
 @section('content')
-    <div class="container py-4" style="margin-top: 9%">
+    <div class="container py-4" style="margin-top: 2%">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <div class="card border-info bg-light">
-                    <div class="card-header border-gray bg-dark fs-6">
-                        <span class="fs-6 text-light">{{ __('Login Account') }}</span>
-                        <p class="fs-6 text-center fw-bolder text-light" style="font-family: 'Montserrat', sans-serif;">
-                            Welcome to
-                            <span class="text-danger fs-4">Power Line
-                                Monitoring</span>
+                <div class="body border-info">
+                    <div class="card border-secondary bg-secondary overflow-hidden" style="height: 22rem;">
+                        <p class="fw-bold d-flex p-0 m-auto mt-0" style="font-family: 'Montserrat', sans-serif;">
+                            <img src="{{ asset('img/logo.png') }}" class="" style="">
                         </p>
                     </div>
-                    <div class="card-body">
+
+                    <div class="card-body bg-secondary" style=";">
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
 

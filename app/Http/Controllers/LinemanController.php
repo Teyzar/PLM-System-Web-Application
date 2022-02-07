@@ -27,7 +27,7 @@ class LinemanController extends Controller
     public function index()
     {
 
-        $accounts = Lineman::paginate(10);
+        $accounts = Lineman::orderBy('created_at', 'desc')->paginate(10);
 
         return view('lineman')->with('users', $accounts);
     }
@@ -63,7 +63,7 @@ class LinemanController extends Controller
                 'password' => Hash::make("plmsystem")
             ];
             Lineman::create($data);
-            toast('Account Succesfully Created!', 'success');
+            toast('Account registered successfully!', 'success');
             return redirect()->back();
         }
     }
@@ -96,7 +96,7 @@ class LinemanController extends Controller
             $user->email = $request->input('updateemail');
             $user->barangay = $request->input('updatebarangay');
             $user->update();
-            Alert::success('', 'Successfully updated');
+            toast('Account updated successfully!', 'success');
             return redirect('/lineman');
         }
     }
@@ -107,7 +107,7 @@ class LinemanController extends Controller
 
         $delete = Lineman::where('id', $id)->delete();
 
-        toast('Successfully deleted!', 'success');
+        toast('Account deleted successfully!', 'success');
         return back();
     }
 }

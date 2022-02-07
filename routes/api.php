@@ -23,6 +23,9 @@ Route::post('/auth/login', [ApiAuthController::class, 'login']);
 
 Route::get('/heatmap', [HeatmapController::class, 'index']);
 
+Route::get('/lineman/edit/', [LinemanController::class, 'edit'])->name('lineman-edit');
+Route::get('/search/', [SearchController::class, 'search']);
+
 
 // Protected Routes
 

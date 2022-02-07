@@ -17,18 +17,24 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
+
 
     @yield("head")
 </head>
 
-<body>
+<body class="bg-secondary">
     @include('sweetalert::alert')
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+
+        <nav class="navbar navbar-expand-md navbar-light bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <img src="{{ asset('img/logo.png') }}" class="float-start" style="width: 6%; float: inline-start;">
+                <a class="navbar-brand fs-3" style="color:#fd7e14; font-family: 'Source Serif 4', sans-serif;"
+                    href="{{ url('/') }}">
                     Power Line Monitoring
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -39,42 +45,46 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto fs-6">
-                        <li class="nav-item">
-                            <a class="nav-link text-muted" href="{{ route('login') }}">{{ __('Past Incidents') }}</a>
+                    <ul class="navbar-nav me-auto fs-5">
+                        <li class="nav-item pt-1 ps-5 " style="font-family: 'Manrope', sans-serif;">
+                            <a class="nav-link text-white texthover"
+                                href="{{ route('login') }}">{{ __('Outage Records') }}</a>
                         </li>
 
                         @auth
-                            <li class="nav-item">
-                                <a class="nav-link text-muted" href="/lineman">{{ __('Accounts') }}</a>
+                            <li class="nav-item text-white pt-1 ps-4" style="font-family: 'Manrope', sans-serif;">
+                                <a class="nav-link text-white texthover" href="/lineman">{{ __('Accounts') }}</a>
                             </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link text-muted hover-zoom"
+                            <li class="nav-item pt-1 ps-4" style="font-family: 'Manrope', sans-serif;">
+                                <a class="nav-link text-white texthover"
                                     href="{{ route('units') }}">{{ __('Units') }}</a>
                             </li>
                         @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
+                    <ul class="navbar-nav ms-auto fs-5 text-warning">
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <li class="nav-item pt-1" style="font-family: 'Manrope', sans-serif;">
+                                    <a class="nav-link text-white texthover"
+                                        href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
-                                <li class="nav-item d-none">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                <li class="nav-item d-none ">
+                                    <a class="nav-link text-white"
+                                        href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item dropdown ">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <li class="nav-item dropdown pt-1 " style="font-family: 'Manrope', sans-serif;">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle text-white text-capitalize texthover"
+                                    href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
 

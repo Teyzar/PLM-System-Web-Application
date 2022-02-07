@@ -52,8 +52,6 @@ class LoginController extends Controller
 
         $this->clearLoginAttempts($request);
 
-        Alert::success('', "You've Successfully Login!");
-
 
         if ($response = $this->authenticated($request, $this->guard()->user())) {
             return $response;
