@@ -23,11 +23,11 @@ Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/lineman/edit/', [LinemanController::class, 'edit'])->name('lineman-edit');
+// Route::get('/lineman/edit/', [LinemanController::class, 'edit'])->name('lineman-edit');
 Route::resource('/lineman', LinemanController::class)->only(['index', 'store', 'show', 'destroy', 'update']);
 
 
-Route::get('/search/', [SearchController::class, 'search']);
+// Route::get('/search/', [SearchController::class, 'search']);
 
 Route::get('/units', [UnitsController::class, 'index'])->name('units');
 Route::post('/units', [UnitsController::class, 'store'])->name('add_unit');
