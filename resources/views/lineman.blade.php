@@ -125,7 +125,7 @@
                     $value = $(this).val();
                     $.ajax({
                         type: 'get',
-                        url: "https://plms-clz.herokuapp.com/search/",
+                        url: "{{ URL::to('search') }}",
                         data: {
                             'search': $value
                         },
@@ -152,7 +152,7 @@
             var route = 'lineman/' + id;
             $.ajax({
                 type: 'get',
-                url: "https://plms-clz.herokuapp.com/lineman/edit/",
+                url: "{{ route('lineman-edit') }}",
                 dataType: 'json',
                 data: params,
                 success: function(data) {
