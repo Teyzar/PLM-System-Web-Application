@@ -1,10 +1,7 @@
 @extends('layouts.app')
 
 @section('head')
-    <script src="{{ asset('js/home.js') }}" defer></script>
-    <link href="{{ asset('css/home.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
-    <meta name="_token" content="{{ csrf_token() }}">
+    <link href="{{ asset('css/lineman.css') }}" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 @endsection
 
@@ -13,8 +10,8 @@
         <div class="card-header border-dark border-1 fw-bolder fs-4 count bg-dark text-light"
             style="font-family: 'Montserrat', sans-serif;">
             {{ __('Accounts ') . '(' . count($users) . ')' }}
-
         </div>
+
         <div class="card align-items-center flex-row justify-content-center fs-5 px-3 bg-light">
             <i class="bi bi-search p-1 text-dark"></i>
             <div class="container p-2">
@@ -34,12 +31,13 @@
 
         </div>
     </div>
+
     <div class="container m-auto">
         <div class="row">
             <div class="border-dark table-responsive">
                 @if (count($users) > 0)
                     <table class="table table-hover table-md text-start"
-                        style="font-family: 'Montserrat', sans-serif; background-color:#ff7300;" >
+                        style="font-family: 'Montserrat', sans-serif; background-color:#ff7300;">
                         <thead class="table-warning opacity-75 text-dark">
                             <tr style="font-family: sans-serif; border-width: 1px;"
                                 class="border-warning border-warning border-top fw-bolder fs-5">
@@ -53,6 +51,7 @@
 
                             </tr>
                         </thead>
+
                         <tbody class="border-warning border-top searchbody bg-white" id="tb" style="border-width: 1px">
                             @foreach ($users as $user)
                                 <tr class="trbody border-dark border-top bg-light">
@@ -87,22 +86,25 @@
                                     </td>
                                 </tr>
                             @endforeach
-            </div>
-            </table>
-            <div class="d-flex justify-content-center fs-7">
-                {!! $users->links() !!}
-            </div>
-            @endif
-            @if (count($users) <= 0)
-                <div class="card border-1 border-secondary align-items-center pt-5 ">
-                    <span class="justify-content-center d-flex fw-bold pb-5 pt-2 text-secondary opacity-75 addicon fs-3"
-                        style="font-family: 'Montserrat', sans-serif;">No Registered Accounts</span>
-                </div>
-            @endif
-        </div>
+                        </tbody>
+                    </table>
 
+                    <div class="d-flex justify-content-center fs-7">
+                        {!! $users->links() !!}
+                    </div>
+                @endif
+
+                @if (count($users) <= 0)
+                    <div class="card border-1 border-secondary align-items-center pt-5 ">
+                        <span class="justify-content-center d-flex fw-bold pb-5 pt-2 text-secondary opacity-75 addicon fs-3"
+                            style="font-family: 'Montserrat', sans-serif;">No Registered Accounts</span>
+                    </div>
+                @endif
+            </div>
+
+        </div>
     </div>
-    </div>
+
     @if ($errors->has('email'))
         <script>
             $(document).ready(function() {
@@ -110,13 +112,7 @@
             });
         </script>
     @endif
-    <style>
-        .modal-open .container-fluid,
-        .modal-open .container {
-            -webkit-filter: blur(5px) grayscale(90%);
-        }
 
-    </style>
     <script>
         $(document).ready(function() {
             $('[data-toggle="tooltip"]').tooltip();
@@ -138,7 +134,7 @@
                     });
                 })
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         });
 
@@ -168,5 +164,7 @@
             });
         }
     </script>
+
     @include('modals.modal')
+
 @endsection

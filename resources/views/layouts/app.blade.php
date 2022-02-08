@@ -17,19 +17,16 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
-
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
-
 
     @yield("head")
 </head>
 
 <body class="bg-secondary">
     @include('sweetalert::alert')
-    <div id="app">
 
+    <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-dark">
             <div class="container">
                 <img src="{{ asset('img/logo.png') }}" class="float-start" style="width: 6%; float: inline-start;">
@@ -108,6 +105,7 @@
                 </div>
             </div>
         </nav>
+
         <main>
             @yield("content")
         </main>

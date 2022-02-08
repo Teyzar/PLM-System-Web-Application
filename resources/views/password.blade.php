@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('body')
-
     <div class="container mt-5 py-4">
         <div class="row justify-content-center">
             <div class="col-md-6">
@@ -9,6 +8,7 @@
                     <div class="card-header w-100 justify-content-start responsive">
                         <i class="bi bi-shield-lock fs-5 px-1"></i>Change Password
                     </div>
+
                     <div class="card-body d-flex bg-white justify-content-center">
                         <form class="form w-75" role="form" autocomplete="off" method="POST"
                             action="{{ route('save-password') }}">
@@ -20,13 +20,13 @@
 
                                 @if ($errors->has('pass'))
                                     <div class="error text-danger form-text small ">{{ $errors->first('pass') }}</div>
-
                                 @endif
 
                                 @if ($errors->has('password'))
                                     <div class="error text-danger form-text small ">{{ $errors->first('password') }}</div>
                                 @endif
                             </div>
+
                             <div class="form-group">
                                 <label for="inputPasswordNew">New Password</label>
                                 <input type="password" class="form-control" id="inputPasswordNew" required=""
@@ -36,16 +36,18 @@
                                     <div class="error text-danger form-text small ">{{ $errors->first('new-password') }}
                                     </div>
                                 @endif
+
                                 @if ($errors->has('newpass'))
                                     <div class="error text-danger form-text small">{{ $errors->first('newpass') }}</div>
                                 @endif
+
                                 @if (!$errors->has('new-password') && !$errors->has('newpass'))
                                     <span class="form-text small text-muted" id="new-password">
                                         The new-password must be at least 8-20 characters.
                                     </span>
                                 @endif
-
                             </div>
+
                             <div class="form-group">
                                 <label for="inputPasswordNewVerify">Verify</label>
                                 <input type="password" class="form-control" id="inputPasswordNewVerify" required=""
@@ -60,11 +62,13 @@
                                     </span>
                                 @endif
                             </div>
+
                             <div class="form-group">
                                 <a type="submit" class="btn btn-success btn-lg float-end py-1 px-3 fs-5 mt-2"
                                     data-bs-toggle="modal" data-bs-target="#modalForm"><i
                                         class="bi bi-box-arrow-down pe-2 fs-5"></i>Save</a>
                             </div>
+
                             <div class="modal fade" id="modalForm" tabindex="-1" role="dialog"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
@@ -89,12 +93,9 @@
                                 </div>
                             </div>
                         </form>
-                        </form>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
-
 @endsection

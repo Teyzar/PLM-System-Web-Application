@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
 @section('head')
-    <script src="{{ asset('js/home.js') }}" defer></script>
-    <link href="{{ asset('css/home.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/units.css') }}" rel="stylesheet">
 @endsection
 
 @section('body')
@@ -14,11 +13,12 @@
             </a>
         </div>
     </div>
+
     <div class="container">
         <div class="card-header">
             <div class="row">
-                <table class ="table-bordered">
-                    <tr class =>
+                <table class="table-bordered">
+                    <tr class=>
                         <th>
                             phone_number
                         </th>
@@ -29,25 +29,24 @@
                             latitude
                         </th>
                     </tr>
-                        @foreach ($units as $unit)
-                            <tr>
-                                <td>
-                                    {{ $unit->phone_number }}
-                                </td>
-                                <td>
-                                    {{ $unit->longitude }}
-                                </td>
-                                <td>
-                                    {{ $unit->latitude }}
-                                </td>
-                            </tr>
-                        @endforeach
 
+                    @foreach ($units as $unit)
+                        <tr>
+                            <td>
+                                {{ $unit->phone_number }}
+                            </td>
+                            <td>
+                                {{ $unit->longitude }}
+                            </td>
+                            <td>
+                                {{ $unit->latitude }}
+                            </td>
+                        </tr>
+                    @endforeach
                 </table>
             </div>
         </div>
     </div>
-
 
     <div class="modal fade pt-5" id="modalForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -64,6 +63,7 @@
                             <input type="tel" class="form-control" id="phone_number" name="phone_number"
                                 placeholder="#" />
                         </div>
+
                         <div class="modal-footer d-block">
                             <button type="submit" class="btn btn-warning float-end">Submit</button>
                         </div>
@@ -72,11 +72,4 @@
             </div>
         </div>
     </div>
-    <style>
-        .modal-open .container-fluid,
-        .modal-open .container {
-            -webkit-filter: blur(5px) grayscale(90%);
-        }
-
-    </style>
 @endsection

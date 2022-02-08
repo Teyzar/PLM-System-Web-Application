@@ -1,42 +1,45 @@
-
 .trbody {
     cursor: pointer;
 }
+
 .trbody:hover .editbtn {
     display: block;
-    opacity: 0.60;
-
+    opacity: 0.6;
 }
+
 .trbody:hover .deletebtn {
     display: block;
-    opacity: 0.60;
-
+    opacity: 0.6;
 }
+
 .trbody:hover .resetbtn {
     display: block;
-    opacity: 0.60;
+    opacity: 0.6;
 }
+
 .trbody:hover .resetbtn:hover {
     display: block;
     opacity: 1;
 }
+
 .trbody:hover .editbtn:hover {
     display: block;
     opacity: 1;
 }
+
 .trbody:hover .deletebtn:hover {
     display: block;
     opacity: 1;
 }
 
 .editbtn {
-    display: none ;
+    display: none;
 }
 .deletebtn {
-    display: none ;
+    display: none;
 }
 .resetbtn {
-    display: none ;
+    display: none;
 }
 
 @media (max-width: 767.98px) {
@@ -56,6 +59,7 @@
         display: block;
     }
 }
+
 .addicon:hover {
     color: #09c916;
     transition: 0.2s ease-in-out;
@@ -66,7 +70,7 @@
     transition: 0.2s all ease-in-out;
 }
 
-
-
-
-
+.modal-open .container-fluid,
+.modal-open .container {
+    -webkit-filter: blur(5px) grayscale(90%);
+}
