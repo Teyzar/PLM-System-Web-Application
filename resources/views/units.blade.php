@@ -18,7 +18,7 @@
         <div class="card-header">
             <div class="row">
                 <table class="table-bordered">
-                    <tr class=>
+                    <tr>
                         <th>
                             phone_number
                         </th>
