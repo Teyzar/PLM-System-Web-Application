@@ -64,7 +64,7 @@ class LinemanController extends Controller
 
     public function update(Request $request, String $id)
     {
-        $user = Lineman::find($id);
+        $lineman = Lineman::find($id);
 
         $rules = [
             'updatename' => 'required',
@@ -77,10 +77,11 @@ class LinemanController extends Controller
             return back()->withErrors($validation)->withInput();
         }
 
-        $user->name = $request->input('updatename');
-        $user->email = $request->input('updateemail');
-        $user->barangay = $request->input('updatebarangay');
-        $user->update();
+        $lineman->name = $request->input('updatename');
+        $lineman->email = $request->input('updateemail');
+        $lineman->barangay = $request->input('updatebarangay');
+
+        $lineman->update();
 
         toast('Account updated successfully!', 'success');
 
@@ -102,10 +103,10 @@ class LinemanController extends Controller
 
         $output = "";
         $searchTerm = $request->searchTerm;
-        $accounts = Lineman::orderBy('created_at', 'desc')->paginate(10);
+        $linemen = Lineman::orderBy('created_at', 'desc')->paginate(10);
 
         if (!empty($searchTerm)) {
-            $accounts = Lineman::where('name', 'LIKE', '%' . $searchTerm . "%")
+            $linemen = Lineman::where('name', 'LIKE', '%' . $searchTerm . "%")
                 ->orWhere('email', 'LIKE', '%' . $searchTerm . "%")
                 ->orWhere('barangay', 'LIKE', '%' . $searchTerm . "%")
                 ->orWhere('created_at', 'LIKE', '%' . $searchTerm . "%")
@@ -113,7 +114,7 @@ class LinemanController extends Controller
                 ->paginate(10);
         }
 
-        $count = $accounts->count();
+        $count = $linemen->count();
 
         if ($count <= 0) {
             $output = `
@@ -124,21 +125,21 @@ class LinemanController extends Controller
                 </tr>
             `;
         } else {
-            foreach ($accounts as $account) {
-                $created_at = Carbon::parse($account->created_at)->toDayDateTimeString();
+            foreach ($linemen as $lineman) {
+                $created_at = Carbon::parse($lineman->created_at)->toDayDateTimeString();
 
                 $output .= "
                     <tr style='font-family: 'Montserrat', sans-serif; border-width: 1px;' class='trbody bg-light border border-dark'>
                         <td class='fs-6 text-black border-top fw-bolder'>
-                            $account->name
+                            $lineman->name
                         </td>
 
                         <td class='text-black fs-6 border-top fw-bolder'>
-                            $account->email
+                            $lineman->email
                         </td>
 
                         <td class='text-black fs-6 text-capitalize border-top fw-bolder'>
-                            $account->barangay
+                            $lineman->barangay
                         </td>
 
                         <td class='text-black fs-6 text-capitalize border-top fw-bolder'>
@@ -146,19 +147,19 @@ class LinemanController extends Controller
                         </td>
 
                         <td>
-                            <a id= 'resetbtn' class='resetbtn' data-bs-toggle='modal' data-bs-target='#modalDelete' onclick='Destroy($account->id)'>
+                            <a id= 'resetbtn' class='resetbtn' data-bs-toggle='modal' data-bs-target='#modalDelete' onclick='Destroy($lineman->id)'>
                                 <i class='fas fa-sync-alt text-success fs-6' data-toggle='tooltip' title='password reset'></i>
                             </a>
                         </td>
 
                         <td>
-                            <a class='editbtn' onclick='LoadAccountDetails($account->id)' data-bs-toggle='modal' data-bs-target='#modalForm2'>
+                            <a class='editbtn' onclick='LoadAccountDetails($lineman->id)' data-bs-toggle='modal' data-bs-target='#modalForm2'>
                                 <i class='fas fa-user-edit text-primary fs-6' data-toggle='tooltip' title='edit'></i>
                             </a>
                         </td>
 
                         <td>
-                            <a id= 'delbtn' class='deletebtn' data-bs-toggle='modal' data-bs-target='#modalDelete' onclick='Destroy($account->id)'>
+                            <a id= 'delbtn' class='deletebtn' data-bs-toggle='modal' data-bs-target='#modalDelete' onclick='Destroy($lineman->id)'>
                                 <i class='fas fa-trash fs-6 text-danger' data-toggle='tooltip' title='delete'></i>
                             </a>
                         </td>
