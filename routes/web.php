@@ -23,18 +23,12 @@ Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-//lineman crud
-Route::get('/edit/lineman/', [LinemanController::class, 'edit']);
-Route::resource('/lineman', LinemanController::class)->except(['edit']);
+Route::resource('/lineman', LinemanController::class)->except(['create', 'edit']);
+Route::get('/lineman-search', [LinemanController::class, 'search']);
 
-//lineman search
-Route::get('/search/lineman/', [SearchController::class, 'index']);
-
-//unit page
 Route::get('/units', [UnitsController::class, 'index']);
 Route::post('/units', [UnitsController::class, 'store']);
 
-//admin change password
 Route::middleware('auth')->group(function () {
     Route::get('/password', [ChangePasswordController::class, 'index']);
     Route::post('/password', [ChangePasswordController::class, 'store']);

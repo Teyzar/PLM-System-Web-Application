@@ -9,7 +9,7 @@
     <div class="container mt-4">
         <div class="card-header border-black border border-1 fw-bolder fs-5 count bg-light text-dark"
             style="font-family: 'Montserrat', sans-serif;">
-            {{ __('Accounts ') . '(' . count($users) . ')' }}
+            {{ __('Accounts ') . '(' . count($linemen) . ')' }}
         </div>
 
         <div class="card align-items-center flex-row justify-content-center fs-5 px-3 bg-light border border-black border-1">
@@ -35,7 +35,14 @@
     <div class="container m-auto">
         <div class="row">
             <div class="border-dark table-responsive">
-                @if (count($users) > 0)
+                @if (count($linemen) <= 0)
+                    <div class="card border-1 border-secondary align-items-center pt-5 ">
+                        <span class="justify-content-center d-flex fw-bold pb-5 pt-2 text-secondary opacity-75 addicon fs-3"
+                            style="font-family: 'Montserrat', sans-serif;">
+                            No Registered Accounts
+                        </span>
+                    </div>
+                @else
                     <table class="table table-hover table-md text-start" style="font-family: 'Montserrat', sans-serif;">
                         <thead class="table-success opacity-75 text-dark">
                             <tr style="font-family: 'Times New Roman', Times, serif"
@@ -47,38 +54,47 @@
                                 <th width="3%">&nbsp;</th>
                                 <th width="3%">&nbsp;</th>
                                 <th width="3%">&nbsp;</th>
-
                             </tr>
                         </thead>
 
                         <tbody class="border border-1 searchbody bg-light" id="tb" style="">
-                            @foreach ($users as $user)
+                            @foreach ($linemen as $lineman)
                                 <tr class="trbody bg-light border border-dark">
                                     <td class="fs-6 text-black border-top fw-bolder">
-                                        {{ ucfirst($user->name) }}</a>
+                                        {{ $lineman->name }}</a>
                                     </td>
-                                    <td class="text-black fs-6 border-top fw-bolder">{{ $user->email }}
+
+                                    <td class="text-black fs-6 border-top fw-bolder">
+                                        {{ $lineman->email }}
                                     </td>
+
                                     <td class="text-black fs-6 text-capitalize border-top fw-bolder">
-                                        {{ $user->barangay }}</td>
+                                        {{ $lineman->barangay }}
+                                    </td>
+
                                     <td class="text-black fs-6 text-capitalize border-top fw-bolder">
-                                        {{ \Carbon\Carbon::parse($user->created_at)->toDayDateTimeString() }}</td>
+                                        {{ \Carbon\Carbon::parse($lineman->created_at)->toDayDateTimeString() }}
+                                    </td>
+
                                     <td class="">
-                                        <a class="resetbtn" onclick="EditAccount({{ $user->id }})" data-bs-toggle="modal" data-bs-target="#modalReset">
+                                        <a class="resetbtn" onclick="EditAccount({{ $lineman->id }})"
+                                            data-bs-toggle="modal" data-bs-target="#modalReset">
                                             <i class="fas fa-sync-alt text-success fs-6" data-toggle="tooltip"
                                                 title="Reset password"></i>
                                         </a>
                                     </td>
+
                                     <td class="">
-                                        <a class="editbtn" onclick="LoadAccountDetails({{ $user->id }})"
+                                        <a class="editbtn" onclick="LoadAccountDetails({{ $lineman->id }})"
                                             data-bs-toggle="modal" data-bs-target="#modalForm2">
                                             <i class="fas fa-user-edit text-primary fs-6" data-toggle="tooltip"
                                                 title="Edit"></i>
                                         </a>
                                     </td>
+
                                     <td class="">
                                         <a id="delbtn" class="deletebtn" data-bs-toggle="modal"
-                                            data-bs-target="#modalDelete" onclick="Destroy({{ $user->id }})">
+                                            data-bs-target="#modalDelete" onclick="Destroy({{ $lineman->id }})">
                                             <i class="fas fa-trash fs-6 text-danger" data-toggle="tooltip"
                                                 title="Delete"></i>
                                         </a>
@@ -87,16 +103,10 @@
                             @endforeach
                         </tbody>
                     </table>
+
                     {{-- pagination --}}
                     <div class="d-flex justify-content-center fs-7">
-                        {!! $users->links() !!}
-                    </div>
-                @endif
-
-                @if (count($users) <= 0)
-                    <div class="card border-1 border-secondary align-items-center pt-5 ">
-                        <span class="justify-content-center d-flex fw-bold pb-5 pt-2 text-secondary opacity-75 addicon fs-3"
-                            style="font-family: 'Montserrat', sans-serif;">No Registered Accounts</span>
+                        {!! $linemen->links() !!}
                     </div>
                 @endif
             </div>
@@ -119,13 +129,13 @@
                     $value = $(this).val();
                     $.ajax({
                         type: 'get',
-                        url: "{{ URL::to('search/lineman') }}",
+                        url: `{{ URL::to('lineman-search') }}`,
                         data: {
-                            'search': $value
+                            'searchTerm': $value
                         },
                         dataType: 'json',
                         success: function(data) {
-                            $('.searchbody').html(data.success);
+                            $('.searchbody').html(data.result);
                             $('[data-toggle="tooltip"]').tooltip();
                             $('.count').html(`Accounts (${data.count})`);
                         }
@@ -141,12 +151,10 @@
         }
 
         function LoadAccountDetails(id) {
-            var params = '?id=' + id;
             $.ajax({
                 type: 'get',
-                url: "{{ URL::to('edit/lineman') }}",
+                url: `{{ URL::to('lineman/${id}') }}`,
                 dataType: 'json',
-                data: params,
                 success: function(data) {
                     const name = $('input#updatename');
                     const barangay = $('input#updatebarangay');
@@ -155,6 +163,7 @@
                     name.val(data.name);
                     barangay.val(data.barangay);
                     email.val(data.email);
+
                     $('#form-id').attr('action', `{{ URL::to('lineman/${data.id}') }}`);
                 }
             });
