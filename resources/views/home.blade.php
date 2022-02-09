@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('head')
-    <script src="{{ asset('js/home.js') }}" defer></script>
-    <link href="{{ asset('css/home.css') }}" rel="stylesheet">
+    <script src="{{ mix('js/home.js') }}" defer></script>
+    <link href="{{ mix('css/home.css') }}" rel="stylesheet">
 @endsection
 
 @section('body')

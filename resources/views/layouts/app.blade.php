@@ -11,15 +11,15 @@
     <title>Power Line Monitoring</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ mix('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 
     @yield("head")
 </head>
@@ -30,7 +30,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white">
             <div class="container">
-                <img src="{{ asset('img/logo.png') }}" class="img-class" style="width: 7%;">
+                <img src="{{ mix('img/logo.png') }}" class="img-class" style="width: 7%;">
                 <a class="navbar-brand fs-3" style="color:#fd7e14; font-family: 'Source Serif 4', sans-serif;"
                     href="{{ url('/') }}">
                     Power Line Monitoring

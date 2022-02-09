@@ -16,4 +16,5 @@ mix.sass("resources/sass/bootstrap.scss", "public/css")
     .ts("resources/js/home.ts", "public/js")
     .copy("resources/css/", "public/css")
     .copy("resources/img/", "public/img")
+    .version()
     .sourceMaps();
