@@ -36,8 +36,8 @@
         <div class="row">
             <div class="border-dark table-responsive">
                 @if (count($users) > 0)
-                    <table class="table table-hover table-md text-start"
-                        style="font-family: 'Montserrat', sans-serif; background-color:#ff7300;">
+                    <table class="table table-hover table-md text-start bg-success"
+                        style="font-family: 'Montserrat', sans-serif;">
                         <thead class="table-warning opacity-75 text-dark">
                             <tr style="font-family: 'Times New Roman', Times, serif"
                                 class="border-dark border fs-5 text-black">
@@ -52,7 +52,7 @@
                             </tr>
                         </thead>
 
-                        <tbody class="border border-1 searchbody" id="tb" style="">
+                        <tbody class="border border-1 searchbody bg-light" id="tb" style="">
                             @foreach ($users as $user)
                                 <tr class="trbody bg-light border border-dark">
                                     <td class="fs-6 text-black border-top fw-bolder">
@@ -147,7 +147,7 @@
             var route = 'lineman/' + id;
             $.ajax({
                 type: 'get',
-                url: "{{ URL::to('/lineman/edit/') }}",
+                url: "{{ URL::to('edit/lineman') }}",
                 dataType: 'json',
                 data: params,
                 success: function(data) {

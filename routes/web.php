@@ -24,7 +24,7 @@ Auth::routes();
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 //lineman crud
-Route::get('/lineman/edit/', [LinemanController::class, 'edit']);
+Route::get('/edit/lineman/', [LinemanController::class, 'edit']);
 Route::resource('/lineman', LinemanController::class)->except(['edit']);
 
 //lineman search
