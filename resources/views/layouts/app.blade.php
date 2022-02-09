@@ -44,16 +44,16 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-                        <li class="nav-item pt-1" style="font-family: 'Manrope', sans-serif;">
+                        <li class="nav-item pt-1">
                             <a class="nav-link texthover rounded-pill" href="{{ route('login') }}">{{ __('Outage Records') }}</a>
                         </li>
 
                         @auth
-                            <li class="nav-item pt-1" style="font-family: 'Manrope', sans-serif;">
+                            <li class="nav-item pt-1">
                                 <a class="nav-link texthover rounded-pill" href="{{URL::to('lineman')}}">{{ __('Accounts') }}</a>
                             </li>
 
-                            <li class="nav-item pt-1" style="font-family: 'Manrope', sans-serif;">
+                            <li class="nav-item pt-1">
                                 <a class="nav-link texthover rounded-pill" href="{{ URL::to('units') }}">{{ __('Units') }}</a>
                             </li>
                         @endauth
@@ -64,7 +64,7 @@
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
-                                <li class="nav-item pt-1" style="font-family: 'Manrope', sans-serif;">
+                                <li class="nav-item pt-1">
                                     <a class="nav-link texthover rounded-pill" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
                             @endif
@@ -75,7 +75,7 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item dropdown pt-1 " style="font-family: 'Manrope', sans-serif;">
+                            <li class="nav-item dropdown pt-1 ">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle text-capitalize texthover rounded-pill" href="#"
                                     role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                     v-pre>

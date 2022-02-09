@@ -166,26 +166,26 @@
             <div class="modal-body fs-6 text-danger">
                 <div class="panel-body">
                     <div class="text-center">
-                        <h3><i class="fa fa-lock fa-4x"></i></h3>
-                        <h2 class="text-center text-dark">Forgot Password?</h2>
-                        <p class="text-dark">You can reset your password here.</p>
+                        <h3><i class="fa fa-lock fa-3x text-red"></i></h3>
+                        <h2 class="text-center text-primary">Forgot Password?</h2>
                         <div class="panel-body">
-
                             <form id="register-form" role="form" autocomplete="off" class="form"
-                                method="post">
-
+                                method="POST">
+                                @csrf
+                                <p class="text-dark fw-light pe-sm-2">
+                                    <input type="hidden" name="checkbox" value="0" class=""><input class="fs-2" type="checkbox"
+                                        onclick="this.previousSibling.value=1-this.previousSibling.value"> Please check to confirm email address.
+                                </p>
                                 <div class="form-group">
                                     <div class="input-group p-1">
-                                        <i class="bi bi-envelope-check fs-1 pe-sm-2 d-flex"></i>
-                                        <input id="email" name="email" placeholder="email address"
-                                            class="form-control" type="email">
+                                        <i class="bi bi-envelope-check fs-2 pe-sm-2 d-flex text-black opacity-75"></i>
+                                        <input id="email" name="email" class="form-control border-0" type="email">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <input name="recover-submit" class="btn btn-lg btn-dark btn-block mt-2"
                                         value="Reset Password" type="submit">
                                 </div>
-
                                 <input type="hidden" class="hide" name="token" id="token" value="">
                             </form>
                         </div>
@@ -194,3 +194,4 @@
             </div>
         </div>
     </div>
+</div>

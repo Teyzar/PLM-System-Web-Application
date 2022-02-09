@@ -7,8 +7,7 @@
 
 @section('body')
     <div class="container mt-4">
-        <div class="card-header border-black border border-1 fw-bolder fs-5 count bg-light text-dark"
-            style="font-family: 'Montserrat', sans-serif;">
+        <div class="card-header border-black border border-1 fs-5 count bg-light text-dark">
             {{ __('Accounts ') . '(' . count($linemen) . ')' }}
         </div>
 
@@ -37,16 +36,14 @@
             <div class="border-dark table-responsive">
                 @if (count($linemen) <= 0)
                     <div class="card border-1 border-secondary align-items-center pt-5 ">
-                        <span class="justify-content-center d-flex fw-bold pb-5 pt-2 text-secondary opacity-75 addicon fs-3"
-                            style="font-family: 'Montserrat', sans-serif;">
+                        <span class="justify-content-center d-flex fw-bold pb-5 pt-2 text-secondary opacity-75 addicon fs-3">
                             No Registered Accounts
                         </span>
                     </div>
                 @else
-                    <table class="table table-hover table-md text-start" style="font-family: 'Montserrat', sans-serif;">
-                        <thead class="table-success opacity-75 text-dark">
-                            <tr style="font-family: 'Times New Roman', Times, serif"
-                                class="border-dark border fs-5 text-black">
+                    <table class="table table-hover table-md text-start">
+                        <thead class="table-success">
+                            <tr class="border-dark border fs-5 text-dark">
                                 <th width="25%">Name</th>
                                 <th width="25%">E-mail</th>
                                 <th width="20%">Designation</th>
@@ -57,22 +54,22 @@
                             </tr>
                         </thead>
 
-                        <tbody class="border border-1 searchbody bg-light" id="tb" style="">
+                        <tbody class="border border-1 searchbody bg-light" id="tb">
                             @foreach ($linemen as $lineman)
                                 <tr class="trbody bg-light border border-dark">
-                                    <td class="fs-6 text-black border-top fw-bolder">
+                                    <td class="fs-6 text-black border-top text-capitalize">
                                         {{ $lineman->name }}</a>
                                     </td>
 
-                                    <td class="text-black fs-6 border-top fw-bolder">
+                                    <td class="text-black fs-6 border-top">
                                         {{ $lineman->email }}
                                     </td>
 
-                                    <td class="text-black fs-6 text-capitalize border-top fw-bolder">
+                                    <td class="text-black fs-6 text-capitalize border-top">
                                         {{ $lineman->barangay }}
                                     </td>
 
-                                    <td class="text-black fs-6 text-capitalize border-top fw-bolder">
+                                    <td class="text-black fs-6 text-capitalize border-top">
                                         {{ \Carbon\Carbon::parse($lineman->created_at)->toDayDateTimeString() }}
                                     </td>
 
