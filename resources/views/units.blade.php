@@ -56,7 +56,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('add_unit') }}" method="POST">
+                    <form action="{{ URL::to('units') }}" method="POST">
                         @csrf
                         <div class="mb-3">
                             <label class="phone_number"><i class="fs-2 bi bi-sim px-1"></i>Mobile No.</label>

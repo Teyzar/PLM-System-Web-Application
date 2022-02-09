@@ -10,20 +10,14 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="body border-info">
-                    <div class="card border-secondary bg-secondary overflow-hidden" style="height: 22rem;">
-                        <p class="fw-bold d-flex p-0 m-auto mt-0" style="font-family: 'Montserrat', sans-serif;">
+
+                    <div class="card-body" style=";">
+                        <p class="m-auto d-flex justify-content-center" style="font-family: 'Montserrat', sans-serif;">
                             <img src="{{ asset('img/logo.png') }}" class="" style="">
                         </p>
-                    </div>
-
-                    <div class="card-body bg-secondary" style=";">
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
-
                             <div class="row mb-3 justify-content-center">
-                                {{-- <label for="email"
-                                    class="col-md-4 col-form-label text-md-end">{{ __('E-Mail Address') }}</label> --}}
-
                                 <div class="col-md-8">
                                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
                                         name="email" value="{{ old('email') }}" required autocomplete="email" autofocus
@@ -36,9 +30,6 @@
                             </div>
 
                             <div class="row mb-3 justify-content-center">
-                                {{-- <label for="password"
-                                    class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label> --}}
-
                                 <div class="col-md-8">
                                     <input id="password" type="password"
                                         class="form-control @error('password') is-invalid @enderror" name="password"

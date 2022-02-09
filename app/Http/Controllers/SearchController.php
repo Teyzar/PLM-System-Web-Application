@@ -27,11 +27,11 @@ class SearchController extends Controller
 
             if ($accounts) {
                 foreach ($accounts as $key => $acc) {
-                    $output .= "<tr style='font-family: 'Montserrat', sans-serif; border-width: 1px;' class = 'trbody border-warning border-top'>" .
-                        '<td class="fs-6 text-black border-warning border-top fw-bolder">' . ucfirst($acc->name) . '</td>' .
-                        '<td class="text-black fs-6 border-warning border-top fw-bolder">' . $acc->email . '</td>' .
-                        '<td class="text-black fs-6 text-capitalize border-warning border-top fw-bolder">' . $acc->barangay . '</td>' .
-                        '<td class="text-black fs-6 text-capitalize border-warning border-top fw-bolder">' . \Carbon\Carbon::parse($acc->created_at)->toDayDateTimeString() . '</td>' .
+                    $output .= "<tr style='font-family: 'Montserrat', sans-serif; border-width: 1px;' class = 'trbody bg-light border border-dark'>" .
+                        '<td class="fs-6 text-black border-top fw-bolder">' . ucfirst($acc->name) . '</td>' .
+                        '<td class="text-black fs-6 border-top fw-bolder">' . $acc->email . '</td>' .
+                        '<td class="text-black fs-6 text-capitalize border-top fw-bolder">' . $acc->barangay . '</td>' .
+                        '<td class="text-black fs-6 text-capitalize border-top fw-bolder">' . \Carbon\Carbon::parse($acc->created_at)->toDayDateTimeString() . '</td>' .
                         '<td>' . "<a id= 'resetbtn' class = 'resetbtn' data-bs-toggle='modal'
                         data-bs-target='#modalDelete' onclick='Destroy($acc->id)' ><i class='fas fa-sync-alt text-success fs-6' data-toggle='tooltip' title='password reset' ></i>" . '</a></td>' .
                         '<td>' . "<a class = 'editbtn' onclick='LoadAccountDetails($acc->id)'
@@ -41,7 +41,7 @@ class SearchController extends Controller
                         '</tr>';
                 }
                 if ($trow <= 0) {
-                    $output = '<tr><td class = "text-center fs-6 border-warning border-top fw-bolder text-danger p-4" colspan ="7">No Record Found</td></tr>';
+                    $output = "<tr style='font-family: 'Montserrat', sans-serif; border-width: 1px;' class = 'trbody bg-light border border-dark'><td class = 'text-center fs-6 border-top fw-bolder text-danger p-4' colspan ='7'>No Record Found</td></tr>";
                 }
             }
             $data = array(

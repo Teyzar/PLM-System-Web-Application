@@ -7,7 +7,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('lineman.store') }}" method="POST">
+                <form action="{{ URL::to('lineman') }}" method="POST">
                     @csrf
                     <div class="mb-3">
                         <label class="form-label text-dark opacity-100">Name</label>
@@ -115,17 +115,16 @@
                             name="updateemail" placeholder="Email" required autocomplete="email"
                             value="{{ old('updateemail') }}">
                     </div>
+                    <div class="modal-footer d-block d-flex align-items-center justify-content-center border-1">
+                        <a type="button" class="btn btn-dark w-75" data-bs-toggle="modal" data-bs-target="#modalSave">
+                            {{ __('Save') }}
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </form>
-
-<div class="modal-footer d-block d-flex align-items-center justify-content-center border-1">
-    <a type="button" class="btn btn-dark w-75" data-bs-toggle="modal" data-bs-target="#modalSave">
-        {{ __('Save') }}
-    </a>
-</div>
 
 <div class="modal fade" id="modalDelete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

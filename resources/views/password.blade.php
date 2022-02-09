@@ -11,7 +11,7 @@
 
                     <div class="card-body d-flex bg-white justify-content-center">
                         <form class="form w-75" role="form" autocomplete="off" method="POST"
-                            action="{{ route('save-password') }}">
+                            action="{{ URL::to('password') }}">
                             @csrf
                             <div class="form-group">
                                 <label for="inputPasswordOld">Current Password</label>

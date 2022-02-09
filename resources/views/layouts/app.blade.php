@@ -19,17 +19,16 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
     @yield("head")
 </head>
 
-<body class="bg-secondary">
+<body>
     @include('sweetalert::alert')
 
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-dark">
+        <nav class="navbar navbar-expand-md navbar-light bg-white">
             <div class="container">
-                <img src="{{ asset('img/logo.png') }}" class="float-start" style="width: 6%; float: inline-start;">
+                <img src="{{ asset('img/logo.png') }}" class="img-class" style="width: 7%;">
                 <a class="navbar-brand fs-3" style="color:#fd7e14; font-family: 'Source Serif 4', sans-serif;"
                     href="{{ url('/') }}">
                     Power Line Monitoring
@@ -42,46 +41,42 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto fs-5">
-                        <li class="nav-item pt-1 ps-5 " style="font-family: 'Manrope', sans-serif;">
-                            <a class="nav-link text-white texthover"
-                                href="{{ route('login') }}">{{ __('Outage Records') }}</a>
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item pt-1" style="font-family: 'Manrope', sans-serif;">
+                            <a class="nav-link texthover rounded-pill" href="{{ route('login') }}">{{ __('Outage Records') }}</a>
                         </li>
 
                         @auth
-                            <li class="nav-item text-white pt-1 ps-4" style="font-family: 'Manrope', sans-serif;">
-                                <a class="nav-link text-white texthover" href="/lineman">{{ __('Accounts') }}</a>
+                            <li class="nav-item pt-1" style="font-family: 'Manrope', sans-serif;">
+                                <a class="nav-link texthover rounded-pill" href="{{URL::to('lineman')}}">{{ __('Accounts') }}</a>
                             </li>
 
-                            <li class="nav-item pt-1 ps-4" style="font-family: 'Manrope', sans-serif;">
-                                <a class="nav-link text-white texthover"
-                                    href="{{ route('units') }}">{{ __('Units') }}</a>
+                            <li class="nav-item pt-1" style="font-family: 'Manrope', sans-serif;">
+                                <a class="nav-link texthover rounded-pill" href="{{ URL::to('units') }}">{{ __('Units') }}</a>
                             </li>
                         @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto fs-5 text-warning">
+                    <ul class="navbar-nav ms-auto text-warning">
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item pt-1" style="font-family: 'Manrope', sans-serif;">
-                                    <a class="nav-link text-white texthover"
-                                        href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link texthover rounded-pill" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
                                 <li class="nav-item d-none ">
-                                    <a class="nav-link text-white"
-                                        href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
                         @else
                             <li class="nav-item dropdown pt-1 " style="font-family: 'Manrope', sans-serif;">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle text-white text-capitalize texthover"
-                                    href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false" v-pre>
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle text-capitalize texthover rounded-pill" href="#"
+                                    role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                    v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
 

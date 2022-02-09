@@ -23,18 +23,19 @@ Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// Route::get('/lineman/edit/', [LinemanController::class, 'edit'])->name('lineman-edit');
-Route::resource('/lineman', LinemanController::class)->only(['index', 'store', 'show', 'destroy', 'update']);
+//lineman crud
+Route::get('/lineman/edit/', [LinemanController::class, 'edit']);
+Route::resource('/lineman', LinemanController::class)->except(['edit']);
 
+//lineman search
+Route::get('/search/lineman/', [SearchController::class, 'search']);
 
-// Route::get('/search/', [SearchController::class, 'search']);
+//unit page
+Route::get('/units', [UnitsController::class, 'index']);
+Route::post('/units', [UnitsController::class, 'store']);
 
-Route::get('/units', [UnitsController::class, 'index'])->name('units');
-Route::post('/units', [UnitsController::class, 'store'])->name('add_unit');
-
-
-
-Route::middleware('auth')->group(function() {
-    Route::get('/password', [ChangePasswordController::class, 'index'])->name('c-password');
-    Route::post('/', [ChangePasswordController::class, 'ChangePass'])->name('save-password');
+//admin change password
+Route::middleware('auth')->group(function () {
+    Route::get('/password', [ChangePasswordController::class, 'index']);
+    Route::post('/password', [ChangePasswordController::class, 'ChangePass']);
 });
