@@ -53,11 +53,13 @@ class LinemanController extends Controller
         return redirect()->back();
     }
 
-    public function show(String $id)
+    public function show(Request $request, String $id)
     {
-        $person = Lineman::find($id);
+        if (!$request->wantsJson()) abort(404);
 
-        return json_encode($person);
+        $lineman = Lineman::find($id);
+
+        return json_encode($lineman);
     }
 
     public function update(Request $request, String $id)
