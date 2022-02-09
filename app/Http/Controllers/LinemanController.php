@@ -117,13 +117,13 @@ class LinemanController extends Controller
         $count = $linemen->count();
 
         if ($count <= 0) {
-            $output = `
+            $output = "
                 <tr style='font-family: 'Montserrat', sans-serif; border-width: 1px;' class='trbody bg-light border border-dark'>
                     <td class='text-center fs-6 border-top fw-bolder text-danger p-4' colspan ='7'>
                         No Record Found
                     </td>
                 </tr>
-            `;
+            ";
         } else {
             foreach ($linemen as $lineman) {
                 $created_at = Carbon::parse($lineman->created_at)->toDayDateTimeString();
