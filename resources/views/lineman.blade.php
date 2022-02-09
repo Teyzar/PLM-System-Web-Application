@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('head')
-    <link href="{{ asset('css/lineman.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/lineman.css') }}" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 @endsection
 

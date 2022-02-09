@@ -13,7 +13,7 @@
 
                     <div class="card-body" style=";">
                         <p class="m-auto d-flex justify-content-center" style="font-family: 'Montserrat', sans-serif;">
-                            <img src="{{ asset('img/logo.png') }}" class="" style="object-fit: cover; width: 450px; height: 300px;">
+                            <img src="{{ mix('img/logo.png') }}" class="" style="object-fit: cover; width: 450px; height: 300px;">
                         </p>
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
