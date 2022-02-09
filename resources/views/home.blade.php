@@ -6,5 +6,5 @@
 @endsection
 
 @section('body')
-    <div id="map"></div>
+    <div id="map" style="height: 891px"></div>
 @endsection

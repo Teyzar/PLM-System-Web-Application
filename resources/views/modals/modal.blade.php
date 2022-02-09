@@ -158,7 +158,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content w-100">
             <div class="modal-header">
-                <h5 class="modal-title text-muted" id="exampleModalLabel">Confirmation</h5>
+                <h5 class="modal-title text-dark" id="exampleModalLabel">Reset Password</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -166,24 +166,32 @@
             <div class="modal-body fs-6 text-danger">
                 <div class="panel-body">
                     <div class="text-center">
-                        <h3><i class="fa fa-lock fa-3x text-red"></i></h3>
-                        <h2 class="text-center text-primary">Forgot Password?</h2>
+                        <h3><i class="fa fa-lock fa-3x text-dark"></i></h3>
+                        <h4 class="text-center text-dark">Forgot password?</h4>
                         <div class="panel-body">
-                            <form id="register-form" role="form" autocomplete="off" class="form"
-                                method="POST">
+                            <form id="reset-id" action="" method="POST">
                                 @csrf
-                                <p class="text-dark fw-light pe-sm-2">
-                                    <input type="hidden" name="checkbox" value="0" class=""><input class="fs-2" type="checkbox"
-                                        onclick="this.previousSibling.value=1-this.previousSibling.value"> Please check to confirm email address.
-                                </p>
-                                <div class="form-group">
-                                    <div class="input-group p-1">
-                                        <i class="bi bi-envelope-check fs-2 pe-sm-2 d-flex text-black opacity-75"></i>
-                                        <input id="email" name="email" class="form-control border-0" type="email">
+                                <span class="text-info fw-light d-flex justify-content-center">
+                                    <input type="hidden" name="checkbox" value="0"><input class="stylebox"
+                                        type="checkbox"
+                                        onclick="this.previousSibling.value=1-this.previousSibling.value"> &nbsp; Please
+                                    check to confirm email address.
+                                </span>
+                                <div class="form-group pt-3 justify-content-center">
+                                    <div class="input-group">
+                                        <i
+                                            class="bi bi-envelope-check fs-2 pe-sm-2 text-black opacity-75 align-items-center"></i>&nbsp;
+                                        <input value="{{ old('email') }}" id="email" name="email"
+                                            class="form-control float-start border-0" type="email" name="email"
+                                            style="pointer-events: none;">
                                     </div>
+                                    @if ($errors->has('checkbox'))
+                                        <div class="error text-danger p-2">
+                                            &nbsp;{{ $errors->first('checkbox') }}</div>
+                                    @endif
                                 </div>
                                 <div class="form-group">
-                                    <input name="recover-submit" class="btn btn-lg btn-dark btn-block mt-2"
+                                    <input name="recover-submit" class="btn btn-lg btn-success btn-block mt-2 py-1"
                                         value="Reset Password" type="submit">
                                 </div>
                                 <input type="hidden" class="hide" name="token" id="token" value="">

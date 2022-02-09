@@ -69,3 +69,12 @@
 .modal-open .container {
     -webkit-filter: blur(5px) grayscale(90%);
 }
+
+.stylebox {
+    box-sizing: content-box;
+    width: 20px;
+    height: 20px;
+    border: 10px solid #808080;
+    border-width: thick;
+    padding: 20px;
+}

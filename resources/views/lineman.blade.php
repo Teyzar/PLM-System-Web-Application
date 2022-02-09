@@ -36,7 +36,8 @@
             <div class="border-dark table-responsive">
                 @if (count($linemen) <= 0)
                     <div class="card border-1 border-secondary align-items-center pt-5 ">
-                        <span class="justify-content-center d-flex fw-bold pb-5 pt-2 text-secondary opacity-75 addicon fs-3">
+                        <span
+                            class="justify-content-center d-flex fw-bold pb-5 pt-2 text-secondary opacity-75 addicon fs-3">
                             No Registered Accounts
                         </span>
                     </div>
@@ -74,7 +75,7 @@
                                     </td>
 
                                     <td class="">
-                                        <a class="resetbtn" onclick="EditAccount({{ $lineman->id }})"
+                                        <a id="resetbtn" class="resetbtn" onclick="Reset({{ $lineman->id }})"
                                             data-bs-toggle="modal" data-bs-target="#modalReset">
                                             <i class="fas fa-sync-alt text-success fs-6" data-toggle="tooltip"
                                                 title="Reset password"></i>
@@ -117,6 +118,14 @@
             });
         </script>
     @endif
+    @if ($errors->has('checkbox') && !$errors->has('email'))
+        <script>
+            $(document).ready(function() {
+                $('#modalReset').modal('show');
+                console.log($(this.method).attr('action'));
+            });
+        </script>
+    @endif
 
     <script>
         $(document).ready(function() {
@@ -145,6 +154,21 @@
 
         function Destroy(id) {
             $('#delete-id').attr('action', `lineman/${id}`);
+        }
+
+        function Reset(id) {
+            event.preventDefault();
+
+            $.ajax({
+                type: 'get',
+                url: `{{ URL::to('lineman/${id}') }}`,
+                dataType: 'json',
+                success: function(data) {
+                    const email = $('input#email');
+                    email.val(data.email);
+                    $('#reset-id').attr('action', `{{ URL::to('lineman-reset/${id}') }}`);
+                },
+            });
         }
 
         function LoadAccountDetails(id) {
