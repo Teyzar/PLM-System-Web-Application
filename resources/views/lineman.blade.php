@@ -36,9 +36,8 @@
         <div class="row">
             <div class="border-dark table-responsive">
                 @if (count($users) > 0)
-                    <table class="table table-hover table-md text-start bg-success"
-                        style="font-family: 'Montserrat', sans-serif;">
-                        <thead class="table-warning opacity-75 text-dark">
+                    <table class="table table-hover table-md text-start" style="font-family: 'Montserrat', sans-serif;">
+                        <thead class="table-success opacity-75 text-dark">
                             <tr style="font-family: 'Times New Roman', Times, serif"
                                 class="border-dark border fs-5 text-black">
                                 <th width="25%">Name</th>
@@ -65,7 +64,7 @@
                                     <td class="text-black fs-6 text-capitalize border-top fw-bolder">
                                         {{ \Carbon\Carbon::parse($user->created_at)->toDayDateTimeString() }}</td>
                                     <td class="">
-                                        <a class="resetbtn" onclick="EditAccount({{ $user->id }})">
+                                        <a class="resetbtn" onclick="EditAccount({{ $user->id }})" data-bs-toggle="modal" data-bs-target="#modalReset">
                                             <i class="fas fa-sync-alt text-success fs-6" data-toggle="tooltip"
                                                 title="Reset password"></i>
                                         </a>
@@ -142,9 +141,7 @@
         }
 
         function LoadAccountDetails(id) {
-            event.preventDefault();
             var params = '?id=' + id;
-            var route = 'lineman/' + id;
             $.ajax({
                 type: 'get',
                 url: "{{ URL::to('edit/lineman') }}",
@@ -158,7 +155,7 @@
                     name.val(data.name);
                     barangay.val(data.barangay);
                     email.val(data.email);
-                    $('#form-id').attr('action', `lineman/${data.id}`);
+                    $('#form-id').attr('action', `{{ URL::to('lineman/${data.id}') }}`);
                 }
             });
         }

@@ -49,6 +49,8 @@
 </div>
 
 <form id="form-id" action="" method="POST">
+    @csrf
+    @method('PUT')
     <div class="modal fade" id="modalSave" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -80,9 +82,6 @@
                 </div>
 
                 <div class="modal-body">
-                    @csrf
-
-                    @method('PUT')
                     <div class="mb-3">
                         <label class="form-label">Name</label>
                         <input id="updatename" type="text"
@@ -153,3 +152,45 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="modalReset" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content w-100">
+            <div class="modal-header">
+                <h5 class="modal-title text-muted" id="exampleModalLabel">Confirmation</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body fs-6 text-danger">
+                <div class="panel-body">
+                    <div class="text-center">
+                        <h3><i class="fa fa-lock fa-4x"></i></h3>
+                        <h2 class="text-center text-dark">Forgot Password?</h2>
+                        <p class="text-dark">You can reset your password here.</p>
+                        <div class="panel-body">
+
+                            <form id="register-form" role="form" autocomplete="off" class="form"
+                                method="post">
+
+                                <div class="form-group">
+                                    <div class="input-group p-1">
+                                        <i class="bi bi-envelope-check fs-1 pe-sm-2 d-flex"></i>
+                                        <input id="email" name="email" placeholder="email address"
+                                            class="form-control" type="email">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input name="recover-submit" class="btn btn-lg btn-dark btn-block mt-2"
+                                        value="Reset Password" type="submit">
+                                </div>
+
+                                <input type="hidden" class="hide" name="token" id="token" value="">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

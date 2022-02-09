@@ -6,20 +6,20 @@
 @endsection
 
 @section('content')
-    <div class="container py-4" style="margin-top: 2%">
+    <div class="container py-4" style="margin-top: 1%">
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="body border-info">
 
                     <div class="card-body" style=";">
                         <p class="m-auto d-flex justify-content-center" style="font-family: 'Montserrat', sans-serif;">
-                            <img src="{{ asset('img/logo.png') }}" class="" style="">
+                            <img src="{{ asset('img/logo.png') }}" class="" style="object-fit: cover; width: 450px; height: 300px;">
                         </p>
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
                             <div class="row mb-3 justify-content-center">
                                 <div class="col-md-8">
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
+                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror border-secondary rounded-pill"
                                         name="email" value="{{ old('email') }}" required autocomplete="email" autofocus
                                         placeholder="Email">
                                     @if ($errors->has('email'))
@@ -32,7 +32,7 @@
                             <div class="row mb-3 justify-content-center">
                                 <div class="col-md-8">
                                     <input id="password" type="password"
-                                        class="form-control @error('password') is-invalid @enderror" name="password"
+                                        class="form-control @error('password') is-invalid @enderror border-secondary rounded-pill" name="password"
                                         required autocomplete="current-password" value="{{ old('password') }}"
                                         placeholder="Password">
                                     @if ($errors->has('password'))

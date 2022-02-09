@@ -17,7 +17,7 @@ class ChangePasswordController extends Controller
     }
 
 
-    public function ChangePass(Request $request)
+    public function store(Request $request)
     {
 
         $password = Auth::user()->password;

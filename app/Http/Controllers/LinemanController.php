@@ -76,7 +76,7 @@ class LinemanController extends Controller
     public function edit(Request $request)
     {
         $person = Lineman::find($request->id);
-        return $person;
+        echo json_encode($person);
     }
 
 
