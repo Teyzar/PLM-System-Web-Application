@@ -30,11 +30,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white">
             <div class="container">
-<<<<<<< HEAD
                 <img src="{{ asset('img/logo.png') }}" class="" style="width: 6%; height: 7%">
-=======
-                <img src="{{ mix('img/logo.png') }}" class="img-class" style="width: 7%;">
->>>>>>> df5af098b2b2e8bc7bea1e12e2e11ef54cbfc1ca
                 <a class="navbar-brand fs-3" style="color:#fd7e14; font-family: 'Source Serif 4', sans-serif;"
                     href="{{ url('/') }}">
                     Power Line Monitoring
