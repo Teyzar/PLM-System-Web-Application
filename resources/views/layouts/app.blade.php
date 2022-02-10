@@ -24,7 +24,7 @@
     @yield("head")
 </head>
 
-<body>
+<body style="overflow: hidden">
     @include('sweetalert::alert')
 
     <div id="app">
@@ -108,7 +108,7 @@
             </div>
         </nav>
 
-        <main>
+        <main style="max-height: 30vh">
             @yield("content")
         </main>
 

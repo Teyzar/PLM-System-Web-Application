@@ -1,74 +1,35 @@
-@extends('layouts.app')
+@extends('layouts.units')
 
-@section('head')
-    <link href="{{ mix('css/units.css') }}" rel="stylesheet">
-@endsection
 
-@section('body')
-    <div class="container mt-5 ">
-        <div class="card align-items-center w-auto flex-row justify-content-between p-2 fs-5 px-3">
-            Units
-            <a href="" class="btn bg-danger text-light a:hover bg-dark" data-bs-toggle="modal" data-bs-target="#modalForm">
-                Register Unit
-            </a>
-        </div>
-    </div>
+@section('content-body')
 
-    <div class="container">
-        <div class="card-header">
-            <div class="row">
-                <table class="table-bordered">
-                    <tr>
-                        <th>
-                            phone_number
-                        </th>
-                        <th>
-                            longitude
-                        </th>
-                        <th>
-                            latitude
-                        </th>
-                    </tr>
-
-                    @foreach ($units as $unit)
-                        <tr>
-                            <td>
-                                {{ $unit->phone_number }}
-                            </td>
-                            <td>
-                                {{ $unit->longitude }}
-                            </td>
-                            <td>
-                                {{ $unit->latitude }}
-                            </td>
+    <div class="container m-auto">
+        <div class="row">
+            <div class="border-dark table-responsive-sm">
+                <table class="table table-hover table-md text-start">
+                    <thead class="table-success">
+                        <tr class="border-dark border fs-5 text-dark">
+                            <th width="25%">phone_number</th>
+                            <th width="25%">longitude</th>
+                            <th width="20%">Latitude</th>
                         </tr>
-                    @endforeach
+                    </thead>
+                    <tbody class="border border-1 searchbody bg-light" id="tb">
+                        @foreach ($units as $unit)
+                            <tr class="trbody bg-light border border-dark">
+                                <td>
+                                    {{ $unit->phone_number }}
+                                </td>
+                                <td>
+                                    {{ $unit->longitude }}
+                                </td>
+                                <td>
+                                    {{ $unit->latitude }}
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
                 </table>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade pt-5" id="modalForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title fs-4 text-center" id="exampleModalLabel">Register unit</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ URL::to('units') }}" method="POST">
-                        @csrf
-                        <div class="mb-3">
-                            <label class="phone_number"><i class="fs-2 bi bi-sim px-1"></i>Mobile No.</label>
-                            <input type="tel" class="form-control" id="phone_number" name="phone_number"
-                                placeholder="#" />
-                        </div>
-
-                        <div class="modal-footer d-block">
-                            <button type="submit" class="btn btn-warning float-end">Submit</button>
-                        </div>
-                    </form>
-                </div>
             </div>
         </div>
     </div>
