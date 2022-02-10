@@ -103,8 +103,8 @@
                     </table>
 
                     {{-- pagination --}}
-                    <div class="d-flex justify-content-center fs-7">
-                        {!! $linemen->links() !!}
+                    <div class="d-flex justify-content-center fs-10">
+                        {{ $linemen->links() }}
                     </div>
                 @endif
             </div>
@@ -154,7 +154,7 @@
                 url: `{{ URL::to('lineman/${id}') }}`,
                 dataType: 'json',
                 success: function(data) {
-                    const email = $('input#email');
+                    const email = $('input#resetEmail');
                     email.val(data.email);
                     $('#reset-id').attr('action', `{{ URL::to('lineman/reset/${data.id}') }}`);
                     $("#reset-id").submit(function(event) {
@@ -168,10 +168,30 @@
                             success: function(data) {
 
                                 if (data === "0") {
-                                    $('#errormsg').html(`<div id="errormsg" class="error text-danger p-2">Please check to confirm the Email address.
-                                    </div>`);
+                                    $('#modal-content').css({
+                                        'border-color': 'red',
+                                        'border-width': 'thin',
+                                    });
+                                    $('#text-msg').css({
+                                        'color': 'red'
+                                    });
+
+                                    setTimeout(() => {
+                                        $('#modal-content').css({
+                                            'border-color': '',
+                                            'border-width': 'thin'
+                                        });
+                                        $('#text-msg').css({
+                                            'color': '#262626'
+                                        });
+                                    }, 3000)
+
+
                                 } else {
-                                    location.reload();
+                                    $('#modalReset').fadeOut(500);
+                                    setTimeout(() => {
+                                        location.reload();
+                                    }, 500);
                                 }
                             },
                             error: function(data) {

@@ -176,19 +176,19 @@ class LinemanController extends Controller
 
     public function reset(Request $request, String $id)
     {
-            $lineman = Lineman::find($id);
-            $checkbox = $request->checkbox;
-            $data = array (
-                'lineman' => $lineman,
-                'checkbox' => $checkbox
-            );
-            if ($checkbox === "0") {
-                return json_encode($data['checkbox']);
-            } else {
-                $lineman->password = Hash::make("plmsystem");
-                $lineman->update();
-                toast('Password has been reset!', 'success');
-                return json_encode($data['lineman']);
-            }
+        $lineman = Lineman::find($id);
+        $checkbox = $request->checkbox;
+        $data = array(
+            'lineman' => $lineman,
+            'checkbox' => $checkbox
+        );
+        if ($checkbox === "0") {
+            return json_encode($data['checkbox']);
+        } else {
+            $lineman->password = Hash::make("plmsystem");
+            $lineman->update();
+            toast('Password has been reset!', 'success');
+            return json_encode($data['lineman']);
+        }
     }
 }

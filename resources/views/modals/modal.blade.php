@@ -131,8 +131,8 @@
         <div class="modal-content w-100">
             <div class="modal-header">
                 <h5 class="modal-title text-muted" id="exampleModalLabel">Confirmation</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
                 </button>
             </div>
             <div class="modal-body fs-6 text-danger">
@@ -156,14 +156,12 @@
 <div class="modal fade" id="modalReset" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content w-100">
+        <div id="modal-content" class="modal-content w-100">
             <div class="modal-header">
-                <h5 class="modal-title text-dark" id="exampleModalLabel">Reset Password</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h5 class="modal-title text-muted" id="exampleModalLabel">Reset Password</h5>
+                <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body fs-6 text-danger">
+            <div class="modal-body">
                 <div class="panel-body">
                     <div class="text-center">
                         <h3><i class="fa fa-lock fa-3x text-dark"></i></h3>
@@ -172,7 +170,7 @@
                             <form id="reset-id" action="" method="POST">
                                 @csrf
                                 @method('PUT')
-                                <span class="text-info fw-light d-flex justify-content-center">
+                                <span id="text-msg" class="fw-light d-flex justify-content-center">
                                     <input type="hidden" name="checkbox" value="0"><input class="stylebox"
                                         type="checkbox"
                                         onclick="this.previousSibling.value=1-this.previousSibling.value"> &nbsp; Please
@@ -180,10 +178,9 @@
                                 </span>
                                 <div class="form-group pt-3 justify-content-center">
                                     <div class="input-group">
-                                        <i
-                                            class="bi bi-envelope-check fs-2 pe-sm-2 text-black opacity-75 align-items-center"></i>&nbsp;
-                                        <input value="{{ old('email') }}" id="email" name="email"
-                                            class="form-control float-start border-0" type="email" name="email"
+                                        <i class="bi bi-envelope-check fs-2 pe-sm-2 text-black opacity-75 align-items-center"></i>&nbsp;
+                                        <input id="resetEmail" name="resetEmail"
+                                            class="form-control float-start border-0" type="email"
                                             style="pointer-events: none;">
                                     </div>
                                     <span id="errormsg"></span>
