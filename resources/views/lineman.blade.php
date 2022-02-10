@@ -33,7 +33,7 @@
 
     <div class="container m-auto">
         <div class="row">
-            <div class="border-dark table-responsive">
+            <div class="border-dark table-responsive-sm">
                 @if (count($linemen) <= 0)
                     <div class="card border-1 border-secondary align-items-center pt-5 ">
                         <span
@@ -170,7 +170,7 @@
                                 if (data === "0") {
                                     $('#modal-content').css({
                                         'border-color': 'red',
-                                        'border-width': 'thin',
+                                        'border-width': '2px',
                                     });
                                     $('#text-msg').css({
                                         'color': 'red'
