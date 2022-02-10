@@ -30,8 +30,11 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white">
             <div class="container">
-                <img src="{{ mix('img/logo.png') }}" class="navbar-brand p-2" style="width: 55px; height: 55px">
-
+                <img src="{{ mix('img/logo.png') }}" class="navbar-brand p-2 collapsible" style="width: 55px; height: 55px">
+                <a class="navbar-brand fs-3" style="color:#fd7e14; font-family: 'Source Serif 4', sans-serif"
+                    href="{{ url('/') }}">
+                    Power Line Monitoring
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -39,11 +42,6 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <a class="navbar-brand fs-3" style="color:#fd7e14; font-family: 'Source Serif 4', sans-serif"
-                        href="{{ url('/') }}">
-                        Power Line Monitoring
-                    </a>
-
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item pt-1">
