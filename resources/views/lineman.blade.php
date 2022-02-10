@@ -118,14 +118,6 @@
             });
         </script>
     @endif
-    @if ($errors->has('checkbox') && !$errors->has('email'))
-        <script>
-            $(document).ready(function() {
-                $('#modalReset').modal('show');
-                console.log($(this.method).attr('action'));
-            });
-        </script>
-    @endif
 
     <script>
         $(document).ready(function() {
@@ -157,8 +149,6 @@
         }
 
         function Reset(id) {
-            event.preventDefault();
-
             $.ajax({
                 type: 'get',
                 url: `{{ URL::to('lineman/${id}') }}`,
@@ -166,7 +156,30 @@
                 success: function(data) {
                     const email = $('input#email');
                     email.val(data.email);
-                    $('#reset-id').attr('action', `{{ URL::to('lineman-reset/${id}') }}`);
+                    $('#reset-id').attr('action', `{{ URL::to('lineman/reset/${data.id}') }}`);
+                    $("#reset-id").submit(function(event) {
+                        event.preventDefault();
+                        var form = $(this);
+                        $.ajax({
+                            url: form.attr('action'),
+                            type: form.attr('method'),
+                            data: form.serialize(),
+                            dataType: 'json',
+                            success: function(data) {
+
+                                if (data === "0") {
+                                    $('#errormsg').html(`<div id="errormsg" class="error text-danger p-2">Please check to confirm the Email address.
+                                    </div>`);
+                                } else {
+                                    location.reload();
+                                }
+                            },
+                            error: function(data) {
+                                console.log('An error occurred.');
+                                console.log(data);
+                            },
+                        })
+                    });
                 },
             });
         }
@@ -184,7 +197,6 @@
                     name.val(data.name);
                     barangay.val(data.barangay);
                     email.val(data.email);
-
                     $('#form-id').attr('action', `{{ URL::to('lineman/${data.id}') }}`);
                 }
             });

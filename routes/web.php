@@ -25,7 +25,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::resource('/lineman', LinemanController::class)->except(['create', 'edit']);
 Route::get('/lineman-search', [LinemanController::class, 'search']);
-Route::post('/lineman-reset/{id}', [LinemanController::class, 'reset']);
+Route::put('/lineman/reset/{id}', [LinemanController::class, 'reset']);
 
 
 Route::get('/units', [UnitsController::class, 'index']);

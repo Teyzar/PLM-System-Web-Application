@@ -171,6 +171,7 @@
                         <div class="panel-body">
                             <form id="reset-id" action="" method="POST">
                                 @csrf
+                                @method('PUT')
                                 <span class="text-info fw-light d-flex justify-content-center">
                                     <input type="hidden" name="checkbox" value="0"><input class="stylebox"
                                         type="checkbox"
@@ -185,14 +186,13 @@
                                             class="form-control float-start border-0" type="email" name="email"
                                             style="pointer-events: none;">
                                     </div>
-                                    @if ($errors->has('checkbox'))
-                                        <div class="error text-danger p-2">
-                                            &nbsp;{{ $errors->first('checkbox') }}</div>
-                                    @endif
+                                    <span id="errormsg"></span>
                                 </div>
                                 <div class="form-group">
-                                    <input name="recover-submit" class="btn btn-lg btn-success btn-block mt-2 py-1"
-                                        value="Reset Password" type="submit">
+                                    <button id="rstbtn" name="recover-submit"
+                                        class="btn btn-lg btn-success btn-block mt-2 py-1" type="submit">Reset
+                                        Password
+                                    </button>
                                 </div>
                                 <input type="hidden" class="hide" name="token" id="token" value="">
                             </form>
