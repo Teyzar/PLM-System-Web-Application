@@ -15,7 +15,7 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ mix('css/bootstrap.css') }}" rel="stylesheet">
@@ -28,13 +28,15 @@
     @include('sweetalert::alert')
 
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white">
+        <nav class="navbar navbar-expand-md navbar-light bg-white" style="height: 65px">
             <div class="container">
-                <img src="{{ mix('img/logo.png') }}" class="" style="width: 6%; height: 7%">
-                <a class="navbar-brand fs-3" style="color:#fd7e14; font-family: 'Source Serif 4', sans-serif;"
+                <a class="navbar-brand fs-3" style="color:#fd7e14; font-family: 'Source Serif 4', sans-serif"
                     href="{{ url('/') }}">
+                    <img src="{{ mix('img/logo.png') }}" style="width: 40px; height: 40px">
+                    &nbsp;
                     Power Line Monitoring
                 </a>
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -45,16 +47,19 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item pt-1">
-                            <a class="nav-link texthover rounded-pill" href="{{ route('login') }}">{{ __('Outage Records') }}</a>
+                            <a class="nav-link texthover rounded-pill"
+                                href="{{ route('login') }}">{{ __('Outage Records') }}</a>
                         </li>
 
                         @auth
                             <li class="nav-item pt-1">
-                                <a class="nav-link texthover rounded-pill" href="{{URL::to('lineman')}}">{{ __('Accounts') }}</a>
+                                <a class="nav-link texthover rounded-pill"
+                                    href="{{ URL::to('lineman') }}">{{ __('Accounts') }}</a>
                             </li>
 
                             <li class="nav-item pt-1">
-                                <a class="nav-link texthover rounded-pill" href="{{ URL::to('units') }}">{{ __('Units') }}</a>
+                                <a class="nav-link texthover rounded-pill"
+                                    href="{{ URL::to('units') }}">{{ __('Units') }}</a>
                             </li>
                         @endauth
                     </ul>
@@ -65,7 +70,8 @@
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item pt-1">
-                                    <a class="nav-link texthover rounded-pill" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link texthover rounded-pill"
+                                        href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
                             @endif
 
@@ -76,7 +82,8 @@
                             @endif
                         @else
                             <li class="nav-item dropdown pt-1 ">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle text-capitalize texthover rounded-pill" href="#"
+                                <a id="navbarDropdown"
+                                    class="nav-link dropdown-toggle text-capitalize texthover rounded-pill" href="#"
                                     role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                     v-pre>
                                     {{ Auth::user()->name }}
