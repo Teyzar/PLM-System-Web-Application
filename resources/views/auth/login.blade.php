@@ -1,10 +1,5 @@
 @extends('layouts.app')
 
-@section('head')
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-@endsection
-
 @section('content')
     <div class="container py-4" style="margin-top: 1%">
         <div class="row justify-content-center">
