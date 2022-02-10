@@ -28,14 +28,9 @@
     @include('sweetalert::alert')
 
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white" style="height: 65px">
+        <nav class="navbar navbar-expand-md navbar-light bg-white">
             <div class="container">
-                <a class="navbar-brand fs-3" style="color:#fd7e14; font-family: 'Source Serif 4', sans-serif"
-                    href="{{ url('/') }}">
-                    <img src="{{ mix('img/logo.png') }}" style="width: 40px; height: 40px">
-                    &nbsp;
-                    Power Line Monitoring
-                </a>
+                <img src="{{ mix('img/logo.png') }}" class="navbar-brand p-2" style="width: 55px; height: 55px">
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -44,6 +39,11 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <a class="navbar-brand fs-3" style="color:#fd7e14; font-family: 'Source Serif 4', sans-serif"
+                        href="{{ url('/') }}">
+                        Power Line Monitoring
+                    </a>
+
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item pt-1">
