@@ -113,9 +113,9 @@ class LinemanController extends Controller
         if ($count <= 0) {
             $output .= "
                 <tr border-width: 1px;' class='trbody bg-light border border-dark'>
-                        <td class='text-center fs-6 border-top text-danger p-4' colspan ='7'>
-                            No Record Found
-                        </td>
+                    <td class='text-center fs-6 border-top text-danger p-4' colspan ='7'>
+                        No Record Found
+                    </td>
                 </tr>
             ";
         } else {
@@ -141,19 +141,19 @@ class LinemanController extends Controller
                         </td>
 
                         <td>
-                            <a id= 'resetbtn' class='resetbtn' data-bs-toggle='modal' data-bs-target='#modalReset' onclick='Reset($lineman->id)'>
+                            <a id= 'resetbtn' class='resetbtn' data-bs-toggle='modal' data-bs-target='#modalReset' onclick='resetPassword($lineman->id)'>
                                 <i class='fas fa-sync-alt text-success fs-6' data-toggle='tooltip' title='Reset password'></i>
                             </a>
                         </td>
 
                         <td>
-                            <a class='editbtn' onclick='LoadAccountDetails($lineman->id)' data-bs-toggle='modal' data-bs-target='#modalForm2'>
+                            <a class='editbtn' onclick='editAccount($lineman->id)' data-bs-toggle='modal' data-bs-target='#modalForm2'>
                                 <i class='fas fa-user-edit text-primary fs-6' data-toggle='tooltip' title='Edit'></i>
                             </a>
                         </td>
 
                         <td>
-                            <a id= 'delbtn' class='deletebtn' data-bs-toggle='modal' data-bs-target='#modalDelete' onclick='Destroy($lineman->id)'>
+                            <a id= 'delbtn' class='deletebtn' data-bs-toggle='modal' data-bs-target='#modalDelete' onclick='deleteAccount($lineman->id)'>
                                 <i class='fas fa-trash fs-6 text-danger' data-toggle='tooltip' title='Delete'></i>
                             </a>
                         </td>

@@ -75,7 +75,7 @@
                                     </td>
 
                                     <td class="">
-                                        <a id="resetbtn" class="resetbtn" onclick="Reset({{ $lineman->id }})"
+                                        <a id="resetbtn" class="resetbtn" onclick="resetPassword({{ $lineman->id }})"
                                             data-bs-toggle="modal" data-bs-target="#modalReset">
                                             <i class="fas fa-sync-alt text-success fs-6" data-toggle="tooltip"
                                                 title="Reset password"></i>
@@ -83,7 +83,7 @@
                                     </td>
 
                                     <td class="">
-                                        <a class="editbtn" onclick="LoadAccountDetails({{ $lineman->id }})"
+                                        <a class="editbtn" onclick="editAccount({{ $lineman->id }})"
                                             data-bs-toggle="modal" data-bs-target="#modalForm2">
                                             <i class="fas fa-user-edit text-primary fs-6" data-toggle="tooltip"
                                                 title="Edit"></i>
@@ -92,7 +92,7 @@
 
                                     <td class="">
                                         <a id="delbtn" class="deletebtn" data-bs-toggle="modal"
-                                            data-bs-target="#modalDelete" onclick="Destroy({{ $lineman->id }})">
+                                            data-bs-target="#modalDelete" onclick="deleteAccount({{ $lineman->id }})">
                                             <i class="fas fa-trash fs-6 text-danger" data-toggle="tooltip"
                                                 title="Delete"></i>
                                         </a>
@@ -113,17 +113,17 @@
 
     @if ($errors->has('email'))
         <script>
-            $(document).ready(function() {
+            $(document).ready(() => {
                 $('#modalForm').modal('show');
             });
         </script>
     @endif
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(() => {
             $('[data-toggle="tooltip"]').tooltip();
             try {
-                $('#search').on('keyup', function() {
+                $('#search').on('keyup', () => {
                     $value = $(this).val();
                     $.ajax({
                         type: 'get',
@@ -132,14 +132,12 @@
                             'searchTerm': $value
                         },
                         dataType: 'json',
-                        success: function(data) {
+                        success: (data) => {
                             $('.searchbody').html(data.result);
                             $('[data-toggle="tooltip"]').tooltip();
                             $('.count').html(`Accounts (${data.count})`);
                         },
-                        error: function(error) {
-                            console.error(error);
-                        },
+                        error: (err) => console.error(err)
                     });
                 })
             } catch (error) {
@@ -147,29 +145,25 @@
             }
         });
 
-        function Destroy(id) {
+        function deleteAccount(id) {
             $('#delete-id').attr('action', `lineman/${id}`);
         }
 
-        function Reset(id) {
+        function resetPassword(id) {
             $.ajax({
                 type: 'get',
                 url: `lineman/${id}`,
                 dataType: 'json',
-                success: function(data) {
+                success: (data) => {
                     $('input#resetEmail').val(data.email);
-                    $('#reset-id').attr('action', `lineman/${data.id}/reset`);
-                    $("#reset-id").submit(function(event) {
+                    $("#reset-id").submit((event) => {
                         event.preventDefault();
-
-                        const form = $(this);
-
                         $.ajax({
-                            url: form.attr('action'),
-                            type: form.attr('method'),
-                            data: form.serialize(),
+                            type: 'post',
+                            url: `lineman/${data.id}/reset`,
+                            data: $(this).serialize(),
                             dataType: 'json',
-                            success: function(data) {
+                            success: (data) => {
                                 if (data === "0") {
                                     $('#modal-content').css({
                                         'border-color': 'red',
@@ -185,6 +179,7 @@
                                             'border-color': '',
                                             'border-width': 'thin'
                                         });
+
                                         $('#text-msg').css({
                                             'color': '#262626'
                                         });
@@ -197,37 +192,26 @@
                                     }, 500);
                                 }
                             },
-                            error: function(error) {
-                                console.error(error);
-                            },
+                            error: (err) => console.error(err)
                         })
                     });
                 },
-                error: function(error) {
-                    console.error(error);
-                },
+                error: (err) => console.error(err)
             });
         }
 
-        function LoadAccountDetails(id) {
+        function editAccount(id) {
             $.ajax({
                 type: 'get',
                 url: `lineman/${id}`,
                 dataType: 'json',
-                success: function(data) {
-                    const name = $('input#updatename');
-                    const barangay = $('input#updatebarangay');
-                    const email = $('input#updateemail');
-
-                    name.val(data.name);
-                    barangay.val(data.barangay);
-                    email.val(data.email);
-
+                success: (data) => {
+                    $('input#updatename').val(data.name);
+                    $('input#updatebarangay').val(data.barangay);
+                    $('input#updateemail').val(data.email);
                     $('#form-id').attr('action', `lineman/${data.id}`);
                 },
-                error: function(error) {
-                    console.error(error);
-                },
+                error: (err) => console.error(err)
             });
         }
     </script>
