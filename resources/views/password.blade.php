@@ -65,32 +65,8 @@
 
                             <div class="form-group">
                                 <a type="submit" class="btn btn-success btn-lg float-end py-1 px-3 fs-5 mt-2"
-                                    data-bs-toggle="modal" data-bs-target="#modalForm"><i
+                                    data-bs-toggle="modal" data-bs-target="#modalConfirm"><i
                                         class="bi bi-box-arrow-down pe-2 fs-5"></i>Save</a>
-                            </div>
-
-                            <div class="modal fade" id="modalForm" tabindex="-1" role="dialog"
-                                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title text-secondary" id="exampleModalLabel">Password
-                                                Confirmation</h5>
-                                            <button type="button" class="close" data-bs-dismiss="modal"
-                                                aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body fs-6 text-dark">
-                                            Save Change Password?
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                                                aria-label="Close">Close</button>
-                                            <button type="submit" class="btn btn-primary">Save changes</button>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </form>
                     </div>
@@ -98,4 +74,7 @@
             </div>
         </div>
     </div>
+
+    @include('modals.password')
+
 @endsection

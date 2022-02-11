@@ -1,8 +1,6 @@
 @extends('layouts.units')
 
-
 @section('content-body')
-
     <div class="container m-auto">
         <div class="row">
             <div class="border-dark table-responsive-sm">
