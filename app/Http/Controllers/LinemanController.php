@@ -13,11 +13,6 @@ class LinemanController extends Controller
 {
     use RegistersUsers;
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function index()
     {
         $linemen = Lineman::orderBy('created_at', 'desc')->paginate(10);
@@ -117,52 +112,53 @@ class LinemanController extends Controller
         $count = $linemen->count();
         if ($count <= 0) {
             $output .= "
-                    <tr border-width: 1px;' class='trbody bg-light border border-dark'>
-                            <td class='text-center fs-6 border-top text-danger p-4' colspan ='7'>
-                                No Record Found
-                            </td>
-                    </tr> ";
+                <tr border-width: 1px;' class='trbody bg-light border border-dark'>
+                        <td class='text-center fs-6 border-top text-danger p-4' colspan ='7'>
+                            No Record Found
+                        </td>
+                </tr>
+            ";
         } else {
             foreach ($linemen as $lineman) {
                 $created_at = Carbon::parse($lineman->created_at)->toDayDateTimeString();
 
                 $output .= "
-                        <tr class='trbody bg-light border border-dark'>
-                            <td class='fs-6 text-black border-top text-capitalize'>
-                                $lineman->name
-                            </td>
+                    <tr class='trbody bg-light border border-dark'>
+                        <td class='fs-6 text-black border-top text-capitalize'>
+                            $lineman->name
+                        </td>
 
-                            <td class='text-black fs-6 border-top'>
-                                $lineman->email
-                            </td>
+                        <td class='text-black fs-6 border-top'>
+                            $lineman->email
+                        </td>
 
-                            <td class='text-black fs-6 text-capitalize border-top'>
-                                $lineman->barangay
-                            </td>
+                        <td class='text-black fs-6 text-capitalize border-top'>
+                            $lineman->barangay
+                        </td>
 
-                            <td class='text-black fs-6 text-capitalize border-top'>
-                                $created_at
-                            </td>
+                        <td class='text-black fs-6 text-capitalize border-top'>
+                            $created_at
+                        </td>
 
-                            <td>
-                                <a id= 'resetbtn' class='resetbtn' data-bs-toggle='modal' data-bs-target='#modalReset' onclick='Reset($lineman->id)'>
-                                    <i class='fas fa-sync-alt text-success fs-6' data-toggle='tooltip' title='Reset password'></i>
-                                </a>
-                            </td>
+                        <td>
+                            <a id= 'resetbtn' class='resetbtn' data-bs-toggle='modal' data-bs-target='#modalReset' onclick='Reset($lineman->id)'>
+                                <i class='fas fa-sync-alt text-success fs-6' data-toggle='tooltip' title='Reset password'></i>
+                            </a>
+                        </td>
 
-                            <td>
-                                <a class='editbtn' onclick='LoadAccountDetails($lineman->id)' data-bs-toggle='modal' data-bs-target='#modalForm2'>
-                                    <i class='fas fa-user-edit text-primary fs-6' data-toggle='tooltip' title='Edit'></i>
-                                </a>
-                            </td>
+                        <td>
+                            <a class='editbtn' onclick='LoadAccountDetails($lineman->id)' data-bs-toggle='modal' data-bs-target='#modalForm2'>
+                                <i class='fas fa-user-edit text-primary fs-6' data-toggle='tooltip' title='Edit'></i>
+                            </a>
+                        </td>
 
-                            <td>
-                                <a id= 'delbtn' class='deletebtn' data-bs-toggle='modal' data-bs-target='#modalDelete' onclick='Destroy($lineman->id)'>
-                                    <i class='fas fa-trash fs-6 text-danger' data-toggle='tooltip' title='Delete'></i>
-                                </a>
-                            </td>
-                        </tr>
-                    ";
+                        <td>
+                            <a id= 'delbtn' class='deletebtn' data-bs-toggle='modal' data-bs-target='#modalDelete' onclick='Destroy($lineman->id)'>
+                                <i class='fas fa-trash fs-6 text-danger' data-toggle='tooltip' title='Delete'></i>
+                            </a>
+                        </td>
+                    </tr>
+                ";
             }
         }
 
@@ -182,13 +178,16 @@ class LinemanController extends Controller
             'lineman' => $lineman,
             'checkbox' => $checkbox
         );
+
         if ($checkbox === "0") {
             return json_encode($data['checkbox']);
-        } else {
-            $lineman->password = Hash::make("plmsystem");
-            $lineman->update();
-            toast('Password has been reset!', 'success');
-            return json_encode($data['lineman']);
         }
+
+        $lineman->password = Hash::make("plmsystem");
+        $lineman->update();
+
+        toast('Password has been reset!', 'success');
+
+        return json_encode($data['lineman']);
     }
 }

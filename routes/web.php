@@ -19,19 +19,22 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+// Public Routes
+
 Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-
-Route::resource('/lineman', LinemanController::class)->except(['create', 'edit']);
-Route::get('/lineman-search', [LinemanController::class, 'search']);
-Route::put('/lineman/reset/{id}', [LinemanController::class, 'reset']);
+Route::get('/heatmap-data', [UnitsController::class, 'heatmap']);
 
 
-Route::get('/units', [UnitsController::class, 'index']);
-Route::post('/units', [UnitsController::class, 'store']);
+// Protected Routes
 
 Route::middleware('auth')->group(function () {
-    Route::get('/password', [ChangePasswordController::class, 'index']);
-    Route::post('/password', [ChangePasswordController::class, 'store']);
+    Route::resource('/lineman', LinemanController::class)->except(['create', 'edit']);
+    Route::post('/lineman/{id}/reset', [LinemanController::class, 'reset']);
+    Route::get('/lineman-search', [LinemanController::class, 'search']);
+
+    Route::resource('/password', ChangePasswordController::class)->only(['index', 'store']);
+
+    Route::resource('/units', UnitsController::class)->only(['index', 'store']);
 });

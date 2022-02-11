@@ -8,7 +8,7 @@
 @section('body')
     <div class="container mt-4">
         <div class="card-header border-black border border-1 fs-5 count bg-light text-dark">
-            {{ __('Accounts ') . '(' . count($linemen) . ')' }}
+            {{ 'Accounts (' . count($linemen) . ')' }}
         </div>
 
         <div class="card align-items-center flex-row justify-content-center fs-5 px-3 bg-light border border-black border-1">
@@ -127,7 +127,7 @@
                     $value = $(this).val();
                     $.ajax({
                         type: 'get',
-                        url: `{{ URL::to('lineman-search') }}`,
+                        url: 'lineman-search',
                         data: {
                             'searchTerm': $value
                         },
@@ -136,7 +136,10 @@
                             $('.searchbody').html(data.result);
                             $('[data-toggle="tooltip"]').tooltip();
                             $('.count').html(`Accounts (${data.count})`);
-                        }
+                        },
+                        error: function(error) {
+                            console.error(error);
+                        },
                     });
                 })
             } catch (error) {
@@ -151,27 +154,28 @@
         function Reset(id) {
             $.ajax({
                 type: 'get',
-                url: `{{ URL::to('lineman/${id}') }}`,
+                url: `lineman/${id}`,
                 dataType: 'json',
                 success: function(data) {
-                    const email = $('input#resetEmail');
-                    email.val(data.email);
-                    $('#reset-id').attr('action', `{{ URL::to('lineman/reset/${data.id}') }}`);
+                    $('input#resetEmail').val(data.email);
+                    $('#reset-id').attr('action', `lineman/${data.id}/reset`);
                     $("#reset-id").submit(function(event) {
                         event.preventDefault();
-                        var form = $(this);
+
+                        const form = $(this);
+
                         $.ajax({
                             url: form.attr('action'),
                             type: form.attr('method'),
                             data: form.serialize(),
                             dataType: 'json',
                             success: function(data) {
-
                                 if (data === "0") {
                                     $('#modal-content').css({
                                         'border-color': 'red',
                                         'border-width': '2px',
                                     });
+
                                     $('#text-msg').css({
                                         'color': 'red'
                                     });
@@ -185,21 +189,22 @@
                                             'color': '#262626'
                                         });
                                     }, 3000)
-
-
                                 } else {
                                     $('#modalReset').fadeOut(500);
+
                                     setTimeout(() => {
                                         location.reload();
                                     }, 500);
                                 }
                             },
-                            error: function(data) {
-                                console.log('An error occurred.');
-                                console.log(data);
+                            error: function(error) {
+                                console.error(error);
                             },
                         })
                     });
+                },
+                error: function(error) {
+                    console.error(error);
                 },
             });
         }
@@ -207,7 +212,7 @@
         function LoadAccountDetails(id) {
             $.ajax({
                 type: 'get',
-                url: `{{ URL::to('lineman/${id}') }}`,
+                url: `lineman/${id}`,
                 dataType: 'json',
                 success: function(data) {
                     const name = $('input#updatename');
@@ -217,8 +222,12 @@
                     name.val(data.name);
                     barangay.val(data.barangay);
                     email.val(data.email);
-                    $('#form-id').attr('action', `{{ URL::to('lineman/${data.id}') }}`);
-                }
+
+                    $('#form-id').attr('action', `lineman/${data.id}`);
+                },
+                error: function(error) {
+                    console.error(error);
+                },
             });
         }
     </script>

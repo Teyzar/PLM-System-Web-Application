@@ -16,11 +16,10 @@ class ChangePasswordController extends Controller
         return view('password');
     }
 
-
     public function store(Request $request)
     {
-
         $password = Auth::user()->password;
+
         $rules = [
             'password' => [
                 'required',
@@ -41,27 +40,28 @@ class ChangePasswordController extends Controller
         if (!Hash::check($request['password'], $password)) {
             return back()->withErrors(['pass' => 'Password not match'])->withInput();
         }
+
         if (Hash::check($request['new-password'], $password)) {
             return back()->withErrors(['newpass' => 'New Password Must not match to the Current Password.'])->withInput();
         }
 
         if ($valid->fails()) {
             return back()->withErrors($valid)->withInput();
-        } else {
-            $user = Auth::user();
-            $disUser = User::where('email', $user->email)->first();
-
-            $hash = Hash::make($request['new-password']);
-
-            $disUser->password = $hash;
-
-            $disUser->save();
-
-            toast('Password successfully changed!', 'success');
-
-            Auth::logout();
-            Session::flush();
-            return redirect('/login');
         }
+
+        $user = Auth::user();
+        $disUser = User::where('email', $user->email)->first();
+
+        $hash = Hash::make($request['new-password']);
+
+        $disUser->password = $hash;
+        $disUser->save();
+
+        toast('Password successfully changed!', 'success');
+
+        Auth::logout();
+        Session::flush();
+
+        return redirect('/login');
     }
 }

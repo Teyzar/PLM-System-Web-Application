@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApiAuthController;
-use App\Http\Controllers\HeatmapController;
+use App\Http\Controllers\UnitsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,14 +21,13 @@ use Illuminate\Support\Facades\Route;
 Route::post('/auth/register', [ApiAuthController::class, 'register']);
 Route::post('/auth/login', [ApiAuthController::class, 'login']);
 
-Route::get('/heatmap', [HeatmapController::class, 'index']);
 
 // Protected Routes
 
-Route::group(['middleware' => ['auth:sanctum']], function () {
+Route::middleware('auth:sanctum')->group(function () {
     Route::post('/auth/logout', [ApiAuthController::class, 'logout']);
 
-    Route::patch('/heatmap/{phone_number}', [HeatmapController::class, 'update']);
+    Route::patch('/units/{phone_number}', [UnitsController::class, 'update']);
 
     Route::get('/user', function (Request $request) {
         return $request->user();

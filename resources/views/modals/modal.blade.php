@@ -48,9 +48,8 @@
     </div>
 </div>
 
-<form id="form-id" action="" method="POST">
+<form id="form-id" action="" method="PATCH">
     @csrf
-    @method('PUT')
     <div class="modal fade" id="modalSave" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -141,10 +140,8 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                     aria-label="Close">Close</button>
-                <form id="delete-id" action="" method="POST">
+                <form id="delete-id" action="" method="DELETE">
                     @csrf
-
-                    @method('delete')
                     <a type="submit" class="btn btn-danger" href="javascript:{}"
                         onclick="document.getElementById('delete-id').submit();">Yes</a>
                 </form>
@@ -169,7 +166,6 @@
                         <div class="panel-body">
                             <form id="reset-id" action="" method="POST">
                                 @csrf
-                                @method('PUT')
                                 <span id="text-msg" class="fw-light d-flex justify-content-center">
                                     <input type="hidden" name="checkbox" value="0"><input class="stylebox"
                                         type="checkbox"

@@ -49,7 +49,7 @@ loader.load().then(async (google) => {
     heatmap.setMap(map);
 
     // Get intial heatmap data from the api
-    const response = await axios.get("/api/heatmap");
+    const response = await axios.get("/heatmap-data");
     const result: HeatmapData[] = response?.data ?? [];
 
     // Push all the data
