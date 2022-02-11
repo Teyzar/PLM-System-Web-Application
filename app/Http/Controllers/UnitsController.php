@@ -65,11 +65,4 @@ class UnitsController extends Controller
 
         return response('', $statusCode);
     }
-
-    public function heatmap(Request $request)
-    {
-        if (!$request->wantsJson()) abort(404);
-
-        return Unit::all(['id', 'active', 'latitude', 'longitude']);
-    }
 }
