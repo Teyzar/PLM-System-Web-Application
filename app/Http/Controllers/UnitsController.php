@@ -68,6 +68,7 @@ class UnitsController extends Controller
 
         return response('', $statusCode);
     }
+<<<<<<< HEAD
 
     public function clear()
     {
@@ -81,4 +82,6 @@ class UnitsController extends Controller
         if (!$request->wantsJson()) abort(404);
         return Unit::all(['id', 'active', 'latitude', 'longitude']);
     }
+=======
+>>>>>>> f13fc5025b61a6713cfd41ebfa76f39a3e595cd0
 }
