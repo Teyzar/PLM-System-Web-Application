@@ -16,20 +16,27 @@ class UnitsController extends Controller
         return view('units')->with('units', $units);
     }
 
+    public function create()
+    {
+        return view('add_unit');
+    }
+
     public function store(Request $request)
     {
-        foreach ($request->phone_number as $key => $value) {
+        foreach ($request->phone_number as $value) {
             $newArr = ['phone_number' => $value];
+
             $rules = [
                 'phone_number' => 'required|unique:units|max:11',
             ];
             $validation = Validator::make($newArr, $rules);
+
             if ($validation->fails()) {
                 return back()->withErrors($validation)->withInput();
             }
         }
 
-        foreach ($request->phone_number as $key => $value) {
+        foreach ($request->phone_number as $value) {
             Unit::create([
                 'active' => false,
                 'phone_number' => $value
@@ -70,7 +77,7 @@ class UnitsController extends Controller
 
     public function clear()
     {
-        Unit::where('id', 'like', '%%')->delete();
+        Unit::all()->delete();
 
         toast('Data succesfully cleared.', 'success');
 

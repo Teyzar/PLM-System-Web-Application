@@ -6,7 +6,7 @@
             <div class="border-dark table-responsive-sm">
                 <table class="table table-hover table-md text-start">
                     <div class="card-header float-end">
-                        <form action="/units/clear" class="bg-dark" method="post">
+                        <form action="/units-clear" class="bg-dark" method="post">
                             @csrf
                             @method('delete')
                             {{-- only temporary --}}

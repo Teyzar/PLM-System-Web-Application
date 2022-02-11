@@ -21,7 +21,7 @@
                             </a>
                             <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
                                 <li>
-                                    <a href="{{URL::to('add_units')}}" class="nav-link px-0 text-muted"> <span class="d-none d-sm-inline ps-2">&nbsp;&nbsp;Add units</span><i class="fs-6 ps-2 fw-bold">&#8594;</i></a>
+                                    <a href="{{URL::to('units/create')}}" class="nav-link px-0 text-muted"> <span class="d-none d-sm-inline ps-2">&nbsp;&nbsp;Add units</span><i class="fs-6 ps-2 fw-bold">&#8594;</i></a>
                                 </li>
                                 <li>
                                     <a href="#" class="nav-link px-0 text-muted"> <span class="d-none d-sm-inline ps-2">&nbsp;&nbsp;Show units</span><i class="fs-6 ps-2 fw-bold">&#8594;</i></a>
