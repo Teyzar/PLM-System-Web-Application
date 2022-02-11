@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Events\HeatmapUpdate;
 use App\Models\Unit;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class UnitsController extends Controller
@@ -68,20 +67,13 @@ class UnitsController extends Controller
 
         return response('', $statusCode);
     }
-<<<<<<< HEAD
 
     public function clear()
     {
-        Unit::where('id','like', '%%')->delete();
+        Unit::where('id', 'like', '%%')->delete();
+
         toast('Data succesfully cleared.', 'success');
+
         return redirect()->back();
     }
-
-    public function heatmap(Request $request)
-    {
-        if (!$request->wantsJson()) abort(404);
-        return Unit::all(['id', 'active', 'latitude', 'longitude']);
-    }
-=======
->>>>>>> f13fc5025b61a6713cfd41ebfa76f39a3e595cd0
 }
