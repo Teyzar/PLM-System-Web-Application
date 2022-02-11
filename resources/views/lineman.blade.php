@@ -157,14 +157,12 @@
                 dataType: 'json',
                 success: function(data) {
                     $('input#resetEmail').val(data.email);
-                    $('#reset-id').attr('action', `lineman/${data.id}/reset`);
                     $("#reset-id").submit(function(event) {
                         event.preventDefault();
-                        const form = $(this);
                         $.ajax({
-                            url: form.attr('action'),
-                            type: form.attr('method'),
-                            data: form.serialize(),
+                            type: 'post',
+                            url: `lineman/${data.id}/reset`,
+                            data: $(this).serialize(),
                             dataType: 'json',
                             success: function(data) {
                                 if (data === "0") {
