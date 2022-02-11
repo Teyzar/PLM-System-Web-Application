@@ -20,6 +20,7 @@
     <!-- Styles -->
     <link href="{{ mix('css/bootstrap.css') }}" rel="stylesheet">
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <script src="https://code.iconify.design/2/2.1.2/iconify.min.js"></script>
 
     @yield("head")
 </head>
@@ -61,6 +62,11 @@
                                 <a class="nav-link texthover rounded-pill"
                                     href="{{ URL::to('units') }}">{{ __('Units') }}</a>
                             </li>
+
+                            <li class="nav-item pt-1">
+                                <a class="nav-link texthover rounded-pill"
+                                    href="#">{{ __('Dispatch') }}</a>
+                            </li>
                         @endauth
                     </ul>
 
@@ -81,21 +87,24 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item dropdown pt-1 ">
+                            <li class="dropdown notification-list topbar-dropdown">
                                 <a id="navbarDropdown"
-                                    class="nav-link dropdown-toggle text-capitalize texthover rounded-pill" href="#"
-                                    role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                    class="nav-link text-capitalize texthover rounded-pill me-0 nav-user waves-effect waves-light" href="#"
+                                    role="button" data-bs-toggle="dropdown" aria-haspopup="false" aria-expanded="false"
                                     v-pre>
-                                    {{ Auth::user()->name }}
+
+                                    <span class="pro-user-name ms-1">
+                                        {{ Auth::user()->name }} <span class="iconify" data-icon="mdi:chevron-down"></span>
+                                    </span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="/password">
-                                        <i class="bi bi-key fs-5 px-2"></i>{{ __('Password') }}
+                                        <i class="bi bi-key fs-6 px-2"></i>{{ __('Password') }}
                                     </a>
                                     <a class="dropdown-item" href=""
                                         onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                                        <i class="bi bi-box-arrow-right fs-5 px-2"></i>{{ __('Logout') }}
+                                        <i class="bi bi-box-arrow-right fs-6 px-2"></i>{{ __('Logout') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST"

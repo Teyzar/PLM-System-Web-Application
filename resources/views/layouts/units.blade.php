@@ -2,25 +2,26 @@
 
 @section('head')
     <link href="{{ mix('css/units.css') }}" rel="stylesheet">
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 @endsection
 
 @section('content')
     <div class="container-fluid">
         <div class="row flex-nowrap">
-            <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-light border border-dark border-1"
+            <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-light border"
                 style="height: 20%;">
-                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-                    <a href="/units" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-primary opacity-50 text-decoration-none ">
+                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 min-vh-100">
+                    <a href="/units" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-dark text-decoration-none ">
                         <span class="fs-5 d-none d-sm-inline"><i class="fs-4 fa-solid fa-house pe-2"></i>{{ __('Power Outage Units') }}</span>
                     </a>
                     <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                         <li>
-                            <a href="#submenu1" data-bs-toggle="collapse" class="btn nav-link px-0 align-middle text-info dropdown-toggle">
+                            <a href="#submenu1" data-bs-toggle="collapse" class="btn nav-link px-0 align-middle text-dark dropdown-toggle">
                                 <i class="fs-4 fa-solid fa-sim-card"></i> <span class="ms-1 d-none d-sm-inline ">Units</span>
                             </a>
-                            <ul class="collapse hide nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
+                            <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
                                 <li>
-                                    <a href="" class="nav-link px-0 text-muted" data-bs-toggle="modal" data-bs-target="#modalForm"> <span class="d-none d-sm-inline ps-2">&nbsp;&nbsp;Add units</span><i class="fs-6 ps-2 fw-bold">&#8594;</i></a>
+                                    <a href="{{URL::to('add_units')}}" class="nav-link px-0 text-muted"> <span class="d-none d-sm-inline ps-2">&nbsp;&nbsp;Add units</span><i class="fs-6 ps-2 fw-bold">&#8594;</i></a>
                                 </li>
                                 <li>
                                     <a href="#" class="nav-link px-0 text-muted"> <span class="d-none d-sm-inline ps-2">&nbsp;&nbsp;Show units</span><i class="fs-6 ps-2 fw-bold">&#8594;</i></a>
@@ -29,7 +30,7 @@
                         </li>
 
                         <li>
-                            <a href="#" class="nav-link px-0 align-middle text-info">
+                            <a href="#" class="nav-link px-0 align-middle text-dark">
                                 <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">Dispatch</span> </a>
                         </li>
 
@@ -37,7 +38,7 @@
 
                 </div>
             </div>
-            <div class="col py-3">
+            <div class="col py-3 bg-white">
                 {{-- Content area... --}}
 
                 @yield('content-body')

@@ -19,24 +19,27 @@ class UnitsController extends Controller
 
     public function store(Request $request)
     {
-        $rules = [
-            'phone_number' => 'required|string|unique:units',
-        ];
+        foreach ($request->phone_number as $key => $value) {
+            $newArr = ['phone_number' => $value];
+            $rules = [
+                'phone_number' => 'required|unique:units|max:11',
+            ];
+            $validation = Validator::make($newArr, $rules);
+            if ($validation->fails()) {
+                return back()->withErrors($validation)->withInput();
+            }
+        }
 
-        $validation = Validator::make($request->all(), $rules);
-
-        if ($validation->fails()) {
-            return back()->withErrors($validation)->withInput();
-        } else {
+        foreach ($request->phone_number as $key => $value) {
             Unit::create([
                 'active' => false,
-                'phone_number' => $request->phone_number
+                'phone_number' => $value
             ]);
-
-            toast('Unit Succesfully Registered!', 'success');
-
-            return redirect()->back();
         }
+
+        toast('Unit Succesfully Registered!', 'success');
+
+        return redirect()->back();
     }
 
     public function update(Request $request, String $phone_number)
@@ -66,10 +69,16 @@ class UnitsController extends Controller
         return response('', $statusCode);
     }
 
+    public function clear()
+    {
+        Unit::where('id','like', '%%')->delete();
+        toast('Data succesfully cleared.', 'success');
+        return redirect()->back();
+    }
+
     public function heatmap(Request $request)
     {
         if (!$request->wantsJson()) abort(404);
-
         return Unit::all(['id', 'active', 'latitude', 'longitude']);
     }
 }

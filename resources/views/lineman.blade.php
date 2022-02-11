@@ -37,14 +37,14 @@
                 @if (count($linemen) <= 0)
                     <div class="card border-1 border-secondary align-items-center pt-5 ">
                         <span
-                            class="justify-content-center d-flex fw-bold pb-5 pt-2 text-secondary opacity-75 addicon fs-3">
+                            class="justify-content-center d-flex pb-5 pt-2 text-danger opacity-75 addicon fs-5">
                             No Registered Accounts
                         </span>
                     </div>
                 @else
                     <table class="table table-hover table-md text-start">
                         <thead class="table-success">
-                            <tr class="border-dark border fs-5 text-dark">
+                            <tr class="border-dark border fs-6 text-dark">
                                 <th width="25%">Name</th>
                                 <th width="25%">E-mail</th>
                                 <th width="20%">Designation</th>

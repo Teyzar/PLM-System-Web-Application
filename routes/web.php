@@ -33,8 +33,11 @@ Route::middleware('auth')->group(function () {
     Route::resource('/lineman', LinemanController::class)->except(['create', 'edit']);
     Route::post('/lineman/{id}/reset', [LinemanController::class, 'reset']);
     Route::get('/lineman-search', [LinemanController::class, 'search']);
-
     Route::resource('/password', ChangePasswordController::class)->only(['index', 'store']);
-
     Route::resource('/units', UnitsController::class)->only(['index', 'store']);
+    Route::delete('/units/clear', [UnitsController::class, 'clear']);
+
+    Route::get('/add_units', function() {
+        return view('add_unit');
+    });
 });
