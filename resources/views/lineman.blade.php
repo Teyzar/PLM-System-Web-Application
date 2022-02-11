@@ -23,7 +23,7 @@
                 </div>
             </div>
 
-            <a href="" class="addicon text-dark" data-bs-toggle="modal" data-bs-target="#modalForm" data-toggle="tooltip"
+            <a href="" class="addicon text-dark" data-bs-toggle="modal" data-bs-target="#modalRegisterForm" data-toggle="tooltip"
                 title="Register">
                 <i class="fad fa-user-plus fs-3 addicon"></i>
             </a>
@@ -84,7 +84,7 @@
 
                                     <td class="">
                                         <a class="editbtn" onclick="editAccount({{ $lineman->id }})"
-                                            data-bs-toggle="modal" data-bs-target="#modalForm2">
+                                            data-bs-toggle="modal" data-bs-target="#modalEdit">
                                             <i class="fas fa-user-edit text-primary fs-6" data-toggle="tooltip"
                                                 title="Edit"></i>
                                         </a>
@@ -114,7 +114,7 @@
     @if ($errors->has('email'))
         <script>
             $(document).ready(() => {
-                $('#modalForm').modal('show');
+                $('#modalRegisterForm').modal('show');
             });
         </script>
     @endif
@@ -209,13 +209,13 @@
                     $('input#updatename').val(data.name);
                     $('input#updatebarangay').val(data.barangay);
                     $('input#updateemail').val(data.email);
-                    $('#form-id').attr('action', `lineman/${data.id}`);
+                    $('#modalEditForm').attr('action', `lineman/${data.id}`);
                 },
                 error: (err) => console.error(err)
             });
         }
     </script>
 
-    @include('modals.modal')
+    @include('modals.lineman')
 
 @endsection

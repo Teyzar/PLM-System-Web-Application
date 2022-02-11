@@ -1,4 +1,4 @@
-<div class="modal fade pt-5" id="modalForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div class="modal fade pt-5" id="modalRegisterForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content border-5 border-info">
@@ -48,10 +48,10 @@
     </div>
 </div>
 
-<form id="form-id" action="" method="POST">
+<form id="modalEditForm" action="" method="POST">
     @csrf
     @method('patch')
-    <div class="modal fade" id="modalSave" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    <div class="modal fade" id="modalConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -73,7 +73,7 @@
         </div>
     </div>
 
-    <div class="modal fade pt-5" id="modalForm2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade pt-5" id="modalEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content border-5 border-yellow">
                 <div class="modal-header">
@@ -100,13 +100,13 @@
                         <label class="form-label">Barangay</label>
                         <input type="text" class="form-control" id="updatebarangay" name="updatebarangay"
                             placeholder="Barangay" required="" value="{{ old('updatebarangay') }}">
-                    </div>
 
-                    @error('updatebarangay')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
+                        @error('updatebarangay')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
 
                     <div class="mb-3">
                         <label class="form-label">Email Address</label>
@@ -114,8 +114,10 @@
                             name="updateemail" placeholder="Email" required autocomplete="email"
                             value="{{ old('updateemail') }}">
                     </div>
+
                     <div class="modal-footer d-block d-flex align-items-center justify-content-center border-1">
-                        <a type="button" class="btn btn-dark w-75" data-bs-toggle="modal" data-bs-target="#modalSave">
+                        <a type="button" class="btn btn-dark w-75" data-bs-toggle="modal"
+                            data-bs-target="#modalConfirm">
                             {{ __('Save') }}
                         </a>
                     </div>

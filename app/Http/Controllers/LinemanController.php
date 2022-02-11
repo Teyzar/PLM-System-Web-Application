@@ -147,7 +147,7 @@ class LinemanController extends Controller
                         </td>
 
                         <td>
-                            <a class='editbtn' onclick='editAccount($lineman->id)' data-bs-toggle='modal' data-bs-target='#modalForm2'>
+                            <a class='editbtn' onclick='editAccount($lineman->id)' data-bs-toggle='modal' data-bs-target='#modalEdit'>
                                 <i class='fas fa-user-edit text-primary fs-6' data-toggle='tooltip' title='Edit'></i>
                             </a>
                         </td>
