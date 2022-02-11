@@ -8,7 +8,7 @@
                     <div class="card-header float-end">
                         <form action="/units-clear" class="bg-dark" method="post">
                             @csrf
-                            @method('delete')
+                            @method('post')
                             {{-- only temporary --}}
                             <button type="submit" class="btn btn-danger">
                                 Clear Data
