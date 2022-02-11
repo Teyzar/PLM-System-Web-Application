@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Auth;
 Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/heatmap-data', [UnitsController::class, 'heatmap']);
 
 
 // Protected Routes

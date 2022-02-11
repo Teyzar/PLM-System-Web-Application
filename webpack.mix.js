@@ -13,6 +13,7 @@ const mix = require("laravel-mix");
 
 mix.sass("resources/sass/bootstrap.scss", "public/css")
     .js("resources/js/**/*.js", "public/js")
+    .ts("resources/js/**/*.ts", "public/js")
     .copy("resources/css/", "public/css")
     .copy("resources/img/", "public/img")
     .version()
