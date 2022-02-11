@@ -23,8 +23,8 @@
                 </div>
             </div>
 
-            <a href="" class="addicon text-dark" data-bs-toggle="modal" data-bs-target="#modalRegisterForm" data-toggle="tooltip"
-                title="Register">
+            <a href="" class="addicon text-dark" data-bs-toggle="modal" data-bs-target="#modalRegisterForm"
+                data-toggle="tooltip" title="Register">
                 <i class="fad fa-user-plus fs-3 addicon"></i>
             </a>
 
@@ -75,8 +75,9 @@
                                     </td>
 
                                     <td class="">
-                                        <a id="resetbtn" class="resetbtn" onclick="resetPassword({{ $lineman->id }})"
-                                            data-bs-toggle="modal" data-bs-target="#modalReset">
+                                        <a id="resetbtn" class="resetbtn"
+                                            onclick="resetPassword({{ $lineman->id }})" data-bs-toggle="modal"
+                                            data-bs-target="#modalReset">
                                             <i class="fas fa-sync-alt text-success fs-6" data-toggle="tooltip"
                                                 title="Reset password"></i>
                                         </a>
@@ -113,17 +114,17 @@
 
     @if ($errors->has('email'))
         <script>
-            $(document).ready(() => {
+            $(document).ready(function() {
                 $('#modalRegisterForm').modal('show');
             });
         </script>
     @endif
 
     <script>
-        $(document).ready(() => {
+        $(document).ready(function() {
             $('[data-toggle="tooltip"]').tooltip();
             try {
-                $('#search').on('keyup', () => {
+                $('#search').on('keyup', function() {
                     $value = $(this).val();
                     $.ajax({
                         type: 'get',
@@ -132,7 +133,7 @@
                             'searchTerm': $value
                         },
                         dataType: 'json',
-                        success: (data) => {
+                        success: function(data) {
                             $('.searchbody').html(data.result);
                             $('[data-toggle="tooltip"]').tooltip();
                             $('.count').html(`Accounts (${data.count})`);
@@ -154,16 +155,18 @@
                 type: 'get',
                 url: `lineman/${id}`,
                 dataType: 'json',
-                success: (data) => {
+                success: function(data) {
                     $('input#resetEmail').val(data.email);
-                    $("#reset-id").submit((event) => {
+                    $('#reset-id').attr('action', `lineman/${data.id}/reset`);
+                    $("#reset-id").submit(function(event) {
                         event.preventDefault();
+                        const form = $(this);
                         $.ajax({
-                            type: 'post',
-                            url: `lineman/${data.id}/reset`,
-                            data: $(this).serialize(),
+                            url: form.attr('action'),
+                            type: form.attr('method'),
+                            data: form.serialize(),
                             dataType: 'json',
-                            success: (data) => {
+                            success: function(data) {
                                 if (data === "0") {
                                     $('#modal-content').css({
                                         'border-color': 'red',
@@ -174,7 +177,7 @@
                                         'color': 'red'
                                     });
 
-                                    setTimeout(() => {
+                                    setTimeout(function() {
                                         $('#modal-content').css({
                                             'border-color': '',
                                             'border-width': 'thin'
@@ -187,7 +190,7 @@
                                 } else {
                                     $('#modalReset').fadeOut(500);
 
-                                    setTimeout(() => {
+                                    setTimeout(function() {
                                         location.reload();
                                     }, 500);
                                 }
@@ -205,7 +208,7 @@
                 type: 'get',
                 url: `lineman/${id}`,
                 dataType: 'json',
-                success: (data) => {
+                success: function(data) {
                     $('input#updatename').val(data.name);
                     $('input#updatebarangay').val(data.barangay);
                     $('input#updateemail').val(data.email);
