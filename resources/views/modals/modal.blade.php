@@ -48,8 +48,9 @@
     </div>
 </div>
 
-<form id="form-id" action="" method="PATCH">
+<form id="form-id" action="" method="POST">
     @csrf
+    @method('patch')
     <div class="modal fade" id="modalSave" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -140,10 +141,12 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                     aria-label="Close">Close</button>
-                <form id="delete-id" action="" method="DELETE">
+                <form id="delete-id" action="" method="POST">
                     @csrf
-                    <a type="submit" class="btn btn-danger" href="javascript:{}"
-                        onclick="document.getElementById('delete-id').submit();">Yes</a>
+                    @method('delete')
+                    <button type="submit" class="btn btn-danger">
+                        Yes
+                    </button>
                 </form>
             </div>
         </div>
@@ -174,7 +177,8 @@
                                 </span>
                                 <div class="form-group pt-3 justify-content-center">
                                     <div class="input-group">
-                                        <i class="bi bi-envelope-check fs-2 pe-sm-2 text-black opacity-75 align-items-center"></i>&nbsp;
+                                        <i
+                                            class="bi bi-envelope-check fs-2 pe-sm-2 text-black opacity-75 align-items-center"></i>&nbsp;
                                         <input id="resetEmail" name="resetEmail"
                                             class="form-control float-start border-0" type="email"
                                             style="pointer-events: none;">
