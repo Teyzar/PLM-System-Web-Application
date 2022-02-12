@@ -31,7 +31,8 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white">
             <div class="container" style="min-height: 55px">
-                <img src="{{ mix('img/logo.png') }}" class="navbar-brand p-2 collapsible" style="width: 55px; height: 55px">
+                <img src="{{ mix('img/logo.png') }}" class="navbar-brand p-2 collapsible"
+                    style="width: 55px; height: 55px">
 
                 <a class="navbar-brand fs-3" style="color:#fd7e14; font-family: 'Source Serif 4', sans-serif"
                     href="{{ url('/') }}">
@@ -58,14 +59,17 @@
                                     href="{{ URL::to('lineman') }}">{{ __('Accounts') }}</a>
                             </li>
 
-                            <li class="nav-item pt-1">
-                                <a class="nav-link texthover rounded-pill"
-                                    href="{{ URL::to('units') }}">{{ __('Units') }}</a>
+                            <li class="nav-item pt-1 dropdown-css">
+                                <a class="nav-link texthover rounded-pill dropbtn-css">{{ __('Units') }} <i
+                                        class="fa fa-caret-down"></i></a>
+                                <div class="dropdown-content-css">
+                                    <a href="{{ URL::to('units') }}">Show units <i class="fs-6 pe-2">&#8594;</i></a>
+                                    <a data-bs-toggle="modal" data-bs-target="#store-unit">Add unit <i class="fs-6 pe-2">&#8594;</i></a>
+                                </div>
                             </li>
 
                             <li class="nav-item pt-1">
-                                <a class="nav-link texthover rounded-pill"
-                                    href="#">{{ __('Dispatch') }}</a>
+                                <a class="nav-link texthover rounded-pill" href="#">{{ __('Dispatch') }}</a>
                             </li>
                         @endauth
                     </ul>
@@ -87,22 +91,23 @@
                                 </li>
                             @endif
                         @else
-                            <li class="dropdown notification-list topbar-dropdown">
+                            <li class="dropdown-css">
                                 <a id="navbarDropdown"
-                                    class="nav-link text-capitalize texthover rounded-pill me-0 nav-user waves-effect waves-light" href="#"
-                                    role="button" data-bs-toggle="dropdown" aria-haspopup="false" aria-expanded="false"
-                                    v-pre>
+                                    class="nav-link text-capitalize texthover rounded-pill me-0 nav-user waves-effect waves-light dropbtn-css"
+                                    href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="false"
+                                    aria-expanded="false" v-pre>
 
                                     <span class="pro-user-name ms-1">
-                                        {{ Auth::user()->name }} <span class="iconify" data-icon="mdi:chevron-down"></span>
+                                        {{ Auth::user()->name }} <span class="iconify"
+                                            data-icon="mdi:chevron-down"></span>
                                     </span>
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="/password">
+                                <div class="dropdown-content-css">
+                                    <a class="" href="/password">
                                         <i class="bi bi-key fs-6 px-2"></i>{{ __('Password') }}
                                     </a>
-                                    <a class="dropdown-item" href=""
+                                    <a class="" href=""
                                         onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                         <i class="bi bi-box-arrow-right fs-6 px-2"></i>{{ __('Logout') }}
                                     </a>
@@ -122,11 +127,9 @@
         <main style="max-height: 30vh">
             @yield("content")
         </main>
-
     </div>
-
     @yield('body')
-
 </body>
+@include('modals.units')
 
 </html>
