@@ -56,8 +56,8 @@
                 <ul class="nav client--nav col-md-10" style="margin-left: 7%; margin-right: 7%;">
                     <p style="max-width: 20%; !important" class="clients--name col-3 mb-0 p-2 text-dark">
                         {{ $unit->phone_number }} </p>
-                    <p class="clients--portal-heading col-md-2 mb-0 p-2 text-dark ps-5"> 123123123 </p>
-                    <p class="clients--account col-md-2 mb-0 p-2 text-dark ps-5"> 123123123 </p>
+                    <p class="clients--portal-heading col-md-2 mb-0 p-2 text-dark ps-5"> {{$unit->longitude}} </p>
+                    <p class="clients--account col-md-2 mb-0 p-2 text-dark ps-5"> {{$unit->latitude}} </p>
                     <p class="clients--companyname col-md-2 mb-0 border-0 p-2 text-dark w-0 ps-5">
                         {{ \Carbon\Carbon::parse($unit->updated_at)->toDayDateTimeString() }} </p>
                 </ul>
