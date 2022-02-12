@@ -1,49 +1,66 @@
-@extends('layouts.units')
+@extends('layouts.app')
 
-@section('content-body')
-    <div class="container m-auto">
+@section('head')
+    <link href="{{ mix('css/units.css') }}" rel="stylesheet">
+@endsection
+
+@section('body')
+    <div class="container-fluid mt-5 ">
         <div class="row">
-            <div class="border-dark table-responsive-sm">
-                <table class="table table-hover table-md text-start">
-                    <div class="card-header float-end">
-                        <form action="/units-clear" class="bg-dark" method="post">
-                            @csrf
-                            @method('post')
-                            {{-- only temporary --}}
-                            <button type="submit" class="btn btn-danger">
-                                Clear Data
-                            </button>
-                        </form>
+            <div class="col-md-12 col-sm-12 col-lg-12">
+                <div class="clients-search" style="margin-left: 7%; margin-right: 7%;">
+                    <form action="" method="get" id="adminClientSearch">
+                        <div class="clients-form-group has-search">
+                            <span class="fa fa-search form-control-feedback"></span>
+                            <input type="text" class="form-control" placeholder="Search" id="adminClientSearchInput"
+                                name="search">
+                        </div>
+                    </form>
+                </div>
+                <div class="clients--filter-container">&nbsp;
+                </div>
+                <div class="inner-menu shadow col-md-10 table-responsive" style="margin-left: 7%; margin-right: 7%;">
+                    <div class="client--nav-container">
+                        <ul class="nav client--nav-tabs">
+                            <p class="clients--name-heading mb-0 col-md-3">
+                                <a class="btn-link d-inline-flex border-0 p-2 text-dark fs-6 " href="">
+                                    Phone Number
+                                </a>
+                            </p>
+                            <p style="margin-left: -35px;margin-right: 63px;" class="clients--portal-heading col-md-2 mb-0">
+                                <a class="btn-link d-inline-flex border-0 p-2 text-dark fs-6"
+                                    onclick="" href="">
+                                    Longitude
+                                </a>
+                            </p>
+                            <p style="margin-left: -66px; margin-right: 65px;" class="clients--account-heading col-md-2 mb-0 ">
+                                <a class="btn-link d-inline-flex border-0 p-2 text-dark fs-6"
+                                    onclick="" href="">
+                                    Latitude
+                                </a>
+                            </p>
+                            <p style="margin-left: -49px;margin-right: 40px;"
+                                class="clients--companyname-heading col-md-2 mb-0">
+                                <a class="btn-link d-inline-flex border-0 p-2 text-dark fs-6"
+                                    onclick="" href="">
+                                    updated_at
+                                </a>
+                            </p>
+                        </ul>
                     </div>
-                    <thead class="table-success">
-                        <tr class="border-dark border fs-5 text-dark">
-                            <th width="25%">phone_number</th>
-                            <th width="25%">longitude</th>
-                            <th width="20%">Latitude</th>
-                            <th width="20%">updated_at</th>
-
-                        </tr>
-                    </thead>
-                    <tbody class="border border-1 searchbody bg-light" id="tb">
-                        @foreach ($units as $unit)
-                            <tr class="trbody bg-light border border-dark">
-                                <td>
-                                    {{ $unit->phone_number }}
-                                </td>
-                                <td>
-                                    {{ $unit->longitude }}
-                                </td>
-                                <td>
-                                    {{ $unit->latitude }}
-                                </td>
-                                <td>
-                                    {{ \Carbon\Carbon::parse($unit->updated_at)->toDayDateTimeString() }}
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                    <div id="clients-user-list" class="client--tab"></div>
+                </div>
             </div>
         </div>
+        @foreach ($units as $unit)
+                <ul class="nav client--nav col-md-10" style="margin-left: 7%; margin-right: 7%;">
+                    <p style="max-width: 20%; !important" class="clients--name col-3 mb-0 p-2 text-dark">
+                        {{ $unit->phone_number }} </p>
+                    <p class="clients--portal-heading col-md-2 mb-0 p-2 text-dark ps-5"> 123123123 </p>
+                    <p class="clients--account col-md-2 mb-0 p-2 text-dark ps-5"> 123123123 </p>
+                    <p class="clients--companyname col-md-2 mb-0 border-0 p-2 text-dark w-0 ps-5">
+                        {{ \Carbon\Carbon::parse($unit->updated_at)->toDayDateTimeString() }} </p>
+                </ul>
+        @endforeach
     </div>
 @endsection
