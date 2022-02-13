@@ -59,13 +59,9 @@
                                     href="{{ URL::to('lineman') }}">{{ __('Accounts') }}</a>
                             </li>
 
-                            <li class="nav-item pt-1 dropdown-css">
-                                <a class="nav-link texthover rounded-pill dropbtn-css">{{ __('Units') }} <i
-                                        class="fa fa-caret-down"></i></a>
-                                <div class="dropdown-content-css">
-                                    <a href="{{ URL::to('units') }}">Show units <i class="fs-6 pe-2">&#8594;</i></a>
-                                    <a data-bs-toggle="modal" data-bs-target="#store-unit">Add unit <i class="fs-6 pe-2">&#8594;</i></a>
-                                </div>
+                            <li class="nav-item pt-1">
+                                <a class="nav-link texthover rounded-pill"
+                                    href="{{ URL::to('units') }}">{{ __('Units') }}</a>
                             </li>
 
                             <li class="nav-item pt-1">
@@ -130,6 +126,5 @@
     </div>
     @yield('body')
 </body>
-@include('modals.units')
 
 </html>
