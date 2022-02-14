@@ -48,7 +48,7 @@
                                 <th width="25%">Name</th>
                                 <th width="25%">E-mail</th>
                                 <th width="20%">Designation</th>
-                                <th width="20%">Registration Date</th>
+                                <th width="20%">Registration&nbsp;Date</th>
                                 <th width="3%">&nbsp;</th>
                                 <th width="3%">&nbsp;</th>
                                 <th width="3%">&nbsp;</th>
