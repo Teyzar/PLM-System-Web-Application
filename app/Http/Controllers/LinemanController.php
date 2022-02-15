@@ -15,7 +15,13 @@ class LinemanController extends Controller
 
     public function index()
     {
+
         $linemen = Lineman::orderBy('created_at', 'desc')->paginate(10);
+        $count = $linemen->count();
+
+        if ($count == 0) {
+            Lineman::truncate();
+        }
 
         return view('lineman')->with('linemen', $linemen);
     }
@@ -141,20 +147,20 @@ class LinemanController extends Controller
                         </td>
 
                         <td>
-                            <a id= 'resetbtn' class='resetbtn' data-bs-toggle='modal' data-bs-target='#modalReset' onclick='resetPassword($lineman->id)'>
-                                <i class='fas fa-sync-alt text-success fs-6' data-toggle='tooltip' title='Reset password'></i>
+                            <a id= 'resetbtn' class='resetbtn' data-bs-toggle='modal' data-bs-target='#modalReset' onclick='resetPassword($lineman->id)' href=''>
+                                <i class='fas fa-sync-alt text-success p-1 bs-tooltip-top' data-toggle='tooltip' title='Reset password'></i>
                             </a>
                         </td>
 
                         <td>
-                            <a class='editbtn' onclick='editAccount($lineman->id)' data-bs-toggle='modal' data-bs-target='#modalEdit'>
-                                <i class='fas fa-user-edit text-primary fs-6' data-toggle='tooltip' title='Edit'></i>
+                            <a class='editbtn' onclick='editAccount($lineman->id)' data-bs-toggle='modal' data-bs-target='#modalEdit' href=''>
+                                <i class='fas fa-user-edit text-primary p-1 bs-tooltip-top' data-toggle='tooltip' title='Edit'></i>
                             </a>
                         </td>
 
                         <td>
-                            <a id= 'delbtn' class='deletebtn' data-bs-toggle='modal' data-bs-target='#modalDelete' onclick='deleteAccount($lineman->id)'>
-                                <i class='fas fa-trash fs-6 text-danger' data-toggle='tooltip' title='Delete'></i>
+                            <a id= 'delbtn' class='deletebtn' data-bs-toggle='modal' data-bs-target='#modalDelete' onclick='deleteAccount($lineman->id)' href=''>
+                                <i class='fas fa-trash text-danger p-1 bs-tooltip-top' data-toggle='tooltip' title='Delete'></i>
                             </a>
                         </td>
                     </tr>
