@@ -9,12 +9,20 @@ use Illuminate\Support\Facades\Validator;
 use PhpMqtt\Client\Exceptions\MqttClientException;
 use PhpMqtt\Client\Facades\MQTT;
 use PhpMqtt\Client\MqttClient;
+use Illuminate\Support\Facades\DB;
+
 
 class UnitsController extends Controller
 {
     public function index()
     {
-        $units = Unit::paginate(10);
+        $units = Unit::paginate(8);
+
+        $count = $units->count();
+
+        if ($count == 0) {
+            Unit::truncate();
+        }
 
         return view('units')->with('units', $units);
     }
@@ -27,10 +35,16 @@ class UnitsController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'phone_number' => 'required|unique:units|max:13|min:11',
+            'phone_number' => 'required|unique:units|max:13|min:13',
         ];
 
+        $startsWith = str_starts_with($request->phone_number, '+639');
+
         $validation = Validator::make($request->all(), $rules);
+
+        if (!$startsWith) {
+            return back()->withErrors(['string' => "Mobile number should start with +639..."])->withInput();
+        }
 
         if ($validation->fails()) {
             return back()->withErrors($validation)->withInput();
@@ -125,6 +139,23 @@ class UnitsController extends Controller
         return response('', $statusCode);
     }
 
+    public function destroy($id)
+    {
+        $unit = Unit::find($id);
+        if ($unit) {
+
+            $remove = Unit::where('id', $id)->delete();
+
+            $data = Unit::all()->where('id','>', $id);
+            foreach ($data as $rowId) {
+                $rowId->id = $rowId->id-1;
+                $rowId->update();
+            }
+
+            return json_encode($remove);
+        }
+    }
+
     public function search(Request $request)
     {
         if (!$request->ajax()) abort(404);
@@ -133,13 +164,16 @@ class UnitsController extends Controller
         $searchTerm = $request->searchTerm;
         $selectTerm = $request->selectTerm;
 
-        $unit = Unit::paginate(10);
+        $unit = Unit::paginate(8);
 
         if (!empty($searchTerm)) {
             $unit = Unit::where($selectTerm, $searchTerm)
                 ->get();
+            if ($selectTerm === 'updated_at') {
+                $unit = Unit::where('updated_at', 'LIKE', '%' . $searchTerm . "%")
+                ->get();
+            }
         }
-
         $count = $unit->count();
         if ($count <= 0) {
             $output .= "
@@ -154,8 +188,8 @@ class UnitsController extends Controller
                 $updated_at = \Carbon\Carbon::parse($unit->updated_at)->toDayDateTimeString();
 
                 $output .= "
-                <tr class='trbody bg-light client--nav tdhover'>
-                    <td class=''>
+                <tr id='$unit->id' class='trbody bg-light client--nav tdhover'>
+                    <td class='text-danger'>
                         $unit->id
                     </td>
                     <td class=''>
@@ -175,6 +209,13 @@ class UnitsController extends Controller
 
                     <td class=''>
                         $updated_at
+                    </td>
+                    <td class=''>
+                        <button id='delbtn' class='btn border-0 deletebtn'
+                            onclick='removeUnit($unit->id)' type='button' data-bs-toggle='modal' data-bs-target='#modalRemove'>
+                            <i class='fas fa-trash fs-5 text-danger bs-tooltip-top tooltip-arrow'
+                                data-toggle='tooltip' data-bs-placement='top' title='Remove'></i>
+                        </button>
                     </td>
                 </tr>
                 ";
