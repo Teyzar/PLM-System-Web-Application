@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/password', ChangePasswordController::class)->only(['index', 'store']);
 
-    Route::resource('/units', UnitsController::class)->only(['index', 'create', 'store']);
+    Route::resource('/units', UnitsController::class)->only(['index', 'create', 'store', 'destroy']);
     Route::get('/units-search', [UnitsController::class, 'search']);
 
 });
