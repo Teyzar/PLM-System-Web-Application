@@ -35,7 +35,20 @@
         <div class="row">
             <div class="border-dark table-responsive-sm">
                 @if (count($linemen) <= 0)
-                    <div class="card border-1 border-secondary align-items-center pt-5 ">
+                <table class="table table-hover table-md text-start">
+                    <thead class="table table-md text-start inner-menu shadow">
+                        <tr class="border-dark border fs-6 text-dark bg-white">
+                            <th width="25%">Name</th>
+                            <th width="25%">E-mail</th>
+                            <th width="20%">Designation</th>
+                            <th width="20%">Registration&nbsp;Date</th>
+                            <th width="3.5%">&nbsp;</th>
+                            <th width="3.5%">&nbsp;</th>
+                            <th width="3.5%">&nbsp;</th>
+                        </tr>
+                    </thead>
+                </table>
+                    <div class="border border-black align-items-center pt-5 ">
                         <span
                             class="justify-content-center d-flex pb-5 pt-2 text-danger opacity-75 addicon fs-5">
                             No Registered Accounts
@@ -43,15 +56,15 @@
                     </div>
                 @else
                     <table class="table table-hover table-md text-start">
-                        <thead class="table-success">
-                            <tr class="border-dark border fs-6 text-dark">
+                        <thead class="table table-md text-start inner-menu shadow">
+                            <tr class="border-dark border fs-6 text-dark bg-white">
                                 <th width="25%">Name</th>
                                 <th width="25%">E-mail</th>
                                 <th width="20%">Designation</th>
                                 <th width="20%">Registration&nbsp;Date</th>
-                                <th width="3%">&nbsp;</th>
-                                <th width="3%">&nbsp;</th>
-                                <th width="3%">&nbsp;</th>
+                                <th width="3.5%">&nbsp;</th>
+                                <th width="3.5%">&nbsp;</th>
+                                <th width="3.5%">&nbsp;</th>
                             </tr>
                         </thead>
 
@@ -77,24 +90,24 @@
                                     <td class="">
                                         <a id="resetbtn" class="resetbtn"
                                             onclick="resetPassword({{ $lineman->id }})" data-bs-toggle="modal"
-                                            data-bs-target="#modalReset">
-                                            <i class="fas fa-sync-alt text-success fs-6" data-toggle="tooltip"
+                                            data-bs-target="#modalReset" href="">
+                                            <i class="fas fa-sync-alt text-success p-1 bs-tooltip-top" data-toggle="tooltip"
                                                 title="Reset password"></i>
                                         </a>
                                     </td>
 
                                     <td class="">
                                         <a class="editbtn" onclick="editAccount({{ $lineman->id }})"
-                                            data-bs-toggle="modal" data-bs-target="#modalEdit">
-                                            <i class="fas fa-user-edit text-primary fs-6" data-toggle="tooltip"
+                                            data-bs-toggle="modal" data-bs-target="#modalEdit" href="">
+                                            <i class="fas fa-user-edit text-primary p-1 bs-tooltip-top" data-toggle="tooltip"
                                                 title="Edit"></i>
                                         </a>
                                     </td>
 
                                     <td class="">
                                         <a id="delbtn" class="deletebtn" data-bs-toggle="modal"
-                                            data-bs-target="#modalDelete" onclick="deleteAccount({{ $lineman->id }})">
-                                            <i class="fas fa-trash fs-6 text-danger" data-toggle="tooltip"
+                                            data-bs-target="#modalDelete" onclick="deleteAccount({{ $lineman->id }})" href="">
+                                            <i class="fas fa-trash text-danger p-1 bs-tooltip-top" data-toggle="tooltip"
                                                 title="Delete"></i>
                                         </a>
                                     </td>

@@ -25,11 +25,11 @@
     @yield("head")
 </head>
 
-<body style="overflow: hidden">
+<body>
     @include('sweetalert::alert')
 
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white">
+        <nav class="navbar navbar-expand-md navbar-light bg-white" style="width: 100%; height: 100%">
             <div class="container" style="min-height: 55px">
                 <img src="{{ mix('img/logo.png') }}" class="navbar-brand p-2 collapsible"
                     style="width: 55px; height: 55px">
@@ -120,7 +120,7 @@
             </div>
         </nav>
 
-        <main style="max-height: 30vh">
+        <main>
             @yield("content")
         </main>
     </div>

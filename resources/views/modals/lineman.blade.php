@@ -1,7 +1,7 @@
 <div class="modal fade pt-5" id="modalRegisterForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content border-5 border-info">
+        <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="staticBackdropLabel">Account Register</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -11,7 +11,7 @@
                     @csrf
                     <div class="mb-3">
                         <label class="form-label text-dark opacity-100">Name</label>
-                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror border-info"
+                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
                             id="name" name="name" placeholder="Name" required autocomplete="name" autofocus
                             value="{{ old('name') }}">
 
@@ -25,7 +25,7 @@
                     <div class="mb-3">
                         <label class="form-label text-dark opacity-100">Email Address</label>
                         <input id="email" type="text"
-                            class="form-control @error('email') is-invalid @enderror border-info" id="email"
+                            class="form-control @error('email') is-invalid @enderror" id="email"
                             name="email" placeholder="Email" required autocomplete="email" value="{{ old('email') }}">
 
                         @if ($errors->has('email'))
@@ -35,7 +35,7 @@
 
                     <div class="mb-3">
                         <label class="form-label text-dark opacity-100">Barangay</label>
-                        <input type="text" class="form-control border-info" id="barangay" name="barangay"
+                        <input type="text" class="form-control" id="barangay" name="barangay"
                             placeholder="Barangay" required="" value="{{ old('barangay') }}">
                     </div>
 
