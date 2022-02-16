@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ChangePasswordController;
+use App\Http\Controllers\DispatchController;
 use App\Http\Controllers\LinemanController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\HomeController;
@@ -37,5 +38,9 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/units', UnitsController::class)->only(['index', 'create', 'store', 'destroy']);
     Route::get('/units-search', [UnitsController::class, 'search']);
+
+    Route::resource('/dispatch', DispatchController::class)->only(['index','store']);
+    Route::get('/dispatch-lineman-search', [DispatchController::class, 'search']);
+
 
 });

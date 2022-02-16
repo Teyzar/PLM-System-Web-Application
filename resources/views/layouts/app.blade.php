@@ -65,7 +65,7 @@
                             </li>
 
                             <li class="nav-item pt-1">
-                                <a class="nav-link texthover rounded-pill" href="#">{{ __('Dispatch') }}</a>
+                                <a class="nav-link texthover rounded-pill" href="/dispatch">{{ __('Dispatch') }}</a>
                             </li>
                         @endauth
                     </ul>

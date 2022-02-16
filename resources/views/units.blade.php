@@ -17,8 +17,8 @@
                         <select class="form-select dropdown-toggle" type="button" name="select">
                             <option value="">Select</option>
                             <option value="id">Id</option>
-                            <option value="phone_number">Phone number</option>
                             <option value="active">Status</option>
+                            <option value="phone_number">Phone&nbsp;number</option>
                             <option value="updated_at">Updated&nbsp;Last</option>
                         </select>
                     </div>
@@ -95,7 +95,7 @@
                                             {{ \Carbon\Carbon::parse($unit->updated_at)->toDayDateTimeString() }}
                                         </td>
                                         <td class="">
-                                            <button id="delbtn" class="btn border-0 deletebtn"
+                                            <button id="delbtn" class="btn border-0 deletebtn float-end"
                                                 onclick="removeUnit({{ $unit->id }})" type="button">
                                                 <i class="fas fa-trash fs-5 text-danger bs-tooltip-top tooltip-arrow"
                                                     data-toggle="tooltip" data-bs-placement="top" title="Remove"></i>

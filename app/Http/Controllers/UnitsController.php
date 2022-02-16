@@ -51,7 +51,7 @@ class UnitsController extends Controller
         }
 
         $success = Unit::create([
-            'active' => true,
+            'active' => 'active',
             'latitude' => '10.773333',
             'longitude' => '10.1122323',
             'phone_number' => $request->phone_number
@@ -143,15 +143,7 @@ class UnitsController extends Controller
     {
         $unit = Unit::find($id);
         if ($unit) {
-
             $remove = Unit::where('id', $id)->delete();
-
-            $data = Unit::all()->where('id','>', $id);
-            foreach ($data as $rowId) {
-                $rowId->id = $rowId->id-1;
-                $rowId->update();
-            }
-
             return json_encode($remove);
         }
     }
