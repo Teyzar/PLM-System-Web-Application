@@ -46,18 +46,17 @@ class DispatchController extends Controller
         $countLineman = $request->lineman_no;
         $countUnit = $request->unit_no;
 
-        if (!$countLineman) {
-            Alert::error('Lineman', 'Failed');
-
-            return redirect()->back();
-        }
-
 
         if ($countLineman) {
             foreach ($countLineman as $key => $dataLineman) {
                 $selected_lineman = Lineman::where('id', $key)->get();
-                foreach ($selected_lineman as $data) {
-                    dump($data->email);
+                foreach ($selected_lineman as $lineman) {
+                    $email = [
+                        'email' => $lineman->email
+                    ];
+                    echo '<pre>';
+                    print_r($email);
+                    echo '</pre>';
                 }
             }
         }
@@ -67,7 +66,12 @@ class DispatchController extends Controller
             foreach ($countUnit as $key => $dataUnit) {
                 $selected_unit = Unit::where('id', $key)->get();
                 foreach ($selected_unit as $unit) {
-                    dump($unit->phone_number);
+                    $phone = [
+                        'number' => $unit->phone_number
+                    ];
+                    echo '<pre>';
+                    print_r($phone);
+                    echo '</pre>';
                 }
             }
         }

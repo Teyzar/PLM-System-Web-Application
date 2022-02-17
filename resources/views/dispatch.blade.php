@@ -6,14 +6,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
-    <script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
-    <script src="dist/js/toastme.js"></script>
 @endsection
 
 @section('content')
     <form method="POST" action="/dispatch" class="form-container">
         @csrf
-        <div style="margin-left: 4%; margin-right: 4%;">
+        <div id="" style="margin-left: 4%; margin-right: 4%;" class="mt-3 border-css">
             <div class="container-fluid">
                 <div class="row mt-4">
                     <div class="d-flex justify-content-end pb-1">
@@ -111,13 +109,18 @@
 
             if (checkedValueUnits == "on" && checkedValueLineman == "on") {
                 $('#modalConfirm').modal('show');
-            } else {
-                $.toast("aweawe");
+            } else if (checkedValueUnits != "on" || checkedValueLineman != "on") {
+                $.toast({
+                    text: '<p>To dispatch, you should choose units and lineman.</p>',
+                    showHideTransition: 'slide',
+                    bgColor: '#b71c1c',
+                    textColor: '#eee',
+                    stack: 3,
+                    textAlign: 'left',
+                    position: 'bottom-left'
+                })
             }
-
         }
-
-
 
         //disable enter key keyboard when submitting
         $("form").bind("keypress", function(e) {
@@ -126,7 +129,6 @@
             }
         });
         $(document).ready(function() {
-
             $('#table').DataTable({
                 "lengthMenu": [
                     [10, 20, 50, -1],
