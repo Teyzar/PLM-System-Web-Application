@@ -118,8 +118,8 @@ class LinemanController extends Controller
         $count = $linemen->count();
         if ($count <= 0) {
             $output .= "
-                <tr border-width: 1px;' class='trbody bg-light border border-dark'>
-                    <td class='text-center fs-6 border-top text-danger p-4' colspan ='7'>
+                <tr border-width: 1px;' class='trbody bg-light'>
+                    <td class='text-center fs-6 text-danger p-4' colspan ='7'>
                         No Record Found
                     </td>
                 </tr>
@@ -129,20 +129,20 @@ class LinemanController extends Controller
                 $created_at = Carbon::parse($lineman->created_at)->toDayDateTimeString();
 
                 $output .= "
-                    <tr class='trbody bg-light border border-dark'>
-                        <td class='fs-6 text-black border-top text-capitalize'>
+                    <tr class='trbody bg-light'>
+                        <td class='fs-6 text-black text-capitalize'>
                             $lineman->name
                         </td>
 
-                        <td class='text-black fs-6 border-top'>
+                        <td class='text-black fs-6'>
                             $lineman->email
                         </td>
 
-                        <td class='text-black fs-6 text-capitalize border-top'>
+                        <td class='text-black fs-6 text-capitalize'>
                             $lineman->barangay
                         </td>
 
-                        <td class='text-black fs-6 text-capitalize border-top'>
+                        <td class='text-black fs-6 text-capitalize'>
                             $created_at
                         </td>
 

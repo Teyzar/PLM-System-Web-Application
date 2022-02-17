@@ -77,3 +77,16 @@
     border-width: thick;
     padding: 20px;
 }
+
+.inner-menu {
+    background: #fff;
+    -webkit-border-top-left-radius: 4px;
+    -webkit-border-top-right-radius: 4px;
+    -moz-border-radius-topleft: 4px;
+    -moz-border-radius-topright: 4px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+  }
+  .shadow {
+    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.06) !important;
+  }

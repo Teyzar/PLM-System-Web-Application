@@ -40,7 +40,4 @@ Route::middleware('auth')->group(function () {
     Route::get('/units-search', [UnitsController::class, 'search']);
 
     Route::resource('/dispatch', DispatchController::class)->only(['index','store']);
-    Route::get('/dispatch-lineman-search', [DispatchController::class, 'search']);
-
-
 });

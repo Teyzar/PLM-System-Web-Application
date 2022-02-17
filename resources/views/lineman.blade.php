@@ -7,37 +7,36 @@
 
 @section('body')
     <div class="container mt-4">
-        <div class="card-header border-black border border-1 fs-5 count bg-light text-dark">
+        <div class="card-header fs-5 count bg-white text-muted inner-menu shadow">
             {{ 'Accounts (' . count($linemen) . ')' }}
         </div>
 
-        <div class="card align-items-center flex-row justify-content-center fs-5 px-3 bg-light border border-black border-1">
+        <div class="card align-items-center flex-row fs-5 px-3 inner-menu shadow">
             <i class="bi bi-search p-1 text-dark"></i>
             <div class="container p-2">
                 <div class="row height d-flex justify-content-start flex-row navbar navbar-expand-sm">
                     <div class="col-md-8">
-                        <div class="search d-flex"><input type="text" class="form-control border-warning border-1"
+                        <div class="search d-flex"><input type="text" class="form-control"
                                 placeholder="Search accounts..." name="search" id="search">
                         </div>
                     </div>
                 </div>
             </div>
 
-            <a href="" class="addicon text-dark" data-bs-toggle="modal" data-bs-target="#modalRegisterForm"
+            <a href="" class="addicon text-dark bs-tooltip-top tooltip-arrow" data-bs-toggle="modal" data-bs-target="#modalRegisterForm"
                 data-toggle="tooltip" title="Register">
                 <i class="fad fa-user-plus fs-3 addicon"></i>
             </a>
-
         </div>
     </div>
 
     <div class="container m-auto">
         <div class="row">
-            <div class="border-dark table-responsive-sm">
+            <div class="table-responsive-md">
                 @if (count($linemen) <= 0)
-                <table class="table table-hover table-md text-start">
-                    <thead class="table table-md text-start inner-menu shadow">
-                        <tr class="border-dark border fs-6 text-dark bg-white">
+                <table class="table-hover text-start">
+                    <thead class="table table-md text-start">
+                        <tr class="">
                             <th width="25%">Name</th>
                             <th width="25%">E-mail</th>
                             <th width="20%">Designation</th>
@@ -55,9 +54,9 @@
                         </span>
                     </div>
                 @else
-                    <table class="table table-hover table-md text-start">
+                    <table class="table border table-hover table-md text-start inner-menu shadow">
                         <thead class="table table-md text-start inner-menu shadow">
-                            <tr class="border-dark border fs-6 text-dark bg-white">
+                            <tr class="table-borderless text-dark bg-white">
                                 <th width="25%">Name</th>
                                 <th width="25%">E-mail</th>
                                 <th width="20%">Designation</th>
@@ -68,22 +67,22 @@
                             </tr>
                         </thead>
 
-                        <tbody class="border border-1 searchbody bg-light" id="tb">
+                        <tbody class="searchbody bg-light" id="tb">
                             @foreach ($linemen as $lineman)
-                                <tr class="trbody bg-light border border-dark">
-                                    <td class="fs-6 text-black border-top text-capitalize">
+                                <tr class="trbody bg-light">
+                                    <td class="fs-6 text-black text-capitalize">
                                         {{ $lineman->name }}</a>
                                     </td>
 
-                                    <td class="text-black fs-6 border-top">
+                                    <td class="text-black fs-6">
                                         {{ $lineman->email }}
                                     </td>
 
-                                    <td class="text-black fs-6 text-capitalize border-top">
+                                    <td class="text-black fs-6 text-capitalize">
                                         {{ $lineman->barangay }}
                                     </td>
 
-                                    <td class="text-black fs-6 text-capitalize border-top">
+                                    <td class="text-black fs-6 text-capitalize">
                                         {{ \Carbon\Carbon::parse($lineman->created_at)->toDayDateTimeString() }}
                                     </td>
 

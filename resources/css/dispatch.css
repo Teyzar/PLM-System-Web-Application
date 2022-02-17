@@ -1,0 +1,21 @@
+.tabs {
+    font-size: 14px;
+    margin: auto;
+    line-height: 35px;
+    color: #c2cfe0;
+    background-color: lightgoldenrodyellow;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #a31d3e;
+    border-radius: 10%;
+    border-color: wheat;
+    transition: 0.3s all ease-in-out;
+}
+input[type="checkbox"] {
+    font-size: 16px;
+    border-width: thin;
+    border-color: gray;
+    margin-top: 9px;
+    cursor: pointer;
+}
