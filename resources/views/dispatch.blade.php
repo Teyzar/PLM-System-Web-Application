@@ -14,9 +14,6 @@
         <div id="" style="margin-left: 4%; margin-right: 4%;" class="mt-3 border-css">
             <div class="container-fluid">
                 <div class="row mt-4">
-                    <div class="d-flex justify-content-end pb-1">
-                        <button type="button" class="border-0 btn btn-primary px-3" onclick="dispatchBtn()">Dispatch</button>
-                    </div>
                     <div class="col card-header border inner-menu shadow">Units</div>
                     <div class="col card-header border inner-menu shadow">Lineman</div>
                     <div class="w-100"></div>
@@ -100,6 +97,9 @@
                 </div>
             </div>
         </div>
+        <div class="d-flex justify-content-center pb-1 mt-5">
+            <button type="button" disabled class="border-0 btn btn-secondary px-5" onclick="dispatchBtn()">Dispatch</button>
+        </div>
     </form>
 
     <script>
@@ -117,7 +117,7 @@
                     textColor: '#eee',
                     stack: 3,
                     textAlign: 'left',
-                    position: 'bottom-left'
+                    position: 'top-right'
                 })
             }
         }
