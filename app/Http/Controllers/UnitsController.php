@@ -51,7 +51,7 @@ class UnitsController extends Controller
         }
 
         $success = Unit::create([
-            'active' => 'active',
+            'active' => true,
             'latitude' => '10.773333',
             'longitude' => '10.1122323',
             'phone_number' => $request->phone_number
