@@ -196,4 +196,28 @@ class LinemanController extends Controller
 
         return json_encode($data['lineman']);
     }
+
+    public function login(Request $request) {
+        $fields = $request->validate([
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'password' => ['required', 'string'],
+        ]);
+
+        $lineman = Lineman::where('email', $fields['email'])->first();
+        if (!$lineman) {
+            return response([
+                'message' => 'These credentials do not match our records.'
+            ], 401);
+        }
+
+        if (!Hash::check($fields['password'], $lineman->password)) {
+            return response([
+                'message' => 'The provided password is incorrect.'
+            ], 401);
+        }
+
+        $token = $lineman->createToken('apiToken')->plainTextToken;
+
+        return response(['token' => $token], 200);
+    }
 }
