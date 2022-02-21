@@ -19,8 +19,8 @@ use Illuminate\Support\Facades\Route;
 
 // Public Routes
 
-Route::post('/auth/register', [ApiAuthController::class, 'register']);
-Route::post('/auth/login', [ApiAuthController::class, 'login']);
+Route::post('/auth/user/register', [ApiAuthController::class, 'register']);
+Route::post('/auth/user/login', [ApiAuthController::class, 'login']);
 
 Route::post('/auth/lineman/login', [LinemanController::class, 'login']);
 
@@ -28,7 +28,7 @@ Route::post('/auth/lineman/login', [LinemanController::class, 'login']);
 // Protected Routes
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/auth/logout', [ApiAuthController::class, 'logout']);
+    Route::post('/auth/user/logout', [ApiAuthController::class, 'logout']);
 
     Route::patch('/units/{phone_number}', [UnitsController::class, 'update']);
 
