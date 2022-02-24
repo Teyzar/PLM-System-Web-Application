@@ -57,8 +57,8 @@
                             </span>
                         </div>
                     @else
-                        <table class="table table-md text-start inner-menu shadow">
-                            <div class="">
+                        <table id="table" class="table table-md text-start">
+                            <thead class="">
                                 <tr class="client--nav-tabs text-secondary">
                                     <th width="5%">Id</th>
                                     <th width="10%">Status</th>
@@ -67,12 +67,22 @@
                                     <th width="20%">Latitude</th>
                                     <th width="20%">Updated&nbsp;Last</th>
                                     <th width="5%">&nbsp;</th>
-
                                 </tr>
-                            </div>
+                            </thead>
+                            <tfoot>
+                                <tr class="client--nav-tabs text-secondary">
+                                    <th width="5%">Id</th>
+                                    <th width="10%">Status</th>
+                                    <th width="20%">Mobile #</th>
+                                    <th width="20%">Longitude</th>
+                                    <th width="20%">Latitude</th>
+                                    <th width="20%">Updated&nbsp;Last</th>
+                                    <th width="5%">&nbsp;</th>
+                                </tr>
+                            </tfoot>
                             <tbody class="searchbody bg-light border-0 " id="tb">
                                 @foreach ($units as $unit)
-                                    <tr id="{{ $unit->id }}" class="trbody bg-light client--nav tdhove data">
+                                    <tr id="{{ $unit->id }}" class="trbody bg-light client--nav tdhover data">
                                         <td class="text-danger">
                                             {{ $unit->id }}
                                         </td>
@@ -92,7 +102,7 @@
                                         </td>
 
                                         <td class="">
-                                            {{ \Carbon\Carbon::parse($unit->updated_at)->toDayDateTimeString() }}
+                                            {{ $unit->updated_at }}
                                         </td>
                                         <td class="">
                                             <button id="delbtn" class="btn border-0 deletebtn float-end"
@@ -123,6 +133,19 @@
 
         <script>
             $(document).ready(function() {
+
+                $('#table').DataTable({
+                    "lengthMenu": [
+                        [10, 20, 50, -1],
+                        [10, 20, 50, "All"]
+                    ],
+                    "bFilter": false,
+                    'columnDefs': [{
+                        'targets': [6],
+                        'orderable': false, // orderable false
+                    }],
+                });
+
                 $('[data-toggle="tooltip"]').tooltip();
                 $('#search-form').submit(function(event) {
                     event.preventDefault();

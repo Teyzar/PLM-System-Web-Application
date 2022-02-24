@@ -32,7 +32,6 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::middleware('auth')->group(function () {
     Route::resource('/lineman', LinemanController::class)->except(['create', 'edit']);
     Route::post('/lineman/{id}/reset', [LinemanController::class, 'reset']);
-    Route::get('/lineman-search', [LinemanController::class, 'search']);
 
     Route::resource('/password', ChangePasswordController::class)->only(['index', 'store']);
 

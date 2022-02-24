@@ -11,78 +11,76 @@
             {{ 'Accounts (' . count($linemen) . ')' }}
         </div>
 
-        <div class="card align-items-center flex-row fs-5 px-3 inner-menu shadow">
-            <i class="bi bi-search p-1 text-dark"></i>
-            <div class="container p-2">
-                <div class="row height d-flex justify-content-start flex-row navbar navbar-expand-sm">
+        <div class="card bg-light border-0 inner-menu shadow align-items-center flex-row px-3">
+            <i class="bi bi-search p-1 text-dark fs-5"></i>
+            <div class="container p-1">
+                <div class="row justify-content-start flex-row">
                     <div class="col-md-8">
-                        <div class="search d-flex"><input type="text" class="form-control"
-                                placeholder="Search accounts..." name="search" id="search">
+                        <div class="search d-flex"><input type="text" class="form-control" placeholder="Search accounts..."
+                                name="search" id="search">
                         </div>
                     </div>
                 </div>
             </div>
 
-            <a href="" class="addicon text-dark bs-tooltip-top tooltip-arrow" data-bs-toggle="modal" data-bs-target="#modalRegisterForm"
-                data-toggle="tooltip" title="Register">
-                <i class="fad fa-user-plus fs-3 addicon"></i>
+            <a href="" class="addicon text-dark bs-tooltip-top tooltip-arrow btn btn-warning d-flex align-items-center px-3 py-1 addicon" data-bs-toggle="modal"
+                data-bs-target="#modalRegisterForm" data-toggle="tooltip" title="Register">
+                <i class="fa-solid fa-plus pe-2"></i>Register
             </a>
         </div>
     </div>
 
-    <div class="container m-auto">
+    <div class="container mt-3">
         <div class="row">
             <div class="table-responsive-md">
                 @if (count($linemen) <= 0)
-                <table class="table-hover text-start">
-                    <thead class="table table-md text-start">
-                        <tr class="">
-                            <th width="25%">Name</th>
-                            <th width="25%">E-mail</th>
-                            <th width="20%">Designation</th>
-                            <th width="20%">Registration&nbsp;Date</th>
-                            <th width="3.5%">&nbsp;</th>
-                            <th width="3.5%">&nbsp;</th>
-                            <th width="3.5%">&nbsp;</th>
-                        </tr>
-                    </thead>
-                </table>
+                    <table class="table table-md text-start">
+                        <thead class="">
+                            <tr class="client--nav-tabs text-secondary">
+                                <th>Name</th>
+                                <th>E-mail</th>
+                                <th>Designation</th>
+                                <th>Registration&nbsp;Date</th>
+                                <th>&nbsp;</th>
+                                <th>&nbsp;</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                    </table>
                     <div class="border border-black align-items-center pt-5 ">
-                        <span
-                            class="justify-content-center d-flex pb-5 pt-2 text-danger opacity-75 addicon fs-5">
+                        <span class="justify-content-center d-flex pb-5 pt-2 text-danger opacity-75 addicon fs-5">
                             No Registered Accounts
                         </span>
                     </div>
                 @else
-                    <table class="table border table-hover table-md text-start inner-menu shadow">
-                        <thead class="table table-md text-start inner-menu shadow">
-                            <tr class="table-borderless text-dark bg-white">
-                                <th width="25%">Name</th>
-                                <th width="25%">E-mail</th>
+                    <table id="table" class="table table-md text-start">
+                        <thead class="table table-md inner-menu shadow">
+                            <tr class="client--nav-tabs text-dark">
+                                <th width="20%">Name</th>
+                                <th width="20%">E-mail</th>
                                 <th width="20%">Designation</th>
-                                <th width="20%">Registration&nbsp;Date</th>
-                                <th width="3.5%">&nbsp;</th>
-                                <th width="3.5%">&nbsp;</th>
-                                <th width="3.5%">&nbsp;</th>
+                                <th width="15%">Registration&nbsp;Date</th>
+                                <th width="2.5%">&nbsp;</th>
+                                <th width="2.5%">&nbsp;</th>
+                                <th width="2.5%">&nbsp;</th>
                             </tr>
                         </thead>
-
                         <tbody class="searchbody bg-light" id="tb">
                             @foreach ($linemen as $lineman)
-                                <tr class="trbody bg-light">
-                                    <td class="fs-6 text-black text-capitalize">
+                                <tr class="trbody bg-light tdhover">
+                                    <td class="text-black text-capitalize">
                                         {{ $lineman->name }}</a>
                                     </td>
 
-                                    <td class="text-black fs-6">
+                                    <td class="text-black">
                                         {{ $lineman->email }}
                                     </td>
 
-                                    <td class="text-black fs-6 text-capitalize">
+                                    <td class="text-black text-capitalize">
                                         {{ $lineman->barangay }}
                                     </td>
 
-                                    <td class="text-black fs-6 text-capitalize">
+                                    <td class="text-black text-capitalize">
                                         {{ \Carbon\Carbon::parse($lineman->created_at)->toDayDateTimeString() }}
                                     </td>
 
@@ -98,14 +96,15 @@
                                     <td class="">
                                         <a class="editbtn" onclick="editAccount({{ $lineman->id }})"
                                             data-bs-toggle="modal" data-bs-target="#modalEdit" href="">
-                                            <i class="fas fa-user-edit text-primary p-1 bs-tooltip-top" data-toggle="tooltip"
-                                                title="Edit"></i>
+                                            <i class="fas fa-user-edit text-primary p-1 bs-tooltip-top"
+                                                data-toggle="tooltip" title="Edit"></i>
                                         </a>
                                     </td>
 
                                     <td class="">
                                         <a id="delbtn" class="deletebtn" data-bs-toggle="modal"
-                                            data-bs-target="#modalDelete" onclick="deleteAccount({{ $lineman->id }})" href="">
+                                            data-bs-target="#modalDelete" onclick="deleteAccount({{ $lineman->id }})"
+                                            href="">
                                             <i class="fas fa-trash text-danger p-1 bs-tooltip-top" data-toggle="tooltip"
                                                 title="Delete"></i>
                                         </a>
@@ -114,11 +113,6 @@
                             @endforeach
                         </tbody>
                     </table>
-
-                    {{-- pagination --}}
-                    <div class="d-flex justify-content-center fs-10">
-                        {{ $linemen->links() }}
-                    </div>
                 @endif
             </div>
         </div>
@@ -134,28 +128,22 @@
 
     <script>
         $(document).ready(function() {
+            var table = $('#table').DataTable({
+                "lengthMenu": [
+                    [10, 25, 50, -1],
+                    [10, 25, 50, "All"]
+                ],
+                'columnDefs': [{
+                    'targets': [4, 5, 6],
+                    'orderable': false,
+                }],
+            });
+
+            $('#search').on('keyup', function() {
+                table.search(this.value).draw();
+            });
+
             $('[data-toggle="tooltip"]').tooltip();
-            try {
-                $('#search').on('keyup', function() {
-                    $value = $(this).val();
-                    $.ajax({
-                        type: 'get',
-                        url: 'lineman-search',
-                        data: {
-                            'searchTerm': $value
-                        },
-                        dataType: 'json',
-                        success: function(data) {
-                            $('.searchbody').html(data.result);
-                            $('[data-toggle="tooltip"]').tooltip();
-                            $('.count').html(`Accounts (${data.count})`);
-                        },
-                        error: (err) => console.error(err)
-                    });
-                })
-            } catch (error) {
-                console.error(error);
-            }
         });
 
         function deleteAccount(id) {

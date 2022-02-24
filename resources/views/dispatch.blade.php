@@ -4,12 +4,10 @@
     <link href="{{ mix('css/units.css') }}" rel="stylesheet">
     <link href="{{ mix('css/dispatch.css') }}" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
 @endsection
 
 @section('content')
-    <form method="POST" action="/dispatch" class="form-container">
+    <form method="POST" action="/dispatch" class="form-container" id="formid">
         @csrf
         <div id="" style="margin-left: 4%; margin-right: 4%;" class="mt-3 border-css">
             <div class="container-fluid">
@@ -19,8 +17,7 @@
                     <div class="w-100"></div>
                     <div class="col-6 card-body border bg-light inner-menu shadow border border-black">
                         <div class="table-responsive-md p-1">
-                            <table id="table"
-                                class="table border mt-1 table-borderless cell compact tabs inner-menu shadow">
+                            <table id="table" class="table border mt-1 table-borderless cell compact tabs inner-menu shadow">
                                 <thead>
                                     <tr class="text-secondary">
                                         <th scope="col" class="px-3"><input name="all" id="checkall-units"
@@ -32,11 +29,22 @@
                                         <th scope="col">Latitude</th>
                                     </tr>
                                 </thead>
+                                <tfoot class="table border table-borderless cell compact tabs inner-menu shadow">
+                                    <tr class="text-secondary">
+                                        <th></th>
+                                        <th scope="col">Id</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Mobile #</th>
+                                        <th scope="col">Longitude</th>
+                                        <th scope="col">Latitude</th>
+                                    </tr>
+                                </tfoot>
                                 <tbody>
                                     @foreach ($units as $unit)
-                                        <tr class="text-dark">
-                                            <td scope="col" class="px-3"><input class="form-check-input cb-units"
-                                                    type="checkbox" name="unit_no[{{ $unit->id }}]"></td>
+                                        <tr class="text-dark" id="trunit">
+                                            <td scope="col" class="px-3"><input id="unitid"
+                                                    class="form-check-input cb-units" type="checkbox"
+                                                    name="unit_no[{{ $unit->id }}]"></td>
                                             <td scope="col">{{ $unit->id }}</td>
                                             <td scope="col">{{ $unit->active }}</td>
                                             <td scope="col">{{ $unit->phone_number }}</td>
@@ -53,19 +61,30 @@
                             <table id="table2" class="table border table-borderless cell compact tabs inner-menu shadow">
                                 <thead>
                                     <tr class="text-secondary">
-                                        <th scope="col" class="px-3"><input name="all" id="checkall-lineman"
-                                                class="form-check-input" type="checkbox"></th>
+                                        <td scope="col" class="px-3">
+                                            <input name="all" id="checkall-lineman" class="form-check-input"
+                                                type="checkbox">
+                                        </td>
                                         <th scope="col">Name</th>
                                         <th scope="col">E-mail</th>
                                         <th scope="col">Designation</th>
                                     </tr>
                                 </thead>
+                                <tfoot class="table border table-borderless cell compact tabs inner-menu shadow">
+                                    <tr class="text-secondary">
+                                        <th>&nbsp;</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">E-mail</th>
+                                        <th scope="col">Designation</th>
+                                    </tr>
+                                </tfoot>
                                 <tbody class="searchbody">
                                     @foreach ($linemans as $lineman)
-                                        <tr class="text-dark">
-                                            <th scope="col" class="px-3"><input
-                                                    class="form-check-input cb-lineman" type="checkbox"
-                                                    name="lineman_no[{{ $lineman->id }}]"></th>
+                                        <tr class="text-dark" id="trlineman">
+                                            <td scope="col" class="px-3">
+                                                <input id="linemanid" class="form-check-input cb-lineman" type="checkbox"
+                                                    name="lineman_no[{{ $lineman->id }}]">
+                                            </td>
                                             <td>{{ ucwords($lineman->name) }}</td>
                                             <td>{{ $lineman->email }}</td>
                                             <td>{{ ucwords($lineman->barangay) }}</td>
@@ -78,7 +97,6 @@
                 </div>
             </div>
         </div>
-
         <div class="modal fade" id="modalConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -92,69 +110,129 @@
                     <div class="modal-footer border">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                             aria-label="Close">Close</button>
-                        <button type="submit" class="btn btn-success" onclick="">Yes</button>
+                        <button type="submit" class="btn btn-success" onclick="allPage()">Yes</button>
                     </div>
                 </div>
             </div>
         </div>
         <div class="d-flex justify-content-center pb-1 mt-5">
-            <button type="button" disabled class="border-0 btn btn-secondary px-5" onclick="dispatchBtn()">Dispatch</button>
+            <button id="btnDispatch" type="button" class="border-0 btn btn-secondary px-5" data-bs-toggle="modal"
+                data-bs-target="#modalConfirm">Dispatch</button>
         </div>
     </form>
 
     <script>
-        function dispatchBtn() {
-            var checkedValueUnits = $('.cb-units:checked').val();
-            var checkedValueLineman = $('.cb-lineman:checked').val();
-
-            if (checkedValueUnits == "on" && checkedValueLineman == "on") {
-                $('#modalConfirm').modal('show');
-            } else if (checkedValueUnits != "on" || checkedValueLineman != "on") {
-                $.toast({
-                    text: '<p>To dispatch, you should choose units and lineman.</p>',
-                    showHideTransition: 'slide',
-                    bgColor: '#b71c1c',
-                    textColor: '#eee',
-                    stack: 3,
-                    textAlign: 'left',
-                    position: 'top-right'
-                })
-            }
-        }
-
-        //disable enter key keyboard when submitting
         $("form").bind("keypress", function(e) {
             if (e.keyCode == 13) {
                 return false;
             }
         });
+
+        function allPage() {
+            var linemanTable = $('#table2').DataTable();
+            var unitTable = $('#table').DataTable();
+            linemanTable.page.len(-1).draw();
+            unitTable.page.len(-1).draw();
+        }
+
+        function selectRow(row) {
+            var firstInput = row.getElementsByTagName('input')[0];
+            firstInput.checked = !firstInput.checked;
+        }
+
         $(document).ready(function() {
-            $('#table').DataTable({
+
+            document.getElementById('btnDispatch').disabled = true;
+
+            var unitTable = $('#table').DataTable({
                 "lengthMenu": [
                     [10, 20, 50, -1],
                     [10, 20, 50, "All"]
                 ],
+                'columnDefs': [{
+                    'targets': [0],
+                    'orderable': false, // orderable false
+                }]
+            });
+            var linemanTable = $('#table2').DataTable({
+                "lengthMenu": [
+                    [10, 20, 50, -1],
+                    [10, 20, 50, "All"]
+                ],
+                'columnDefs': [{
+                    'targets': [0],
+                    'orderable': false, // orderable false
+                }]
             });
 
+            var LinemanPages = linemanTable.cells().nodes();
+            var UnitPages = unitTable.cells().nodes();
+            $('#checkall-lineman').change(function() {
+                if ($(this).hasClass('cb-lineman')) {
+                    $('input[type="checkbox"]', LinemanPages).prop('checked', false).css({
+                        "transition": "0.3s all ease-in-out",
+                    });
 
-            $('#table2').DataTable({
-                "lengthMenu": [
-                    [10, 20, 50, -1],
-                    [10, 20, 50, "All"]
-                ],
+                } else {
+                    $('input[type="checkbox"]', LinemanPages).prop('checked', true).css({
+                        "transition": "0.3s all ease-in-out",
+                    });
+                }
+                $(this).toggleClass('cb-lineman');
             });
 
             $('#checkall-units').change(function() {
-                $('.cb-units').prop('checked', this.checked).css({
-                    "transition": "0.3s all ease-in-out",
-                });
+                if ($(this).hasClass('cb-units')) {
+                    $('input[type="checkbox"]', UnitPages).prop('checked', false).css({
+                        "transition": "0.3s all ease-in-out",
+                    });
+                } else {
+                    $('input[type="checkbox"]', UnitPages).prop('checked', true).css({
+                        "transition": "0.3s all ease-in-out",
+                    });
+                }
+                $(this).toggleClass('cb-units');
             });
+        });
 
-            $('#checkall-lineman').change(function() {
-                $('.cb-lineman').prop('checked', this.checked).css({
-                    "transition": "0.3s all ease-in-out",
-                });
-            });
+        $("#checkall-units, #checkall-lineman").on('click', function() {
+            var allunit = $('#checkall-units:checked').val();
+            var alllineman = $('#checkall-lineman:checked').val();
+
+            if (allunit == "on" && alllineman == "on") {
+                document.getElementById('btnDispatch').disabled = false;
+            } else {
+                document.getElementById('btnDispatch').disabled = true;
+            }
+        });
+        $("#checkall-units, .cb-lineman").on('click', function() {
+            var allunit = $('#checkall-units:checked').val();
+            var lineman = $('.cb-lineman:checked').val();
+
+            if (allunit == "on" && lineman == "on") {
+                document.getElementById('btnDispatch').disabled = false;
+            } else {
+                document.getElementById('btnDispatch').disabled = true;
+            }
+        });
+        $("#checkall-lineman, .cb-units").on('click', function() {
+            var alllineman = $('#checkall-lineman:checked').val();
+            var unit = $('.cb-units:checked').val();
+
+            if (alllineman == "on" && unit == "on") {
+                document.getElementById('btnDispatch').disabled = false;
+            } else {
+                document.getElementById('btnDispatch').disabled = true;
+            }
+        });
+        $(".cb-units, .cb-lineman").on('click', function() {
+            var lineman = $('.cb-lineman:checked').val();
+            var unit = $('.cb-units:checked').val();
+            if (lineman == "on" && unit == "on") {
+                document.getElementById('btnDispatch').disabled = false;
+            } else {
+                document.getElementById('btnDispatch').disabled = true;
+            }
         });
     </script>
 @endsection

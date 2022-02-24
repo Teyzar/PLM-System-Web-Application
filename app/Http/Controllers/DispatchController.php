@@ -16,8 +16,8 @@ class DispatchController extends Controller
      */
     public function index()
     {
-        $lineman = Lineman::get();
-        $unit = Unit::get();
+        $lineman = Lineman::all();
+        $unit = Unit::all();
 
         return view('dispatch', [
             'linemans' => $lineman,
@@ -75,6 +75,8 @@ class DispatchController extends Controller
                 }
             }
         }
+
+        // return redirect()->back();
     }
 
     /**
