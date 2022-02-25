@@ -50,66 +50,52 @@ class UnitsController extends Controller
             return back()->withErrors($validation)->withInput();
         }
 
-        $success = Unit::create([
-            'active' => true,
-            'latitude' => '10.773333',
-            'longitude' => '10.1122323',
-            'phone_number' => $request->phone_number
-        ]);
+        $phone_number = $request->phone_number;
+
+        $success = true;
+
+        try {
+            $mqtt = MQTT::connection();
+            $mqtt->subscribe('plms-clz/units/response', function (string $topic, string $message) use ($mqtt, $phone_number) {
+                $data = json_decode($message);
+
+                if ($phone_number != $data->phone_number) return;
+
+                Unit::create([
+                    'active' => $data->active == 1 ? true : false,
+                    'latitude' => $data->latitude,
+                    'longitude' => $data->longitude,
+                    'phone_number' => $data->phone_number
+                ]);
+
+                $mqtt->interrupt();
+            });
+
+            $mqtt->registerLoopEventHandler(
+                function (MqttClient $client, float $elapsedTime) use (&$success) {
+                    if ($elapsedTime > 30) {
+                        $success = false;
+                        $client->interrupt();
+                    }
+                }
+            );
+
+            $mqtt->publish('plms-clz/units/register', $phone_number);
+
+            $mqtt->loop();
+
+            $mqtt->disconnect();
+        } catch (MqttClientException $error) {
+            $success = false;
+        }
 
         if ($success) {
             toast('Unit Succesfully Registered!', 'success');
         } else {
             toast('Unit Failed to Respond!', 'error');
         }
+
         return redirect()->back();
-
-        // $phone_number = $request->phone_number;
-
-        // $success = true;
-
-        // try {
-        //     $mqtt = MQTT::connection();
-        //     $mqtt->subscribe('plms-clz/units/response', function (string $topic, string $message) use ($mqtt, $phone_number) {
-        //         $data = json_decode($message);
-
-        //         if ($phone_number != $data->phone_number) return;
-
-        //         Unit::create([
-        //             'active' => $data->active,
-        //             'latitude' => $data->latitude,
-        //             'longitude' => $data->longitude,
-        //             'phone_number' => $data->phone_number
-        //         ]);
-
-        //         $mqtt->interrupt();
-        //     });
-
-        //     $mqtt->registerLoopEventHandler(
-        //         function (MqttClient $client, float $elapsedTime) use (&$success) {
-        //             if ($elapsedTime > 30) {
-        //                 $success = false;
-        //                 $client->interrupt();
-        //             }
-        //         }
-        //     );
-
-        //     $mqtt->publish('plms-clz/units/register', $phone_number);
-
-        //     $mqtt->loop();
-
-        //     $mqtt->disconnect();
-        // } catch (MqttClientException $error) {
-        //     $success = false;
-        // }
-
-        // if ($success) {
-        //     toast('Unit Succesfully Registered!', 'success');
-        // } else {
-        //     toast('Unit Failed to Respond!', 'error');
-        // }
-
-        // return redirect()->back();
     }
 
     public function update(Request $request, String $phone_number)
@@ -163,7 +149,7 @@ class UnitsController extends Controller
                 ->get();
             if ($selectTerm === 'updated_at') {
                 $unit = Unit::where('updated_at', 'LIKE', '%' . $searchTerm . "%")
-                ->get();
+                    ->get();
             }
         }
         $count = $unit->count();
