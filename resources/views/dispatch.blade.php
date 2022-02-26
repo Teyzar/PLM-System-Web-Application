@@ -12,14 +12,14 @@
         <div id="" style="margin-left: 4%; margin-right: 4%;" class="mt-3 border-css">
             <div class="container-fluid">
                 <div class="row mt-4">
-                    <div class="col card-header border inner-menu shadow">Units</div>
-                    <div class="col card-header border inner-menu shadow">Lineman</div>
+                    <div class="col card-header border-end inner-menu shadow">Units</div>
+                    <div class="col card-header border-start inner-menu shadow">Lineman</div>
                     <div class="w-100"></div>
-                    <div class="col-6 card-body border bg-light inner-menu shadow border border-black">
+                    <div class="col-6 card-body bg-light inner-menu shadow border-end">
                         <div class="table-responsive-md p-1">
-                            <table id="table" class="table border mt-1 table-borderless cell compact tabs inner-menu shadow">
+                            <table id="table" class="table border mt-1 table-borderless">
                                 <thead>
-                                    <tr class="text-secondary">
+                                    <tr class="text-secondary tabs">
                                         <th scope="col" class="px-3"><input name="all" id="checkall-units"
                                                 class="form-check-input" type="checkbox"></th>
                                         <th scope="col">Id</th>
@@ -29,8 +29,8 @@
                                         <th scope="col">Latitude</th>
                                     </tr>
                                 </thead>
-                                <tfoot class="table border table-borderless cell compact tabs inner-menu shadow">
-                                    <tr class="text-secondary">
+                                <tfoot class="table border table-borderless inner-menu shadow">
+                                    <tr class="text-secondary tabs">
                                         <th></th>
                                         <th scope="col">Id</th>
                                         <th scope="col">Status</th>
@@ -41,7 +41,7 @@
                                 </tfoot>
                                 <tbody>
                                     @foreach ($units as $unit)
-                                        <tr class="text-dark" id="trunit">
+                                        <tr class="tabs text-dark" id="trunit">
                                             <td scope="col" class="px-3"><input id="unitid"
                                                     class="form-check-input cb-units" type="checkbox"
                                                     name="unit_no[{{ $unit->id }}]"></td>
@@ -56,22 +56,22 @@
                             </table>
                         </div>
                     </div>
-                    <div class="col-6 card-body border bg-light inner-menu shadow border border-black">
+                    <div class="col-6 card-body bg-light inner-menu shadow border-start">
                         <div class="table-responsive-md p-1">
-                            <table id="table2" class="table border table-borderless cell compact tabs inner-menu shadow">
+                            <table id="table2" class="table border table-borderless inner-menu shadow">
                                 <thead>
-                                    <tr class="text-secondary">
-                                        <td scope="col" class="px-3">
+                                    <tr class="text-secondary tabs">
+                                        <th scope="col" class="px-3" width="10%">
                                             <input name="all" id="checkall-lineman" class="form-check-input"
                                                 type="checkbox">
-                                        </td>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">E-mail</th>
-                                        <th scope="col">Designation</th>
+                                        </th>
+                                        <th width="20%" scope="col">Name</th>
+                                        <th width="25%" scope="col">E-mail</th>
+                                        <th width="25%" scope="col">Designation</th>
                                     </tr>
                                 </thead>
-                                <tfoot class="table border table-borderless cell compact tabs inner-menu shadow">
-                                    <tr class="text-secondary">
+                                <tfoot class="table border table-borderless inner-menu shadow">
+                                    <tr class="text-secondary tabs">
                                         <th>&nbsp;</th>
                                         <th scope="col">Name</th>
                                         <th scope="col">E-mail</th>
@@ -80,14 +80,14 @@
                                 </tfoot>
                                 <tbody class="searchbody">
                                     @foreach ($linemans as $lineman)
-                                        <tr class="text-dark" id="trlineman">
+                                        <tr class="text-dark tabs" id="trlineman">
                                             <td scope="col" class="px-3">
                                                 <input id="linemanid" class="form-check-input cb-lineman" type="checkbox"
                                                     name="lineman_no[{{ $lineman->id }}]">
                                             </td>
-                                            <td>{{ ucwords($lineman->name) }}</td>
-                                            <td>{{ $lineman->email }}</td>
-                                            <td>{{ ucwords($lineman->barangay) }}</td>
+                                            <td class="ps-3">{{ ucwords($lineman->name) }}</td>
+                                            <td class="ps-3">{{ $lineman->email }}</td>
+                                            <td class="ps-3">{{ ucwords($lineman->barangay) }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
