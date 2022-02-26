@@ -29,7 +29,7 @@ class ChangePasswordController extends Controller
                 'required',
                 'string',
                 'min:8',
-                'max:20',
+                'max:13',
                 'required_with:verify'
             ],
             'verify' => ['required', 'same:new-password', 'string']
