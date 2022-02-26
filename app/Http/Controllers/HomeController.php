@@ -16,7 +16,7 @@ class HomeController extends Controller
         return view('home', [
             'apiKey' => 'AIzaSyA2vqdxEToK1qKnxm14YrCwJ1xoLd1FcBU',
             'cadizCity' => json_encode($cadizCity),
-            'heatmapData' => Unit::all(['id', 'active', 'latitude', 'longitude'])->where('active', true)
+            'heatmapData' => Unit::all(['id', 'active', 'latitude', 'longitude'])->where('active', false)
         ]);
     }
 }

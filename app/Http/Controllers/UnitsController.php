@@ -50,20 +50,6 @@ class UnitsController extends Controller
             return back()->withErrors($validation)->withInput();
         }
 
-        // $success = Unit::create([
-        //     'active' => true,
-        //     'latitude' => '10.773333',
-        //     'longitude' => '10.1122323',
-        //     'phone_number' => $request->phone_number
-        // ]);
-
-        // if ($success) {
-        //     toast('Unit Succesfully Registered!', 'success');
-        // } else {
-        //     toast('Unit Failed to Respond!', 'error');
-        // }
-        // return redirect()->back();
-
         $phone_number = $request->phone_number;
 
         $success = true;
@@ -163,7 +149,7 @@ class UnitsController extends Controller
                 ->get();
             if ($selectTerm === 'updated_at') {
                 $unit = Unit::where('updated_at', 'LIKE', '%' . $searchTerm . "%")
-                ->get();
+                    ->get();
             }
         }
         $count = $unit->count();

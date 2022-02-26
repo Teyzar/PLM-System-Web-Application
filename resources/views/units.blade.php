@@ -82,7 +82,7 @@
                                             {{ $unit->id }}
                                         </td>
                                         <td class="">
-                                            {{ $unit->active }}
+                                            {{ $unit->active ? 'Normal' : 'Fault' }}
                                         </td>
                                         <td class="">
                                             {{ $unit->phone_number }}

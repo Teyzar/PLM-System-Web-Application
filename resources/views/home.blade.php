@@ -36,6 +36,17 @@
 
         async function updateHeatmap(data) {
             if (data.active) {
+                // Loop through all the elements
+                for (let i = 0; i < heatmapData.getLength(); i++) {
+                    const thisData = heatmapData.getAt(i);
+
+                    // Remove element if the phone number matches
+                    if (thisData.id === data.id) {
+                        heatmapData.removeAt(i);
+                        break;
+                    }
+                }
+            } else {
                 // Construct the data
                 const value = {
                     id: data.id,
@@ -60,17 +71,6 @@
 
                 // Push the new data
                 heatmapData.push(value);
-            } else {
-                // Loop through all the elements
-                for (let i = 0; i < heatmapData.getLength(); i++) {
-                    const thisData = heatmapData.getAt(i);
-
-                    // Remove element if the phone number matches
-                    if (thisData.id === data.id) {
-                        heatmapData.removeAt(i);
-                        break;
-                    }
-                }
             }
         }
     </script>
