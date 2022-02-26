@@ -10,8 +10,8 @@
                     </div>
 
                     <div class="card-body d-flex bg-white justify-content-center">
-                        <form class="form w-75" role="form" autocomplete="off" method="POST"
-                            action="{{ URL::to('password') }}">
+                        <form class="form w-75" role="form" method="POST"
+                            action="{{route('password.store')}}">
                             @csrf
                             <div class="form-group">
                                 <label for="inputPasswordOld">Current Password</label>
@@ -64,17 +64,15 @@
                             </div>
 
                             <div class="form-group">
-                                <a type="submit" class="btn btn-success btn-lg float-end py-1 px-3 fs-5 mt-2"
+                                <a class="btn btn-success btn-lg float-end py-1 px-3 fs-5 mt-2"
                                     data-bs-toggle="modal" data-bs-target="#modalConfirm"><i
                                         class="bi bi-box-arrow-down pe-2 fs-5"></i>Save</a>
                             </div>
+                            @include('modals.password')
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    @include('modals.password')
-
 @endsection
