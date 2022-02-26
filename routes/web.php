@@ -23,7 +23,6 @@ use Illuminate\Support\Facades\Auth;
 // Public Routes
 
 Auth::routes();
-
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
