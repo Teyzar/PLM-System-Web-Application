@@ -11,7 +11,7 @@
             {{ 'Accounts (' . count($linemen) . ')' }}
         </div>
 
-        <div class="card bg-light border-0 inner-menu shadow align-items-center flex-row px-3">
+        <div class="card bg-light border-0 p-2 inner-menu shadow align-items-center flex-row px-3">
             <i class="bi bi-search p-1 text-dark fs-5"></i>
             <div class="container p-1">
                 <div class="row justify-content-start flex-row">
@@ -34,7 +34,7 @@
         <div class="row">
             <div class="table-responsive-md">
                 @if (count($linemen) <= 0)
-                    <table class="table table-md text-start">
+                    <table id="table" class="table border table-md text-start">
                         <thead class="">
                             <tr class="client--nav-tabs text-secondary">
                                 <th>Name</th>
@@ -47,13 +47,8 @@
                             </tr>
                         </thead>
                     </table>
-                    <div class="border border-black align-items-center pt-5 ">
-                        <span class="justify-content-center d-flex pb-5 pt-2 text-danger opacity-75 addicon fs-5">
-                            No Registered Accounts
-                        </span>
-                    </div>
                 @else
-                    <table id="table" class="table table-md text-start">
+                    <table id="table" class="table border table-md text-start">
                         <thead class="table table-md inner-menu shadow">
                             <tr class="client--nav-tabs text-dark">
                                 <th width="20%">Name</th>
