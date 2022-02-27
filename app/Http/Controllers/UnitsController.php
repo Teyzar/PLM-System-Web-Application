@@ -45,7 +45,7 @@ class UnitsController extends Controller
         try {
             $mqtt = MQTT::connection();
 
-            $mqtt->subscribe('plms-clz/controller', function (string $topic, string $message) {
+            $mqtt->subscribe('plms-clz/controller', function (string $topic, string $message) use (&$controllerConnected, &$messageSent) {
                 if (strcmp($message, "controller connect success") == 0) {
                     $controllerConnected = true;
                 }
