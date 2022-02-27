@@ -34,35 +34,22 @@ class UnitsController extends Controller
 
     public function store(Request $request)
     {
-        $rules = [
-            'phone_number' => 'required|unique:units|max:13|min:13',
-        ];
-
-        $startsWith = str_starts_with($request->phone_number, '+639');
-
-        $validation = Validator::make($request->all(), $rules);
-
-        if (!$startsWith) {
-            return back()->withErrors(['string' => "Mobile number should start with +639..."])->withInput();
-        }
-
-        if ($validation->fails()) {
-            return back()->withErrors($validation)->withInput();
-        }
-
-        $phone_number = $request->phone_number;
-
         $success = true;
+
+        $validated = $request->validate([
+            'phone_number' => 'required|starts_with:+639|min:13|max:13|unique:units',
+        ]);
 
         try {
             $mqtt = MQTT::connection();
-            $mqtt->subscribe('plms-clz/units/response', function (string $topic, string $message) use ($mqtt, $phone_number) {
+
+            $mqtt->subscribe('plms-clz/units/response', function (string $topic, string $message) use ($mqtt, $validated) {
                 $data = json_decode($message);
 
-                if ($phone_number != $data->phone_number) return;
+                if ($validated["phone_number"] != $data->phone_number) return;
 
                 Unit::create([
-                    'active' => $data->active,
+                    'active' => $data->active == 1 ? true : false,
                     'latitude' => $data->latitude,
                     'longitude' => $data->longitude,
                     'phone_number' => $data->phone_number
@@ -80,7 +67,7 @@ class UnitsController extends Controller
                 }
             );
 
-            $mqtt->publish('plms-clz/units/register', $phone_number);
+            $mqtt->publish('plms-clz/units/register', $validated["phone_number"]);
 
             $mqtt->loop();
 
