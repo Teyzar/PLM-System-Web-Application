@@ -10,7 +10,7 @@ use PhpMqtt\Client\Exceptions\MqttClientException;
 use PhpMqtt\Client\Facades\MQTT;
 use PhpMqtt\Client\MqttClient;
 use Illuminate\Support\Facades\DB;
-
+use SebastianBergmann\Environment\Console;
 
 class UnitsController extends Controller
 {
@@ -34,7 +34,9 @@ class UnitsController extends Controller
 
     public function store(Request $request)
     {
-        $success = true;
+        $controllerConnected = false;
+        $messageSent = false;
+        $unitRegistered = false;
 
         $validated = $request->validate([
             'phone_number' => 'required|starts_with:+639|min:13|max:13|unique:units',
@@ -42,6 +44,18 @@ class UnitsController extends Controller
 
         try {
             $mqtt = MQTT::connection();
+
+            $mqtt->subscribe('plms-clz/controller', function (string $topic, string $message) {
+                if (strcmp($message, "controller connect success") == 0) {
+                    $controllerConnected = true;
+                }
+
+                if (strcmp($message, "message send success") == 0) {
+                    $messageSent = true;
+                }
+
+               echo $message;
+            });
 
             $mqtt->subscribe('plms-clz/units/response', function (string $topic, string $message) use ($mqtt, $validated) {
                 $data = json_decode($message);
@@ -55,13 +69,31 @@ class UnitsController extends Controller
                     'phone_number' => $data->phone_number
                 ]);
 
+                echo "unit register success";
+
                 $mqtt->interrupt();
             });
 
             $mqtt->registerLoopEventHandler(
-                function (MqttClient $client, float $elapsedTime) use (&$success) {
-                    if ($elapsedTime > 30) {
-                        $success = false;
+                function (MqttClient $client, float $elapsedTime) use (&$controllerConnected, &$messageSent, &$unitRegistered) {
+                    // Controller must be connected within 10 seconds
+                    if ($elapsedTime > 10 && !$controllerConnected) {
+                        echo "controller connect failed";
+
+                        $client->interrupt();
+                    }
+
+                    // Controller must be able to send the command to the unit within 20 seconds
+                    if ($elapsedTime > 20 && !$messageSent) {
+                        echo "message send failed";
+
+                        $client->interrupt();
+                    }
+
+                    // The unit must be registered within 30 seconds
+                    if ($elapsedTime > 30 && !$unitRegistered) {
+                        echo "unit register failed";
+
                         $client->interrupt();
                     }
                 }
@@ -73,13 +105,7 @@ class UnitsController extends Controller
 
             $mqtt->disconnect();
         } catch (MqttClientException $error) {
-            $success = false;
-        }
-
-        if ($success) {
-            toast('Unit Succesfully Registered!', 'success');
-        } else {
-            toast('Unit Failed to Respond!', 'error');
+            echo "<script>console.log('" . $error->__toString() . "');</script>";
         }
 
         return redirect()->back();
