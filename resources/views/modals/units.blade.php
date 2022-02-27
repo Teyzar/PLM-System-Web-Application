@@ -11,16 +11,22 @@
                 <form action="{{ URL::to('units') }}" method="POST">
                     @csrf
                     <div class="mb-3">
-                        <label class="phone_number"><i class="fs-2 bi bi-sim px-1"></i>Mobile No.</label>
-                        <input type="tel" class="form-control" id="phone_number" name="phone_number"
-                            value="{{ old('phone_number') }}" placeholder="+639" required="" />
-                        @if ($errors->has('string'))
-                            <div class="error text-danger">{{ $errors->first('string') }}</div>
-                        @endif
-                        @if ($errors->has('phone_number'))
-                            <div class="error text-danger">{{ $errors->first('phone_number') }}</div>
-                        @endif
+                        <label class="phone_number">
+                            <i class="fs-2 bi-sim px-1"></i>
+                            Enter the unit's phone number:
+                        </label>
+
+                        <input type="tel" class="form-control @error('phone_number') is-invalid @enderror"
+                            id="phone_number" name="phone_number" value="{{ old('phone_number') }}" placeholder="+639"
+                            required="" />
+
+                        @error('phone_number')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
+
                     <div class="modal-footer d-block">
                         <span id="processing" class="text-center d-flex justify-content-center text-dark fs-5"></span>
                         <div id="bar" class="progress h-100">
@@ -41,6 +47,7 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="modalRemove" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
