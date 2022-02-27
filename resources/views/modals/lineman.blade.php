@@ -11,9 +11,9 @@
                     @csrf
                     <div class="mb-3">
                         <label class="form-label text-dark opacity-100">Name</label>
-                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
-                            id="name" name="name" placeholder="Name" required autocomplete="name" autofocus
-                            value="{{ old('name') }}">
+                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" id="name"
+                            name="name" placeholder="Name" autocomplete="name" autofocus value="{{ old('name') }}"
+                            required>
 
                         @error('name')
                             <span class="invalid-feedback" role="alert">
@@ -24,9 +24,9 @@
 
                     <div class="mb-3">
                         <label class="form-label text-dark opacity-100">Email Address</label>
-                        <input id="email" type="text"
-                            class="form-control @error('email') is-invalid @enderror" id="email"
-                            name="email" placeholder="Email" required autocomplete="email" value="{{ old('email') }}">
+                        <input id="email" type="text" class="form-control @error('email') is-invalid @enderror"
+                            id="email" name="email" placeholder="Email" autocomplete="email"
+                            value="{{ old('email') }}" required>
 
                         @if ($errors->has('email'))
                             <div class="error text-danger">{{ $errors->first('email') }}</div>
@@ -35,8 +35,8 @@
 
                     <div class="mb-3">
                         <label class="form-label text-dark opacity-100">Barangay</label>
-                        <input type="text" class="form-control" id="barangay" name="barangay"
-                            placeholder="Barangay" required="" value="{{ old('barangay') }}">
+                        <input type="text" class="form-control" id="barangay" name="barangay" placeholder="Barangay"
+                            value="{{ old('barangay') }}" required>
                     </div>
 
                     <div class="modal-footer d-block d-flex align-items-center justify-content-center border-1">
@@ -86,8 +86,8 @@
                         <label class="form-label">Name</label>
                         <input id="updatename" type="text"
                             class="form-control @error('updatename') is-invalid @enderror" name="updatename"
-                            placeholder="Name" required autocomplete="updatename" autofocus
-                            value="{{ old('updatename') }}">
+                            placeholder="Name" autocomplete="updatename" autofocus value="{{ old('updatename') }}"
+                            required>
 
                         @error('updatename')
                             <span class="invalid-feedback" role="alert">
@@ -99,7 +99,7 @@
                     <div class="mb-3">
                         <label class="form-label">Barangay</label>
                         <input type="text" class="form-control" id="updatebarangay" name="updatebarangay"
-                            placeholder="Barangay" required="" value="{{ old('updatebarangay') }}">
+                            placeholder="Barangay" value="{{ old('updatebarangay') }}" required>
 
                         @error('updatebarangay')
                             <span class="invalid-feedback" role="alert">
@@ -111,8 +111,8 @@
                     <div class="mb-3">
                         <label class="form-label">Email Address</label>
                         <input id="updateemail" type="text" class="form-control border-0" style="pointer-events: none"
-                            name="updateemail" placeholder="Email" required autocomplete="email"
-                            value="{{ old('updateemail') }}">
+                            name="updateemail" placeholder="Email" autocomplete="email"
+                            value="{{ old('updateemail') }}" required>
                     </div>
 
                     <div class="modal-footer d-block d-flex align-items-center justify-content-center border-1">

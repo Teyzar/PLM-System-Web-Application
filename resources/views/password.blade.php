@@ -10,13 +10,12 @@
                     </div>
 
                     <div class="card-body d-flex bg-white justify-content-center">
-                        <form class="form w-75" role="form" method="POST"
-                            action="{{route('password.store')}}">
+                        <form class="form w-75" role="form" method="POST" action="{{ route('password.store') }}">
                             @csrf
                             <div class="form-group">
                                 <label for="inputPasswordOld">Current Password</label>
-                                <input type="password" class="form-control" id="inputPasswordOld" required=""
-                                    name="password" value="{{ old('password') }}">
+                                <input type="password" class="form-control" id="inputPasswordOld" name="password"
+                                    value="{{ old('password') }}" required>
 
                                 @if ($errors->has('pass'))
                                     <div class="error text-danger form-text small ">{{ $errors->first('pass') }}</div>
@@ -29,8 +28,8 @@
 
                             <div class="form-group">
                                 <label for="inputPasswordNew">New Password</label>
-                                <input type="password" class="form-control" id="inputPasswordNew" required=""
-                                    name="new-password" value="{{ old('new-password') }}">
+                                <input type="password" class="form-control" id="inputPasswordNew" name="new-password"
+                                    value="{{ old('new-password') }}" required>
 
                                 @if ($errors->has('new-password'))
                                     <div class="error text-danger form-text small ">{{ $errors->first('new-password') }}
@@ -50,8 +49,8 @@
 
                             <div class="form-group">
                                 <label for="inputPasswordNewVerify">Verify</label>
-                                <input type="password" class="form-control" id="inputPasswordNewVerify" required=""
-                                    name="verify" value="{{ old('verify') }}">
+                                <input type="password" class="form-control" id="inputPasswordNewVerify" name="verify"
+                                    value="{{ old('verify') }}" required>
                                 @if ($errors->has('verify'))
                                     <div class="error text-danger form-text small ">
                                         {{ __('Verify must match with the New Password') }}</div>
@@ -64,9 +63,11 @@
                             </div>
 
                             <div class="form-group">
-                                <a class="btn btn-success btn-lg float-end py-1 px-3 fs-5 mt-2"
-                                    data-bs-toggle="modal" data-bs-target="#modalConfirm"><i
-                                        class="bi bi-box-arrow-down pe-2 fs-5"></i>Save</a>
+                                <a class="btn btn-success btn-lg float-end py-1 px-3 fs-5 mt-2" data-bs-toggle="modal"
+                                    data-bs-target="#modalConfirm">
+                                    <i class="bi bi-box-arrow-down pe-2 fs-5"></i>
+                                    Save
+                                </a>
                             </div>
                             @include('modals.password')
                         </form>

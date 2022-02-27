@@ -18,7 +18,7 @@
 
                         <input type="tel" class="form-control @error('phone_number') is-invalid @enderror"
                             id="phone_number" name="phone_number" value="{{ old('phone_number') }}" placeholder="+639"
-                            required="" />
+                            required>
 
                         @error('phone_number')
                             <span class="invalid-feedback" role="alert">
