@@ -45,31 +45,35 @@ class UnitsController extends Controller
         try {
             $mqtt = MQTT::connection();
 
-            $mqtt->subscribe('plms-clz/controller', function (string $topic, string $message) use (&$controllerConnected, &$messageSent) {
-                if (strcmp($message, "controller connect success") == 0) {
+            $mqtt->subscribe('PLMS-ControllerResponse-CLZ', function (string $topic, string $message) use (&$controllerConnected, &$messageSent) {
+                if ($message == "ControllerConnected") {
+                    echo "controller 1";
                     $controllerConnected = true;
                 }
 
-                if (strcmp($message, "message send success") == 0) {
+                if ($message == "MessageSent") {
+                    echo "message 1";
                     $messageSent = true;
                 }
-
-               echo $message;
             });
 
-            $mqtt->subscribe('plms-clz/units/response', function (string $topic, string $message) use ($mqtt, $validated) {
-                $data = json_decode($message);
+            $mqtt->subscribe('PLMS-UnitRegisterResponse-CLZ', function (string $topic, string $message) use ($mqtt, $validated, &$unitRegistered) {
+                list($phone_number, $active, $latitude, $longitude) = explode("\n", $message);
 
-                if ($validated["phone_number"] != $data->phone_number) return;
+                if ($validated["phone_number"] != $phone_number) return;
 
                 Unit::create([
-                    'active' => $data->active == 1 ? true : false,
-                    'latitude' => $data->latitude,
-                    'longitude' => $data->longitude,
-                    'phone_number' => $data->phone_number
+                    'active' => ($active == "1"),
+                    'latitude' => floatval($latitude),
+                    'longitude' => floatval($longitude),
+                    'phone_number' => $phone_number
                 ]);
 
-                echo "unit register success";
+                echo "register 1";
+
+                $unitRegistered = true;
+
+                toast("Unit Registered", "success");
 
                 $mqtt->interrupt();
             });
@@ -78,28 +82,34 @@ class UnitsController extends Controller
                 function (MqttClient $client, float $elapsedTime) use (&$controllerConnected, &$messageSent, &$unitRegistered) {
                     // Controller must be connected within 10 seconds
                     if ($elapsedTime > 10 && !$controllerConnected) {
-                        echo "controller connect failed";
+                        echo "controller 0";
+
+                        toast("Controller Failed to Respond", "error");
 
                         $client->interrupt();
                     }
 
                     // Controller must be able to send the command to the unit within 20 seconds
                     if ($elapsedTime > 20 && !$messageSent) {
-                        echo "message send failed";
+                        echo "message 0";
+
+                        toast("Controller Failed to Execute", "error");
 
                         $client->interrupt();
                     }
 
                     // The unit must be registered within 30 seconds
                     if ($elapsedTime > 30 && !$unitRegistered) {
-                        echo "unit register failed";
+                        echo "register 0";
+
+                        toast("Unit Failed to Respond", "error");
 
                         $client->interrupt();
                     }
                 }
             );
 
-            $mqtt->publish('plms-clz/units/register', $validated["phone_number"]);
+            $mqtt->publish('PLMS-ControllerCommands-CLZ', "UnitRegister\n" . $validated["phone_number"]);
 
             $mqtt->loop();
 
