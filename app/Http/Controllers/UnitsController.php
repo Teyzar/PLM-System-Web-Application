@@ -81,7 +81,7 @@ class UnitsController extends Controller
             $mqtt->registerLoopEventHandler(
                 function (MqttClient $client, float $elapsedTime) use (&$controllerConnected, &$messageSent, &$unitRegistered) {
                     // Controller must be connected within 10 seconds
-                    if ($elapsedTime > 5 && !$controllerConnected) {
+                    if ($elapsedTime > 10 && !$controllerConnected) {
                         echo "controller 0";
 
                         toast("Controller Failed to Respond", "error");
@@ -90,7 +90,7 @@ class UnitsController extends Controller
                     }
 
                     // Controller must be able to send the command to the unit within 20 seconds
-                    if ($elapsedTime > 10 && !$messageSent) {
+                    if ($elapsedTime > 20 && !$messageSent) {
                         echo "message 0";
 
                         toast("Controller Failed to Execute", "error");
