@@ -200,51 +200,51 @@
                     submitbtn.hide();
                     closebtn.hide();
                     bar.fadeIn();
-                    // function TimeOut() {
-                    //     setTimeout(() => {
-                    //         processing.html('Processing');
-                    //         setTimeout(() => {
-                    //             processing.html('Processing.');
-                    //             setTimeout(() => {
-                    //                 processing.html('Processing..');
-                    //                 setTimeout(() => {
-                    //                     processing.html('Processing...');
-                    //                     TimeOut();
-                    //                 }, 1000);
-                    //             }, 1000);
-                    //         }, 1000);
-                    //     }, 1000)
-                    // }
+                    function TimeOut() {
+                        setTimeout(() => {
+                            processing.html('Processing');
+                            setTimeout(() => {
+                                processing.html('Processing.');
+                                setTimeout(() => {
+                                    processing.html('Processing..');
+                                    setTimeout(() => {
+                                        processing.html('Processing...');
+                                        TimeOut();
+                                    }, 1000);
+                                }, 1000);
+                            }, 1000);
+                        }, 1000)
+                    }
 
-                    // TimeOut();
+                    TimeOut();
 
-                    // var width = 0;
-                    // var progress = document.getElementById('progress');
-                    // var sec = 0;
-                    // setTimeout(ProgressBar, 1000);
+                    var width = 0;
+                    var progress = document.getElementById('progress');
+                    var sec = 0;
+                    setTimeout(ProgressBar, 1000);
 
-                    // function ProgressBar() {
-                    //     width++;
-                    //     sec++;
+                    function ProgressBar() {
+                        width++;
+                        sec++;
 
-                    //     if (sec < 31) {
-                    //         setTimeout(ProgressBar, 1000);
-                    //     }
-                    //     var percent = $('#percent');
+                        if (sec < 31) {
+                            setTimeout(ProgressBar, 1000);
+                        }
+                        var percent = $('#percent');
 
-                    //     progress.style.width = width * 3 + "%";
+                        progress.style.width = width * 3 + "%";
 
-                    //     if (progress.style.width == '18%') {
-                    //         width += 2;
-                    //     } else if (progress.style.width == '45%') {
-                    //         width += 2;
-                    //     } else if (progress.style.width == '102%') {
-                    //         progress.style.width = '100%'
-                    //     } else if (progress.style.width == '105%') {
-                    //         progress.style.width = '100%'
-                    //     }
-                    //     percent.html(progress.style.width);
-                    // }
+                        if (progress.style.width == '18%') {
+                            width += 2;
+                        } else if (progress.style.width == '45%') {
+                            width += 2;
+                        } else if (progress.style.width == '102%') {
+                            progress.style.width = '100%'
+                        } else if (progress.style.width == '105%') {
+                            progress.style.width = '100%'
+                        }
+                        percent.html(progress.style.width);
+                    }
                 } else {
                     console.log('empty')
                 }
