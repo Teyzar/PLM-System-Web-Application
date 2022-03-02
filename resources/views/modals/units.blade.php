@@ -3,12 +3,12 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-center" id="exampleModalLabel">Register unit</h5>
+                <h5 class="modal-title text-center" id="regUnit">Register unit</h5>
                 <button id="close" type="button" class="btn-close" data-bs-dismiss="modal"
                     aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{ URL::to('units') }}" method="POST">
+                <form id="unit-form" action="{{ URL::to('units') }}" method="POST">
                     @csrf
                     <div class="mb-3">
                         <label class="phone_number">
@@ -37,9 +37,21 @@
                                 <span id="percent"></span>
                             </div>
                         </div>
-                        <span class="d-flex justify-content-center"></span>
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div id="steps-id" class="progresses">
+                                <div id="controller" class="steps bg-white border"><span id="spinner" class="pt-1"></span></div> <span class="line border"></span>
+                                <div style="margin-top: 11%; position: absolute">
+                                    <span>controller</span>
+                                </div>
+                                <div id="detector" class="steps bg-white border"> <span class="font-weight-bold text-secondary">2</span> </div> <span class="line border"></span>
+                                <div style="margin-top: 11%; position: absolute; padding-left: 30%">
+                                    <span>detector</span>
+                                </div>
+                                <div id="registered" class="steps bg-white border"> <span class="font-weight-bold text-secondary">3</span> </div>
+                                {{-- <span>unit</span> --}}
 
-                        <span id="spinner" class="float-end"></span>
+                            </div>
+                        </div>
                         <button id="submitbtn" type="submit" class="btn btn-warning float-end">Submit</button>
                     </div>
                 </form>

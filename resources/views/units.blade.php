@@ -186,68 +186,79 @@
             }
 
             var submitbtn = $('#submitbtn');
-            var spinner = $('#spinner');
             var phone_num = $('#phone_number');
-            var time = $('#timer');
             var closebtn = $('#close');
             var bar = $('#bar');
             var processing = $('#processing');
+            var steps_bar = $('#steps-id');
+            var spinner = $('#spinner');
 
-            bar.hide();
 
-            submitbtn.on('click', function() {
-                if (phone_num.val() !== "") {
-                    submitbtn.hide();
-                    closebtn.hide();
-                    bar.fadeIn();
-                    function TimeOut() {
-                        setTimeout(() => {
-                            processing.html('Processing');
-                            setTimeout(() => {
-                                processing.html('Processing.');
-                                setTimeout(() => {
-                                    processing.html('Processing..');
-                                    setTimeout(() => {
-                                        processing.html('Processing...');
-                                        TimeOut();
-                                    }, 1000);
-                                }, 1000);
-                            }, 1000);
-                        }, 1000)
-                    }
+            var form = $('#unit-form');
 
-                    TimeOut();
+            steps_bar.hide();
 
-                    var width = 0;
-                    var progress = document.getElementById('progress');
-                    var sec = 0;
-                    setTimeout(ProgressBar, 1000);
 
-                    function ProgressBar() {
-                        width++;
-                        sec++;
+            form.on('submit', function(e) {
+                e.preventDefault();
+                steps_bar.show('slow');
+                submitbtn.hide();
 
-                        if (sec < 31) {
-                            setTimeout(ProgressBar, 1000);
+                spinner.html(`<div class="spinner-border text-secondary" role="status">
+                <span class="sr-only">Loading...</span>
+                </div>`);
+
+                $.ajax({
+                    type: "post",
+                    url: "units",
+                    data: $(this).serialize(),
+                    success: function(data) {
+                        console.log(data);
+                        switch (data) {
+                            case "controller 1":
+                                spinner.html('<i class="fa-solid fa-check text-darm fs-4"></i>');
+                                break;
+                            case "controller 0":
+                                submitbtn.show();
+                                spinner.html('<i class="fa-solid fa-xmark text-danger fs-4"></i>');
+                                submitbtn.html('re-submit');
+                                break;
                         }
-                        var percent = $('#percent');
-
-                        progress.style.width = width * 3 + "%";
-
-                        if (progress.style.width == '18%') {
-                            width += 2;
-                        } else if (progress.style.width == '45%') {
-                            width += 2;
-                        } else if (progress.style.width == '102%') {
-                            progress.style.width = '100%'
-                        } else if (progress.style.width == '105%') {
-                            progress.style.width = '100%'
-                        }
-                        percent.html(progress.style.width);
                     }
-                } else {
-                    console.log('empty')
-                }
-            });
+                })
+            })
+
+            // submitbtn.on('click', function() {
+            //     if (phone_num.val() !== "") {
+            //         submitbtn.hide();
+            //         closebtn.hide();
+            //         bar.fadeIn();
+            //         function TimeOut() {
+            //             setTimeout(() => {
+            //                 processing.html('Processing');
+            //                 setTimeout(() => {
+            //                     processing.html('Processing.');
+            //                     setTimeout(() => {
+            //                         processing.html('Processing..');
+            //                         setTimeout(() => {
+            //                             processing.html('Processing...');
+            //                             TimeOut();
+            //                         }, 1000);
+            //                     }, 1000);
+            //                 }, 1000);
+            //             }, 1000)
+            //         }
+
+            //         TimeOut();
+
+            //         steps_bar.show();
+
+
+
+
+            //     } else {
+            //         console.log('empty')
+            //     }
+            // });
         </script>
     @endsection

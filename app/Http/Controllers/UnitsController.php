@@ -73,8 +73,6 @@ class UnitsController extends Controller
 
                 $unitRegistered = true;
 
-                toast("Unit Registered", "success");
-
                 $mqtt->interrupt();
             });
 
@@ -84,8 +82,6 @@ class UnitsController extends Controller
                     if ($elapsedTime > 10 && !$controllerConnected) {
                         echo "controller 0";
 
-                        toast("Controller Failed to Respond", "error");
-
                         $client->interrupt();
                     }
 
@@ -93,16 +89,12 @@ class UnitsController extends Controller
                     if ($elapsedTime > 20 && !$messageSent) {
                         echo "message 0";
 
-                        toast("Controller Failed to Execute", "error");
-
                         $client->interrupt();
                     }
 
                     // The unit must be registered within 30 seconds
                     if ($elapsedTime > 25 && !$unitRegistered) {
                         echo "register 0";
-
-                        toast("Unit Failed to Respond", "error");
 
                         $client->interrupt();
                     }
@@ -117,8 +109,6 @@ class UnitsController extends Controller
         } catch (MqttClientException $error) {
             echo "<script>console.log('" . $error->__toString() . "');</script>";
         }
-
-        return redirect()->back();
     }
 
     public function update(Request $request, String $phone_number)
