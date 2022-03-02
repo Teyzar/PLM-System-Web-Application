@@ -46,7 +46,7 @@
                                                     class="form-check-input cb-units" type="checkbox"
                                                     name="unit_no[{{ $unit->id }}]"></td>
                                             <td scope="col">{{ $unit->id }}</td>
-                                            <td scope="col">{{ $unit->active }}</td>
+                                            <td scope="col">{{ $unit->status }}</td>
                                             <td scope="col">{{ $unit->phone_number }}</td>
                                             <td scope="col">{{ $unit->longitude }}</td>
                                             <td scope="col">{{ $unit->latitude }}</td>

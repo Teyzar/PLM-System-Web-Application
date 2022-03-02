@@ -17,7 +17,7 @@
                         <select class="form-select dropdown-toggle" type="button" name="select">
                             <option value="">Select</option>
                             <option value="id">Id</option>
-                            <option value="active">Status</option>
+                            <option value="status">Status</option>
                             <option value="phone_number">Phone&nbsp;number</option>
                             <option value="updated_at">Updated&nbsp;Last</option>
                         </select>
@@ -82,7 +82,7 @@
                                             {{ $unit->id }}
                                         </td>
                                         <td class="">
-                                            {{ $unit->active ? 'Normal' : 'Fault' }}
+                                            {{ Str::ucfirst($unit->status) }}
                                         </td>
                                         <td class="">
                                             {{ $unit->phone_number }}

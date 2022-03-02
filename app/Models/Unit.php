@@ -10,7 +10,7 @@ class Unit extends Model
     use HasFactory;
 
     protected $fillable = [
-        'active',
+        'status',
         'latitude',
         'longitude',
         'phone_number',

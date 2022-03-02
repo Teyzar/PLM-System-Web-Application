@@ -35,7 +35,7 @@
         }
 
         async function updateHeatmap(data) {
-            if (data.active) {
+            if (data.status == "normal") {
                 // Loop through all the elements
                 for (let i = 0; i < heatmapData.getLength(); i++) {
                     const thisData = heatmapData.getAt(i);
@@ -46,7 +46,7 @@
                         break;
                     }
                 }
-            } else {
+            } else if (data.status == "fault") {
                 // Construct the data
                 const value = {
                     id: data.id,

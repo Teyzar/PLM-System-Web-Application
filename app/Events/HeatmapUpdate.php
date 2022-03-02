@@ -31,7 +31,7 @@ class HeatmapUpdate implements ShouldBroadcast
     {
         return [
             'id' => $this->unit->id,
-            'active' => $this->unit->active,
+            'status' => $this->unit->status,
             'latitude' => $this->unit->latitude,
             'longitude' => $this->unit->longitude,
         ];

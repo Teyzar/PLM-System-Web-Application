@@ -36,7 +36,6 @@ class UnitsController extends Controller
     {
         $controllerConnected = false;
         $messageSent = false;
-        $unitRegistered = false;
 
         $validated = $request->validate([
             'phone_number' => 'required|starts_with:+639|min:13|max:13|unique:units',
@@ -45,39 +44,29 @@ class UnitsController extends Controller
         try {
             $mqtt = MQTT::connection();
 
-            $mqtt->subscribe('PLMS-ControllerResponse-CLZ', function (string $topic, string $message) use (&$controllerConnected, &$messageSent) {
+            $mqtt->subscribe('PLMS-ControllerResponse-CLZ', function (string $topic, string $message) use (&$mqtt, &$validated, &$controllerConnected, &$messageSent) {
                 if ($message == "ControllerConnected") {
-                    echo "controller 1";
                     $controllerConnected = true;
+
+                    echo "controller 1";
                 }
 
                 if ($message == "MessageSent") {
-                    echo "message 1";
                     $messageSent = true;
+
+                    Unit::create([
+                        'status' => "Pending",
+                        'phone_number' => $validated["phone_number"]
+                    ]);
+
+                    echo "message 1";
+
+                    $mqtt->interrupt();
                 }
             });
 
-            $mqtt->subscribe('PLMS-UnitRegisterResponse-CLZ', function (string $topic, string $message) use ($mqtt, $validated, &$unitRegistered) {
-                list($phone_number, $active, $latitude, $longitude) = explode("\n", $message);
-
-                if ($validated["phone_number"] != $phone_number) return;
-
-                Unit::create([
-                    'active' => ($active == "1"),
-                    'latitude' => floatval($latitude),
-                    'longitude' => floatval($longitude),
-                    'phone_number' => $phone_number
-                ]);
-
-                echo "register 1";
-
-                $unitRegistered = true;
-
-                $mqtt->interrupt();
-            });
-
             $mqtt->registerLoopEventHandler(
-                function (MqttClient $client, float $elapsedTime) use (&$controllerConnected, &$messageSent, &$unitRegistered) {
+                function (MqttClient $client, float $elapsedTime) use (&$controllerConnected, &$messageSent) {
                     // Controller must be connected within 10 seconds
                     if ($elapsedTime > 10 && !$controllerConnected) {
                         echo "controller 0";
@@ -86,15 +75,8 @@ class UnitsController extends Controller
                     }
 
                     // Controller must be able to send the command to the unit within 20 seconds
-                    if ($elapsedTime > 20 && !$messageSent) {
+                    if ($elapsedTime > 25 && !$messageSent) {
                         echo "message 0";
-
-                        $client->interrupt();
-                    }
-
-                    // The unit must be registered within 30 seconds
-                    if ($elapsedTime > 25 && !$unitRegistered) {
-                        echo "register 0";
 
                         $client->interrupt();
                     }
@@ -107,7 +89,7 @@ class UnitsController extends Controller
 
             $mqtt->disconnect();
         } catch (MqttClientException $error) {
-            echo "<script>console.log('" . $error->__toString() . "');</script>";
+            echo $error->__toString();
         }
     }
 
@@ -116,7 +98,7 @@ class UnitsController extends Controller
         $statusCode = 400;
 
         $fields = $request->validate([
-            'active' => 'required|boolean',
+            'status' => 'required|string',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
         ]);
@@ -125,7 +107,7 @@ class UnitsController extends Controller
 
         if ($unit) {
             $unit->update([
-                'active' => $fields['active'],
+                'status' => $fields['status'],
                 'latitude' => $fields['latitude'],
                 'longitude' => $fields['longitude']
             ]);
@@ -184,7 +166,7 @@ class UnitsController extends Controller
                         $unit->id
                     </td>
                     <td class=''>
-                         $unit->active
+                         $unit->status
                     </td>
                     <td class=''>
                         $unit->phone_number
