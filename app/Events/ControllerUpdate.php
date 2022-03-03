@@ -23,11 +23,11 @@ class ControllerUpdate implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        return new Channel('Controllers');
+        return new Channel('Controller');
     }
 
     public function broadcastWith()
     {
-        return [$this, $this->message];
+        return ['message' => $this->message];
     }
 }

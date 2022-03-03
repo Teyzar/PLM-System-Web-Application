@@ -5,6 +5,8 @@
 @section('head')
     <link href="{{ mix('css/units.css') }}" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
 @endsection
 
 @section('content')
@@ -131,6 +133,26 @@
 
         <script>
             $(document).ready(function() {
+                Echo.channel("Controller").listen("ControllerUpdate", (data) => {
+                    switch (data.message) {
+                        case "controller 1":
+                            spinner.html(
+                                '<i class="fa-solid fa-check text-darm fs-4"></i>');
+                            break;
+                        case "controller 0":
+                            submitbtn.show();
+                            spinner.html(
+                                '<i class="fa-solid fa-xmark text-danger fs-4"></i>');
+                            submitbtn.html('re-submit');
+                            break;
+                        case "message 0":
+                            console.log('here');
+                            break;
+                        default:
+                            console.error(data.message);
+                    }
+                });
+
                 $('#table').DataTable({
                     "lengthMenu": [
                         [10, 20, 50, -1],
@@ -185,34 +207,12 @@
                 <span class="sr-only">Loading...</span>
                 </div>`);
 
-                    // Echo.channel("Controllers").listen("ControllerUpdate", (message) => {
-                    //     console.log(message)
-                    // });
-
-
                     $.ajax({
                         type: "post",
                         url: "units",
                         data: $(this).serialize(),
                         success: function(data) {
-
                             console.log(data);
-
-                            // switch (data) {
-                            //     case "controller 1":
-                            //         spinner.html(
-                            //         '<i class="fa-solid fa-check text-darm fs-4"></i>');
-                            //         break;
-                            //     case "controller 0":
-                            //         submitbtn.show();
-                            //         spinner.html(
-                            //             '<i class="fa-solid fa-xmark text-danger fs-4"></i>');
-                            //         submitbtn.html('re-submit');
-                            //         break;
-                            //     case "message 0":
-                            //         console.log('here');
-                            //         break;
-                            // }
                         }
                     })
                 });
@@ -220,7 +220,6 @@
 
             function removeUnit(id) {
                 $('#modalRemove').modal('show');
-                console.log('here');
 
                 $('#remove-id').submit(function(event) {
                     event.preventDefault();
@@ -233,44 +232,9 @@
                             $(`#${id}`).fadeOut('slow');
                             location.reload();
                         },
-                        error: (error) => console.log(error)
+                        error: (error) => console.error(error)
                     });
                 })
             }
-
-
-
-            // submitbtn.on('click', function() {
-            //     if (phone_num.val() !== "") {
-            //         submitbtn.hide();
-            //         closebtn.hide();
-            //         bar.fadeIn();
-            //         function TimeOut() {
-            //             setTimeout(() => {
-            //                 processing.html('Processing');
-            //                 setTimeout(() => {
-            //                     processing.html('Processing.');
-            //                     setTimeout(() => {
-            //                         processing.html('Processing..');
-            //                         setTimeout(() => {
-            //                             processing.html('Processing...');
-            //                             TimeOut();
-            //                         }, 1000);
-            //                     }, 1000);
-            //                 }, 1000);
-            //             }, 1000)
-            //         }
-
-            //         TimeOut();
-
-            //         steps_bar.show();
-
-
-
-
-            //     } else {
-            //         console.log('empty')
-            //     }
-            // });
         </script>
     @endsection

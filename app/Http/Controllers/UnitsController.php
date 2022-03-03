@@ -6,12 +6,9 @@ use App\Events\HeatmapUpdate;
 use App\Events\ControllerUpdate;
 use App\Models\Unit;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use PhpMqtt\Client\Exceptions\MqttClientException;
 use PhpMqtt\Client\Facades\MQTT;
 use PhpMqtt\Client\MqttClient;
-use Illuminate\Support\Facades\DB;
-use SebastianBergmann\Environment\Console;
 
 class UnitsController extends Controller
 {
@@ -48,9 +45,7 @@ class UnitsController extends Controller
             $mqtt->subscribe('PLMS-ControllerResponse-CLZ', function (string $topic, string $message) use (&$mqtt, &$validated, &$controllerConnected, &$messageSent) {
                 if ($message == "ControllerConnected") {
                     $controllerConnected = true;
-                    echo "controller 1";
-
-                    // event(new ControllerUpdate("controller 1"));
+                    event(new ControllerUpdate("controller 1"));
                 }
 
                 if ($message == "MessageSent") {
@@ -61,8 +56,7 @@ class UnitsController extends Controller
                         'phone_number' => $validated["phone_number"]
                     ]);
 
-                    echo "message 1";
-                    // event(new ControllerUpdate("message 1"));
+                    event(new ControllerUpdate("message 1"));
 
                     $mqtt->interrupt();
                 }
@@ -72,17 +66,14 @@ class UnitsController extends Controller
                 function (MqttClient $client, float $elapsedTime) use (&$controllerConnected, &$messageSent) {
                     // Controller must be connected within 10 seconds
                     if ($elapsedTime > 10 && !$controllerConnected) {
-                        echo "controller 0";
-                        // event(new ControllerUpdate("controller 0"));
-
+                        event(new ControllerUpdate("controller 0"));
 
                         $client->interrupt();
                     }
 
                     // Controller must be able to send the command to the unit within 20 seconds
                     if ($elapsedTime > 25 && !$messageSent) {
-                        echo "message 0";
-                        // event(new ControllerUpdate("message 0"));
+                        event(new ControllerUpdate("message 0"));
 
                         $client->interrupt();
                     }
@@ -95,7 +86,7 @@ class UnitsController extends Controller
 
             $mqtt->disconnect();
         } catch (MqttClientException $error) {
-            echo $error->__toString();
+            event(new ControllerUpdate($error->__toString()));
         }
     }
 
@@ -200,10 +191,12 @@ class UnitsController extends Controller
                 ";
             }
         }
+
         $data = array(
             'result' => $output,
             'count' => $count
         );
+
         return json_encode($data);
     }
 }
