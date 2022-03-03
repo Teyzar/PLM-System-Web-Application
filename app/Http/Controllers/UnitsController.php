@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use PhpMqtt\Client\Exceptions\MqttClientException;
 use PhpMqtt\Client\Facades\MQTT;
 use PhpMqtt\Client\MqttClient;
+use Illuminate\Support\Facades\Validator;
+
 
 class UnitsController extends Controller
 {
@@ -38,6 +40,17 @@ class UnitsController extends Controller
         $validated = $request->validate([
             'phone_number' => 'required|starts_with:+639|min:13|max:13|unique:units',
         ]);
+
+        // $validation = Validator::make($request->all(), $validated);
+
+
+        // $array = array(
+        //     'x' => $validation
+        // );
+
+        // if ($validation->fails()) {
+        //     echo json_encode($array);
+        // }
 
         try {
             $mqtt = MQTT::connection();
@@ -82,12 +95,16 @@ class UnitsController extends Controller
 
             $mqtt->publish('PLMS-ControllerCommands-CLZ', "UnitRegister\n" . $validated["phone_number"]);
 
+            event(new ControllerUpdate("start"));
+
             $mqtt->loop();
 
             $mqtt->disconnect();
         } catch (MqttClientException $error) {
             event(new ControllerUpdate($error->__toString()));
         }
+
+        // return redirect()->back();
     }
 
     public function update(Request $request, String $phone_number)

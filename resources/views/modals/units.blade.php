@@ -39,20 +39,22 @@
                         </div>
                         <div class="d-flex justify-content-center align-items-center">
                             <div id="steps-id" class="progresses">
-                                <div id="controller" class="steps bg-white border"><span id="spinner" class="pt-1"></span></div> <span class="line border"></span>
+                                <div id="start" class="steps border"><span id="spinner1" class="pt-1"></span></div> <span id="line1" class="line border"></span>
                                 <div style="margin-top: 11%; position: absolute">
+                                    <span>start</span>
+                                </div>
+                                <div id="controller" class="steps border"> <span id="spinner2" class="">2</span> </div> <span id="line2" class="line border"></span>
+                                <div style="margin-top: 11%; position: absolute; padding-left: 30%">
                                     <span>controller</span>
                                 </div>
-                                <div id="detector" class="steps bg-white border"> <span class="font-weight-bold text-secondary">2</span> </div> <span class="line border"></span>
-                                <div style="margin-top: 11%; position: absolute; padding-left: 30%">
-                                    <span>detector</span>
+                                <div id="message" class="steps border"> <span id="spinner3" class="">3</span> </div>
+                                <div style="margin-top: 11%; position: absolute; padding-left: 65%;">
+                                    <span>text</span>
                                 </div>
-                                <div id="registered" class="steps bg-white border"> <span class="font-weight-bold text-secondary">3</span> </div>
-                                {{-- <span>unit</span> --}}
 
                             </div>
                         </div>
-                        <button id="submitbtn" type="submit" class="btn btn-warning float-end">Submit</button>
+                        <button id="submitbtn" type="submit" class="btn btn-warning float-end mt-3">Submit</button>
                     </div>
                 </form>
             </div>

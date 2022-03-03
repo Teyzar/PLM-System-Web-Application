@@ -185,7 +185,7 @@
 
                                     setTimeout(function() {
                                         location.reload();
-                                    }, 500);
+                                    }, 0);
                                 }
                             },
                             error: (err) => console.error(err)

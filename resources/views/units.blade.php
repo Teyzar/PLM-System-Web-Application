@@ -68,17 +68,6 @@
                                 <th width="5%">&nbsp;</th>
                             </tr>
                         </thead>
-                        <tfoot>
-                            <tr class="client--nav-tabs text-secondary">
-                                <th width="5%">Id</th>
-                                <th width="10%">Status</th>
-                                <th width="20%">Mobile #</th>
-                                <th width="20%">Longitude</th>
-                                <th width="20%">Latitude</th>
-                                <th width="20%">Updated&nbsp;Last</th>
-                                <th width="5%">&nbsp;</th>
-                            </tr>
-                        </tfoot>
                         <tbody class="searchbody bg-light border-0 " id="tb">
                             @foreach ($units as $unit)
                                 <tr id="{{ $unit->id }}" class="trbody bg-light client--nav tdhover data">
@@ -133,20 +122,100 @@
 
         <script>
             $(document).ready(function() {
+                var submitbtn = $('#submitbtn');
+                var phone_num = $('#phone_number');
+                var closebtn = $('#close');
+                var bar = $('#bar');
+                var processing = $('#processing');
+                var steps_bar = $('#steps-id');
+                var spinner1 = $('#spinner1');
+                var spinner2 = $('#spinner2');
+                var spinner3 = $('#spinner3');
+                var form = $('#unit-form');
+                var line1 = $('#line1');
+                var line2 = $('#line2');
+
+                var start = $('#start');
+                var controller = $('#controller');
+                var message = $('#message');
+
+                steps_bar.hide();
+
+                submitbtn.on('click', function() {
+                    if (phone_num.val() !== "") {
+                        steps_bar.show('slow');
+                        submitbtn.hide();
+
+                        controller.css('background', 'white');
+                        spinner1.html(`<div class="spinner-border text-secondary" role="status">
+                        <span class="sr-only">Loading...</span>
+                        </div>`);
+                    }
+                });
+
+                form.on('submit', function(e) {
+                    e.preventDefault();
+                    start.css('background', 'white');
+                    controller.css('background', 'white');
+                    message.css('background', 'white');
+                    line1.css('background', 'white');
+                    line2.css('background', 'white');
+
+                    $.ajax({
+                        type: "post",
+                        url: "units",
+                        data: $(this).serialize(),
+                        dataType: 'json',
+                        success: function(data) {
+                            if (data.x) {
+
+                            }
+                        }
+                    })
+                });
+
                 Echo.channel("Controller").listen("ControllerUpdate", (data) => {
+                    console.log(data.message);
                     switch (data.message) {
+                        case "start":
+                            start.css('background', '#63d19e');
+                            spinner1.html(
+                                '<i class="fa-solid fa-check text-white fs-5"></i>');
+                            line1.css('background-color', '#63d19e');
+                            spinner2.html(`<div class="spinner-border text-secondary mt-1" role="status">
+                                <span class="sr-only">Loading...</span>
+                                </div>`);
+                            break;
                         case "controller 1":
-                            spinner.html(
-                                '<i class="fa-solid fa-check text-darm fs-4"></i>');
+                            controller.css('background', '#63d19e');
+                            spinner2.html(
+                                '<i class="fa-solid fa-check text-white fs-5 mt-1"></i>');
+                            line2.css('background-color', '#63d19e');
+                            spinner3.html(`<div class="spinner-border text-secondary mt-1" role="status">
+                                <span class="sr-only">Loading...</span>
+                                </div>`);
                             break;
                         case "controller 0":
                             submitbtn.show();
-                            spinner.html(
-                                '<i class="fa-solid fa-xmark text-danger fs-4"></i>');
+                            controller.css('background', 'red');
+                            spinner2.html(
+                                '<i class="fa-solid fa-xmark text-white fs-4 mt-1"></i>');
                             submitbtn.html('re-submit');
                             break;
+                        case "message 1":
+                            message.css('background', '#63d19e');
+                            spinner3.html(
+                                '<i class="fa-solid fa-check text-white fs-5"></i>');
+                            location.reload();
+                            break;
                         case "message 0":
-                            console.log('here');
+                            submitbtn.show();
+                            message.css('background', 'red');
+                            spinner3.html(
+                                '<i class="fa-solid fa-xmark text-white fs-4 mt-1"></i>');
+                            submitbtn.html('re-submit');
+
+                            spinner3.addClass('resubmit');
                             break;
                         default:
                             console.error(data.message);
@@ -185,36 +254,6 @@
                         },
                         error: (error) => console.log(error)
                     });
-                });
-
-                var submitbtn = $('#submitbtn');
-                var phone_num = $('#phone_number');
-                var closebtn = $('#close');
-                var bar = $('#bar');
-                var processing = $('#processing');
-                var steps_bar = $('#steps-id');
-                var spinner = $('#spinner');
-                var form = $('#unit-form');
-
-                steps_bar.hide();
-
-                form.on('submit', function(e) {
-                    e.preventDefault();
-                    steps_bar.show('slow');
-                    submitbtn.hide();
-
-                    spinner.html(`<div class="spinner-border text-secondary" role="status">
-                <span class="sr-only">Loading...</span>
-                </div>`);
-
-                    $.ajax({
-                        type: "post",
-                        url: "units",
-                        data: $(this).serialize(),
-                        success: function(data) {
-                            console.log(data);
-                        }
-                    })
                 });
             });
 
