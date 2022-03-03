@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', '- Accounts')
+
 @section('head')
     <link href="{{ mix('css/lineman.css') }}" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
@@ -7,10 +9,6 @@
 
 @section('body')
     <div class="container mt-4">
-        <div class="card-header fs-5 count bg-white text-muted inner-menu shadow">
-            {{ 'Accounts (' . count($linemen) . ')' }}
-        </div>
-
         <div class="card bg-light border-0 p-2 inner-menu shadow align-items-center flex-row px-3">
             <i class="bi bi-search p-1 text-dark fs-5"></i>
             <div class="container p-1">

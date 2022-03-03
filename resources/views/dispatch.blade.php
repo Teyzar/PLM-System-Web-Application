@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', '- Dispatch')
+
 @section('head')
     <link href="{{ mix('css/units.css') }}" rel="stylesheet">
     <link href="{{ mix('css/dispatch.css') }}" rel="stylesheet">

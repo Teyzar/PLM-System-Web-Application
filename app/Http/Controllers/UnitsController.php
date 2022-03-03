@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\HeatmapUpdate;
+use App\Events\ControllerUpdate;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -47,8 +48,9 @@ class UnitsController extends Controller
             $mqtt->subscribe('PLMS-ControllerResponse-CLZ', function (string $topic, string $message) use (&$mqtt, &$validated, &$controllerConnected, &$messageSent) {
                 if ($message == "ControllerConnected") {
                     $controllerConnected = true;
-
                     echo "controller 1";
+
+                    // event(new ControllerUpdate("controller 1"));
                 }
 
                 if ($message == "MessageSent") {
@@ -60,6 +62,7 @@ class UnitsController extends Controller
                     ]);
 
                     echo "message 1";
+                    // event(new ControllerUpdate("message 1"));
 
                     $mqtt->interrupt();
                 }
@@ -70,6 +73,8 @@ class UnitsController extends Controller
                     // Controller must be connected within 10 seconds
                     if ($elapsedTime > 10 && !$controllerConnected) {
                         echo "controller 0";
+                        // event(new ControllerUpdate("controller 0"));
+
 
                         $client->interrupt();
                     }
@@ -77,6 +82,7 @@ class UnitsController extends Controller
                     // Controller must be able to send the command to the unit within 20 seconds
                     if ($elapsedTime > 25 && !$messageSent) {
                         echo "message 0";
+                        // event(new ControllerUpdate("message 0"));
 
                         $client->interrupt();
                     }

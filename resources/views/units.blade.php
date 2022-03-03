@@ -1,19 +1,22 @@
 @extends('layouts.app')
 
+@section('title', '- Units')
+
 @section('head')
     <link href="{{ mix('css/units.css') }}" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 @endsection
 
 @section('content')
-    <div style="margin-left: 8%; margin-right: 9%;" class="">
-        <div class="container-fluid col-7 pt-2">
-            <form id="search-form" method="POST" class="">
+    <div class="container mt-4">
+        <div class="card bg-light inner-menu shadow border-0 p-2 align-items-start flex-row">
+            <form id="search-form" method="POST" class="w-100">
                 @csrf
-                <div class="has-search input-group mt-4 col-md-2">
+                <div class="has-search input-group">
                     <span class="fa fa-search form-control-feedback"></span>
-                    <input type="text" class="form-control rounded d-flex" placeholder="Search" name="search" id="search">
-                    <div class="btn-group col-md-2">
+                    <div class="w-50"><input type="text" class="form-control" placeholder="Search" name="search"
+                            id="search"></div>
+                    <div class="btn-group">
                         <select class="form-select dropdown-toggle" type="button" name="select">
                             <option value="">Select</option>
                             <option value="id">Id</option>
@@ -25,96 +28,94 @@
                     <button type="submit" class="btn btn-outline-primary invisible">search</button>
                 </div>
             </form>
-        </div>
-        <div class="float-end">
-            <a href="" class="btn register" data-bs-toggle="modal" data-bs-target="#store-unit" data-toggle="tooltip"
-                title="Register">
+            <button
+                class="addicon text-dark bs-tooltip-top tooltip-arrow btn register d-flex align-items-center px-3 py-1 addicon"
+                data-bs-toggle="modal" data-bs-target="#store-unit" data-toggle="tooltip" title="Register">
                 <i class="fa-solid fa-plus pe-2"></i><span class="fs-6 text-dark opacity-100">Register</span>
-            </a>
+            </button>
         </div>
     </div>
-    <div style="margin-left: 8%; margin-right: 8%;">
-        <div class="container-fluid mt-5">
-            <div class="row">
-                <div class="table-responsive-sm">
-                    @if (count($units) <= 0)
-                        <table id="table" class="table table-md text-start">
-                            <thead class="">
-                                <tr class="client--nav-tabs text-secondary">
-                                    <th width="5%">Id</th>
-                                    <th width="10%">Status</th>
-                                    <th width="20%">Mobile #</th>
-                                    <th width="20%">Longitude</th>
-                                    <th width="20%">Latitude</th>
-                                    <th width="20%">Updated&nbsp;Last</th>
-                                    <th width="5%">&nbsp;</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    @else
-                        <table id="table" class="table table-md text-start">
-                            <thead class="">
-                                <tr class="client--nav-tabs text-secondary">
-                                    <th width="5%">Id</th>
-                                    <th width="10%">Status</th>
-                                    <th width="20%">Mobile #</th>
-                                    <th width="20%">Longitude</th>
-                                    <th width="20%">Latitude</th>
-                                    <th width="20%">Updated&nbsp;Last</th>
-                                    <th width="5%">&nbsp;</th>
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                <tr class="client--nav-tabs text-secondary">
-                                    <th width="5%">Id</th>
-                                    <th width="10%">Status</th>
-                                    <th width="20%">Mobile #</th>
-                                    <th width="20%">Longitude</th>
-                                    <th width="20%">Latitude</th>
-                                    <th width="20%">Updated&nbsp;Last</th>
-                                    <th width="5%">&nbsp;</th>
-                                </tr>
-                            </tfoot>
-                            <tbody class="searchbody bg-light border-0 " id="tb">
-                                @foreach ($units as $unit)
-                                    <tr id="{{ $unit->id }}" class="trbody bg-light client--nav tdhover data">
-                                        <td class="text-danger">
-                                            {{ $unit->id }}
-                                        </td>
-                                        <td class="">
-                                            {{ Str::ucfirst($unit->status) }}
-                                        </td>
-                                        <td class="">
-                                            {{ $unit->phone_number }}
-                                        </td>
 
-                                        <td class="">
-                                            {{ $unit->longitude }}
-                                        </td>
+    <div class="container mt-3">
+        <div class="row">
+            <div class="table-responsive-md">
+                @if (count($units) <= 0)
+                    <table id="table" class="table border table-md text-start">
+                        <thead class="">
+                            <tr class="client--nav-tabs text-secondary">
+                                <th width="5%">Id</th>
+                                <th width="10%">Status</th>
+                                <th width="20%">Mobile #</th>
+                                <th width="20%">Longitude</th>
+                                <th width="20%">Latitude</th>
+                                <th width="20%">Updated&nbsp;Last</th>
+                                <th width="5%">&nbsp;</th>
+                            </tr>
+                        </thead>
+                    </table>
+                @else
+                    <table id="table" class="table border table-md text-start">
+                        <thead class="">
+                            <tr class="client--nav-tabs text-secondary">
+                                <th width="5%">Id</th>
+                                <th width="10%">Status</th>
+                                <th width="20%">Mobile #</th>
+                                <th width="20%">Longitude</th>
+                                <th width="20%">Latitude</th>
+                                <th width="20%">Updated&nbsp;Last</th>
+                                <th width="5%">&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr class="client--nav-tabs text-secondary">
+                                <th width="5%">Id</th>
+                                <th width="10%">Status</th>
+                                <th width="20%">Mobile #</th>
+                                <th width="20%">Longitude</th>
+                                <th width="20%">Latitude</th>
+                                <th width="20%">Updated&nbsp;Last</th>
+                                <th width="5%">&nbsp;</th>
+                            </tr>
+                        </tfoot>
+                        <tbody class="searchbody bg-light border-0 " id="tb">
+                            @foreach ($units as $unit)
+                                <tr id="{{ $unit->id }}" class="trbody bg-light client--nav tdhover data">
+                                    <td class="text-danger">
+                                        {{ $unit->id }}
+                                    </td>
+                                    <td class="">
+                                        {{ Str::ucfirst($unit->status) }}
+                                    </td>
+                                    <td class="">
+                                        {{ $unit->phone_number }}
+                                    </td>
 
-                                        <td class="">
-                                            {{ $unit->latitude }}
-                                        </td>
+                                    <td class="">
+                                        {{ $unit->longitude }}
+                                    </td>
 
-                                        <td class="">
-                                            {{ $unit->updated_at }}
-                                        </td>
-                                        <td class="">
-                                            <button id="delbtn" class="btn border-0 deletebtn float-end"
-                                                onclick="removeUnit({{ $unit->id }})" type="button">
-                                                <i class="fas fa-trash fs-5 text-danger bs-tooltip-top tooltip-arrow"
-                                                    data-toggle="tooltip" data-bs-placement="top" title="Remove"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        <div class="d-flex justify-content-center fs-10">
-                            {{ $units->links() }}
-                        </div>
-                    @endif
-                </div>
+                                    <td class="">
+                                        {{ $unit->latitude }}
+                                    </td>
+
+                                    <td class="">
+                                        {{ $unit->updated_at }}
+                                    </td>
+                                    <td class="">
+                                        <button id="delbtn" class="btn border-0 deletebtn float-end"
+                                            onclick="removeUnit({{ $unit->id }})" type="button">
+                                            <i class="fas fa-trash fs-5 text-danger bs-tooltip-top tooltip-arrow"
+                                                data-toggle="tooltip" data-bs-placement="top" title="Remove"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-center fs-10">
+                        {{ $units->links() }}
+                    </div>
+                @endif
             </div>
         </div>
 
@@ -163,6 +164,58 @@
                         error: (error) => console.log(error)
                     });
                 });
+
+                var submitbtn = $('#submitbtn');
+                var phone_num = $('#phone_number');
+                var closebtn = $('#close');
+                var bar = $('#bar');
+                var processing = $('#processing');
+                var steps_bar = $('#steps-id');
+                var spinner = $('#spinner');
+                var form = $('#unit-form');
+
+                steps_bar.hide();
+
+                form.on('submit', function(e) {
+                    e.preventDefault();
+                    steps_bar.show('slow');
+                    submitbtn.hide();
+
+                    spinner.html(`<div class="spinner-border text-secondary" role="status">
+                <span class="sr-only">Loading...</span>
+                </div>`);
+
+                    // Echo.channel("Controllers").listen("ControllerUpdate", (message) => {
+                    //     console.log(message)
+                    // });
+
+
+                    $.ajax({
+                        type: "post",
+                        url: "units",
+                        data: $(this).serialize(),
+                        success: function(data) {
+
+                            console.log(data);
+
+                            // switch (data) {
+                            //     case "controller 1":
+                            //         spinner.html(
+                            //         '<i class="fa-solid fa-check text-darm fs-4"></i>');
+                            //         break;
+                            //     case "controller 0":
+                            //         submitbtn.show();
+                            //         spinner.html(
+                            //             '<i class="fa-solid fa-xmark text-danger fs-4"></i>');
+                            //         submitbtn.html('re-submit');
+                            //         break;
+                            //     case "message 0":
+                            //         console.log('here');
+                            //         break;
+                            // }
+                        }
+                    })
+                });
             });
 
             function removeUnit(id) {
@@ -185,48 +238,7 @@
                 })
             }
 
-            var submitbtn = $('#submitbtn');
-            var phone_num = $('#phone_number');
-            var closebtn = $('#close');
-            var bar = $('#bar');
-            var processing = $('#processing');
-            var steps_bar = $('#steps-id');
-            var spinner = $('#spinner');
 
-
-            var form = $('#unit-form');
-
-            steps_bar.hide();
-
-
-            form.on('submit', function(e) {
-                e.preventDefault();
-                steps_bar.show('slow');
-                submitbtn.hide();
-
-                spinner.html(`<div class="spinner-border text-secondary" role="status">
-                <span class="sr-only">Loading...</span>
-                </div>`);
-
-                $.ajax({
-                    type: "post",
-                    url: "units",
-                    data: $(this).serialize(),
-                    success: function(data) {
-                        console.log(data);
-                        switch (data) {
-                            case "controller 1":
-                                spinner.html('<i class="fa-solid fa-check text-darm fs-4"></i>');
-                                break;
-                            case "controller 0":
-                                submitbtn.show();
-                                spinner.html('<i class="fa-solid fa-xmark text-danger fs-4"></i>');
-                                submitbtn.html('re-submit');
-                                break;
-                        }
-                    }
-                })
-            })
 
             // submitbtn.on('click', function() {
             //     if (phone_num.val() !== "") {
