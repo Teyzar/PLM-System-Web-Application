@@ -2,7 +2,9 @@
 .modal-open .container {
     -webkit-filter: blur(1px) grayscale(100%);
 }
-
+.paginate_button {
+    font-size: small !important;
+}
 .dataTables_length {
     font-size: 0.9rem;
     height: 50px;

@@ -23,8 +23,9 @@
                 </div>
             </div>
 
-            <a href="" class="addicon text-dark bs-tooltip-top tooltip-arrow btn btn-warning d-flex align-items-center px-3 py-1 addicon" data-bs-toggle="modal"
-                data-bs-target="#modalRegisterForm" data-toggle="tooltip" title="Register">
+            <a href=""
+                class="addicon text-dark bs-tooltip-top tooltip-arrow btn btn-warning d-flex align-items-center px-3 py-1 addicon"
+                data-bs-toggle="modal" data-bs-target="#modalRegisterForm" data-toggle="tooltip" title="Register">
                 <i class="fa-solid fa-plus pe-2"></i>Register
             </a>
         </div>
@@ -123,6 +124,8 @@
 
     <script>
         $(document).ready(function() {
+
+            // $.fn.dataTable.ext.classes.sPageButton = 'btn';
             var table = $('#table').DataTable({
                 "lengthMenu": [
                     [10, 25, 50, -1],
@@ -132,6 +135,7 @@
                     'targets': [4, 5, 6],
                     'orderable': false,
                 }],
+                "pagingType": "simple_numbers",
             });
 
             $('#search').on('keyup', function() {

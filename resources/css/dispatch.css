@@ -1,9 +1,7 @@
 .tabs {
-    font-size: 14px;
-    margin: auto;
+    font-size: 13.5px;
     line-height: 35px;
     color: #c2cfe0;
-    background-color: lightgoldenrodyellow;
 }
 
 input[type="checkbox"]:checked {
