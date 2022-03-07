@@ -50,7 +50,7 @@
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item pt-1">
                             <a class="nav-link texthover rounded-pill"
-                                href="{{ route('login') }}">{{ __('Outage Records') }}</a>
+                                href="/records">{{ __('Outage Records') }}</a>
                         </li>
 
                         @auth

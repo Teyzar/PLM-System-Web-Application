@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
 @endsection
 
-@section('content')
+@section('body')
     <div class="container mt-4">
         <div class="card bg-light inner-menu shadow border-0 p-2 align-items-start flex-row">
             <form id="search-form" method="POST" class="w-100">
@@ -109,171 +109,176 @@
                 @endif
             </div>
         </div>
+    </div>
 
-        @if (count($errors) > 0)
-            <script>
-                $(document).ready(function() {
-                    $('#store-unit').modal('show');
-                });
-            </script>
-        @endif
-
-        @include('modals.units')
-
+    @if (count($errors) > 0)
         <script>
             $(document).ready(function() {
-                var submitbtn = $('#submitbtn');
-                var phone_num = $('#phone_number');
-                var closebtn = $('#close');
-                var bar = $('#bar');
-                var processing = $('#processing');
-                var steps_bar = $('#steps-id');
-                var spinner1 = $('#spinner1');
-                var spinner2 = $('#spinner2');
-                var spinner3 = $('#spinner3');
-                var form = $('#unit-form');
-                var line1 = $('#line1');
-                var line2 = $('#line2');
+                $('#store-unit').modal('show');
+            });
+        </script>
+    @endif
 
-                var start = $('#start');
-                var controller = $('#controller');
-                var message = $('#message');
+    <script>
+        $(document).ready(function() {
+            var submitbtn = $('#submitbtn');
+            var phone_num = $('#phone_number');
+            var closebtn = $('#close');
+            var bar = $('#bar');
+            var processing = $('#processing');
+            var steps_bar = $('#steps-id');
+            var spinner1 = $('#spinner1');
+            var spinner2 = $('#spinner2');
+            var spinner3 = $('#spinner3');
+            var form = $('#unit-form');
+            var line1 = $('#line1');
+            var line2 = $('#line2');
 
-                steps_bar.hide();
+            var start = $('#start');
+            var controller = $('#controller');
+            var message = $('#message');
 
-                submitbtn.on('click', function() {
-                    if (phone_num.val() !== "") {
-                        steps_bar.show('slow');
-                        submitbtn.hide();
+            steps_bar.hide();
 
-                        controller.css('background', 'white');
-                        spinner1.html(`<div class="spinner-border text-secondary" role="status">
+            submitbtn.on('click', function() {
+                if (phone_num.val() !== "") {
+                    steps_bar.show('slow');
+                    submitbtn.hide();
+
+                    controller.css('background', 'white');
+                    spinner1.html(`<div class="spinner-border text-secondary" role="status">
                         <span class="sr-only">Loading...</span>
                         </div>`);
-                    }
-                });
-
-                form.on('submit', function(e) {
-                    e.preventDefault();
-                    start.css('background', 'white');
-                    controller.css('background', 'white');
-                    message.css('background', 'white');
-                    line1.css('background', 'white');
-                    line2.css('background', 'white');
-
-                    $.ajax({
-                        type: "post",
-                        url: "units",
-                        data: $(this).serialize(),
-                        dataType: 'json',
-                        success: function(data) {
-                            if (data.x) {
-
-                            }
-                        }
-                    })
-                });
-
-                Echo.channel("Controller").listen("ControllerUpdate", (data) => {
-                    console.log(data.message);
-                    switch (data.message) {
-                        case "start":
-                            start.css('background', '#63d19e');
-                            spinner1.html(
-                                '<i class="fa-solid fa-check text-white fs-5"></i>');
-                            line1.css('background-color', '#63d19e');
-                            spinner2.html(`<div class="spinner-border text-secondary mt-1" role="status">
-                                <span class="sr-only">Loading...</span>
-                                </div>`);
-                            break;
-                        case "controller 1":
-                            controller.css('background', '#63d19e');
-                            spinner2.html(
-                                '<i class="fa-solid fa-check text-white fs-5 mt-1"></i>');
-                            line2.css('background-color', '#63d19e');
-                            spinner3.html(`<div class="spinner-border text-secondary mt-1" role="status">
-                                <span class="sr-only">Loading...</span>
-                                </div>`);
-                            break;
-                        case "controller 0":
-                            submitbtn.show();
-                            controller.css('background', 'red');
-                            spinner2.html(
-                                '<i class="fa-solid fa-xmark text-white fs-4 mt-1"></i>');
-                            submitbtn.html('re-submit');
-                            break;
-                        case "message 1":
-                            message.css('background', '#63d19e');
-                            spinner3.html(
-                                '<i class="fa-solid fa-check text-white fs-5"></i>');
-                            location.reload();
-                            break;
-                        case "message 0":
-                            submitbtn.show();
-                            message.css('background', 'red');
-                            spinner3.html(
-                                '<i class="fa-solid fa-xmark text-white fs-4 mt-1"></i>');
-                            submitbtn.html('re-submit');
-
-                            spinner3.addClass('resubmit');
-                            break;
-                        default:
-                            console.error(data.message);
-                    }
-                });
-
-                $('#table').DataTable({
-                    "lengthMenu": [
-                        [10, 20, 50, -1],
-                        [10, 20, 50, "All"]
-                    ],
-                    "bFilter": false,
-                    'columnDefs': [{
-                        'targets': [6],
-                        'orderable': false, // orderable false
-                    }],
-                });
-
-                $('[data-toggle="tooltip"]').tooltip();
-                $('#search-form').submit(function(event) {
-                    event.preventDefault();
-                    var $form = $(this);
-                    var value = $form.find("input[name='search']").val();
-                    var selectValue = $form.find("select[name='select']").val();
-
-                    $.ajax({
-                        type: 'get',
-                        url: 'units-search',
-                        data: {
-                            'searchTerm': value,
-                            'selectTerm': selectValue
-                        },
-                        dataType: 'json',
-                        success: function(data) {
-                            $('.searchbody').html(data.result);
-                        },
-                        error: (error) => console.log(error)
-                    });
-                });
+                }
             });
 
-            function removeUnit(id) {
-                $('#modalRemove').modal('show');
+            form.on('submit', function(e) {
+                e.preventDefault();
+                start.css('background', 'white');
+                controller.css('background', 'white');
+                message.css('background', 'white');
+                line1.css('background', 'white');
+                line2.css('background', 'white');
 
-                $('#remove-id').submit(function(event) {
-                    event.preventDefault();
-                    $.ajax({
-                        type: 'delete',
-                        url: `units/${id}`,
-                        data: $(this).serialize(),
-                        dataType: 'json',
-                        success: function(data) {
-                            $(`#${id}`).fadeOut('slow');
-                            location.reload();
-                        },
-                        error: (error) => console.error(error)
-                    });
+                $.ajax({
+                    type: "post",
+                    url: "units",
+                    data: $(this).serialize(),
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data.x) {
+
+                        }
+                    },
+                    error: function(response) {
+                        console.log(response.responseJSON.errors.phone_number);
+                    },
                 })
-            }
-        </script>
-    @endsection
+            });
+
+            Echo.channel("Controller").listen("ControllerUpdate", (data) => {
+                console.log(data.message);
+                switch (data.message) {
+                    case "start":
+                        start.css('background', '#63d19e');
+                        spinner1.html(
+                            '<i class="fa-solid fa-check text-white fs-5"></i>');
+                        line1.css('background-color', '#63d19e');
+                        spinner2.html(`<div class="spinner-border text-secondary mt-1" role="status">
+                                <span class="sr-only">Loading...</span>
+                                </div>`);
+                        break;
+                    case "controller 1":
+                        controller.css('background', '#63d19e');
+                        spinner2.html(
+                            '<i class="fa-solid fa-check text-white fs-5 mt-1"></i>');
+                        line2.css('background-color', '#63d19e');
+                        spinner3.html(`<div class="spinner-border text-secondary mt-1" role="status">
+                                <span class="sr-only">Loading...</span>
+                                </div>`);
+                        break;
+                    case "controller 0":
+                        submitbtn.show();
+                        controller.css('background', 'red');
+                        spinner2.html(
+                            '<i class="fa-solid fa-xmark text-white fs-4 mt-1"></i>');
+                        submitbtn.html('re-submit');
+                        break;
+                    case "message 1":
+                        message.css('background', '#63d19e');
+                        spinner3.html(
+                            '<i class="fa-solid fa-check text-white fs-5"></i>');
+                        location.reload();
+                        break;
+                    case "message 0":
+                        submitbtn.show();
+                        message.css('background', 'red');
+                        spinner3.html(
+                            '<i class="fa-solid fa-xmark text-white fs-4 mt-1"></i>');
+                        submitbtn.html('re-submit');
+
+                        spinner3.addClass('resubmit');
+                        break;
+                    default:
+                        console.error(data.message);
+                }
+            });
+
+            $('#table').DataTable({
+                "lengthMenu": [
+                    [10, 20, 50, -1],
+                    [10, 20, 50, "All"]
+                ],
+                "bFilter": false,
+                'columnDefs': [{
+                    'targets': [6],
+                    'orderable': false, // orderable false
+                }],
+            });
+
+            $('[data-toggle="tooltip"]').tooltip();
+            $('#search-form').submit(function(event) {
+                event.preventDefault();
+                var $form = $(this);
+                var value = $form.find("input[name='search']").val();
+                var selectValue = $form.find("select[name='select']").val();
+
+                $.ajax({
+                    type: 'get',
+                    url: 'units-search',
+                    data: {
+                        'searchTerm': value,
+                        'selectTerm': selectValue
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        $('.searchbody').html(data.result);
+                    },
+                    error: (error) => console.log(error)
+                });
+            });
+        });
+
+        function removeUnit(id) {
+            $('#modalRemove').modal('show');
+
+            $('#remove-id').submit(function(event) {
+                event.preventDefault();
+                $.ajax({
+                    type: 'delete',
+                    url: `units/${id}`,
+                    data: $(this).serialize(),
+                    dataType: 'json',
+                    success: function(data) {
+                        $(`#${id}`).fadeOut('slow');
+                        location.reload();
+                    },
+                    error: (error) => console.error(error)
+                });
+            })
+        }
+    </script>
+
+    @include('modals.units')
+
+@endsection

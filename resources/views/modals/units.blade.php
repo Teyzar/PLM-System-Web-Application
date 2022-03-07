@@ -1,5 +1,5 @@
-<div class="modal fade pt-5" id="store-unit" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade pt-5" id="store-unit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -39,15 +39,20 @@
                         </div>
                         <div class="d-flex justify-content-center align-items-center">
                             <div id="steps-id" class="progresses">
-                                <div id="start" class="steps border"><span id="spinner1" class="pt-1"></span></div> <span id="line1" class="line border"></span>
+                                <div id="start" class="steps border"><span id="spinner1"
+                                        class="pt-1"></span></div> <span id="line1"
+                                    class="line border"></span>
                                 <div style="margin-top: 11%; position: absolute">
                                     <span>start</span>
                                 </div>
-                                <div id="controller" class="steps border"> <span id="spinner2" class="">2</span> </div> <span id="line2" class="line border"></span>
+                                <div id="controller" class="steps border"> <span id="spinner2"
+                                        class="">2</span> </div> <span id="line2"
+                                    class="line border"></span>
                                 <div style="margin-top: 11%; position: absolute; padding-left: 30%">
                                     <span>controller</span>
                                 </div>
-                                <div id="message" class="steps border"> <span id="spinner3" class="">3</span> </div>
+                                <div id="message" class="steps border"> <span id="spinner3"
+                                        class="">3</span> </div>
                                 <div style="margin-top: 11%; position: absolute; padding-left: 65%;">
                                     <span>text</span>
                                 </div>

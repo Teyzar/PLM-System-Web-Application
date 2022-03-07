@@ -42,3 +42,11 @@ jobs:
           HD_MIX_PUSHER_APP_KEY: ${{secrets.PUSHER_APP_KEY}}
           HD_MIX_PUSHER_APP_CLUSTER: ${{secrets.PUSHER_APP_CLUSTER}}
           HD_MQTT_HOST: ${{secrets.MQTT_HOST}}
+          HD_MAIL_MAILER: smtp
+          HD_MAIL_HOST: smtp.gmail.com
+          HD_MAIL_PORT: 465
+          HD_MAIL_USERNAME: ${{secrets.MAIL_USERNAME}}
+          HD_MAIL_PASSWORD: ${{secrets.MAIL_PASSWORD}}
+          HD_MAIL_ENCRYPTION: ssl
+          HD_MAIL_FROM_ADDRESS: ${{secrets.MAIL_USERNAME}}
+          HD_MAIL_FROM_NAME: "Power Line Monitoring"
