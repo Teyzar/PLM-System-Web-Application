@@ -50,7 +50,7 @@
                     </table>
                 @else
                     <table id="table" class="table border table-md text-start">
-                        <thead class="table table-md inner-menu shadow">
+                        <thead class="">
                             <tr class="client--nav-tabs text-dark">
                                 <th width="20%">Name</th>
                                 <th width="20%">E-mail</th>
@@ -135,7 +135,6 @@
                     'targets': [4, 5, 6],
                     'orderable': false,
                 }],
-                "pagingType": "simple_numbers",
             });
 
             $('#search').on('keyup', function() {

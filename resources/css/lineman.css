@@ -149,3 +149,9 @@
 .dataTables_filter {
     display: none;
 }
+.client--nav-tabs {
+    font-size: 14px;
+    line-height: 20px;
+    align-items: center;
+    color: #c2cfe0;
+}
