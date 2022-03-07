@@ -21,10 +21,10 @@
                     <div class="w-100"></div>
                     <div class="col-6 card-body bg-light inner-menu shadow border-end">
                         <div class="table-responsive-md p-1">
-                            <table id="table" class="table border">
+                            <table id="table" class="table border client--nav-tabs">
                                 <thead class="">
                                     <tr class="text-secondary tabs">
-                                        <th scope="col" class="px-3"><input name="all" id="checkall-units"
+                                        <td scope="col" class="px-3"><input name="all" id="checkall-units"
                                                 class="form-check-input" type="checkbox"></th>
                                         <th scope="col">Id</th>
                                         <th scope="col">Status</th>
@@ -39,11 +39,11 @@
                                             <td scope="col" class="px-3"><input id="unitid"
                                                     class="form-check-input cb-units" type="checkbox"
                                                     name="unit_no[{{ $unit->id }}]"></td>
-                                            <td scope="col">{{ $unit->id }}</td>
-                                            <td scope="col">{{ $unit->status }}</td>
-                                            <td scope="col">{{ $unit->phone_number }}</td>
-                                            <td scope="col">{{ $unit->longitude }}</td>
-                                            <td scope="col">{{ $unit->latitude }}</td>
+                                            <td class="ps-3">{{ $unit->id }}</td>
+                                            <td class="ps-3">{{ $unit->status }}</td>
+                                            <td class="ps-3">{{ $unit->phone_number }}</td>
+                                            <td class="ps-3">{{ $unit->longitude }}</td>
+                                            <td class="ps-3">{{ $unit->latitude }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -52,13 +52,13 @@
                     </div>
                     <div class="col-6 card-body bg-light inner-menu shadow border-start">
                         <div class="table-responsive-md p-1">
-                            <table id="table2" class="table border">
+                            <table id="table2" class="table border client--nav-tabs">
                                 <thead>
                                     <tr class="text-secondary tabs">
-                                        <th scope="col" class="px-3">
+                                        <td scope="col" class="px-3">
                                             <input name="all" id="checkall-lineman" class="form-check-input"
                                                 type="checkbox">
-                                        </th>
+                                            </th>
                                         <th scope="col">Name</th>
                                         <th scope="col">E-mail</th>
                                         <th scope="col">Designation</th>

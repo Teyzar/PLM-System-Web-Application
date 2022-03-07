@@ -1,7 +1,11 @@
+th {
+    white-space: nowrap;
+    outline: none;
+  }
 .tabs {
     font-size: 13.5px;
     line-height: 35px;
-    color: #c2cfe0;
+    margin: auto;
 }
 
 input[type="checkbox"]:checked {
