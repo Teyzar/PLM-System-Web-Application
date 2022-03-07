@@ -45,9 +45,9 @@
                     <table id="table" class="table border table-md text-start">
                         <thead class="">
                             <tr class="client--nav-tabs text-secondary">
-                                <th width="5%">Id</th>
+                                <th width="8%">Id <span class="arrows-icon"></span></th>
                                 <th width="10%">Status</th>
-                                <th width="20%">Mobile #</th>
+                                <th width="15%">Mobile #</th>
                                 <th width="20%">Longitude</th>
                                 <th width="20%">Latitude</th>
                                 <th width="20%">Updated&nbsp;Last</th>
@@ -59,9 +59,9 @@
                     <table id="table" class="table border table-md text-start">
                         <thead class="">
                             <tr class="client--nav-tabs text-secondary">
-                                <th width="5%">Id</th>
+                                <th width="8%">Id</th>
                                 <th width="10%">Status</th>
-                                <th width="20%">Mobile #</th>
+                                <th width="15%">Mobile #</th>
                                 <th width="20%">Longitude</th>
                                 <th width="20%">Latitude</th>
                                 <th width="20%">Updated&nbsp;Last</th>
@@ -71,29 +71,29 @@
                         <tbody class="searchbody bg-light border-0 " id="tb">
                             @foreach ($units as $unit)
                                 <tr id="{{ $unit->id }}" class="trbody bg-light client--nav tdhover data">
-                                    <td class="text-danger">
+                                    <td class="text-danger ps-3">
                                         {{ $unit->id }}
                                     </td>
-                                    <td class="">
+                                    <td class="ps-3">
                                         {{ Str::ucfirst($unit->status) }}
                                     </td>
-                                    <td class="">
+                                    <td class="ps-3">
                                         {{ $unit->phone_number }}
                                     </td>
 
-                                    <td class="">
+                                    <td class="ps-3">
                                         {{ $unit->longitude }}
                                     </td>
 
-                                    <td class="">
+                                    <td class="ps-3">
                                         {{ $unit->latitude }}
                                     </td>
 
-                                    <td class="">
+                                    <td class="ps-3">
                                         {{ $unit->updated_at }}
                                     </td>
-                                    <td class="">
-                                        <button id="delbtn" class="btn border-0 deletebtn float-end"
+                                    <td class="pe-4">
+                                        <button id="delbtn" class="btn border-0 deletebtn float-end p-0"
                                             onclick="removeUnit({{ $unit->id }})" type="button">
                                             <i class="fas fa-trash fs-5 text-danger bs-tooltip-top tooltip-arrow"
                                                 data-toggle="tooltip" data-bs-placement="top" title="Remove"></i>
@@ -138,6 +138,8 @@
             var controller = $('#controller');
             var message = $('#message');
 
+            var pmessage = $('#p-message').val();
+
             steps_bar.hide();
 
             submitbtn.on('click', function() {
@@ -166,12 +168,16 @@
                     data: $(this).serialize(),
                     dataType: 'json',
                     success: function(data) {
-                        if (data.x) {
+                        if (data) {
 
                         }
                     },
                     error: function(response) {
-                        console.log(response.responseJSON.errors.phone_number);
+                        $('#p-message').html(
+                            `<strong>${response.responseJSON.errors.phone_number[0]}</strong>`
+                        );
+                        steps_bar.hide();
+                        submitbtn.show();
                     },
                 })
             });

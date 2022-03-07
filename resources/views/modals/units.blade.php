@@ -25,6 +25,7 @@
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
+                        <span class="text-danger" role="alert" id="p-message"></span>
                     </div>
 
                     <div class="modal-footer d-block">

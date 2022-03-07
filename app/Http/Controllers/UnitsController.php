@@ -41,17 +41,6 @@ class UnitsController extends Controller
             'phone_number' => 'required|starts_with:+639|min:13|max:13|unique:units',
         ]);
 
-        // $validation = Validator::make($request->all(), $validated);
-
-
-        // $array = array(
-        //     'x' => $validation
-        // );
-
-        // if ($validation->fails()) {
-        //     echo json_encode($array);
-        // }
-
         try {
             $mqtt = MQTT::connection();
 
@@ -175,30 +164,30 @@ class UnitsController extends Controller
                 $updated_at = \Carbon\Carbon::parse($unit->updated_at)->toDayDateTimeString();
 
                 $output .= "
-                <tr id='$unit->id' class='trbody bg-light client--nav tdhover'>
-                    <td class='text-danger'>
+                <tr id='$unit->id' class='trbody bg-light client--nav tdhover data'>
+                    <td class='text-danger ps-3'>
                         $unit->id
                     </td>
-                    <td class=''>
+                    <td class='ps-3'>
                          $unit->status
                     </td>
-                    <td class=''>
+                    <td class='ps-3'>
                         $unit->phone_number
                     </td>
 
-                    <td class=''>
+                    <td class='ps-3'>
                          $unit->longitude
                     </td>
 
-                    <td class=''>
+                    <td class='ps-3'>
                         $unit->latitude
                     </td>
 
-                    <td class=''>
+                    <td class='ps-3'>
                         $updated_at
                     </td>
-                    <td class=''>
-                        <button id='delbtn' class='btn border-0 deletebtn'
+                    <td class='pe-4'>
+                        <button id='delbtn' class='btn border-0 deletebtn float-end p-0'
                             onclick='removeUnit($unit->id)' type='button' data-bs-toggle='modal' data-bs-target='#modalRemove'>
                             <i class='fas fa-trash fs-5 text-danger bs-tooltip-top tooltip-arrow'
                                 data-toggle='tooltip' data-bs-placement='top' title='Remove'></i>

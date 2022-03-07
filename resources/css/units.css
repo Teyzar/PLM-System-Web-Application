@@ -750,9 +750,7 @@ p {
 
 .client--nav-tabs {
     font-size: 14px;
-    height: 60px;
-    margin: auto;
-    line-height: 35px;
+    line-height: 20px;
     align-items: center;
     color: #c2cfe0;
 }
@@ -843,8 +841,8 @@ p {
 }
 
 .client--nav {
-    margin: auto;
-    height: 70px;
+    margin-left: 100px;
+    height: 50px;
     line-height: 35px;
     align-items: center;
     border-bottom: 1px solid #e3e6f0;
@@ -6595,3 +6593,10 @@ p {
     background-color: #75e900;
     transition: 0.3s all ease-in-out;
 }
+
+.table.dataTable thead .sorting,
+.table.dataTable thead .sorting_asc,
+.table.dataTable thead .sorting_desc {
+    /* background: none; */
+}
+
