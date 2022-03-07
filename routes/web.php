@@ -24,6 +24,9 @@ use Illuminate\Support\Facades\Auth;
 
 Auth::routes();
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/records', function() {
+    return view('records');
+});
 
 
 // Protected Routes
@@ -38,8 +41,4 @@ Route::middleware('auth')->group(function () {
     Route::get('/units-search', [UnitsController::class, 'search']);
 
     Route::resource('/dispatch', DispatchController::class)->only(['index','store']);
-
-    Route::get('/records', function() {
-        return view('records');
-    });
 });
