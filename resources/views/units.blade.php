@@ -133,26 +133,12 @@
             var form = $('#unit-form');
             var line1 = $('#line1');
             var line2 = $('#line2');
-
             var start = $('#start');
             var controller = $('#controller');
             var message = $('#message');
-
-            var pmessage = $('#p-message').val();
+            var pmessage = $('#p-message');
 
             steps_bar.hide();
-
-            submitbtn.on('click', function() {
-                if (phone_num.val() !== "") {
-                    steps_bar.show('slow');
-                    submitbtn.hide();
-
-                    controller.css('background', 'white');
-                    spinner1.html(`<div class="spinner-border text-secondary" role="status">
-                        <span class="sr-only">Loading...</span>
-                        </div>`);
-                }
-            });
 
             form.on('submit', function(e) {
                 e.preventDefault();
@@ -162,30 +148,45 @@
                 line1.css('background', 'white');
                 line2.css('background', 'white');
 
+                phone_num.attr('class', 'form-control')
+                pmessage.html('');
+
                 $.ajax({
                     type: "post",
                     url: "units",
                     data: $(this).serialize(),
                     dataType: 'json',
-                    success: function(data) {
-                        if (data) {
+                    error: function(error) {
+                        const errors = error.responseJSON?.errors?.phone_number;
+                        if (Array.isArray(errors)) {
+                            let output = "";
+                            for (const message of errors) {
+                                if (output.length > 0) output += "</br>"
+                                output += `<strong>${message}</strong>`;
+                            }
 
+                            phone_num.attr('class', 'form-control is-invalid')
+                            pmessage.html(output);
+
+                            steps_bar.hide();
+                            submitbtn.show();
                         }
-                    },
-                    error: function(response) {
-                        $('#p-message').html(
-                            `<strong>${response.responseJSON.errors.phone_number[0]}</strong>`
-                        );
-                        steps_bar.hide();
-                        submitbtn.show();
                     },
                 })
             });
 
-            Echo.channel("Controller").listen("ControllerUpdate", (data) => {
-                console.log(data.message);
+            Echo.channel("UnitRegister").listen("UnitRegisterUpdate", (data) => {
                 switch (data.message) {
                     case "start":
+                        steps_bar.show('slow');
+                        submitbtn.hide();
+
+                        controller.css('background', 'white');
+                        spinner1.html(`<div class="spinner-border text-secondary" role="status">
+                        <span class="sr-only">Loading...</span>
+                        </div>`);
+                        break;
+                    case "published":
                         start.css('background', '#63d19e');
                         spinner1.html(
                             '<i class="fa-solid fa-check text-white fs-5"></i>');
@@ -225,8 +226,6 @@
 
                         spinner3.addClass('resubmit');
                         break;
-                    default:
-                        console.error(data.message);
                 }
             });
 
@@ -260,7 +259,7 @@
                     success: function(data) {
                         $('.searchbody').html(data.result);
                     },
-                    error: (error) => console.log(error)
+                    error: (error) => console.error(error)
                 });
             });
         });
