@@ -16,16 +16,11 @@
                             Enter the unit's phone number:
                         </label>
 
-                        <input type="tel" class="form-control @error('phone_number') is-invalid @enderror"
+                        <input type="tel" class="form-control"
                             id="phone_number" name="phone_number" value="{{ old('phone_number') }}" placeholder="+639"
                             required>
 
-                        @error('phone_number')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                        <span class="text-danger" role="alert" id="p-message"></span>
+                        <span class="invalid-feedback" role="alert" id="p-message"></span>
                     </div>
 
                     <div class="modal-footer d-block">
