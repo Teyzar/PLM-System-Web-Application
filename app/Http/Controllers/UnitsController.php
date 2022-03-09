@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\HeatmapUpdate;
-use App\Events\ControllerUpdate;
+use App\Events\UnitRegisterUpdate;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 use PhpMqtt\Client\Exceptions\MqttClientException;
@@ -41,13 +41,15 @@ class UnitsController extends Controller
             'phone_number' => 'required|starts_with:+639|min:13|max:13|unique:units',
         ]);
 
+        event(new UnitRegisterUpdate("start"));
+
         try {
             $mqtt = MQTT::connection();
 
             $mqtt->subscribe('PLMS-ControllerResponse-CLZ', function (string $topic, string $message) use (&$mqtt, &$validated, &$controllerConnected, &$messageSent) {
                 if ($message == "ControllerConnected") {
                     $controllerConnected = true;
-                    event(new ControllerUpdate("controller 1"));
+                    event(new UnitRegisterUpdate("controller 1"));
                 }
 
                 if ($message == "MessageSent") {
@@ -58,7 +60,7 @@ class UnitsController extends Controller
                         'phone_number' => $validated["phone_number"]
                     ]);
 
-                    event(new ControllerUpdate("message 1"));
+                    event(new UnitRegisterUpdate("message 1"));
 
                     $mqtt->interrupt();
                 }
@@ -68,14 +70,14 @@ class UnitsController extends Controller
                 function (MqttClient $client, float $elapsedTime) use (&$controllerConnected, &$messageSent) {
                     // Controller must be connected within 10 seconds
                     if ($elapsedTime > 10 && !$controllerConnected) {
-                        event(new ControllerUpdate("controller 0"));
+                        event(new UnitRegisterUpdate("controller 0"));
 
                         $client->interrupt();
                     }
 
                     // Controller must be able to send the command to the unit within 20 seconds
                     if ($elapsedTime > 25 && !$messageSent) {
-                        event(new ControllerUpdate("message 0"));
+                        event(new UnitRegisterUpdate("message 0"));
 
                         $client->interrupt();
                     }
@@ -84,16 +86,14 @@ class UnitsController extends Controller
 
             $mqtt->publish('PLMS-ControllerCommands-CLZ', "UnitRegister\n" . $validated["phone_number"]);
 
-            event(new ControllerUpdate("start"));
+            event(new UnitRegisterUpdate("published"));
 
             $mqtt->loop();
 
             $mqtt->disconnect();
         } catch (MqttClientException $error) {
-            event(new ControllerUpdate($error->__toString()));
+            event(new UnitRegisterUpdate($error->__toString()));
         }
-
-        // return redirect()->back();
     }
 
     public function update(Request $request, String $phone_number)

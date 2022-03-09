@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ControllerUpdate implements ShouldBroadcast
+class UnitRegisterUpdate implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -23,7 +23,7 @@ class ControllerUpdate implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        return new Channel('Controller');
+        return new Channel('UnitRegister');
     }
 
     public function broadcastWith()
