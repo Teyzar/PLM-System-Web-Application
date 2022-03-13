@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\ApiAuthController;
-use App\Http\Controllers\LinemanController;
-use App\Http\Controllers\UnitsController;
-use Illuminate\Http\Request;
+
+use App\Http\Controllers\LinemanApiController;
+use App\Http\Controllers\UnitsApiController;
+use App\Http\Controllers\UserApiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,22 +17,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Public Routes
 
-Route::post('/auth/user/register', [ApiAuthController::class, 'register']);
-Route::post('/auth/user/login', [ApiAuthController::class, 'login']);
+Route::resource('/lineman', LinemanApiController::class, ['as' => 'api'])->only(['update']);
+Route::post('/lineman/login', [LinemanApiController::class, 'login'])->name('api.lineman.login');
 
-Route::post('/auth/lineman/login', [LinemanController::class, 'login']);
+Route::resource('/units', UnitsApiController::class, ['as' => 'api'])->only(['update']);
 
-
-// Protected Routes
-
-Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/auth/user/logout', [ApiAuthController::class, 'logout']);
-
-    Route::patch('/units/{phone_number}', [UnitsController::class, 'update']);
-
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
-});
+Route::resource('/user', UserApiController::class, ['as' => 'api'])->only(['index']);
+Route::post('/user/login', [UserApiController::class, 'login'])->name('api.user.login');
+Route::post('/user/logout', [UserApiController::class, 'logout'])->name('api.user.logout');

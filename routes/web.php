@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\DispatchController;
 use App\Http\Controllers\LinemanController;
-use App\Http\Controllers\SearchController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\IncidentsController;
 use App\Http\Controllers\UnitsController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,25 +20,18 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-// Public Routes
-
 Auth::routes();
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/records', function() {
-    return view('records');
-});
 
+Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
-// Protected Routes
+Route::resource('/dispatch', DispatchController::class)->only(['index', 'store']);
 
-Route::middleware('auth')->group(function () {
-    Route::resource('/lineman', LinemanController::class)->except(['create', 'edit']);
-    Route::post('/lineman/{id}/reset', [LinemanController::class, 'reset']);
+Route::resource('/past-incidents', IncidentsController::class)->only(['index']);
 
-    Route::resource('/password', ChangePasswordController::class)->only(['index', 'store']);
+Route::resource('/lineman', LinemanController::class)->except(['create', 'edit']);
+Route::post('/lineman/{id}/reset', [LinemanController::class, 'reset'])->name('lineman.reset');
 
-    Route::resource('/units', UnitsController::class)->only(['index', 'create', 'store', 'destroy']);
-    Route::get('/units-search', [UnitsController::class, 'search']);
+Route::resource('/units', UnitsController::class)->except(['show', 'edit', 'update']);
+Route::get('/units-search', [UnitsController::class, 'search'])->name('units.search');
 
-    Route::resource('/dispatch', DispatchController::class)->only(['index','store']);
-});
+Route::resource('/user', UserController::class)->except(['show', 'edit', 'update']);

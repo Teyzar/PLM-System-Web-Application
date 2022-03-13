@@ -2,18 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\HeatmapUpdate;
 use App\Events\UnitRegisterUpdate;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 use PhpMqtt\Client\Exceptions\MqttClientException;
 use PhpMqtt\Client\Facades\MQTT;
 use PhpMqtt\Client\MqttClient;
-use Illuminate\Support\Facades\Validator;
-
 
 class UnitsController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         $units = Unit::paginate(8);
@@ -32,6 +44,12 @@ class UnitsController extends Controller
         return view('add_unit');
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
         $controllerConnected = false;
@@ -96,39 +114,18 @@ class UnitsController extends Controller
         }
     }
 
-    public function update(Request $request, String $phone_number)
-    {
-        $statusCode = 400;
-
-        $fields = $request->validate([
-            'status' => 'required|string',
-            'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric',
-        ]);
-
-        $unit = Unit::where('phone_number', $phone_number)->first();
-
-        if ($unit) {
-            $unit->update([
-                'status' => $fields['status'],
-                'latitude' => $fields['latitude'],
-                'longitude' => $fields['longitude']
-            ]);
-
-            event(new HeatmapUpdate($unit));
-
-            $statusCode = 200;
-        }
-
-        return response('', $statusCode);
-    }
-
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function destroy($id)
     {
         $unit = Unit::find($id);
         if ($unit) {
             $remove = Unit::where('id', $id)->delete();
-            return json_encode($remove);
+            return $remove;
         }
     }
 

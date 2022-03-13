@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Lineman;
-use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -13,9 +12,23 @@ class LinemanController extends Controller
 {
     use RegistersUsers;
 
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-
         $linemen = Lineman::get();
         $count = $linemen->count();
 
@@ -26,6 +39,12 @@ class LinemanController extends Controller
         return view('lineman')->with('linemen', $linemen);
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
         $rules = [
@@ -54,16 +73,30 @@ class LinemanController extends Controller
         return redirect()->back();
     }
 
-    public function show(Request $request, String $id)
+    /**
+     * Display the specified resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Request $request, $id)
     {
-        if (!$request->wantsJson()) abort(404);
+        if (!$request->ajax()) abort(404);
 
         $lineman = Lineman::find($id);
 
-        return json_encode($lineman);
+        return $lineman;
     }
 
-    public function update(Request $request, String $id)
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
         $lineman = Lineman::find($id);
 
@@ -89,7 +122,13 @@ class LinemanController extends Controller
         return redirect('/lineman');
     }
 
-    public function destroy(String $id)
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
     {
         Lineman::where('id', $id)->delete();
 
@@ -98,7 +137,7 @@ class LinemanController extends Controller
         return back();
     }
 
-    public function reset(Request $request, String $id)
+    public function reset(Request $request, $id)
     {
         $lineman = Lineman::find($id);
         $checkbox = $request->checkbox;
@@ -116,30 +155,6 @@ class LinemanController extends Controller
 
         toast('Password has been reset!', 'success');
 
-        return json_encode($data['lineman']);
-    }
-
-    public function login(Request $request) {
-        $fields = $request->validate([
-            'email' => ['required', 'string', 'email', 'max:255'],
-            'password' => ['required', 'string'],
-        ]);
-
-        $lineman = Lineman::where('email', $fields['email'])->first();
-        if (!$lineman) {
-            return response([
-                'message' => 'These credentials do not match our records.'
-            ], 401);
-        }
-
-        if (!Hash::check($fields['password'], $lineman->password)) {
-            return response([
-                'message' => 'The provided password is incorrect.'
-            ], 401);
-        }
-
-        $token = $lineman->createToken('apiToken')->plainTextToken;
-
-        return response(['token' => $token], 200);
+        return $data['lineman'];
     }
 }
