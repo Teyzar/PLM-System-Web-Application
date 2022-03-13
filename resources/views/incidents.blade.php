@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('head')
-    <link rel="stylesheet" href="{{ mix('css/records.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/incidents.css') }}">
 @endsection
 
 @section('content')
@@ -47,7 +47,7 @@
             var divContents = document.getElementById("GFG").innerHTML;
             var a = window.open('', 'PRINT', 'height=500, width=500');
             a.document.write('<html><head>');
-            a.document.write('<link rel=\"stylesheet\" href=\"{{ mix('css/records.css') }}\">');
+            a.document.write('<link rel=\"stylesheet\" href=\"{{ mix('css/incidents.css') }}\">');
             a.document.write('<link href=\"{{ mix('css/bootstrap.css') }}\" rel=\"stylesheet\">');
             a.document.write('</head><body>');
             a.document.write(
