@@ -15,7 +15,7 @@ class LinemanApiController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:sanctum')->except(['login']);
+        $this->middleware(['auth:sanctum', 'ability:accessLineman'])->except(['login']);
     }
 
     /**
@@ -27,6 +27,9 @@ class LinemanApiController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!$request->user()->tokenCan('editLineman' . $id))
+            return abort(401);
+
         $fields = $request->validate([
             'fcm_token' => 'required|string'
         ]);
@@ -68,7 +71,9 @@ class LinemanApiController extends Controller
             ], 401);
         }
 
-        $lineman->token = $lineman->createToken('apiToken')->plainTextToken;
+        $lineman->token = $lineman
+            ->createToken('linemanToken', ['accessLineman', 'editLineman' . $lineman->id])
+            ->plainTextToken;
 
         return $lineman;
     }

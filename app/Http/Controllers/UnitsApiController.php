@@ -15,7 +15,7 @@ class UnitsApiController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:sanctum');
+        $this->middleware(['auth:sanctum', 'ability:accessUnits']);
     }
 
     /**
@@ -27,7 +27,8 @@ class UnitsApiController extends Controller
      */
     public function update(Request $request, $phone_number)
     {
-        $statusCode = 400;
+        if (!$request->user()->tokenCan('editUnits'))
+            return abort(401);
 
         $fields = $request->validate([
             'status' => 'required|string',
@@ -37,18 +38,16 @@ class UnitsApiController extends Controller
 
         $unit = Unit::where('phone_number', $phone_number)->first();
 
-        if ($unit) {
-            $unit->update([
-                'status' => $fields['status'],
-                'latitude' => $fields['latitude'],
-                'longitude' => $fields['longitude']
-            ]);
+        if (!$unit) return abort(404);
 
-            event(new HeatmapUpdate($unit));
+        $unit->update([
+            'status' => $fields['status'],
+            'latitude' => $fields['latitude'],
+            'longitude' => $fields['longitude']
+        ]);
 
-            $statusCode = 200;
-        }
+        event(new HeatmapUpdate($unit));
 
-        return response('', $statusCode);
+        return $unit;
     }
 }

@@ -15,7 +15,7 @@ class UserApiController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:sanctum')->except(['login']);
+        $this->middleware(['auth:sanctum', 'ability:accessUser'])->except(['login']);
     }
 
     /**
@@ -43,6 +43,7 @@ class UserApiController extends Controller
         ]);
 
         $user = User::where('email', $fields['email'])->first();
+
         if (!$user) {
             return response([
                 'message' => 'These credentials do not match our records.'
@@ -55,7 +56,9 @@ class UserApiController extends Controller
             ], 401);
         }
 
-        $token = $user->createToken('apiToken')->plainTextToken;
+        $token = $user
+            ->createToken('userToken', ['accessUser', 'accessUnits', 'editUnits'])
+            ->plainTextToken;
 
         return ['token' => $token];
     }
