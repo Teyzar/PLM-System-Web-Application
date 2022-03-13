@@ -15,6 +15,16 @@ class Lineman extends Model
         'name',
         'email',
         'password',
-        'barangay'
+        'barangay',
+        'fcm_token'
+    ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password'
     ];
 }

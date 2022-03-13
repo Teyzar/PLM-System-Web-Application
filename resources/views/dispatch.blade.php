@@ -3,7 +3,6 @@
 @section('title', '- Dispatch')
 
 @section('head')
-    <link href="{{ mix('css/units.css') }}" rel="stylesheet">
     <link href="{{ mix('css/dispatch.css') }}" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
@@ -38,7 +37,7 @@
                                         <tr class="tabs text-dark" id="trunit">
                                             <td scope="col" class="px-3"><input id="unitid"
                                                     class="form-check-input cb-units" type="checkbox"
-                                                    name="unit_no[{{ $unit->id }}]"></td>
+                                                    name="unit_ids[{{ $unit->id }}]"></td>
                                             <td class="ps-3">{{ $unit->id }}</td>
                                             <td class="ps-3">{{ $unit->status }}</td>
                                             <td class="ps-3">{{ $unit->phone_number }}</td>
@@ -65,11 +64,11 @@
                                     </tr>
                                 </thead>
                                 <tbody class="searchbody">
-                                    @foreach ($linemans as $lineman)
+                                    @foreach ($linemen as $lineman)
                                         <tr class="text-dark tabs" id="trlineman">
                                             <td scope="col" class="px-3">
                                                 <input id="linemanid" class="form-check-input cb-lineman" type="checkbox"
-                                                    name="lineman_no[{{ $lineman->id }}]">
+                                                    name="lineman_ids[{{ $lineman->id }}]">
                                             </td>
                                             <td class="ps-3">{{ ucwords($lineman->name) }}</td>
                                             <td class="ps-3">{{ $lineman->email }}</td>

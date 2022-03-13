@@ -2,13 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Unit;
 use App\Models\Lineman;
-use RealRashid\SweetAlert\Facades\Alert;
+use App\Notifications\Dispatch;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 
 class DispatchController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -20,19 +31,9 @@ class DispatchController extends Controller
         $unit = Unit::all();
 
         return view('dispatch', [
-            'linemans' => $lineman,
+            'linemen' => $lineman,
             'units' => $unit
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -43,84 +44,16 @@ class DispatchController extends Controller
      */
     public function store(Request $request)
     {
-        $countLineman = $request->lineman_no;
-        $countUnit = $request->unit_no;
+        $fields = $request->validate([
+            'lineman_ids' => 'required|array|min:1',
+            'unit_ids' => 'required|array|min:1',
+        ]);
 
+        $linemen = Lineman::all()->whereIn('id', array_keys($fields['lineman_ids']));
+        $units = Unit::all()->whereIn('id', array_keys($fields['unit_ids']));
 
-        if ($countLineman) {
-            foreach ($countLineman as $key => $dataLineman) {
-                $selected_lineman = Lineman::where('id', $key)->get();
-                foreach ($selected_lineman as $lineman) {
-                    $email = [
-                        'email' => $lineman->email
-                    ];
-                    echo '<pre>';
-                    print_r($email);
-                    echo '</pre>';
-                }
-            }
-        }
+        Notification::send($linemen, new Dispatch($units));
 
-
-        if ($countUnit) {
-            foreach ($countUnit as $key => $dataUnit) {
-                $selected_unit = Unit::where('id', $key)->get();
-                foreach ($selected_unit as $unit) {
-                    $phone = [
-                        'number' => $unit->phone_number
-                    ];
-                    echo '<pre>';
-                    print_r($phone);
-                    echo '</pre>';
-                }
-            }
-        }
-
-        // return redirect()->back();
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return redirect()->back();
     }
 }
