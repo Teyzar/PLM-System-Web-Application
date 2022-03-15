@@ -1,130 +1,386 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <meta charset="utf-8" />
     <title>Power Line Monitoring @yield('title')</title>
 
-    <!-- Scripts -->
-    <script src="{{ mix('js/app.js') }}" defer></script>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
-
-    <!-- Styles -->
-    <link href="{{ mix('css/bootstrap.css') }}" rel="stylesheet">
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-    <script src="https://code.iconify.design/2/2.1.2/iconify.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Coderthemes" name="author" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     @yield("head")
+
+
+    <link rel="shortcut icon" href="{{ mix('images/logo.png') }}">
+
+    <link href="{{ mix('css/config/bootstrap.min.css') }}" rel="stylesheet" type="text/css"
+        id="bs-default-stylesheet" />
+    <link href="{{ mix('css/config/app.min.css') }}" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
+
+    <link href="{{ mix('css/config/bootstrap-dark.min.css') }}" rel="stylesheet" type="text/css"
+        id="bs-dark-stylesheet" />
+    <link href="{{ mix('css/config/app-dark.min.css') }}" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
+
+
+    <link rel="stylesheet" href="{{ mix('css/icons.min.css') }}" type="text/css" />
+    <script src="{{ mix('js/app.js') }}"></script>
+
+
+
+
 </head>
 
 <body>
+    <div id="preloader">
+        <div id="status">
+            <div class="spinner">Loading...</div>
+        </div>
+    </div>
     @include('sweetalert::alert')
 
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white" style="width: 100%; height: 100%">
-            <div class="container" style="min-height: 55px">
-                <img src="{{ mix('img/logo.png') }}" class="navbar-brand p-2 collapsible"
-                    style="width: 55px; height: 55px">
 
-                <a class="navbar-brand fs-3" style="color:#fd7e14; font-family: 'Source Serif 4', sans-serif"
-                    href="{{ url('/') }}">
-                    Power Line Monitoring
-                </a>
-
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item pt-1">
-                            <a class="nav-link texthover rounded-pill"
-                                href="/past-incidents">{{ __('Outage Records') }}</a>
+    <div id="wrapper">
+        <!-- Topbar Start -->
+        <div class="navbar-custom">
+            <div class="container-fluid">
+                <ul class="list-unstyled topnav-menu float-end mb-0">
+                    @guest
+                        @if (Route::has('login'))
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            </li>
+                        @endif
+                    @else
+                        <li class="d-none d-lg-inline-block">
+                            <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-toggle="fullscreen"
+                                href="#">
+                                <i class="fe-maximize noti-icon"></i>
+                            </a>
                         </li>
+                        <li class="dropdown notification-list topbar-dropdown">
+                            <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light"
+                                data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false"
+                                aria-expanded="false">
+                                <img src="{{ mix('images/user-3.jpg') }}" alt="user-image" class="rounded-circle">
+                                <span class="pro-user-name ms-1">
+                                    {{ ucwords(Auth::user()->name) }}<i class="mdi mdi-chevron-down"></i>
+                                </span>
+                            </a>
+                            <div class="dropdown-menu">
+                                <!-- item-->
+                                <div class="dropdown-header noti-title">
+                                    <h6 class="text-overflow m-0">Welcome !</h6>
+                                </div>
 
-                        @auth
-                            <li class="nav-item pt-1">
-                                <a class="nav-link texthover rounded-pill"
-                                    href="{{ URL::to('lineman') }}">{{ __('Accounts') }}</a>
-                            </li>
-
-                            <li class="nav-item pt-1">
-                                <a class="nav-link texthover rounded-pill"
-                                    href="{{ URL::to('units') }}">{{ __('Units') }}</a>
-                            </li>
-
-                            <li class="nav-item pt-1">
-                                <a class="nav-link texthover rounded-pill" href="/dispatch">{{ __('Dispatch') }}</a>
-                            </li>
-                        @endauth
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto text-warning">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item pt-1">
-                                    <a class="nav-link texthover rounded-pill"
-                                        href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('register'))
-                                <li class="nav-item d-none ">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="dropdown-css">
-                                <a id="navbarDropdown"
-                                    class="nav-link text-capitalize texthover rounded-pill me-0 nav-user waves-effect waves-light dropbtn-css"
-                                    href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="false"
-                                    aria-expanded="false" v-pre>
-
-                                    <span class="pro-user-name ms-1">
-                                        {{ Auth::user()->name }} <span class="iconify"
-                                            data-icon="mdi:chevron-down"></span>
-                                    </span>
+                                <!-- item-->
+                                <a href="/profile" class="dropdown-item notify-item">
+                                    <i class="fe-user"></i>
+                                    <span>My Account</span>
                                 </a>
 
-                                <div class="dropdown-content-css">
-                                    <a class="" href="/password">
-                                        <i class="bi bi-key fs-6 px-2"></i>{{ __('Password') }}
-                                    </a>
-                                    <a class="" href=""
-                                        onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                                        <i class="bi bi-box-arrow-right fs-6 px-2"></i>{{ __('Logout') }}
-                                    </a>
+                                <!-- item-->
+                                <a href="/user" class="dropdown-item notify-item">
+                                    <i class="fe-lock"></i>
+                                    <span>Password</span>
+                                </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                        class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
+                                <div class="dropdown-divider"></div>
+
+                                <!-- item-->
+                                <a href="" class="dropdown-item notify-item"
+                                    onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                    <i class="fe-log-out"></i>
+                                    <span>Logout</span>
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                    class="d-none">
+                                    @csrf
+                                </form>
+
+                            </div>
+                        </li>
+
+
+                        <li class="">
+                            <a href="#" class="nav-link right-bar-toggle">
+                                <i class="fe-settings noti-icon"></i>
+                            </a>
+                        </li>
+                    @endguest
+
+                </ul>
+
+                <!-- LOGO -->
+                <div class="logo-box">
+                    <a href="/" class="logo logo-dark text-center">
+                        <span class="logo-sm">
+                            <img src="{{ mix('images/PLMS.png') }}" alt="" height="25">
+                            <span class="logo-lg-text-light"></span>
+                        </span>
+                        <span class="logo-lg">
+                            <img src="{{ mix('images/PLMS.png') }}" alt="" height="34">
+                            <span class="logo-lg-text-light"></span>
+                        </span>
+                    </a>
+
+                    <a href="/" class="logo logo-light text-center">
+                        <span class="logo-sm">
+                            <img src="{{ mix('images/PLMS-WHITE.png') }}" alt="" height="25">
+                        </span>
+                        <span class="logo-lg">
+                            <img src="{{ mix('images/PLMS-WHITE.png') }}" alt="" height="33">
+                            {{-- <span class="text-muted ps-1 fs-5">Power Line Monitoring</span> --}}
+                        </span>
+                    </a>
+                </div>
+                <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
+                    @auth
+                        <li>
+                            <button class="button-menu-mobile waves-effect waves-light">
+                                <i class="fe-menu"></i>
+                            </button>
+                        </li>
+
+                    @endauth
+
+                    @if (!Auth::check())
+                        <li class="dropdown d-none d-xl-block">
+                            <a class="nav-link dropdown-toggle waves-effect waves-light" href="/past-incidents"
+                                role="button" aria-haspopup="false" aria-expanded="false">
+                                Outage Records
+                            </a>
+                        </li>
+                    @endif
+                </ul>
+            </div>
+        </div>
+
+        <!-- end Topbar -->
+        @auth
+            <div class="left-side-menu">
+                <div class="h-100" data-simplebar>
+                    <div id="sidebar-menu">
+
+                        <ul id="side-menu">
+
+                            <li class="menu-title">Power Line Monitoring</li>
+
+                            <li>
+                                <a href="/past-incidents">
+                                    <i class="mdi mdi-view-list-outline"></i>
+                                    <span> Outage Records </span>
+                                </a>
                             </li>
-                        @endguest
-                    </ul>
+
+                            <li>
+                                <a href="{{ URL::to('lineman') }}">
+                                    <i data-feather="users"></i>
+                                    <span> Accounts </span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ URL::to('units') }}">
+                                    <i class="mdi mdi-sim"></i>
+                                    <span> Units </span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="/dispatch">
+                                    <i class="mdi mdi-car-arrow-right"></i>
+                                    <span> Dispatch </span>
+                                </a>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <!-- End Sidebar -->
+
+                    <div class="clearfix"></div>
+
+                </div>
+                <!-- Sidebar -left -->
+            </div>
+        @endauth
+
+        @auth
+
+            <div class="content-page p-0">
+                <div class="content">
+                    <div class="container-fluid p-0">
+                        @yield("content")
+                    </div>
                 </div>
             </div>
-        </nav>
 
-        <main>
-            @yield("content")
-        </main>
+
+        @endauth
+
+        @if (!Auth::check())
+            <div style="margin-top: 70px;">
+                @yield('content')
+            </div>
+        @endif
     </div>
-    @yield('body')
+
+    <div class="right-bar">
+        <div data-simplebar class="h-100">
+            <div class="tab-pane active" id="settings-tab" role="tabpanel">
+                <h6 class="fw-medium px-3 m-0 py-2 font-13 text-uppercase bg-light">
+                    <span class="d-block py-1">Theme Settings</span>
+                </h6>
+
+                <div class="p-3">
+                    <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">Color Scheme</h6>
+                    <div class="form-check form-switch mb-1">
+                        <input type="checkbox" class="form-check-input" name="color-scheme-mode" value="light"
+                            id="light-mode-check" checked />
+                        <label class="form-check-label" for="light-mode-check">Light Mode</label>
+                    </div>
+
+                    <div class="form-check form-switch mb-1">
+                        <input type="checkbox" class="form-check-input" name="color-scheme-mode" value="dark"
+                            id="dark-mode-check" />
+                        <label class="form-check-label" for="dark-mode-check">Dark Mode</label>
+                    </div>
+
+                    <!-- Width -->
+                    <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">Width</h6>
+                    <div class="form-check form-switch mb-1">
+                        <input type="checkbox" class="form-check-input" name="width" value="fluid" id="fluid-check"
+                            checked />
+                        <label class="form-check-label" for="fluid-check">Fluid</label>
+                    </div>
+                    <div class="form-check form-switch mb-1">
+                        <input type="checkbox" class="form-check-input" name="width" value="boxed" id="boxed-check" />
+                        <label class="form-check-label" for="boxed-check">Boxed</label>
+                    </div>
+
+                    <!-- Menu positions -->
+                    <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">Menus (Leftsidebar and Topbar) Positon</h6>
+
+                    <div class="form-check form-switch mb-1">
+                        <input type="checkbox" class="form-check-input" name="menus-position" value="fixed"
+                            id="fixed-check" checked />
+                        <label class="form-check-label" for="fixed-check">Fixed</label>
+                    </div>
+
+                    <div class="form-check form-switch mb-1">
+                        <input type="checkbox" class="form-check-input" name="menus-position" value="scrollable"
+                            id="scrollable-check" />
+                        <label class="form-check-label" for="scrollable-check">Scrollable</label>
+                    </div>
+
+                    <!-- Left Sidebar-->
+                    <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">Left Sidebar Color</h6>
+
+                    <div class="form-check form-switch mb-1">
+                        <input type="checkbox" class="form-check-input" name="leftsidebar-color" value="light"
+                            id="light-check" />
+                        <label class="form-check-label" for="light-check">Light</label>
+                    </div>
+
+                    <div class="form-check form-switch mb-1">
+                        <input type="checkbox" class="form-check-input" name="leftsidebar-color" value="dark"
+                            id="dark-check" checked />
+                        <label class="form-check-label" for="dark-check">Dark</label>
+                    </div>
+
+                    <div class="form-check form-switch mb-1">
+                        <input type="checkbox" class="form-check-input" name="leftsidebar-color" value="brand"
+                            id="brand-check" />
+                        <label class="form-check-label" for="brand-check">Brand</label>
+                    </div>
+
+                    <div class="form-check form-switch mb-3">
+                        <input type="checkbox" class="form-check-input" name="leftsidebar-color" value="gradient"
+                            id="gradient-check" />
+                        <label class="form-check-label" for="gradient-check">Gradient</label>
+                    </div>
+
+                    <!-- size -->
+                    <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">Left Sidebar Size</h6>
+
+                    <div class="form-check form-switch mb-1">
+                        <input type="checkbox" class="form-check-input" name="leftsidebar-size" value="default"
+                            id="default-size-check" checked />
+                        <label class="form-check-label" for="default-size-check">Default</label>
+                    </div>
+
+                    <div class="form-check form-switch mb-1">
+                        <input type="checkbox" class="form-check-input" name="leftsidebar-size" value="condensed"
+                            id="condensed-check" />
+                        <label class="form-check-label" for="condensed-check">Condensed <small>(Extra Small
+                                size)</small></label>
+                    </div>
+
+                    <div class="form-check form-switch mb-1">
+                        <input type="checkbox" class="form-check-input" name="leftsidebar-size" value="compact"
+                            id="compact-check" />
+                        <label class="form-check-label" for="compact-check">Compact <small>(Small
+                                size)</small></label>
+                    </div>
+
+                    <!-- User info -->
+                    <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">Sidebar User Info</h6>
+
+                    <div class="form-check form-switch mb-1">
+                        <input type="checkbox" class="form-check-input" name="leftsidebar-user" value="fixed"
+                            id="sidebaruser-check" />
+                        <label class="form-check-label" for="sidebaruser-check">Enable</label>
+                    </div>
+
+
+                    <!-- Topbar -->
+                    <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">Topbar</h6>
+
+                    <div class="form-check form-switch mb-1">
+                        <input type="checkbox" class="form-check-input" name="topbar-color" value="dark"
+                            id="darktopbar-check" checked />
+                        <label class="form-check-label" for="darktopbar-check">Dark</label>
+                    </div>
+
+                    <div class="form-check form-switch mb-1">
+                        <input type="checkbox" class="form-check-input" name="topbar-color" value="light"
+                            id="lighttopbar-check" />
+                        <label class="form-check-label" for="lighttopbar-check">Light</label>
+                    </div>
+
+
+                    <div class="d-grid mt-4">
+                        <button class="btn btn-primary" id="resetBtn">Reset to Default</button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div> <!-- end slimscroll-menu-->
+    <style>
+        @media (max-width: 780px) {
+            body {
+                overflow: auto !important;
+                max-height: 100vh !important;
+            }
+        }
+
+    </style>
+    </div>
+
+    @auth
+        <script src="{{ mix('js/button-theme-settings.js') }}"></script>
+    @endauth
+
+    <div class="rightbar-overlay"></div>
+    <script src="{{ mix('js/vendor.min.js') }}"></script>
+    <script src="{{ mix('libs/moment/min/moment.min.js') }}"></script>
+    <script src="{{ mix('js/app.min.js') }}"></script>
+    @yield('script')
+
 </body>
 
 </html>

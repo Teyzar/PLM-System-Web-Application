@@ -1,62 +1,60 @@
 @extends('layouts.app')
 
-@section('body')
-    <div class="container mt-5 py-4">
+@section('content')
+    <div class="container-fluid mt-5 py-4">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header w-100 justify-content-start responsive">
-                        <i class="bi bi-shield-lock fs-5 px-1"></i>Change Password
+                <div class="card shadow">
+                    <div class="card-header header-title justify-content-start">
+                        <i class="fe-lock fs-3 px-1"></i> <span>Reset Password</span>
                     </div>
 
-                    <div class="card-body d-flex bg-white justify-content-center">
-                        <form class="form w-75" role="form" method="POST" action="{{ route('password.store') }}">
+                    <div class="card-body d-flex justify-content-center">
+                        <form class="form w-75" role="form" method="POST" action="/user">
                             @csrf
-                            <div class="form-group">
+                            <div class="form-group p-2">
                                 <label for="inputPasswordOld">Current Password</label>
-                                <input type="password" class="form-control" id="inputPasswordOld" name="password"
-                                    value="{{ old('password') }}" required>
+                                <input type="password" class="form-control @error('pass') is-invalid @enderror"
+                                    id="inputPasswordOld" name="password" value="{{ old('password') }}" required=""
+                                    autocomplete>
 
                                 @if ($errors->has('pass'))
-                                    <div class="error text-danger form-text small ">{{ $errors->first('pass') }}</div>
-                                @endif
-
-                                @if ($errors->has('password'))
-                                    <div class="error text-danger form-text small ">{{ $errors->first('password') }}</div>
+                                    <div class="error text-danger">{{ $errors->first('pass') }}</div>
                                 @endif
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group p-2">
                                 <label for="inputPasswordNew">New Password</label>
-                                <input type="password" class="form-control" id="inputPasswordNew" name="new-password"
-                                    value="{{ old('new-password') }}" required>
+                                <input type="password" class="form-control @error('pass') is-invalid @enderror"
+                                    id="inputPasswordNew" name="new-password" value="{{ old('new-password') }}"
+                                    required="" autocomplete>
 
                                 @if ($errors->has('new-password'))
-                                    <div class="error text-danger form-text small ">{{ $errors->first('new-password') }}
-                                    </div>
+                                    <div class="error text-danger">{{ $errors->first('new-password') }}</div>
                                 @endif
 
                                 @if ($errors->has('newpass'))
-                                    <div class="error text-danger form-text small">{{ $errors->first('newpass') }}</div>
+                                    <div class="error text-danger">{{ $errors->first('newpass') }}</div>
                                 @endif
 
                                 @if (!$errors->has('new-password') && !$errors->has('newpass'))
-                                    <span class="form-text small text-muted" id="new-password">
-                                        The new-password must be at least 8-20 characters.
+                                    <span class="text-muted" id="new-password">
+                                        The New password must be at least 8-10 characters.
                                     </span>
                                 @endif
                             </div>
 
-                            <div class="form-group">
-                                <label for="inputPasswordNewVerify">Verify</label>
-                                <input type="password" class="form-control" id="inputPasswordNewVerify" name="verify"
-                                    value="{{ old('verify') }}" required>
+                            <div class="form-group p-2">
+                                <label for="inputPasswordNewVerify">Confirm Password</label>
+                                <input type="password" class="form-control @error('verify') is-invalid @enderror"
+                                    id="inputPasswordNewVerify" name="verify" value="{{ old('verify') }}" required=""
+                                    autocomplete>
                                 @if ($errors->has('verify'))
-                                    <div class="error text-danger form-text small ">
-                                        {{ __('Verify must match with the New Password') }}</div>
+                                    <div class="error text-danger">
+                                        {{ __('Password do not match') }}</div>
                                 @endif
                                 @if (!$errors->has('verify'))
-                                    <span class="form-text small text-muted">
+                                    <span class="text-muted">
                                         To confirm, type the new password again.
                                     </span>
                                 @endif
@@ -64,8 +62,8 @@
 
                             <div class="form-group">
                                 <a class="btn btn-success btn-lg float-end py-1 px-3 fs-5 mt-2" data-bs-toggle="modal"
-                                    data-bs-target="#modalConfirm">
-                                    <i class="bi bi-box-arrow-down pe-2 fs-5"></i>
+                                    data-bs-target="#modalConfirm" type="submit">
+                                    <i class="mdi mdi-content-save-move pe-1"></i>
                                     Save
                                 </a>
                             </div>
@@ -76,4 +74,7 @@
             </div>
         </div>
     </div>
+@section('script')
+    <script src="{{ mix('js/vendor.min.js') }}"></script>
+@endsection
 @endsection

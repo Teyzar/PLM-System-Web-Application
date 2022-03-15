@@ -1,96 +1,120 @@
 @extends('layouts.app')
 
-@section('title', '- Dispatch')
-
 @section('head')
-    <link href="{{ mix('css/dispatch.css') }}" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+
+    <link href="{{ mix('libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet"
+        type="text/css" />
+    <link href="{{ mix('libs/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css') }}" rel="stylesheet"
+        type="text/css" />
+    <link href="{{ mix('libs/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css') }}" rel="stylesheet"
+        type="text/css" />
+
+
 @endsection
 
+
 @section('content')
+
     <form method="POST" action="/dispatch" class="form-container" id="formid">
         @csrf
-        <div id="" style="margin-left: 4%; margin-right: 4%;" class="mt-3 border-css">
-            <div class="container-fluid">
-                <div class="row mt-4">
-                    <div class="col card-header border-end inner-menu shadow">Units</div>
-                    <div class="col card-header border-start inner-menu shadow">Lineman</div>
-                    <div class="w-100"></div>
-                    <div class="col-6 card-body bg-light inner-menu shadow border-end">
-                        <div class="table-responsive-md p-1">
-                            <table id="table" class="table border client--nav-tabs">
-                                <thead class="">
-                                    <tr class="text-secondary tabs">
-                                        <td scope="col" class="px-3"><input name="all" id="checkall-units"
-                                                class="form-check-input" type="checkbox"></th>
-                                        <th scope="col">Id</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Mobile #</th>
-                                        <th scope="col">Longitude</th>
-                                        <th scope="col">Latitude</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($units as $unit)
-                                        <tr class="tabs text-dark" id="trunit">
-                                            <td scope="col" class="px-3"><input id="unitid"
-                                                    class="form-check-input cb-units" type="checkbox"
-                                                    name="unit_ids[{{ $unit->id }}]"></td>
-                                            <td class="ps-3">{{ $unit->id }}</td>
-                                            <td class="ps-3">{{ $unit->status }}</td>
-                                            <td class="ps-3">{{ $unit->phone_number }}</td>
-                                            <td class="ps-3">{{ $unit->longitude }}</td>
-                                            <td class="ps-3">{{ $unit->latitude }}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-6 card-body bg-light inner-menu shadow border-start">
-                        <div class="table-responsive-md p-1">
-                            <table id="table2" class="table border client--nav-tabs">
-                                <thead>
-                                    <tr class="text-secondary tabs">
-                                        <td scope="col" class="px-3">
-                                            <input name="all" id="checkall-lineman" class="form-check-input"
-                                                type="checkbox">
-                                            </th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">E-mail</th>
-                                        <th scope="col">Designation</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="searchbody">
-                                    @foreach ($linemen as $lineman)
-                                        <tr class="text-dark tabs" id="trlineman">
-                                            <td scope="col" class="px-3">
-                                                <input id="linemanid" class="form-check-input cb-lineman" type="checkbox"
-                                                    name="lineman_ids[{{ $lineman->id }}]">
-                                            </td>
-                                            <td class="ps-3">{{ ucwords($lineman->name) }}</td>
-                                            <td class="ps-3">{{ $lineman->email }}</td>
-                                            <td class="ps-3">{{ ucwords($lineman->barangay) }}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+        <div class="container-fluid mt-5">
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <h4 class="header-title mb-0">Units</h4>
+
+                            <div id="cardCollpase5" class="collapse pt-3 show">
+                                <div class="table-responsive">
+                                    <table id="table" class="table dt-responsive nowrap w-100">
+                                        <thead>
+                                            <tr>
+                                                <th><input name="all" id="checkall-units" class="form-check-input"
+                                                        type="checkbox"></th>
+                                                <th>Id</th>
+                                                <th>Status</th>
+                                                <th>Mobile #</th>
+                                                <th>Longitude</th>
+                                                <th>Latitude</th>
+                                            </tr>
+                                        </thead>
+
+
+                                        <tbody>
+                                            @foreach ($units as $unit)
+                                                <tr class="" id="trunit">
+                                                    <td><input id="unitid" class="form-check-input cb-units" type="checkbox"
+                                                            name="unit_no[{{ $unit->id }}]"></td>
+                                                    <td>{{ $unit->id }}</td>
+                                                    <td>{{ $unit->status }}</td>
+                                                    <td>{{ $unit->phone_number }}</td>
+                                                    <td>{{ $unit->longitude }}</td>
+                                                    <td>{{ $unit->latitude }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div> <!-- end table responsive-->
+                            </div> <!-- collapsed end -->
+                        </div> <!-- end card-body -->
+                    </div> <!-- end card-->
                 </div>
+
+                <div class="col-xl-6">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <h4 class="header-title mb-0">Lineman</h4>
+
+                            <div id="cardCollpase5" class="collapse pt-3 show">
+                                <div class="table-responsive">
+                                    <table id="table2" class="table dt-responsive nowrap w-100">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <input name="all" id="checkall-lineman" class="form-check-input"
+                                                        type="checkbox">
+                                                </th>
+                                                <th>Name</th>
+                                                <th>E-mail</th>
+                                                <th>Designation</th>
+                                            </tr>
+                                        </thead>
+
+
+                                        <tbody>
+                                            @foreach ($linemans as $lineman)
+                                                <tr id="trlineman">
+                                                    <td>
+                                                        <input id="linemanid" class="form-check-input cb-lineman"
+                                                            type="checkbox" name="lineman_no[{{ $lineman->id }}]">
+                                                    </td>
+                                                    <td>{{ ucwords($lineman->name) }}</td>
+                                                    <td>{{ $lineman->email }}</td>
+                                                    <td>{{ ucwords($lineman->barangay) }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div> <!-- end table responsive-->
+                            </div> <!-- collapsed end -->
+                        </div> <!-- end card-body -->
+                    </div> <!-- end card-->
+                </div> <!-- end col -->
             </div>
         </div>
+
         <div class="modal fade" id="modalConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content inner-menu shadow border-0 border-red">
+                <div class="modal-content inner-menu shadow">
                     <div class="modal-header">
-                        <h6 class="modal-title text-secondary" id="exampleModalLabel">Confirmation</h6>
+                        <h6 class="modal-title" id="exampleModalLabel">Confirmation</h6>
                     </div>
-                    <div class="modal-body fs-6 text-black text-center p-4">
-                        To despatch, select <span class="text-success">Yes.</span>
+                    <div class="modal-body text-center p-4">
+                        To dispatch, select <span class="text-success">Yes.</span>
                     </div>
                     <div class="modal-footer border">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
@@ -100,11 +124,22 @@
                 </div>
             </div>
         </div>
-        <div class="d-flex justify-content-center pb-1 mt-5">
+        <div class="d-flex justify-content-center pb-1">
             <button id="btnDispatch" type="button" class="border-0 btn btn-secondary px-5" data-bs-toggle="modal"
                 data-bs-target="#modalConfirm">Dispatch</button>
         </div>
     </form>
+
+@section('script')
+    <!-- Bootstrap Tables js -->
+    <script src="{{ mix('js/vendor.min.js') }}"></script>
+
+    <script src="{{ mix('libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ mix('libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
+    <script src="{{ mix('libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+
+
+
 
     <script>
         $("form").bind("keypress", function(e) {
@@ -220,4 +255,10 @@
             }
         });
     </script>
+
+
+
+    {{-- <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script> --}}
+@endsection
+
 @endsection

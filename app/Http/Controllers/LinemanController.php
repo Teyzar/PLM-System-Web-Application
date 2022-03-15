@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class LinemanController extends Controller
 {
@@ -68,7 +69,8 @@ class LinemanController extends Controller
 
         Lineman::create($data);
 
-        toast('Account registered successfully!', 'success');
+        // toast('Account registered successfully!', 'success');
+        Alert::success('Success', 'Account registered successfully!');
 
         return redirect()->back();
     }
@@ -117,7 +119,9 @@ class LinemanController extends Controller
 
         $lineman->update();
 
-        toast('Account updated successfully!', 'success');
+        // toast('Account updated successfully!', 'success');
+        Alert::success('Success', 'Account updated successfully!');
+
 
         return redirect('/lineman');
     }
@@ -132,7 +136,9 @@ class LinemanController extends Controller
     {
         Lineman::where('id', $id)->delete();
 
-        toast('Account deleted successfully!', 'success');
+        // toast('Account deleted successfully!', 'success');
+        Alert::success('Success', 'Account deleted successfully!');
+
 
         return back();
     }
@@ -153,7 +159,9 @@ class LinemanController extends Controller
         $lineman->password = Hash::make("plmsystem");
         $lineman->update();
 
-        toast('Password has been reset!', 'success');
+        // toast('Password has been reset!', 'success');
+        Alert::success('Success', 'Password has been reset!');
+
 
         return $data['lineman'];
     }

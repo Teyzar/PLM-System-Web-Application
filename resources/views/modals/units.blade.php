@@ -12,19 +12,24 @@
                     @csrf
                     <div class="mb-3">
                         <label class="phone_number">
-                            <i class="fs-2 bi-sim px-1"></i>
+                            <i class="mdi mdi-sim px-1"></i>
                             Enter the unit's phone number:
                         </label>
 
-                        <input type="tel" class="form-control"
+                        <input type="tel" class="form-control @error('phone_number') is-invalid @enderror"
                             id="phone_number" name="phone_number" value="{{ old('phone_number') }}" placeholder="+639"
                             required>
 
-                        <span class="invalid-feedback" role="alert" id="p-message"></span>
+                        @error('phone_number')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                        <span class="text-danger" role="alert" id="p-message"></span>
                     </div>
 
                     <div class="modal-footer d-block">
-                        <span id="processing" class="text-center d-flex justify-content-center text-dark fs-5"></span>
+                        <span id="processing" class="text-center d-flex justify-content-center fs-5"></span>
                         <div id="bar" class="progress h-100">
                             <div id="progress"
                                 class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
@@ -36,7 +41,7 @@
                         <div class="d-flex justify-content-center align-items-center">
                             <div id="steps-id" class="progresses">
                                 <div id="start" class="steps border"><span id="spinner1"
-                                        class="pt-1"></span></div> <span id="line1"
+                                        class=""></span></div> <span id="line1"
                                     class="line border"></span>
                                 <div style="margin-top: 11%; position: absolute">
                                     <span>start</span>
@@ -68,12 +73,12 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content w-100">
             <div class="modal-header">
-                <h5 class="modal-title text-muted" id="exampleModalLabel">Remove Confirmation</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Remove Confirmation</h5>
                 <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true"></span>
                 </button>
             </div>
-            <div class="modal-body fs-6 text-danger">
+            <div class="modal-body">
                 Are you sure you want to remove this unit?
             </div>
             <div class="modal-footer">

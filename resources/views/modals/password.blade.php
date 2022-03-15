@@ -5,12 +5,11 @@
             <div class="modal-header">
                 <h5 class="modal-title text-secondary" id="exampleModalLabel">Password
                     Confirmation</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal">
                 </button>
             </div>
-            <div class="modal-body fs-6 text-dark">
-                Save Change Password?
+            <div class="modal-body text-dark">
+                <span>Save Change Password?</span>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Close</button>

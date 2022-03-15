@@ -10,7 +10,7 @@
                 <form action="{{ URL::to('lineman') }}" method="POST">
                     @csrf
                     <div class="mb-3">
-                        <label class="form-label text-dark opacity-100">Name</label>
+                        <label class="form-label opacity-100">Name</label>
                         <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" id="name"
                             name="name" placeholder="Name" autocomplete="name" autofocus value="{{ old('name') }}"
                             required>
@@ -23,7 +23,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label text-dark opacity-100">Email Address</label>
+                        <label class="form-label opacity-100">Email Address</label>
                         <input id="email" type="text" class="form-control @error('email') is-invalid @enderror"
                             id="email" name="email" placeholder="Email" autocomplete="email"
                             value="{{ old('email') }}" required>
@@ -34,7 +34,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label text-dark opacity-100">Barangay</label>
+                        <label class="form-label opacity-100">Barangay</label>
                         <input type="text" class="form-control" id="barangay" name="barangay" placeholder="Barangay"
                             value="{{ old('barangay') }}" required>
                     </div>
@@ -56,12 +56,12 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title text-secondary" id="exampleModalLabel">Confirmation</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                    <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                    <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"></span>
                     </button>
                 </div>
-                <div class="modal-body fs-6 text-dark">
+                <div class="modal-body">
                     Are you sure you want to save changes?
                 </div>
                 <div class="modal-footer">
@@ -116,8 +116,8 @@
                     </div>
 
                     <div class="modal-footer d-block d-flex align-items-center justify-content-center border-1">
-                        <a type="button" class="btn btn-dark w-75" data-bs-toggle="modal"
-                            data-bs-target="#modalConfirm">
+                        <a type="button" class="btn btn-dark w-75" data-bs-toggle="modal" data-bs-target="#modalConfirm"
+                            onclick="closeModal()">
                             {{ __('Save') }}
                         </a>
                     </div>
@@ -126,19 +126,24 @@
         </div>
     </div>
 </form>
+<script>
+    function closeModal() {
+        $('#modalEdit').modal('hide');
+    }
+</script>
 
 <div class="modal fade" id="modalDelete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content w-100">
             <div class="modal-header">
-                <h5 class="modal-title text-muted" id="exampleModalLabel">Confirmation</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
                 <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true"></span>
                 </button>
             </div>
-            <div class="modal-body fs-6 text-danger">
-                Are you sure you want to delete this account?
+            <div class="modal-body">
+                <span>Are you sure you want to delete this account?</span>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
@@ -160,27 +165,27 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div id="modal-content" class="modal-content w-100">
             <div class="modal-header">
-                <h5 class="modal-title text-muted" id="exampleModalLabel">Reset Password</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Reset Password</h5>
                 <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="panel-body">
                     <div class="text-center">
-                        <h3><i class="fa fa-lock fa-3x text-dark"></i></h3>
-                        <h4 class="text-center text-dark">Forgot password?</h4>
+                        <h3><i class="fa fa-lock fa-3x"></i></h3>
+                        <h4 class="text-center">Forgot password?</h4>
                         <div class="panel-body">
                             <form id="reset-id" action="" method="POST">
                                 @csrf
-                                <span id="text-msg" class="fw-light d-flex justify-content-center">
+                                <span id="text-msg" class="justify-content-center">
                                     <input type="hidden" name="checkbox" value="0"><input class="stylebox"
                                         type="checkbox"
-                                        onclick="this.previousSibling.value=1-this.previousSibling.value"> &nbsp; Please
-                                    check to confirm email address.
+                                        onclick="this.previousSibling.value=1-this.previousSibling.value" style="width: 35px;
+                                        height: 17px;"><span>Please
+                                        check to confirm email address.</span>
                                 </span>
                                 <div class="form-group pt-3 justify-content-center">
                                     <div class="input-group">
-                                        <i
-                                            class="bi bi-envelope-check fs-2 pe-sm-2 text-black opacity-75 align-items-center"></i>&nbsp;
+                                        <i class="mdi mdi-email-check fs-2 pe-sm-1 align-items-center"></i>&nbsp;
                                         <input id="resetEmail" name="resetEmail"
                                             class="form-control float-start border-0" type="email"
                                             style="pointer-events: none;">

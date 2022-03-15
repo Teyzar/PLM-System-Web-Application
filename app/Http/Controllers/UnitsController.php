@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use PhpMqtt\Client\Exceptions\MqttClientException;
 use PhpMqtt\Client\Facades\MQTT;
 use PhpMqtt\Client\MqttClient;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UnitsController extends Controller
 {
@@ -124,8 +125,9 @@ class UnitsController extends Controller
     {
         $unit = Unit::find($id);
         if ($unit) {
-            $remove = Unit::where('id', $id)->delete();
-            return $remove;
+            Unit::where('id', $id)->delete();
+            Alert::success('Success', 'Unit Deleted Succesfuly!');
+            return redirect()->back();
         }
     }
 

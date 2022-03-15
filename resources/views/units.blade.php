@@ -1,289 +1,234 @@
 @extends('layouts.app')
 
-@section('title', '- Units')
+
 
 @section('head')
-    <link href="{{ mix('css/units.css') }}" rel="stylesheet">
+    <link href="{{ mix('libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet"
+        type="text/css" />
+    <link href="{{ mix('libs/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css') }}" rel="stylesheet"
+        type="text/css" />
+    <link href="{{ mix('libs/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css') }}" rel="stylesheet"
+        type="text/css" />
+    <link href="{{ mix('css/config/bootstrap.min.css') }}" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
+
+
+    <!-- App css -->
+    {{-- <link href="{{ mix('css/config/bootstrap.min.css') }}" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
+    <link href="{{ mix('css/config/app.min.css') }}" rel="stylesheet" type="text/css" id="app-default-stylesheet" /> --}}
+
+    <link href="{{ mix('css/units.css') }}" rel="stylesheet" type="text/css" />
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
 @endsection
 
-@section('body')
-    <div class="container mt-4">
-        <div class="card bg-light inner-menu shadow border-0 p-2 align-items-start flex-row">
-            <form id="search-form" method="POST" class="w-100">
-                @csrf
-                <div class="has-search input-group">
-                    <span class="fa fa-search form-control-feedback"></span>
-                    <div class="w-50"><input type="text" class="form-control" placeholder="Search" name="search"
-                            id="search"></div>
-                    <div class="btn-group">
-                        <select class="form-select dropdown-toggle" type="button" name="select">
-                            <option value="">Select</option>
-                            <option value="id">Id</option>
-                            <option value="status">Status</option>
-                            <option value="phone_number">Phone&nbsp;number</option>
-                            <option value="updated_at">Updated&nbsp;Last</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-outline-primary invisible">search</button>
-                </div>
-            </form>
-            <button
-                class="addicon text-dark bs-tooltip-top tooltip-arrow btn register d-flex align-items-center px-3 py-1 addicon"
-                data-bs-toggle="modal" data-bs-target="#store-unit" data-toggle="tooltip" title="Register">
-                <i class="fa-solid fa-plus pe-2"></i><span class="fs-6 text-dark opacity-100">Register</span>
-            </button>
-        </div>
-    </div>
 
-    <div class="container mt-3">
-        <div class="row">
-            <div class="table-responsive-md">
-                @if (count($units) <= 0)
-                    <table id="table" class="table border table-md text-start">
-                        <thead class="">
-                            <tr class="client--nav-tabs text-secondary">
-                                <th width="8%">Id <span class="arrows-icon"></span></th>
-                                <th width="10%">Status</th>
-                                <th width="15%">Mobile #</th>
-                                <th width="20%">Longitude</th>
-                                <th width="20%">Latitude</th>
-                                <th width="20%">Updated&nbsp;Last</th>
-                                <th width="5%">&nbsp;</th>
-                            </tr>
-                        </thead>
-                    </table>
-                @else
-                    <table id="table" class="table border table-md text-start">
-                        <thead class="">
-                            <tr class="client--nav-tabs text-secondary">
-                                <th width="8%">Id</th>
-                                <th width="10%">Status</th>
-                                <th width="15%">Mobile #</th>
-                                <th width="20%">Longitude</th>
-                                <th width="20%">Latitude</th>
-                                <th width="20%">Updated&nbsp;Last</th>
-                                <th width="5%">&nbsp;</th>
-                            </tr>
-                        </thead>
-                        <tbody class="searchbody bg-light border-0 " id="tb">
-                            @foreach ($units as $unit)
-                                <tr id="{{ $unit->id }}" class="trbody bg-light client--nav tdhover data">
-                                    <td class="text-danger ps-3">
-                                        {{ $unit->id }}
-                                    </td>
-                                    <td class="ps-3">
-                                        {{ Str::ucfirst($unit->status) }}
-                                    </td>
-                                    <td class="ps-3">
-                                        {{ $unit->phone_number }}
-                                    </td>
+@section('content')
+    <div class="container-fluid mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <button type="button" class="btn btn-sm btn-blue waves-effect waves-light float-end fs-5"
+                        data-bs-toggle="modal" data-bs-target="#store-unit" data-toggle="tooltip">
+                        <i class="mdi mdi-plus-circle pe-1"></i> Register
+                    </button>
+                    <h4 class="header-title mb-4">Units</h4>
 
-                                    <td class="ps-3">
-                                        {{ $unit->longitude }}
-                                    </td>
-
-                                    <td class="ps-3">
-                                        {{ $unit->latitude }}
-                                    </td>
-
-                                    <td class="ps-3">
-                                        {{ $unit->updated_at }}
-                                    </td>
-                                    <td class="pe-4">
-                                        <button id="delbtn" class="btn border-0 deletebtn float-end p-0"
-                                            onclick="removeUnit({{ $unit->id }})" type="button">
-                                            <i class="fas fa-trash fs-5 text-danger bs-tooltip-top tooltip-arrow"
-                                                data-toggle="tooltip" data-bs-placement="top" title="Remove"></i>
-                                        </button>
-                                    </td>
+                    <div class="table-responsive">
+                        <table class="table table-hover m-0 table-cente#f1556c dt-responsive nowrap w-100"
+                            id="datatable-buttons">
+                            {{-- or tickets-table --}}
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Status</th>
+                                    <th>Mobile #</th>
+                                    <th>Longitude</th>
+                                    <th>Latitude</th>
+                                    <th>Updated&nbsp;Last</th>
+                                    <th>&nbsp;</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                    <div class="d-flex justify-content-center fs-10">
-                        {{ $units->links() }}
-                    </div>
-                @endif
-            </div>
-        </div>
-    </div>
+                            </thead>
 
-    @if (count($errors) > 0)
+                            <tbody>
+                                @foreach ($units as $unit)
+                                    <tr>
+                                        <td>
+                                            {{ $unit->id }}
+                                        </td>
+                                        <td>
+                                            {{ Str::ucfirst($unit->status) }}
+                                        </td>
+                                        <td>
+                                            {{ $unit->phone_number }}
+                                        </td>
+
+                                        <td>
+                                            {{ $unit->longitude }}
+                                        </td>
+
+                                        <td>
+                                            {{ $unit->latitude }}
+                                        </td>
+
+                                        <td>
+                                            {{ $unit->updated_at }}
+                                        </td>
+                                        <td>
+                                            <button id="delbtn" class="btn border-0 deletebtn float-end p-0"
+                                                onclick="removeUnit({{ $unit->id }})" type="button"
+                                                data-bs-toggle="modal" data-bs-target="#modalRemove">
+                                                <i class="fas fa-trash fs-5 text-danger bs-tooltip-top tooltip-arrow"
+                                                    data-toggle="tooltip" data-bs-placement="top" title="Remove"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div><!-- end col -->
         <script>
             $(document).ready(function() {
-                $('#store-unit').modal('show');
-            });
-        </script>
-    @endif
+                var submitbtn = $('#submitbtn');
+                var phone_num = $('#phone_number');
+                var closebtn = $('#close');
+                var bar = $('#bar');
+                var processing = $('#processing');
+                var steps_bar = $('#steps-id');
+                var spinner1 = $('#spinner1');
+                var spinner2 = $('#spinner2');
+                var spinner3 = $('#spinner3');
+                var form = $('#unit-form');
+                var line1 = $('#line1');
+                var line2 = $('#line2');
+                var start = $('#start');
+                var controller = $('#controller');
+                var message = $('#message');
+                var pmessage = $('#p-message');
 
-    <script>
-        $(document).ready(function() {
-            var submitbtn = $('#submitbtn');
-            var phone_num = $('#phone_number');
-            var closebtn = $('#close');
-            var bar = $('#bar');
-            var processing = $('#processing');
-            var steps_bar = $('#steps-id');
-            var spinner1 = $('#spinner1');
-            var spinner2 = $('#spinner2');
-            var spinner3 = $('#spinner3');
-            var form = $('#unit-form');
-            var line1 = $('#line1');
-            var line2 = $('#line2');
-            var start = $('#start');
-            var controller = $('#controller');
-            var message = $('#message');
-            var pmessage = $('#p-message');
+                steps_bar.hide();
 
-            steps_bar.hide();
+                form.on('submit', function(e) {
+                    e.preventDefault();
+                    start.css('background', 'white');
+                    controller.css('background', 'white');
+                    message.css('background', 'white');
+                    line1.css('background', 'white');
+                    line2.css('background', 'white');
 
-            form.on('submit', function(e) {
-                e.preventDefault();
-                start.css('background', 'white');
-                controller.css('background', 'white');
-                message.css('background', 'white');
-                line1.css('background', 'white');
-                line2.css('background', 'white');
+                    phone_num.attr('class', 'form-control')
+                    pmessage.html('');
 
-                phone_num.attr('class', 'form-control')
-                pmessage.html('');
+                    $.ajax({
+                        type: "post",
+                        url: "units",
+                        data: $(this).serialize(),
+                        dataType: 'json',
+                        error: function(error) {
+                            const errors = error.responseJSON?.errors?.phone_number;
+                            if (Array.isArray(errors)) {
+                                let output = "";
+                                for (const message of errors) {
+                                    if (output.length > 0) output += "</br>"
+                                    output += `<strong>${message}</strong>`;
+                                }
 
-                $.ajax({
-                    type: "post",
-                    url: "units",
-                    data: $(this).serialize(),
-                    dataType: 'json',
-                    error: function(error) {
-                        const errors = error.responseJSON?.errors?.phone_number;
-                        if (Array.isArray(errors)) {
-                            let output = "";
-                            for (const message of errors) {
-                                if (output.length > 0) output += "</br>"
-                                output += `<strong>${message}</strong>`;
+                                phone_num.attr('class', 'form-control is-invalid')
+                                pmessage.html(output);
+
+                                steps_bar.hide();
+                                submitbtn.show();
                             }
+                        },
+                    });
+                });
 
-                            phone_num.attr('class', 'form-control is-invalid')
-                            pmessage.html(output);
+                Echo.channel("UnitRegister").listen("UnitRegisterUpdate", (data) => {
+                    switch (data.message) {
+                        case "start":
+                            steps_bar.show('slow');
+                            submitbtn.hide();
 
-                            steps_bar.hide();
+                            controller.css('background', 'white');
+                            spinner1.html(`<div class="spinner-border text-secondary" role="status" style="margin-top: 2px">
+                            <span class="sr-only">Loading...</span>
+                            </div>`);
+                            break;
+                        case "published":
+                            start.css('background', '#63d19e');
+                            spinner1.html(
+                                '<i class="mdi mdi-check"></i>');
+                            line1.css('background-color', '#63d19e');
+                            spinner2.html(`<div class="spinner-border text-secondary" role="status" style="margin-top: 2px">
+                                    <span class="sr-only">Loading...</span>
+                                    </div>`);
+                            break;
+                        case "controller 1":
+                            controller.css('background', '#63d19e');
+                            spinner2.html(
+                                '<i class="mdi mdi-check"></i>');
+                            line2.css('background-color', '#63d19e');
+                            spinner3.html(`<div class="spinner-border text-secondary" role="status" style="margin-top: 2px">
+                                    <span class="sr-only">Loading...</span>
+                                    </div>`);
+                            break;
+                        case "controller 0":
                             submitbtn.show();
-                        }
-                    },
-                })
-            });
+                            controller.css('background', '#f1556c');
+                            spinner2.html(
+                                '<i class="mdi mdi-alert-rhombus fs-4"></i>');
+                            submitbtn.html('re-submit');
+                            break;
+                        case "message 1":
+                            message.css('background', '#63d19e');
+                            spinner3.html(
+                                '<i class="mdi mdi-check fs-5"></i>');
+                            location.reload();
+                            break;
+                        case "message 0":
+                            submitbtn.show();
+                            message.css('background', '#f1556c');
+                            spinner3.html(
+                                '<i class="mdi mdi-alert-rhombus fs-4"></i>');
+                            submitbtn.html('re-submit');
 
-            Echo.channel("UnitRegister").listen("UnitRegisterUpdate", (data) => {
-                switch (data.message) {
-                    case "start":
-                        steps_bar.show('slow');
-                        submitbtn.hide();
-
-                        controller.css('background', 'white');
-                        spinner1.html(`<div class="spinner-border text-secondary" role="status">
-                        <span class="sr-only">Loading...</span>
-                        </div>`);
-                        break;
-                    case "published":
-                        start.css('background', '#63d19e');
-                        spinner1.html(
-                            '<i class="fa-solid fa-check text-white fs-5"></i>');
-                        line1.css('background-color', '#63d19e');
-                        spinner2.html(`<div class="spinner-border text-secondary mt-1" role="status">
-                                <span class="sr-only">Loading...</span>
-                                </div>`);
-                        break;
-                    case "controller 1":
-                        controller.css('background', '#63d19e');
-                        spinner2.html(
-                            '<i class="fa-solid fa-check text-white fs-5 mt-1"></i>');
-                        line2.css('background-color', '#63d19e');
-                        spinner3.html(`<div class="spinner-border text-secondary mt-1" role="status">
-                                <span class="sr-only">Loading...</span>
-                                </div>`);
-                        break;
-                    case "controller 0":
-                        submitbtn.show();
-                        controller.css('background', 'red');
-                        spinner2.html(
-                            '<i class="fa-solid fa-xmark text-white fs-4 mt-1"></i>');
-                        submitbtn.html('re-submit');
-                        break;
-                    case "message 1":
-                        message.css('background', '#63d19e');
-                        spinner3.html(
-                            '<i class="fa-solid fa-check text-white fs-5"></i>');
-                        location.reload();
-                        break;
-                    case "message 0":
-                        submitbtn.show();
-                        message.css('background', 'red');
-                        spinner3.html(
-                            '<i class="fa-solid fa-xmark text-white fs-4 mt-1"></i>');
-                        submitbtn.html('re-submit');
-
-                        spinner3.addClass('resubmit');
-                        break;
-                }
-            });
-
-            $('#table').DataTable({
-                "lengthMenu": [
-                    [10, 20, 50, -1],
-                    [10, 20, 50, "All"]
-                ],
-                "bFilter": false,
-                'columnDefs': [{
-                    'targets': [6],
-                    'orderable': false, // orderable false
-                }],
-            });
-
-            $('[data-toggle="tooltip"]').tooltip();
-            $('#search-form').submit(function(event) {
-                event.preventDefault();
-                var $form = $(this);
-                var value = $form.find("input[name='search']").val();
-                var selectValue = $form.find("select[name='select']").val();
-
-                $.ajax({
-                    type: 'get',
-                    url: 'units-search',
-                    data: {
-                        'searchTerm': value,
-                        'selectTerm': selectValue
-                    },
-                    dataType: 'json',
-                    success: function(data) {
-                        $('.searchbody').html(data.result);
-                    },
-                    error: (error) => console.error(error)
+                            spinner3.addClass('resubmit');
+                            break;
+                    }
                 });
             });
-        });
 
-        function removeUnit(id) {
-            $('#modalRemove').modal('show');
-
-            $('#remove-id').submit(function(event) {
-                event.preventDefault();
-                $.ajax({
-                    type: 'delete',
-                    url: `units/${id}`,
-                    data: $(this).serialize(),
-                    dataType: 'json',
-                    success: function(data) {
-                        $(`#${id}`).fadeOut('slow');
-                        location.reload();
-                    },
-                    error: (error) => console.error(error)
-                });
-            })
+            function removeUnit(id) {
+                $('#remove-id').attr('action', `units/${id}`);
+            }
+        </script>
+    </div>
+    <style>
+        body {
+            overflow-y: hidden;
         }
-    </script>
+
+    </style>
 
     @include('modals.units')
 
+@section('script')
+    <script src="{{ mix('js/vendor.min.js') }}"></script>
+    <script src="{{ mix('libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ mix('libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
+    <script src="{{ mix('libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ mix('libs/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ mix('libs/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js') }}"></script>
+    <script src="{{ mix('libs/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ mix('libs/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
+    <script src="{{ mix('libs/pdfmake/build/pdfmake.min.js') }}"></script>
+    <script src="{{ mix('libs/pdfmake/build/vfs_fonts.js') }}"></script>
+    <script src="{{ mix('js/pages/datatables.init.js') }}"></script>
+    {{-- <script src="{{ asset('libs/datatables.net-keytable/js/dataTables.keyTable.min.js') }}"></script> --}}
+    {{-- <script src="{{ asset('libs/datatables.net-select/js/dataTables.select.min.js') }}"></script> --}}
+    {{-- <script src="{{ asset('libs/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js') }}"></script> --}}
+    {{-- <script src="{{ asset('libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}"></script> --}}
+@endsection
 @endsection

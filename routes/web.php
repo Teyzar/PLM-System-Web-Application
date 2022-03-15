@@ -22,7 +22,13 @@ use Illuminate\Support\Facades\Auth;
 
 Auth::routes();
 
+
+
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
+Route::get('/profile', function() {
+    return view('profile');
+})->middleware('auth');
+
 
 Route::resource('/dispatch', DispatchController::class)->only(['index', 'store']);
 

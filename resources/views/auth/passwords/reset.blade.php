@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="login">
-        <h2 class="p-2">Reset Password</h2>
+        <h2 class="header-title"><span>Reset Password</span></h2>
         <form method="POST" action="{{ route('password.update') }}">
             @csrf
             <input type="hidden" name="token" value="{{ $token }}">

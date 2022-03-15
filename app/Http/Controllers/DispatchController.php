@@ -31,7 +31,7 @@ class DispatchController extends Controller
         $unit = Unit::all();
 
         return view('dispatch', [
-            'linemen' => $lineman,
+            'linemans' => $lineman,
             'units' => $unit
         ]);
     }

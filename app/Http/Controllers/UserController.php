@@ -50,7 +50,7 @@ class UserController extends Controller
                 'required',
                 'string',
                 'min:8',
-                'max:13',
+                'max:10',
                 'required_with:verify'
             ],
             'verify' => ['required', 'same:new-password', 'string']
@@ -63,7 +63,7 @@ class UserController extends Controller
         }
 
         if (Hash::check($request['new-password'], $password)) {
-            return back()->withErrors(['newpass' => 'New Password Must not match to the Current Password.'])->withInput();
+            return back()->withErrors(['newpass' => 'New password must not match to the current password.'])->withInput();
         }
 
         if ($valid->fails()) {

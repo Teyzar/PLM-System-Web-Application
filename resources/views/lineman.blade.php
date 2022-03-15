@@ -1,119 +1,109 @@
 @extends('layouts.app')
 
-@section('title', '- Accounts')
-
 @section('head')
-    <link href="{{ mix('css/lineman.css') }}" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+    <!-- third party css -->
+    <link href="{{ mix('libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet"
+        type="text/css" />
+    <link href="{{ mix('libs/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css') }}" rel="stylesheet"
+        type="text/css" />
+    <link href="{{ mix('libs/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css') }}" rel="stylesheet"
+        type="text/css" />
+    <link href="{{ mix('css/config/bootstrap.min.css') }}" rel="stylesheet" type="text/css"
+        id="bs-default-stylesheet" />
 @endsection
 
-@section('body')
-    <div class="container mt-4">
-        <div class="card bg-light border-0 p-2 inner-menu shadow align-items-center flex-row px-3">
-            <i class="bi bi-search p-1 text-dark fs-5"></i>
-            <div class="container p-1">
-                <div class="row justify-content-start flex-row">
-                    <div class="col-md-8">
-                        <div class="search d-flex"><input type="text" class="form-control" placeholder="Search accounts..."
-                                name="search" id="search">
-                        </div>
+@section('content')
+    <div class="container-fluid mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <button type="button" class="btn btn-sm btn-blue waves-effect waves-light float-end fs-5"
+                        data-bs-toggle="modal" data-bs-target="#modalRegisterForm" data-toggle="tooltip">
+                        <i class="mdi mdi-plus-circle pe-1"></i> Register
+                    </button>
+                    <h4 class="header-title mb-4">Accounts</h4>
+
+                    <div class="table-responsive">
+                        <table class="table activate-select dt-responsive nowrap w-100" id="datatable-buttons">
+                            {{-- or tickets-table --}}
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>E-mail</th>
+                                    <th>Designation</th>
+                                    <th>Registration</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach ($linemen as $lineman)
+                                    <tr>
+                                        <td>{{ $lineman->name }}</td>
+                                        <td>{{ $lineman->email }}</td>
+                                        <td>{{ $lineman->barangay }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($lineman->created_at)->toDayDateTimeString() }}</td>
+
+                                        <td>
+                                            <div class="btn-group dropdown">
+                                                <a href=""
+                                                    class="btn btn-light btn-sm"
+                                                    data-bs-toggle="dropdown" aria-expanded="false"><i
+                                                        class="mdi mdi-dots-horizontal"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <a class="dropdown-item" onclick="editAccount({{ $lineman->id }})"
+                                                        data-bs-toggle="modal" data-bs-target="#modalEdit" href=""><i
+                                                            class="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>Edit
+                                                        Account</a>
+                                                    <a id="resetbtn" class="dropdown-item"
+                                                        onclick="resetPassword({{ $lineman->id }})" data-bs-toggle="modal"
+                                                        data-bs-target="#modalReset" href=""><i
+                                                            class="mdi mdi-lock-reset me-2 text-muted font-18 vertical-middle"></i>Reset
+                                                        Password</a>
+                                                    <a id="delbtn" class="dropdown-item" data-bs-toggle="modal"
+                                                        data-bs-target="#modalDelete"
+                                                        onclick="deleteAccount({{ $lineman->id }})" href=""><i
+                                                            class="mdi mdi-delete me-2 text-muted font-18 vertical-middle"></i>Remove</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-
-            <a href=""
-                class="addicon text-dark bs-tooltip-top tooltip-arrow btn btn-warning d-flex align-items-center px-3 py-1 addicon"
-                data-bs-toggle="modal" data-bs-target="#modalRegisterForm" data-toggle="tooltip" title="Register">
-                <i class="fa-solid fa-plus pe-2"></i>Register
-            </a>
-        </div>
+        </div><!-- end col -->
     </div>
+    <style>
+        body {
+            overflow-y: hidden;
+        }
 
-    <div class="container mt-3">
-        <div class="row">
-            <div class="table-responsive-md">
-                @if (count($linemen) <= 0)
-                    <table id="table" class="table border table-md text-start">
-                        <thead class="">
-                            <tr class="client--nav-tabs text-secondary">
-                                <th>Name</th>
-                                <th>E-mail</th>
-                                <th>Designation</th>
-                                <th>Registration&nbsp;Date</th>
-                                <th>&nbsp;</th>
-                                <th>&nbsp;</th>
-                                <th>&nbsp;</th>
-                            </tr>
-                        </thead>
-                    </table>
-                @else
-                    <table id="table" class="table border table-md text-start">
-                        <thead class="">
-                            <tr class="client--nav-tabs text-dark">
-                                <th width="20%">Name</th>
-                                <th width="20%">E-mail</th>
-                                <th width="20%">Designation</th>
-                                <th width="15%">Registration&nbsp;Date</th>
-                                <th width="2.5%">&nbsp;</th>
-                                <th width="2.5%">&nbsp;</th>
-                                <th width="2.5%">&nbsp;</th>
-                            </tr>
-                        </thead>
-                        <tbody class="searchbody bg-light" id="tb">
-                            @foreach ($linemen as $lineman)
-                                <tr class="trbody bg-light tdhover">
-                                    <td class="text-black text-capitalize">
-                                        {{ $lineman->name }}</a>
-                                    </td>
+    </style>
 
-                                    <td class="text-black">
-                                        {{ $lineman->email }}
-                                    </td>
+    @include('modals.lineman')
 
-                                    <td class="text-black text-capitalize">
-                                        {{ $lineman->barangay }}
-                                    </td>
+@section('script')
+    <script src="{{ mix('js/vendor.min.js') }}"></script>
 
-                                    <td class="text-black text-capitalize">
-                                        {{ \Carbon\Carbon::parse($lineman->created_at)->toDayDateTimeString() }}
-                                    </td>
+    <script src="{{ mix('libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ mix('libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
+    <script src="{{ mix('libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ mix('libs/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ mix('libs/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js') }}"></script>
+    <script src="{{ mix('libs/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ mix('libs/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
+    <script src="{{ mix('libs/pdfmake/build/pdfmake.min.js') }}"></script>
+    <script src="{{ mix('libs/pdfmake/build/vfs_fonts.js') }}"></script>
+    <script src="{{ mix('js/pages/datatables.init.js') }}"></script>
 
-                                    <td class="">
-                                        <a id="resetbtn" class="resetbtn"
-                                            onclick="resetPassword({{ $lineman->id }})" data-bs-toggle="modal"
-                                            data-bs-target="#modalReset" href="">
-                                            <i class="fas fa-sync-alt text-success p-1 bs-tooltip-top" data-toggle="tooltip"
-                                                title="Reset password"></i>
-                                        </a>
-                                    </td>
-
-                                    <td class="">
-                                        <a class="editbtn" onclick="editAccount({{ $lineman->id }})"
-                                            data-bs-toggle="modal" data-bs-target="#modalEdit" href="">
-                                            <i class="fas fa-user-edit text-primary p-1 bs-tooltip-top"
-                                                data-toggle="tooltip" title="Edit"></i>
-                                        </a>
-                                    </td>
-
-                                    <td class="">
-                                        <a id="delbtn" class="deletebtn" data-bs-toggle="modal"
-                                            data-bs-target="#modalDelete" onclick="deleteAccount({{ $lineman->id }})"
-                                            href="">
-                                            <i class="fas fa-trash text-danger p-1 bs-tooltip-top" data-toggle="tooltip"
-                                                title="Delete"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                @endif
-            </div>
-        </div>
-    </div>
-
+    <script>
+        $(document).ready(function() {
+            $('#success-alert-modal').modal('show');
+        })
+    </script>
     @if ($errors->has('email'))
         <script>
             $(document).ready(function() {
@@ -125,23 +115,7 @@
     <script>
         $(document).ready(function() {
 
-            // $.fn.dataTable.ext.classes.sPageButton = 'btn';
-            var table = $('#table').DataTable({
-                "lengthMenu": [
-                    [10, 25, 50, -1],
-                    [10, 25, 50, "All"]
-                ],
-                'columnDefs': [{
-                    'targets': [4, 5, 6],
-                    'orderable': false,
-                }],
-            });
 
-            $('#search').on('keyup', function() {
-                table.search(this.value).draw();
-            });
-
-            $('[data-toggle="tooltip"]').tooltip();
         });
 
         function deleteAccount(id) {
@@ -214,7 +188,5 @@
             });
         }
     </script>
-
-    @include('modals.lineman')
-
+@endsection
 @endsection

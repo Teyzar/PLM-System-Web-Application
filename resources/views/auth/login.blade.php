@@ -3,11 +3,10 @@
 @section('content')
     <div class="container py-4" style="margin-top: 1%">
         <div class="row justify-content-center">
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <div class="body border-info">
-
                     <div class="card-body" style=";">
-                        <img src="{{ mix('img/logo.png') }}" class="m-auto d-flex justify-content-center p-4"
+                        <img src="{{ mix('images/logo.png') }}" class="m-auto d-flex justify-content-center p-4"
                             style="object-fit: cover; width: 300px; height: 300px;">
 
                         <form method="POST" action="{{ route('login') }}">
@@ -36,7 +35,7 @@
                                 </div>
                             </div>
 
-                            <div class="row mb-3">
+                            {{-- <div class="row mb-3">
                                 <div class="col-md-6 offset-md-4">
                                     <div class="form-check ">
                                         <input class="form-check-input" type="checkbox" name="remember" id="remember"
@@ -47,7 +46,7 @@
                                         </label>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="row mb-0">
                                 <div class="col-md-8 offset-md-4">
