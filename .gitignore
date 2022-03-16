@@ -1,7 +1,8 @@
 /node_modules
 /public/css
 /public/js
-/public/img
+/public/libs
+/public/images
 /public/fonts
 /public/mix-manifest.json
 /public/hot

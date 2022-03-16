@@ -377,7 +377,7 @@
 
     <div class="rightbar-overlay"></div>
     <script src="{{ mix('js/vendor.min.js') }}"></script>
-    <script src="{{ mix('libs/moment/min/moment.min.js') }}"></script>
+    <script src="{{ asset('libs/moment/min/moment.min.js') }}"></script>
     <script src="{{ mix('js/app.min.js') }}"></script>
     @yield('script')
 
