@@ -14,8 +14,8 @@ class HomeController extends Controller
     public function index()
     {
         $cadizCity = array(
-            'lat' => 10.94463755493866,
-            'lng' => 123.27352044217186
+            'lat' => 10.95583493620157,
+            'lng' => 123.30611654802884
         );
 
         return view('home', [
