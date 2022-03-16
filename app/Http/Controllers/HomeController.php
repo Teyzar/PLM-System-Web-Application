@@ -19,7 +19,7 @@ class HomeController extends Controller
         );
 
         return view('home', [
-            'apiKey' => 'AIzaSyCUkerPRBMbwWZ083ke5NbpQEr9tsKALMo',
+            'apiKey' => env('MAPS_KEY', 'AIzaSyA2vqdxEToK1qKnxm14YrCwJ1xoLd1FcBU'),
             'cadizCity' => json_encode($cadizCity),
             'heatmapData' => Unit::all(['id', 'status', 'latitude', 'longitude'])->where('status', 'fault')
         ]);

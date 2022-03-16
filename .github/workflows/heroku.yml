@@ -50,3 +50,4 @@ jobs:
           HD_MAIL_ENCRYPTION: ssl
           HD_MAIL_FROM_ADDRESS: ${{secrets.MAIL_USERNAME}}
           HD_MAIL_FROM_NAME: "Power Line Monitoring"
+          HD_MAPS_KEY: ${{secrets.MAPS_KEY}}
