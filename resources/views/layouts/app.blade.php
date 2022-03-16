@@ -68,7 +68,7 @@
                                     {{ ucwords(Auth::user()->name) }}<i class="mdi mdi-chevron-down"></i>
                                 </span>
                             </a>
-                            <div class="dropdown-menu">
+                            <div class="dropdown-menu dropdown-menu-end profile-dropdown">
                                 <!-- item-->
                                 <div class="dropdown-header noti-title">
                                     <h6 class="text-overflow m-0">Welcome !</h6>
@@ -169,7 +169,7 @@
 
                             <li>
                                 <a href="/past-incidents">
-                                    <i class="mdi mdi-view-list-outline"></i>
+                                    <i data-feather="list"></i>
                                     <span> Outage Records </span>
                                 </a>
                             </li>
@@ -183,14 +183,14 @@
 
                             <li>
                                 <a href="{{ URL::to('units') }}">
-                                    <i class="mdi mdi-sim"></i>
+                                    <i class="text-muted mdi mdi-sim"></i>
                                     <span> Units </span>
                                 </a>
                             </li>
 
                             <li>
                                 <a href="/dispatch">
-                                    <i class="mdi mdi-car-arrow-right"></i>
+                                    <i class="text-muted mdi mdi-car-arrow-right"></i>
                                     <span> Dispatch </span>
                                 </a>
                             </li>
@@ -360,7 +360,7 @@
         </div>
 
     </div> <!-- end slimscroll-menu-->
-    <style>
+    {{-- <style>
         @media (max-width: 780px) {
             body {
                 overflow: auto !important;
@@ -368,7 +368,7 @@
             }
         }
 
-    </style>
+    </style> --}}
     </div>
 
     @auth

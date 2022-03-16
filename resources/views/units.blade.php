@@ -77,7 +77,7 @@
                                             <button id="delbtn" class="btn border-0 deletebtn float-end p-0"
                                                 onclick="removeUnit({{ $unit->id }})" type="button"
                                                 data-bs-toggle="modal" data-bs-target="#modalRemove">
-                                                <i class="fas fa-trash fs-5 text-danger bs-tooltip-top tooltip-arrow"
+                                                <i class="fe-trash fs-5 text-danger bs-tooltip-top tooltip-arrow"
                                                     data-toggle="tooltip" data-bs-placement="top" title="Remove"></i>
                                             </button>
                                         </td>
@@ -205,12 +205,12 @@
             }
         </script>
     </div>
-    <style>
+    {{-- <style>
         body {
             overflow-y: hidden;
         }
 
-    </style>
+    </style> --}}
 
     @include('modals.units')
 
@@ -226,9 +226,9 @@
     <script src="{{ mix('libs/pdfmake/build/pdfmake.min.js') }}"></script>
     <script src="{{ mix('libs/pdfmake/build/vfs_fonts.js') }}"></script>
     <script src="{{ mix('js/pages/datatables.init.js') }}"></script>
-    {{-- <script src="{{ asset('libs/datatables.net-keytable/js/dataTables.keyTable.min.js') }}"></script> --}}
-    {{-- <script src="{{ asset('libs/datatables.net-select/js/dataTables.select.min.js') }}"></script> --}}
-    {{-- <script src="{{ asset('libs/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js') }}"></script> --}}
-    {{-- <script src="{{ asset('libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}"></script> --}}
+    {{-- <script src="{{ mix('libs/datatables.net-keytable/js/dataTables.keyTable.min.js') }}"></script> --}}
+    {{-- <script src="{{ mix('libs/datatables.net-select/js/dataTables.select.min.js') }}"></script> --}}
+    {{-- <script src="{{ mix('libs/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js') }}"></script> --}}
+    {{-- <script src="{{ mix('libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}"></script> --}}
 @endsection
 @endsection

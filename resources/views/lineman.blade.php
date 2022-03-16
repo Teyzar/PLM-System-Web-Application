@@ -19,7 +19,7 @@
                 <div class="card-body">
                     <button type="button" class="btn btn-sm btn-blue waves-effect waves-light float-end fs-5"
                         data-bs-toggle="modal" data-bs-target="#modalRegisterForm" data-toggle="tooltip">
-                        <i class="mdi mdi-plus-circle pe-1"></i> Register
+                        <i class="fe-user-plus pe-1"></i> Register
                     </button>
                     <h4 class="header-title mb-4">Accounts</h4>
 
@@ -32,7 +32,7 @@
                                     <th>E-mail</th>
                                     <th>Designation</th>
                                     <th>Registration</th>
-                                    <th>&nbsp;</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
 
@@ -76,12 +76,12 @@
             </div>
         </div><!-- end col -->
     </div>
-    <style>
+    {{-- <style>
         body {
             overflow-y: hidden;
         }
 
-    </style>
+    </style> --}}
 
     @include('modals.lineman')
 
