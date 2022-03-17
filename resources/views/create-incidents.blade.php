@@ -66,6 +66,18 @@
                 removeMarker();
             }
         }
+
+        function checkFields() {
+            const btnPublish = document.getElementById('btnPublish');
+            const inptTitle = document.getElementById('title');
+            const inptDescription = document.getElementById('description');
+
+            if (inptTitle.value && inptDescription.value && markers.length > 0) {
+                btnPublish.disabled = false;
+            } else {
+                btnPublish.disabled = true;
+            }
+        }
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 @endsection
@@ -81,25 +93,45 @@
                             <div class="row">
                                 <div class="container-fluid">
                                     <div class="mb-3">
-                                        <label for="projectname" class="form-label">Title <span
-                                                class="text-danger">*</span></label>
-                                        <input type="text" id="title" class="form-control" placeholder="Enter Title"
-                                            name="title" required>
+                                        <label for="projectname" class="form-label">
+                                            Title
+                                            <span class="text-danger"> *</span>
+                                        </label>
+                                        <input id="title" name="title" type="text"
+                                            class="form-control @error('title') is-invalid @enderror"
+                                            placeholder="Enter Title" oninput="checkFields()" required>
+
+                                        @error('title')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
-
                                     <div class="mb-3">
-                                        <label class="form-label"> Title Description <span
-                                                class="text-danger">*</span></label>
-                                        {{-- <div id="snow-editor" style="height: 200px;">
+                                        <label class="form-label">
+                                            Description
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <textarea id="description" name="description" class="form-control @error('description') is-invalid @enderror" rows="5"
+                                            placeholder="Enter some brief description about the report"
+                                            oninput="checkFields()" required></textarea>
 
-                                        </div> --}}
-                                        <textarea class="form-control" id="description" rows="5" placeholder="Enter some brief about the report.."
-                                            name="description"></textarea>
+                                        @error('description')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
-                            <hr>
-                            <label class="form-label">Units - Fault <span class="text-danger">*</span></label>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <label class="form-label">
+                                Units
+                                <span class="text-danger">*</span>
+                            </label>
                             <div class="table-responsive">
                                 <table class="table table-hover m-0 table-cente#f1556c dt-responsive nowrap w-100"
                                     id="basic-datatable">
@@ -107,7 +139,7 @@
                                     <thead>
                                         <tr>
                                             <th><input type="checkbox" name="" id="checkbox"></th>
-                                            <th>ID</th>
+                                            <th>Id</th>
                                             <th>Status</th>
                                             <th>Mobile #</th>
                                             <th>Longitude</th>
@@ -120,29 +152,23 @@
                                             <tr>
                                                 <td>
                                                     <input type="checkbox" name="unit_ids[{{ $unit->id }}]"
-                                                        onchange="updateMarker({{ $unit->id }})">
+                                                        onchange="updateMarker({{ $unit->id }}); checkFields();">
                                                 </td>
-                                                <td>
-                                                    {{ $unit->id }}
-                                                </td>
-                                                <td>
-                                                    {{ Str::ucfirst($unit->status) }}
-                                                </td>
-                                                <td>
-                                                    {{ $unit->phone_number }}
-                                                </td>
-
-                                                <td>
-                                                    {{ $unit->longitude }}
-                                                </td>
-
-                                                <td>
-                                                    {{ $unit->latitude }}
-                                                </td>
+                                                <td> {{ $unit->id }} </td>
+                                                <td> {{ Str::ucfirst($unit->status) }} </td>
+                                                <td> {{ $unit->phone_number }} </td>
+                                                <td> {{ $unit->longitude }} </td>
+                                                <td> {{ $unit->latitude }} </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
+
+                                @error('unit_ids')
+                                    <span class="invalid-feedback d-block" role="alert">
+                                        <strong>At least 1 unit must be selected.</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -158,13 +184,9 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
-                <div class="text-center mb-5">
-                    <button type="button" class="btn w-sm btn-light waves-effect">Cancel</button>
-                    <button type="submit" class="btn w-sm btn-success waves-effect waves-light">Save</button>
-                    <button type="button" class="btn w-sm btn-danger waves-effect waves-light">Delete</button>
-                </div>
-            </div> <!-- end col -->
+            <div class="d-flex justify-content-center mb-5">
+                <button id="btnPublish" type="submit" class="border-0 btn btn-success px-5" disabled>Publish</button>
+            </div>
         </div>
     </form>
     <footer class="footer">
