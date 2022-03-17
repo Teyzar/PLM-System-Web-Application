@@ -10,65 +10,60 @@
     <link href="{{ asset('libs/quill/quill.snow.css') }}" rel="stylesheet" type="text/css" />
 
     <script>
-        let map, heatmap, heatmapData;
+        let map, markers;
 
         function initMap() {
             map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 13,
-                center: {!! $cadizCity !!},
+                zoom: 15,
+                center: {
+                    'lat': 10.95583493620157,
+                    'lng': 123.30611654802884
+                },
                 mapTypeId: "roadmap"
             });
-            // Initialize heatmap data
-            heatmapData = new google.maps.MVCArray();
-            // Initialize heatmap layer
-            heatmap = new google.maps.visualization.HeatmapLayer({
-                data: heatmapData,
-                radius: 12
-            });
-            // Link heatmap with map
-            heatmap.setMap(map);
-            for (const data of {!! $heatmapData !!}) {
-                heatmapData.push({
-                    id: data.id,
-                    weight: 1,
-                    location: new google.maps.LatLng(data.latitude, data.longitude)
-                });
-            }
-            Echo.channel("Heatmap").listen("HeatmapUpdate", updateHeatmap);
+
+            markers = [];
         }
-        async function updateHeatmap(data) {
-            if (data.status == "normal") {
-                // Loop through all the elements
-                for (let i = 0; i < heatmapData.getLength(); i++) {
-                    const thisData = heatmapData.getAt(i);
-                    // Remove element if the phone number matches
-                    if (thisData.id === data.id) {
-                        heatmapData.removeAt(i);
-                        break;
+
+        function updateMarker(id) {
+            const units = {!! $units !!};
+            const unit = units.find(unit => unit.id === id);
+            const position = {
+                lat: unit.latitude,
+                lng: unit.longitude
+            };
+            const checkbox = document.getElementsByName(`unit_ids[${id}]`)[0];
+            const removeMarker = () => {
+                const newMarker = [];
+
+                for (const marker of markers) {
+                    const sameLat = marker.position.lat() === position.lat;
+                    const sameLng = marker.position.lng() === position.lng;
+
+                    if (sameLat && sameLng) {
+                        marker.setMap(null);
+                    } else {
+                        newMarker.push(marker);
                     }
                 }
-            } else if (data.status == "fault") {
-                // Construct the data
-                const value = {
-                    id: data.id,
-                    weight: 1,
-                    location: new google.maps.LatLng(data.latitude, data.longitude),
-                };
-                // Get the current index if existing
-                let currentIndex;
-                for (let i = 0; i < heatmapData.getLength(); i++) {
-                    const thisData = heatmapData.getAt(i);
-                    if (thisData.id === data.id) {
-                        currentIndex = i;
-                        break;
-                    }
-                }
-                // Remove existing data
-                if (typeof currentIndex === "number") {
-                    heatmapData.removeAt(currentIndex);
-                }
-                // Push the new data
-                heatmapData.push(value);
+
+                markers = newMarker;
+            }
+            const addMarker = () => {
+                const marker = new google.maps.Marker({
+                    map,
+                    position
+                });
+
+                markers.push(marker);
+            }
+
+            if (!unit || !checkbox) return;
+
+            if (checkbox.checked) {
+                addMarker();
+            } else {
+                removeMarker();
             }
         }
     </script>
@@ -123,7 +118,10 @@
                                     <tbody>
                                         @foreach ($units as $unit)
                                             <tr>
-                                                <td><input type="checkbox" name="unit_ids[{{$unit->id}}]"></td>
+                                                <td>
+                                                    <input type="checkbox" name="unit_ids[{{ $unit->id }}]"
+                                                        onchange="updateMarker({{ $unit->id }})">
+                                                </td>
                                                 <td>
                                                     {{ $unit->id }}
                                                 </td>
