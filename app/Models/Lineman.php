@@ -27,4 +27,9 @@ class Lineman extends Model
     protected $hidden = [
         'password'
     ];
+
+    public function incidents()
+    {
+        return $this->belongsToMany(Incident::class);
+    }
 }

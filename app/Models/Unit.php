@@ -15,4 +15,9 @@ class Unit extends Model
         'longitude',
         'phone_number',
     ];
+
+    public function incidents()
+    {
+        return $this->belongsToMany(Incident::class);
+    }
 }

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Incident;
 use App\Models\Unit;
-
+use Illuminate\Http\Request;
 
 class IncidentsController extends Controller
 {
@@ -18,9 +18,13 @@ class IncidentsController extends Controller
         return view('incidents');
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
-
         $cadizCity = array(
             'lat' => 10.94463755493866,
             'lng' => 123.27352044217186
@@ -34,5 +38,32 @@ class IncidentsController extends Controller
             'heatmapData' => Unit::all(['id', 'status', 'latitude', 'longitude'])->where('status', 'fault'),
             'units' => $units
         ]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $fields = $request->validate([
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'unit_ids' => 'required|array'
+        ]);
+
+        $incident = Incident::create([
+            'resolved' => false,
+        ]);
+
+        $incident->info()->create([
+            'title' => $fields['title'],
+            'description' => $fields['description']
+        ]);
+
+        $units = Unit::whereIn('id', $fields['unit_ids'])->where('status', 'fault')->get();
+        $incident->units()->sync(array_column($units, 'id'));
     }
 }
