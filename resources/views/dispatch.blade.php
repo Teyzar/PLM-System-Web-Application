@@ -124,7 +124,7 @@
             </div>
         </div>
         <div class="d-flex justify-content-center pb-1">
-            <button id="btnDispatch" type="button" class="border-0 btn btn-secondary px-5" data-bs-toggle="modal"
+            <button id="btnDispatch" type="button" class="border-0 btn btn-success px-5" data-bs-toggle="modal"
                 data-bs-target="#modalConfirm">Dispatch</button>
         </div>
     </form>
