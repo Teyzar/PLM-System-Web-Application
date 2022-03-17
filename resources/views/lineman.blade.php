@@ -8,8 +8,7 @@
         type="text/css" />
     <link href="{{ asset('libs/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css') }}" rel="stylesheet"
         type="text/css" />
-    <link href="{{ mix('css/config/bootstrap.min.css') }}" rel="stylesheet" type="text/css"
-        id="bs-default-stylesheet" />
+    <link href="{{ mix('css/config/bootstrap.min.css') }}" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
 @endsection
 
 @section('content')
@@ -46,10 +45,8 @@
 
                                         <td>
                                             <div class="btn-group dropdown">
-                                                <a href=""
-                                                    class="btn btn-light btn-sm"
-                                                    data-bs-toggle="dropdown" aria-expanded="false"><i
-                                                        class="mdi mdi-dots-horizontal"></i></a>
+                                                <a href="" class="btn btn-light btn-sm" data-bs-toggle="dropdown"
+                                                    aria-expanded="false"><i class="mdi mdi-dots-horizontal"></i></a>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <a class="dropdown-item" onclick="editAccount({{ $lineman->id }})"
                                                         data-bs-toggle="modal" data-bs-target="#modalEdit" href=""><i
@@ -76,6 +73,22 @@
             </div>
         </div><!-- end col -->
     </div>
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <script>
+                        document.write(new Date().getFullYear())
+                    </script> &copy; <span>Power Line Monitoring</span>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-md-end footer-links d-none d-sm-block">
+                        <a href="javascript:void(0);">PLMS-CLZ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
     {{-- <style>
         body {
             overflow-y: hidden;

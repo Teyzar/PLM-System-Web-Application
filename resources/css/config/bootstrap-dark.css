@@ -61,10 +61,10 @@ File: Custom Bootstrap Css File
   --bs-white-rgb: 255, 255, 255;
   --bs-black-rgb: 0, 0, 0;
   --bs-body-rgb: 148, 160, 173;
-  --bs-font-sans-serif: "Roboto", sans-serif;
+  --bs-font-sans-serif: "Nunito", sans-serif;
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
-  --bs-body-font-family: Roboto, sans-serif;
+  --bs-body-font-family: Nunito, sans-serif;
   --bs-body-font-size: 0.875rem;
   --bs-body-font-weight: 400;
   --bs-body-line-height: 1.5;
@@ -4546,7 +4546,7 @@ textarea.form-control-lg {
   z-index: 1080;
   display: block;
   margin: 0;
-  font-family: "Roboto", sans-serif;
+  font-family: "Nunito", sans-serif;
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -4631,7 +4631,7 @@ textarea.form-control-lg {
   z-index: 1070;
   display: block;
   max-width: 276px;
-  font-family: "Roboto", sans-serif;
+  font-family: "Nunito", sans-serif;
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -8729,37 +8729,37 @@ textarea.form-control-lg {
   font-family: "Material Design Icons"; }
 
 .btn-primary {
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075) rgba(102, 88, 221, 0.5); }
+  box-shadow: 0 0 0 rgba(102, 88, 221, 0.5); }
 
 .btn-secondary {
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075) rgba(206, 222, 239, 0.5); }
+  box-shadow: 0 0 0 rgba(206, 222, 239, 0.5); }
 
 .btn-success {
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075) rgba(26, 188, 156, 0.5); }
+  box-shadow: 0 0 0 rgba(26, 188, 156, 0.5); }
 
 .btn-purple {
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075) rgba(102, 88, 221, 0.5); }
+  box-shadow: 0 0 0 rgba(102, 88, 221, 0.5); }
 
 .btn-info {
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075) rgba(79, 198, 225, 0.5); }
+  box-shadow: 0 0 0 rgba(79, 198, 225, 0.5); }
 
 .btn-warning {
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075) rgba(247, 184, 75, 0.5); }
+  box-shadow: 0 0 0 rgba(247, 184, 75, 0.5); }
 
 .btn-danger {
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075) rgba(241, 85, 108, 0.5); }
+  box-shadow: 0 0 0 rgba(241, 85, 108, 0.5); }
 
 .btn-light {
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075) rgba(66, 78, 90, 0.5); }
+  box-shadow: 0 0 0 rgba(66, 78, 90, 0.5); }
 
 .btn-dark {
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075) rgba(243, 247, 249, 0.5); }
+  box-shadow: 0 0 0 rgba(243, 247, 249, 0.5); }
 
 .btn-pink {
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075) rgba(246, 114, 167, 0.5); }
+  box-shadow: 0 0 0 rgba(246, 114, 167, 0.5); }
 
 .btn-blue {
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075) rgba(74, 129, 212, 0.5); }
+  box-shadow: 0 0 0 rgba(74, 129, 212, 0.5); }
 
 .btn .mdi:before {
   margin-top: -1px; }
@@ -9403,11 +9403,11 @@ input.form-control[type="range"] {
 
 .nav-tabs > li > a, .nav-pills > li > a {
   color: #dee2e6;
-  font-weight: 500; }
+  font-weight: 600; }
 
 .nav-pills > a {
   color: #dee2e6;
-  font-weight: 500; }
+  font-weight: 600; }
 
 .nav-fill .nav-item .nav-link,
 .nav-justified .nav-item .nav-link {
@@ -9505,13 +9505,13 @@ body {
     opacity: 0; }
 
 label {
-  font-weight: 500; }
+  font-weight: 600; }
 
 button:focus {
   outline: none; }
 
 th {
-  font-weight: 500; }
+  font-weight: 700; }
 
 .table-centered td, .table-centered th {
   vertical-align: middle !important; }
@@ -9538,7 +9538,7 @@ th {
 .h5,
 .h6, h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
   margin: 10px 0;
-  font-family: "Roboto", sans-serif;
+  font-family: "Cerebri Sans,sans-serif";
   color: #acbfd2; }
 
 .font-11 {

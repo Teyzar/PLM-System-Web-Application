@@ -5,15 +5,15 @@
     <meta charset="utf-8" />
     <title>Power Line Monitoring @yield('title')</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta content="Coderthemes" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+
 
     @yield("head")
 
-
-    <link rel="shortcut icon" href="{{ mix('images/logo.png') }}">
+    <link rel="shortcut icon" href="{{ mix('images/logo.png') }}" />
 
     <link href="{{ mix('css/config/bootstrap.min.css') }}" rel="stylesheet" type="text/css"
         id="bs-default-stylesheet" />
@@ -23,12 +23,10 @@
         id="bs-dark-stylesheet" />
     <link href="{{ mix('css/config/app-dark.min.css') }}" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
 
-
     <link rel="stylesheet" href="{{ mix('css/icons.min.css') }}" type="text/css" />
+
     <script src="{{ mix('js/app.js') }}"></script>
-
-
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 
 </head>
 
@@ -146,10 +144,10 @@
                     @endauth
 
                     @if (!Auth::check())
-                        <li class="dropdown d-none d-xl-block">
+                        <li class="dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-light" href="/past-incidents"
                                 role="button" aria-haspopup="false" aria-expanded="false">
-                                Outage Records
+                                Past Incidents
                             </a>
                         </li>
                     @endif
@@ -162,18 +160,43 @@
             <div class="left-side-menu">
                 <div class="h-100" data-simplebar>
                     <div id="sidebar-menu">
-
                         <ul id="side-menu">
-
                             <li class="menu-title">Power Line Monitoring</li>
-
                             <li>
-                                <a href="/past-incidents">
-                                    <i data-feather="list"></i>
-                                    <span> Outage Records </span>
+                                <a href="/">
+                                    <i class="fe-home"></i>
+                                    <span> Home </span>
                                 </a>
                             </li>
+                            <li>
+                                <a type="button" id="toggle-btn" data-toggle="collapse" data-target="#sidebarEmail"
+                                    aria-expanded="false">
+                                    <i data-feather="clipboard"></i>
+                                    <span class="badge bg-success rounded-pill float-end">2</span>
+                                    <span> Past Incidents </span>
+                                    {{-- <span class="menu-arrow"></span> --}}
+                                </a>
+                                <div id="sidebarEmail" class="collapse">
+                                    <ul class="nav-second-level">
+                                        <li>
+                                            <a href="/past-incidents"><i class="fe-corner-down-right"></i>&nbsp;View
+                                                Publish</a>
+                                        </li>
+                                        <li>
 
+                                            <a href="/past-incidents/create"><i
+                                                    class="fe-corner-down-right"></i>&nbsp;Create Incidents</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <script>
+                                $(document).ready(function() {
+                                    $("#toggle-btn").click(function() {
+                                        $("#sidebarEmail").collapse('toggle');
+                                    });
+                                });
+                            </script>
                             <li>
                                 <a href="{{ URL::to('lineman') }}">
                                     <i data-feather="users"></i>
@@ -369,15 +392,14 @@
         }
 
     </style> --}}
-    </div>
 
     @auth
         <script src="{{ mix('js/button-theme-settings.js') }}"></script>
     @endauth
-
     <div class="rightbar-overlay"></div>
     <script src="{{ mix('js/vendor.min.js') }}"></script>
     <script src="{{ asset('libs/moment/min/moment.min.js') }}"></script>
+    {{-- <script src="{{mix('js/pages/jquery.todo.js')}}"></script> --}}
     <script src="{{ mix('js/app.min.js') }}"></script>
     @yield('script')
 

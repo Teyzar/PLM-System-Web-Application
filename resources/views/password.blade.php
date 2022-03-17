@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card shadow">
-                    <div class="card-header header-title justify-content-start">
+                    <div class="card-header header-title justify-content-start bg-light">
                         <i class="fe-lock fs-3 px-1"></i> <span>Reset Password</span>
                     </div>
 
@@ -74,6 +74,20 @@
             </div>
         </div>
     </div>
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <script>document.write(new Date().getFullYear())</script> &copy; <span>Power Line Monitoring</span>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-md-end footer-links d-none d-sm-block">
+                        <a href="javascript:void(0);">PLMS-CLZ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 @section('script')
     <script src="{{ mix('js/vendor.min.js') }}"></script>
 @endsection

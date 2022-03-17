@@ -9,8 +9,6 @@
         type="text/css" />
     <link href="{{ asset('libs/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css') }}" rel="stylesheet"
         type="text/css" />
-
-
 @endsection
 
 
@@ -18,7 +16,8 @@
 
     <form method="POST" action="/dispatch" class="form-container" id="formid">
         @csrf
-        <div class="container-fluid mt-5">
+        <div class="container-fluid mt-4">
+            <h5 class="text-secondary text-uppercase bg-light justify-content-center d-flex p-2">To dispatch, please select both sides.</h5>
             <div class="row">
                 <div class="col-xl-6">
                     <div class="card">
@@ -129,6 +128,22 @@
                 data-bs-target="#modalConfirm">Dispatch</button>
         </div>
     </form>
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <script>
+                        document.write(new Date().getFullYear())
+                    </script> &copy; <span>Power Line Monitoring</span>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-md-end footer-links d-none d-sm-block">
+                        <a href="javascript:void(0);">PLMS-CLZ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 
 @section('script')
     <!-- Bootstrap Tables js -->

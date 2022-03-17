@@ -32,7 +32,7 @@ Route::get('/profile', function() {
 
 Route::resource('/dispatch', DispatchController::class)->only(['index', 'store']);
 
-Route::resource('/past-incidents', IncidentsController::class)->only(['index']);
+Route::resource('/past-incidents', IncidentsController::class)->only(['index', 'create']);
 
 Route::resource('/lineman', LinemanController::class)->except(['create', 'edit']);
 Route::post('/lineman/{id}/reset', [LinemanController::class, 'reset'])->name('lineman.reset');
