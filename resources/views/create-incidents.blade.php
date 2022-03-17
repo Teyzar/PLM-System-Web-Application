@@ -1,6 +1,5 @@
 @extends('layouts.app')
 
-
 @section('head')
     <link href="{{ asset('libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet"
         type="text/css" />
@@ -186,6 +185,7 @@
             </div>
         </div>
     </footer>
+@endsection
 
 @section('script')
     <script src="{{ mix('js/vendor.min.js') }}"></script>
@@ -204,5 +204,4 @@
     <script src="{{ asset('libs/pdfmake/build/pdfmake.min.js') }}"></script>
     <script src="{{ asset('libs/pdfmake/build/vfs_fonts.js') }}"></script>
     <script src="{{ mix('js/pages/datatables.init.js') }}"></script>
-@endsection
 @endsection
