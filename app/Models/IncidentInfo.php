@@ -11,7 +11,7 @@ class IncidentInfo extends Model
 
     protected $table = 'incident_info';
 
-    protected $filable = [
+    protected $fillable = [
         'title',
         'description'
     ];
