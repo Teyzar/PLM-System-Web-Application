@@ -9,6 +9,8 @@ class IncidentInfo extends Model
 {
     use HasFactory;
 
+    protected $table = 'incident_info';
+
     protected $filable = [
         'title',
         'description'
