@@ -40,6 +40,11 @@ class UnitsController extends Controller
         return view('units')->with('units', $units);
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
         return view('add_unit');
