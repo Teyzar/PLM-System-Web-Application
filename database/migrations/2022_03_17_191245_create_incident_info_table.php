@@ -17,6 +17,7 @@ class CreateIncidentInfoTable extends Migration
             $table->id();
             $table->text('title');
             $table->text('description');
+            $table->bigInteger('incident_id');
             $table->timestamps();
         });
     }

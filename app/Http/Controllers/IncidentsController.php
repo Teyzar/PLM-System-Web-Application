@@ -4,10 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\Incident;
 use App\Models\Unit;
+
 use Illuminate\Http\Request;
 
 class IncidentsController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +26,8 @@ class IncidentsController extends Controller
      */
     public function index()
     {
-        return view('incidents');
+        $incidents = Incident::all();
+        return view('incidents', ['incidents' => $incidents]);
     }
 
     /**
@@ -48,6 +60,7 @@ class IncidentsController extends Controller
      */
     public function store(Request $request)
     {
+
         $fields = $request->validate([
             'title' => 'required|string',
             'description' => 'required|string',
@@ -63,7 +76,11 @@ class IncidentsController extends Controller
             'description' => $fields['description']
         ]);
 
-        $units = Unit::whereIn('id', $fields['unit_ids'])->where('status', 'fault')->get();
-        $incident->units()->sync(array_column($units, 'id'));
+
+        $units = Unit::whereIn('id', array_keys($fields['unit_ids']))->where('status', 'fault')->get();
+        $incident->units()->sync(array_column($units->toArray(), 'id'));
+        dd($incident->info());
+
+        return redirect()->back();
     }
 }
