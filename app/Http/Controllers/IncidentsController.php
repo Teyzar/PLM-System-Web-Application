@@ -51,7 +51,7 @@ class IncidentsController extends Controller
         $fields = $request->validate([
             'title' => 'required|string',
             'description' => 'required|string',
-            'unit_ids' => 'required|array'
+            'unit_ids' => 'required|array|min:1'
         ]);
 
         $incident = Incident::create([
