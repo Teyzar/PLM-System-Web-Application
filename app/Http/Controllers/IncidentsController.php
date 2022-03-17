@@ -76,10 +76,8 @@ class IncidentsController extends Controller
             'description' => $fields['description']
         ]);
 
-
         $units = Unit::whereIn('id', array_keys($fields['unit_ids']))->where('status', 'fault')->get();
         $incident->units()->sync(array_column($units->toArray(), 'id'));
-        dd($incident->info());
 
         return redirect()->back();
     }
