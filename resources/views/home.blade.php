@@ -7,16 +7,22 @@
         function initMap() {
             map = new google.maps.Map(document.getElementById("map"), {
                 zoom: 16,
-                center: {!! $cadizCity !!},
+                center: {
+                    'lat': 10.95583493620157,
+                    'lng': 123.30611654802884
+                },
                 mapTypeId: "roadmap"
             });
+
             // Initialize heatmap data
             heatmapData = new google.maps.MVCArray();
+
             // Initialize heatmap layer
             heatmap = new google.maps.visualization.HeatmapLayer({
                 data: heatmapData,
                 radius: 12
             });
+
             // Link heatmap with map
             heatmap.setMap(map);
             for (const data of {!! $heatmapData !!}) {
@@ -26,6 +32,7 @@
                     location: new google.maps.LatLng(data.latitude, data.longitude)
                 });
             }
+
             Echo.channel("Home").listen("HeatmapUpdate", updateHeatmap);
         }
         async function updateHeatmap(data) {
@@ -46,6 +53,7 @@
                     weight: 1,
                     location: new google.maps.LatLng(data.latitude, data.longitude),
                 };
+
                 // Get the current index if existing
                 let currentIndex;
                 for (let i = 0; i < heatmapData.getLength(); i++) {
@@ -55,19 +63,23 @@
                         break;
                     }
                 }
+
                 // Remove existing data
                 if (typeof currentIndex === "number") {
                     heatmapData.removeAt(currentIndex);
                 }
+
                 // Push the new data
                 heatmapData.push(value);
             }
         }
     </script>
+
     <style>
         body {
             overflow-y: hidden;
         }
+
     </style>
 @endsection
 
