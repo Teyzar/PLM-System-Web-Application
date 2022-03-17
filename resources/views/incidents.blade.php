@@ -12,7 +12,7 @@
             @foreach ($incidents as $incident)
                 <div class="col-lg-12">
                     <div class="card project-box">
-                        <div class="card-body">
+                        <div class="card-body shadow">
                             @auth
                                 <div class="dropdown float-end">
                                     <a href="#" class="dropdown-toggle card-drop arrow-none" data-bs-toggle="dropdown"
@@ -27,25 +27,18 @@
                                     </div>
                                 </div> <!-- end dropdown -->
                             @endauth
-                            <!-- Title-->
-                            <h5 class="mt-0"><a href="project-detail.html" class="text-dark">{{$incident->created_at}}</a>
+                            <h5 class="mt-0"><span
+                                    class="text-dark fs-4">{{ \Carbon\Carbon::parse($incident->created_at)->toDayDateTimeString() }}</span>
                             </h5>
-                            <div class="w-100 border mb-2"></div>
-                            <p class="text-muted"><i class="fe-corner-down-right"></i> <small
-                                    class="text-uppercase fw-bold">Resolved </small> - <mark>This incident has
-                                    been
-                                    resolved</mark></p>
-                            <p class="text-muted"><i class="ps-2"></i><small
-                                    class="badge bg-soft-success text-secondary mb-3">March, 12 2022
-                                    10:25am</small></p>
-
-                            <p class="text-muted"><i class="fe-corner-down-right"></i> <small
-                                    class="text-uppercase fw-bold">Investigating </small> - <mark>We are
-                                    currently investigating
-                                    a latency message and messages send issued for some requests</mark></p>
-                            <p class="text-muted"><i class="ps-2"></i><small
-                                    class="badge bg-soft-success text-secondary mb-3">March, 12 2022
-                                    8:15am</small></p>
+                            <hr>
+                            @foreach ($incident->info()->get() as $info)
+                                <span class="text-uppercase fw-bolder h5 mt-0">{{ $info->title }}</span> <i
+                                    class="fe-minus"></i>
+                                <span class="">{{ $info->description }}</span>
+                                <p class="mt-2"><span
+                                        class="text-muted">{{ \Carbon\Carbon::parse($info->created_at)->toDayDateTimeString() }}</span>
+                                </p>
+                            @endforeach
 
                         </div>
                     </div> <!-- end card box-->
