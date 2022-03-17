@@ -98,9 +98,11 @@
                                     <div class="mb-3">
                                         <label class="form-label"> Title Description <span
                                                 class="text-danger">*</span></label>
-                                        <textarea id="snow-editor" style="height: 200px;" class="form-control" id="description" rows="5"
-                                            placeholder="Enter some brief about the report.." name="description"
-                                            required></textarea>
+                                        <div id="snow-editor" style="height: 200px;">
+
+                                        </div>
+                                        {{-- <textarea class="form-control" id="description" rows="5" placeholder="Enter some brief about the report.."
+                                                name="description"></textarea> --}}
                                     </div>
                                 </div>
                             </div>
@@ -150,7 +152,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="card">
-                        <div id="map" style="height: calc(66vh - 71px);"></div>
+                        <div id="map" style="height: calc(82.7vh - 71px);"></div>
                         <script src="https://maps.googleapis.com/maps/api/js?key={{ $apiKey }}&callback=initMap&v=weekly&libraries=visualization"
                                                 async>
                         </script>
@@ -172,7 +174,9 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-6">
-                    <script>document.write(new Date().getFullYear())</script> &copy; <span>Power Line Monitoring</span>
+                    <script>
+                        document.write(new Date().getFullYear())
+                    </script> &copy; <span>Power Line Monitoring</span>
                 </div>
                 <div class="col-md-6">
                     <div class="text-md-end footer-links d-none d-sm-block">

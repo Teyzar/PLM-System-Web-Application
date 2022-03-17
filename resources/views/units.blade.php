@@ -19,6 +19,8 @@
     <link href="{{ mix('css/units.css') }}" rel="stylesheet" type="text/css" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="{{asset('libs/tippy.js/tippy.all.min.js')}}"></script>
+
 @endsection
 
 
@@ -77,8 +79,7 @@
                                             <button id="delbtn" class="btn border-0 deletebtn float-end p-0"
                                                 onclick="removeUnit({{ $unit->id }})" type="button"
                                                 data-bs-toggle="modal" data-bs-target="#modalRemove">
-                                                <i class="fe-trash fs-5 text-danger bs-tooltip-top tooltip-arrow"
-                                                    data-toggle="tooltip" data-bs-placement="top" title="Remove"></i>
+                                                <i class="fe-trash fs-5 text-danger waves-effect waves-light" title="Remove" tabindex="0" data-plugin="tippy" data-tippy-placement="left"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -209,7 +210,9 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-6">
-                    <script>document.write(new Date().getFullYear())</script> &copy; <span>Power Line Monitoring</span>
+                    <script>
+                        document.write(new Date().getFullYear())
+                    </script> &copy; <span>Power Line Monitoring</span>
                 </div>
                 <div class="col-md-6">
                     <div class="text-md-end footer-links d-none d-sm-block">
@@ -234,6 +237,7 @@
     <script src="{{ asset('libs/pdfmake/build/pdfmake.min.js') }}"></script>
     <script src="{{ asset('libs/pdfmake/build/vfs_fonts.js') }}"></script>
     <script src="{{ mix('js/pages/datatables.init.js') }}"></script>
+
     {{-- <script src="{{ mix('libs/datatables.net-keytable/js/dataTables.keyTable.min.js') }}"></script> --}}
     {{-- <script src="{{ mix('libs/datatables.net-select/js/dataTables.select.min.js') }}"></script> --}}
     {{-- <script src="{{ mix('libs/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js') }}"></script> --}}

@@ -23,7 +23,7 @@
                     <h4 class="header-title mb-4">Accounts</h4>
 
                     <div class="table-responsive">
-                        <table class="table activate-select dt-responsive nowrap w-100" id="datatable-buttons">
+                        <table class="table table-hover dt-responsive nowrap w-100" id="datatable-buttons">
                             {{-- or tickets-table --}}
                             <thead>
                                 <tr>
@@ -38,9 +38,9 @@
                             <tbody>
                                 @foreach ($linemen as $lineman)
                                     <tr>
-                                        <td>{{ $lineman->name }}</td>
+                                        <td class="text-capitalize">{{ $lineman->name }}</td>
                                         <td>{{ $lineman->email }}</td>
-                                        <td>{{ $lineman->barangay }}</td>
+                                        <td class="text-capitalize">{{ $lineman->barangay }}</td>
                                         <td>{{ \Carbon\Carbon::parse($lineman->created_at)->toDayDateTimeString() }}</td>
 
                                         <td>
