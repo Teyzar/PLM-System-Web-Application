@@ -30,7 +30,7 @@
 
 </head>
 
-<body>
+<body data-layout="" data-sidebar-width="boxed">
     <div id="preloader">
         <div id="status">
             <div class="spinner">Loading...</div>
@@ -261,25 +261,13 @@
                     <div class="form-check form-switch mb-1">
                         <input type="checkbox" class="form-check-input" name="color-scheme-mode" value="light"
                             id="light-mode-check" checked />
-                        <label class="form-check-label" for="light-mode-check">Light Mode</label>
+                        <label class="form-check-label text-dark" for="light-mode-check">Light Mode <i class="ps-1 fas fa-cloud-sun text-warning"></i></label>
                     </div>
 
                     <div class="form-check form-switch mb-1">
                         <input type="checkbox" class="form-check-input" name="color-scheme-mode" value="dark"
                             id="dark-mode-check" />
-                        <label class="form-check-label" for="dark-mode-check">Dark Mode</label>
-                    </div>
-
-                    <!-- Width -->
-                    <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">Width</h6>
-                    <div class="form-check form-switch mb-1">
-                        <input type="checkbox" class="form-check-input" name="width" value="fluid" id="fluid-check"
-                            checked />
-                        <label class="form-check-label" for="fluid-check">Fluid</label>
-                    </div>
-                    <div class="form-check form-switch mb-1">
-                        <input type="checkbox" class="form-check-input" name="width" value="boxed" id="boxed-check" />
-                        <label class="form-check-label" for="boxed-check">Boxed</label>
+                        <label class="form-check-label text-dark " for="dark-mode-check">Dark Mode <i class="ps-2 fas fa-moon"></i></label>
                     </div>
 
                     <!-- size -->

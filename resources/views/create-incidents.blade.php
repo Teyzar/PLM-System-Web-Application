@@ -76,11 +76,9 @@
 @endsection
 
 @section('content')
-    <form action="#" method="POST">
+    <form action="/past-incidents" method="POST">
         @csrf
         <div class="container-fluid mt-2">
-            <h5 class="text-secondary text-uppercase bg-light p-2 mt-0 ">To report an incident, please fill out the form
-                below.</h5>
             <div class="row">
                 <div class="col-xl-6">
                     <div class="card">
@@ -97,11 +95,11 @@
                                     <div class="mb-3">
                                         <label class="form-label"> Title Description <span
                                                 class="text-danger">*</span></label>
-                                        <div id="snow-editor" style="height: 200px;">
+                                        {{-- <div id="snow-editor" style="height: 200px;">
 
-                                        </div>
-                                        {{-- <textarea class="form-control" id="description" rows="5" placeholder="Enter some brief about the report.."
-                                                name="description"></textarea> --}}
+                                        </div> --}}
+                                        <textarea class="form-control" id="description" rows="5" placeholder="Enter some brief about the report.."
+                                            name="description"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -113,6 +111,7 @@
                                     {{-- or tickets-table --}}
                                     <thead>
                                         <tr>
+                                            <th><input type="checkbox" name="" id="checkbox"></th>
                                             <th>ID</th>
                                             <th>Status</th>
                                             <th>Mobile #</th>
@@ -124,6 +123,7 @@
                                     <tbody>
                                         @foreach ($units as $unit)
                                             <tr>
+                                                <td><input type="checkbox" name="unit_ids[{{$unit->id}}]"></td>
                                                 <td>
                                                     {{ $unit->id }}
                                                 </td>

@@ -41,37 +41,19 @@ const defaultBtn = document.querySelector('#default-size-check');
 let condensed = localStorage.getItem('condensed');
 
 const enableCondensed = () => {
-    if (darkMode == "enabled" && boxWidth == "enabled") {
-        body.setAttribute('data-layout', '{"mode" : "dark", "sidebar" : {"color" : "dark", "size" : "condensed"}, "width": "boxed"}');
-    } else {
-        body.setAttribute('data-layout', '{"mode" : "light", "sidebar" : {"color" : "light", "size" : "condensed"}, "width": "fluid"}');
-    }
-    if (darkMode == "enabled" && boxWidth == "disabled") {
-        body.setAttribute('data-layout', '{"mode" : "dark", "sidebar" : {"color" : "dark", "size" : "condensed"}, "width": "fluid"}');
-    }
-    if (darkMode == "disabled" && boxWidth == "enabled") {
-        body.setAttribute('data-layout', '{"mode" : "light", "sidebar" : {"color" : "light", "size" : "condensed"}, "width": "boxed"}');
-    }
     if (darkMode == "enabled") {
         body.setAttribute('data-layout', '{"mode" : "dark", "sidebar" : {"color" : "dark", "size" : "condensed"}, "width": "fluid"}');
+    } else {
+        body.setAttribute('data-layout', '{"mode" : "light", "sidebar" : {"color" : "light", "size" : "condensed"}, "width": "fluid"}');
     }
     localStorage.setItem('condensed', 'enabled');
 }
 
 const enableDefault = () => {
-    if (darkMode == "enabled" && boxWidth == "enabled") {
-        body.setAttribute('data-layout', '{"mode" : "dark", "sidebar" : {"color" : "dark", "size" : "default"}, "width": "boxed"}');
-    } else {
-        body.setAttribute('data-layout', '{"mode" : "light", "sidebar" : {"color" : "light", "size" : "default"}, "width": "fluid"}');
-    }
-    if (darkMode == "enabled" && boxWidth == "disabled") {
-        body.setAttribute('data-layout', '{"mode" : "dark", "sidebar" : {"color" : "dark", "size" : "default"}, "width": "fluid"}');
-    }
-    if (darkMode == "disabled" && boxWidth == "enabled") {
-        body.setAttribute('data-layout', '{"mode" : "light", "sidebar" : {"color" : "light", "size" : "default"}, "width": "boxed"}');
-    }
     if (darkMode == "enabled") {
         body.setAttribute('data-layout', '{"mode" : "dark", "sidebar" : {"color" : "dark", "size" : "default"}, "width": "fluid"}');
+    } else {
+        body.setAttribute('data-layout', '{"mode" : "light", "sidebar" : {"color" : "light", "size" : "default"}, "width": "fluid"}');
     }
     localStorage.setItem('condensed', 'disabled');
 }
@@ -94,75 +76,11 @@ defaultBtn.addEventListener('click', () => {
 });
 
 
-//width size layout
-let boxWidth = localStorage.getItem("boxedWidth")
+const resetBtn = document.querySelector('#resetBtn');
 
-const boxedWidthBtn = document.querySelector('#boxed-check');
-const fluidWidthBtn = document.querySelector('#fluid-check');
+resetBtn.addEventListener('click', () => {
 
-
-const enableBoxWidth = () => {
-    if (condensed == "enabled" && darkMode =="disabled") {
-        body.setAttribute('data-layout', '{"mode" : "light", "sidebar" : {"color" : "light", "size" : "default" }, "width": "boxed"}');
-    }
-    if (darkMode == "enabled") {
-        body.setAttribute('data-layout', '{"mode" : "dark", "sidebar" : {"color" : "dark"}, "width": "boxed"}');
-    } else if (darkMode == "enabled" && condensed == "enabled") {
-        body.setAttribute('data-layout', '{"mode" : "dark", "sidebar" : {"color" : "dark", "size" : "condensed" }, "width": "boxed"}');
-    } else if (darkMode == "disabled" && condensed == "enabled"){
-        body.setAttribute('data-layout', '{"mode" : "light", "sidebar" : {"color" : "light", "size" : "condensed"}, "width": "boxed"}');
-    } else if (darkMode == "enabled" && condensed == "disabled"){
-        body.setAttribute('data-layout', '{"mode" : "dark", "sidebar" : {"color" : "dark", "size" : "default"}, "width": "boxed"}');
-    }
-    localStorage.setItem('boxedWidth', "enabled");
-}
-
-const enableFluidWidth = () => {
-    if (condensed == "enabled" && darkMode =="disabled") {
-        body.setAttribute('data-layout', '{"mode" : "light", "sidebar" : {"color" : "light", "size" : "default" }, "width": "fluid"}');
-    }
-    if (darkMode == "enabled") {
-        body.setAttribute('data-layout', '{"mode" : "dark", "sidebar" : {"color" : "dark"}, "width": "fluid"}');
-    } else if (darkMode == "enabled" && condensed == "enabled") {
-        body.setAttribute('data-layout', '{"mode" : "dark", "sidebar" : {"color" : "dark", "size" : "condensed" }, "width": "fluid"}');
-    } else if (darkMode == "disabled" && condensed == "enabled"){
-        body.setAttribute('data-layout', '{"mode" : "light", "sidebar" : {"color" : "light", "size" : "condensed"}, "width": "fluid"}');
-    } else if (darkMode == "enabled" && condensed == "disabled"){
-        body.setAttribute('data-layout', '{"mode" : "dark", "sidebar" : {"color" : "dark", "size" : "default"}, "width": "fluid"}');
-    }
-    localStorage.setItem('boxedWidth', "disabled");
-}
-
-if (boxWidth == "enabled") {
-    enableBoxWidth();
-}
-
-boxedWidthBtn.addEventListener('click', () => {
-    boxWidth = localStorage.getItem('boxedWidth');
-    if (boxWidth !== "enabled") {
-        enableBoxWidth();
-    }
+    body.setAttribute('data-layout', '');
+    localStorage.setItem('darkMode', "disabled");
+    localStorage.setItem('condensed', "disabled");
 });
-fluidWidthBtn.addEventListener('click', () => {
-    boxWidth = localStorage.getItem('boxedWidth');
-    if (boxWidth == "enabled") {
-        enableFluidWidth();
-    }
-});
-
-
-// const resetBtn = document.querySelector('#resetBtn');
-
-// resetBtn.addEventListener('click', () => {
-
-//     body.setAttribute('data-layout', '{"mode": "light", "sidebar" : {"color" : "light", size : "default"}, "width" : "fluid"}');
-//     localStorage.setItem('boxedWidth', "disabled");
-//     localStorage.setItem('darkMode', "disabled");
-//     localStorage.setItem('condensed', "disabled");
-// });
-
-
-
-
-
-
