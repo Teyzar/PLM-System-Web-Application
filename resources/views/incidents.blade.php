@@ -183,16 +183,8 @@
             </div>
         </footer>
     @endauth
-
-    {{-- <style>
-        .container-body {
-            height: 800px;
-            overflow-y: scroll;
-        }
-
-    </style> --}}
+@endsection
 
 @section('script')
     <script src="{{ asset('js/vendor.min.js') }}"></script>
-@endsection
 @endsection
