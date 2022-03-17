@@ -26,7 +26,7 @@
                     location: new google.maps.LatLng(data.latitude, data.longitude)
                 });
             }
-            Echo.channel("Heatmap").listen("HeatmapUpdate", updateHeatmap);
+            Echo.channel("Home").listen("HeatmapUpdate", updateHeatmap);
         }
         async function updateHeatmap(data) {
             if (data.status == "normal") {

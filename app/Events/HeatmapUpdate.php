@@ -24,7 +24,7 @@ class HeatmapUpdate implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        return new Channel('Heatmap');
+        return new Channel('Home');
     }
 
     public function broadcastWith()
