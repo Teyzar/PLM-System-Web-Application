@@ -178,7 +178,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="card">
-                        <div id="map" style="height: calc(82.7vh - 71px);"></div>
+                        <div id="map" style="height: calc(75vh - 71px);"></div>
                         <script src="https://maps.googleapis.com/maps/api/js?key={{ $apiKey }}&callback=initMap&v=weekly&libraries=visualization"
                                                 async>
                         </script>

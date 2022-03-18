@@ -100,14 +100,19 @@
                             </div>
                         </li>
 
-
                         <li class="">
                             <a href="#" class="nav-link right-bar-toggle">
                                 <i class="fe-settings noti-icon"></i>
                             </a>
                         </li>
                     @endguest
-
+                    @if (!Auth::check())
+                        <li class="d-none d-xl-block">
+                            <a href="#" class="nav-link right-bar-toggle">
+                                <i class="fe-settings noti-icon"></i>
+                            </a>
+                        </li>
+                    @endif
                 </ul>
 
                 <!-- LOGO -->
@@ -144,9 +149,13 @@
                     @endauth
 
                     @if (!Auth::check())
-                        <li class="dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-light" href="/incidents" role="button"
-                                aria-haspopup="false" aria-expanded="false">
+                        <li>
+                            <a class="nav-link waves-effect waves-light" href="/about" role="button">
+                                About Us
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link waves-effect waves-light" href="/incidents" role="button">
                                 Incidents
                             </a>
                         </li>
@@ -173,7 +182,7 @@
                                     aria-expanded="false">
                                     <i data-feather="clipboard"></i>
                                     <span> Incidents </span>
-                                    <span class="menu-arrow"></span>
+                                    <span id="icon" class="menu-arrow"></span>
                                 </a>
                                 <div id="sidebarEmail" class="collapse">
                                     <ul class="nav-second-level">
@@ -193,22 +202,48 @@
                                     </ul>
                                 </div>
                             </li>
+                            <style>
+                                .menu-arrow {
+                                    transform: rotate(0deg);
+                                    transition: transform 0.2s linear;
+                                }
+
+                                .menu-arrow.open {
+                                    transform: rotate(90deg);
+                                    transition: transform 0.2s linear;
+                                }
+
+                            </style>
                             <script>
                                 $(document).ready(function() {
-                                    $("#toggle-btn").click(function() {
-                                        $("#sidebarEmail").collapse('toggle');
+                                    var div = document.getElementById('toggle-btn');
+                                    var icon = document.getElementById('icon');
+                                    let open = false;
+
+                                    div.addEventListener('click', function() {
+                                        console.log(open);
+                                        if (open) {
+                                            icon.className = 'menu-arrow';
+                                        } else {
+                                            icon.className = 'menu-arrow open';
+                                        }
+
+                                        open = !open;
                                     });
+                                });
+                                $("#toggle-btn").click(function() {
+                                    $("#sidebarEmail").collapse('toggle');
                                 });
                             </script>
                             <li>
-                                <a href="{{ URL::to('lineman') }}">
+                                <a href="/lineman">
                                     <i data-feather="users"></i>
                                     <span> Accounts </span>
                                 </a>
                             </li>
 
                             <li>
-                                <a href="{{ URL::to('units') }}">
+                                <a href="/units">
                                     <i class="text-muted mdi mdi-sim"></i>
                                     <span> Units </span>
                                 </a>
@@ -276,25 +311,27 @@
                     </div>
 
                     <!-- size -->
-                    <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">Left Sidebar Size</h6>
+                    @auth
+                        <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">Left Sidebar Size</h6>
 
-                    <div class="form-check form-switch mb-1">
-                        <input type="checkbox" class="form-check-input" name="leftsidebar-size" value="default"
-                            id="default-size-check" checked />
-                        <label class="form-check-label" for="default-size-check">Default</label>
-                    </div>
+                        <div class="form-check form-switch mb-1">
+                            <input type="checkbox" class="form-check-input" name="leftsidebar-size" value="default"
+                                id="default-size-check" checked />
+                            <label class="form-check-label" for="default-size-check">Default</label>
+                        </div>
 
-                    <div class="form-check form-switch mb-1">
-                        <input type="checkbox" class="form-check-input" name="leftsidebar-size" value="condensed"
-                            id="condensed-check" />
-                        <label class="form-check-label" for="condensed-check">Condensed <small>(Extra Small
-                                size)</small></label>
-                    </div>
+                        <div class="form-check form-switch mb-1">
+                            <input type="checkbox" class="form-check-input" name="leftsidebar-size" value="condensed"
+                                id="condensed-check" />
+                            <label class="form-check-label" for="condensed-check">Condensed <small>(Extra Small
+                                    size)</small></label>
+                        </div>
 
-                    <div class="d-grid mt-4">
-                        <button class="btn btn-primary" id="resetBtn">Reset to Default</button>
-                    </div>
+                        <div class="d-grid mt-4">
+                            <button class="btn btn-primary" id="resetBtn">Reset to Default</button>
+                        </div>
 
+                    @endauth
                 </div>
 
             </div>
@@ -311,9 +348,8 @@
 
     </style> --}}
 
-    @auth
-        <script src="{{ mix('js/button-theme-settings.js') }}"></script>
-    @endauth
+    <script src="{{ mix('js/button-theme-settings.js') }}"></script>
+
     <div class="rightbar-overlay"></div>
     <script src="{{ mix('js/vendor.min.js') }}"></script>
     <script src="{{ asset('libs/moment/min/moment.min.js') }}"></script>

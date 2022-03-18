@@ -28,6 +28,10 @@ Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('/profile', function() {
     return view('profile');
 })->middleware('auth');
+Route::get('/about', function() {
+    return view('about');
+});
+
 
 
 Route::resource('/dispatch', DispatchController::class)->only(['index', 'store']);

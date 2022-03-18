@@ -12,7 +12,7 @@
                     <div class="card-body d-flex justify-content-center">
                         <form class="form w-75" role="form" method="POST" action="/user">
                             @csrf
-                            <div class="form-group p-2">
+                            <div class="form-group p-1">
                                 <label for="inputPasswordOld">Current Password</label>
                                 <input type="password" class="form-control @error('pass') is-invalid @enderror"
                                     id="inputPasswordOld" name="password" value="{{ old('password') }}" required=""
@@ -23,7 +23,7 @@
                                 @endif
                             </div>
 
-                            <div class="form-group p-2">
+                            <div class="form-group p-1">
                                 <label for="inputPasswordNew">New Password</label>
                                 <input type="password" class="form-control @error('pass') is-invalid @enderror"
                                     id="inputPasswordNew" name="new-password" value="{{ old('new-password') }}"
@@ -44,7 +44,7 @@
                                 @endif
                             </div>
 
-                            <div class="form-group p-2">
+                            <div class="form-group p-1">
                                 <label for="inputPasswordNewVerify">Confirm Password</label>
                                 <input type="password" class="form-control @error('verify') is-invalid @enderror"
                                     id="inputPasswordNewVerify" name="verify" value="{{ old('verify') }}" required=""
