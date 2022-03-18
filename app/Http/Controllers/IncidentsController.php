@@ -38,9 +38,13 @@ class IncidentsController extends Controller
      */
     public function create()
     {
+        $units = Unit::where('status', 'fault')->get();
+
+        dd($units);
+
         return view('create-incidents', [
             'apiKey' => env('MAPS_KEY', 'AIzaSyA2vqdxEToK1qKnxm14YrCwJ1xoLd1FcBU'),
-            'units' => Unit::where('status', 'fault')->get()
+            'units' => $units
         ]);
     }
 
