@@ -172,23 +172,22 @@
                                 <a type="button" id="toggle-btn" data-toggle="collapse" data-target="#sidebarEmail"
                                     aria-expanded="false">
                                     <i data-feather="clipboard"></i>
-                                    <span class="badge bg-success rounded-pill float-end">2</span>
-                                    <span> Past Incidents </span>
-                                    {{-- <span class="menu-arrow"></span> --}}
+                                    <span> Incidents </span>
+                                    <span class="menu-arrow"></span>
                                 </a>
                                 <div id="sidebarEmail" class="collapse">
                                     <ul class="nav-second-level">
                                         <li>
                                             <a href="/incidents">
                                                 <i class="fe-corner-down-right"></i>
-                                                &nbsp;View
+                                                View
                                             </a>
                                         </li>
                                         <li>
 
                                             <a href="/incidents/create">
                                                 <i class="fe-corner-down-right"></i>
-                                                &nbsp;Create
+                                                Create
                                             </a>
                                         </li>
                                     </ul>
