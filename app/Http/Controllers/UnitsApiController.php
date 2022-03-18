@@ -42,8 +42,8 @@ class UnitsApiController extends Controller
 
         $unit->update([
             'status' => $fields['status'],
-            'latitude' => $fields['latitude'],
-            'longitude' => $fields['longitude']
+            'latitude' => doubleval($fields['latitude']),
+            'longitude' => doubleval($fields['longitude'])
         ]);
 
         event(new HeatmapUpdate($unit));
