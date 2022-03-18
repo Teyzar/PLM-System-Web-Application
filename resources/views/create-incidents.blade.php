@@ -86,7 +86,7 @@
 @endsection
 
 @section('content')
-    <form action="/past-incidents" method="POST">
+    <form action="/incidents" method="POST">
         @csrf
         <div class="container-fluid mt-2">
             <div class="row">

@@ -145,9 +145,9 @@
 
                     @if (!Auth::check())
                         <li class="dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-light" href="/past-incidents"
-                                role="button" aria-haspopup="false" aria-expanded="false">
-                                Past Incidents
+                            <a class="nav-link dropdown-toggle waves-effect waves-light" href="/incidents" role="button"
+                                aria-haspopup="false" aria-expanded="false">
+                                Incidents
                             </a>
                         </li>
                     @endif
@@ -179,13 +179,17 @@
                                 <div id="sidebarEmail" class="collapse">
                                     <ul class="nav-second-level">
                                         <li>
-                                            <a href="/past-incidents"><i class="fe-corner-down-right"></i>&nbsp;View
-                                                Publish</a>
+                                            <a href="/incidents">
+                                                <i class="fe-corner-down-right"></i>
+                                                &nbsp;View
+                                            </a>
                                         </li>
                                         <li>
 
-                                            <a href="/past-incidents/create"><i
-                                                    class="fe-corner-down-right"></i>&nbsp;Create Incidents</a>
+                                            <a href="/incidents/create">
+                                                <i class="fe-corner-down-right"></i>
+                                                &nbsp;Create
+                                            </a>
                                         </li>
                                     </ul>
                                 </div>
@@ -261,13 +265,15 @@
                     <div class="form-check form-switch mb-1">
                         <input type="checkbox" class="form-check-input" name="color-scheme-mode" value="light"
                             id="light-mode-check" checked />
-                        <label class="form-check-label text-dark" for="light-mode-check">Light Mode <i class="ps-1 fas fa-cloud-sun text-warning"></i></label>
+                        <label class="form-check-label text-dark" for="light-mode-check">Light Mode <i
+                                class="ps-1 fas fa-cloud-sun text-warning"></i></label>
                     </div>
 
                     <div class="form-check form-switch mb-1">
                         <input type="checkbox" class="form-check-input" name="color-scheme-mode" value="dark"
                             id="dark-mode-check" />
-                        <label class="form-check-label text-dark " for="dark-mode-check">Dark Mode <i class="ps-2 fas fa-moon"></i></label>
+                        <label class="form-check-label text-dark " for="dark-mode-check">Dark Mode <i
+                                class="ps-2 fas fa-moon"></i></label>
                     </div>
 
                     <!-- size -->
