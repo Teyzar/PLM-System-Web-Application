@@ -27,14 +27,11 @@
 
         function updateMarker(id) {
             const units = {!! $units !!};
-            console.log(units);
             const unit = units.find(unit => unit.id === id);
-            console.log(unit);
             const position = {
-                lat: unit.latitude,
-                lng: unit.longitude
+                lat: parseFloat(unit.latitude),
+                lng: parseFloat(unit.longitude)
             };
-            console.log(position);
             const checkbox = document.getElementsByName(`unit_ids[${id}]`)[0];
             const removeMarker = () => {
                 const newMarker = [];
