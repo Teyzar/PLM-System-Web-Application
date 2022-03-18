@@ -32,18 +32,36 @@ class UnitsApiController extends Controller
 
         $fields = $request->validate([
             'status' => 'required|string',
-            'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric',
+            'location' => 'required|string|starts_with:$GPRMC,',
         ]);
 
         $unit = Unit::where('phone_number', $phone_number)->first();
 
         if (!$unit) return abort(404);
 
+        // Parse GPRMC NMEA Data
+        list($id, $utc, $posStatus, $lat, $latDir, $lng, $lngDir, $gndSpeed, $trkTrue, $date, $magVar, $magVarDir) = explode(',', $fields['location']);
+
+        // Latitude
+        $latitude = $lat / 100;
+        $latitude_degrees = explode('.', $latitude)[0];
+        $latitude_minutes = $lat - ($latitude_degrees * 100);
+        $latitude_seconds = ($latitude_minutes / 60);
+        $latitude = $latitude_degrees + $latitude_seconds;
+        if ($latDir == 'S') $latitude *= -1;
+
+        // Longitude
+        $longitude = $lng / 100;
+        $longitude_degrees = explode('.', $longitude)[0];
+        $longitude_minutes = $lng - ($longitude_degrees * 100);
+        $longitude_seconds = ($longitude_minutes / 60);
+        $longitude = $longitude_degrees + $longitude_seconds;
+        if ($lngDir == 'W') $longitude *= -1;
+
         $unit->update([
             'status' => $fields['status'],
-            'latitude' => doubleval($fields['latitude']),
-            'longitude' => doubleval($fields['longitude'])
+            'latitude' => doubleval($latitude),
+            'longitude' => doubleval($longitude)
         ]);
 
         event(new HeatmapUpdate($unit));
