@@ -24,45 +24,46 @@
             markers = [];
         }
 
+        function addMarker(position) {
+            markers.push(new google.maps.Marker({
+                map,
+                position
+            }));
+        }
+
+        function removeMarker(position) {
+            const newMarker = [];
+
+            for (const marker of markers) {
+                const sameLat = marker.position.lat() === position.lat;
+                const sameLng = marker.position.lng() === position.lng;
+
+                if (sameLat && sameLng) {
+                    marker.setMap(null);
+                } else {
+                    newMarker.push(marker);
+                }
+            }
+
+            markers = newMarker;
+        }
+
         function updateMarker(id) {
             const units = {!! $units !!};
-            const unit = units.find(unit => unit.id === id);
+            const unit = units.find(unit => unit.id == id);
+            const checkbox = document.getElementsByName(`unit_ids[${id}]`)[0];
+
+            if (!unit || !checkbox) return;
+
             const position = {
                 lat: parseFloat(unit.latitude),
                 lng: parseFloat(unit.longitude)
             };
-            const checkbox = document.getElementsByName(`unit_ids[${id}]`)[0];
-            const removeMarker = () => {
-                const newMarker = [];
-
-                for (const marker of markers) {
-                    const sameLat = marker.position.lat() === position.lat;
-                    const sameLng = marker.position.lng() === position.lng;
-
-                    if (sameLat && sameLng) {
-                        marker.setMap(null);
-                    } else {
-                        newMarker.push(marker);
-                    }
-                }
-
-                markers = newMarker;
-            }
-            const addMarker = () => {
-                const marker = new google.maps.Marker({
-                    map,
-                    position
-                });
-
-                markers.push(marker);
-            }
-
-            if (!unit || !checkbox) return;
 
             if (checkbox.checked) {
-                addMarker();
+                addMarker(position);
             } else {
-                removeMarker();
+                removeMarker(position);
             }
         }
 
@@ -70,8 +71,6 @@
             const btnPublish = document.getElementById('btnPublish');
             const inptTitle = document.getElementById('title');
             const inptDescription = document.getElementById('description');
-
-
 
             if (inptTitle.value && inptDescription.value && markers.length > 0) {
                 btnPublish.disabled = false;
@@ -81,68 +80,19 @@
         }
 
         function checkall() {
-            var headboxId = document.getElementById('head-checkbox');
-            var table = $('#basic-datatable').DataTable();
-            var unitPage = table.cells().nodes();
-
-            const ids = [];
-            const getallMarker = () => {
-                table.rows().data().map((row) => {
-                    ids.push(row[1]);
-                })
-                const units = {!! $units !!};
-                for (const id of ids) {
-                    const unit = units.find(unit => unit.id == id);
-
-                    const position = {
-                        lat: parseFloat(unit.latitude),
-                        lng: parseFloat(unit.longitude)
-                    };
-                    const checkbox = document.getElementsByName(`unit_ids[${id}]`)[0];
-                    const removeMarker = () => {
-                        const newMarker = [];
-
-                        for (const marker of markers) {
-                            const sameLat = marker.position.lat() === position.lat;
-                            const sameLng = marker.position.lng() === position.lng;
-
-                            if (sameLat && sameLng) {
-                                marker.setMap(null);
-                            } else {
-                                newMarker.push(marker);
-                            }
-                        }
-
-                        markers = newMarker;
-                    }
-                    const addMarker = () => {
-                        const marker = new google.maps.Marker({
-                            map,
-                            position
-                        });
-
-                        markers.push(marker);
-                    }
-
-                    if (!unit || !checkbox) return;
-
-                    if (checkbox.checked) {
-                        addMarker();
-                    } else {
-                        removeMarker();
-                    }
-                }
-            }
+            const headboxId = document.getElementById('head-checkbox');
+            const table = $('#basic-datatable').DataTable();
+            const unitPage = table.cells().nodes();
 
             if (headboxId.checked) {
                 $('input[type="checkbox"]', unitPage).prop('checked', true);
                 table.page.len(-1).draw();
-                getallMarker();
             } else {
                 $('input[type="checkbox"]', unitPage).prop('checked', false);
                 table.page.len(10).draw();
-                getallMarker();
             }
+
+            table.rows().data().each((row) => updateMarker(row[1]));
         }
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
@@ -205,7 +155,8 @@
                                     <thead>
                                         <tr>
                                             <th>
-                                                <input type="checkbox" name="" id="head-checkbox" onclick="checkall()">
+                                                <input type="checkbox" name="" id="head-checkbox"
+                                                    onclick="checkall(); checkFields();">
                                             </th>
                                             <th>Id</th>
                                             <th>Status</th>
