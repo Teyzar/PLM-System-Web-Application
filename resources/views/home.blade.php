@@ -20,7 +20,16 @@
             // Initialize heatmap layer
             heatmap = new google.maps.visualization.HeatmapLayer({
                 data: heatmapData,
-                radius: 16
+                radius: 50,
+                gradient: [
+                    "rgba(0, 0, 0, 0)",
+                    "rgba(255, 0, 0, 0.6)",
+                    "rgba(255, 0, 0, 0.7)",
+                    "rgba(255, 0, 0, 0.8)",
+                    "rgba(255, 0, 0, 0.9)",
+                    "rgba(255, 0, 0, 1)"
+                ],
+                maxIntentsity: 1
             });
 
             // Link heatmap with map
