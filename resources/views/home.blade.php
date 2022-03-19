@@ -20,7 +20,7 @@
             // Initialize heatmap layer
             heatmap = new google.maps.visualization.HeatmapLayer({
                 data: heatmapData,
-                radius: 30,
+                radius: 50,
                 gradient: [
                     "rgba(0, 0, 0, 0)",
                     "rgba(255, 0, 0, 0.6)",
