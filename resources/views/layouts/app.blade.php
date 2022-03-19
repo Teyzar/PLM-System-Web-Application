@@ -10,7 +10,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-
     @yield("head")
 
     <link rel="shortcut icon" href="{{ mix('images/logo.png') }}" />
@@ -27,7 +26,6 @@
 
     <script src="{{ mix('js/app.js') }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-
 </head>
 
 <body>
@@ -36,8 +34,8 @@
             <div class="spinner">Loading...</div>
         </div>
     </div>
-    @include('sweetalert::alert')
 
+    @include('sweetalert::alert')
 
     <div id="wrapper">
         <!-- Topbar Start -->
@@ -106,13 +104,14 @@
                             </a>
                         </li>
                     @endguest
-                    @if (!Auth::check())
+
+                    @guest
                         <li class="d-none d-xl-block">
                             <a href="#" class="nav-link right-bar-toggle">
                                 <i class="fe-settings noti-icon"></i>
                             </a>
                         </li>
-                    @endif
+                    @endguest
                 </ul>
 
                 <!-- LOGO -->
@@ -145,21 +144,18 @@
                                 <i class="fe-menu"></i>
                             </button>
                         </li>
-
-                    @endauth
-
-                    @if (!Auth::check())
-                        <li>
-                            <a class="nav-link waves-effect waves-light" href="/about" role="button">
-                                About Us
-                            </a>
-                        </li>
+                    @else
                         <li>
                             <a class="nav-link waves-effect waves-light" href="/incidents" role="button">
                                 Incidents
                             </a>
                         </li>
-                    @endif
+                        <li>
+                            <a class="nav-link waves-effect waves-light" href="/about" role="button">
+                                About Us
+                            </a>
+                        </li>
+                    @endauth
                 </ul>
             </div>
         </div>
@@ -265,9 +261,6 @@
                 </div>
                 <!-- Sidebar -left -->
             </div>
-        @endauth
-
-        @auth
 
             <div class="content-page p-0">
                 <div class="content">
@@ -276,15 +269,11 @@
                     </div>
                 </div>
             </div>
-
-
-        @endauth
-
-        @if (!Auth::check())
+        @else
             <div style="margin-top: 70px;">
                 @yield('content')
             </div>
-        @endif
+        @endauth
     </div>
 
     <div class="right-bar">
@@ -338,23 +327,14 @@
         </div>
 
     </div> <!-- end slimscroll-menu-->
-    {{-- <style>
-        @media (max-width: 780px) {
-            body {
-                overflow: auto !important;
-                max-height: 100vh !important;
-            }
-        }
-
-    </style> --}}
-
-    <script src="{{ mix('js/button-theme-settings.js') }}"></script>
 
     <div class="rightbar-overlay"></div>
+
+    <script src="{{ mix('js/button-theme-settings.js') }}"></script>
     <script src="{{ mix('js/vendor.min.js') }}"></script>
     <script src="{{ asset('libs/moment/min/moment.min.js') }}"></script>
-    {{-- <script src="{{mix('js/pages/jquery.todo.js')}}"></script> --}}
     <script src="{{ mix('js/app.min.js') }}"></script>
+
     @yield('script')
 
 </body>
