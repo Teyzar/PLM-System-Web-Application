@@ -82,7 +82,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="text-md-end footer-links d-none d-sm-block">
-                        <a href="javascript:void(0);">PLMS-CLZ</a>
+                        <a href="/about">PLMS-CLZ</a>
                     </div>
                 </div>
             </div>

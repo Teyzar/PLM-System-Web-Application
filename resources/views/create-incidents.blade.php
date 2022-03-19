@@ -7,7 +7,6 @@
         type="text/css" />
     <link href="{{ asset('libs/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css') }}" rel="stylesheet"
         type="text/css" />
-    <link href="{{ asset('libs/quill/quill.snow.css') }}" rel="stylesheet" type="text/css" />
 
     <script>
         let map, markers;
@@ -72,10 +71,77 @@
             const inptTitle = document.getElementById('title');
             const inptDescription = document.getElementById('description');
 
+
+
             if (inptTitle.value && inptDescription.value && markers.length > 0) {
                 btnPublish.disabled = false;
             } else {
                 btnPublish.disabled = true;
+            }
+        }
+
+        function checkall() {
+            var headboxId = document.getElementById('head-checkbox');
+            var table = $('#basic-datatable').DataTable();
+            var unitPage = table.cells().nodes();
+
+            const ids = [];
+            const getallMarker = () => {
+                table.rows().data().map((row) => {
+                    ids.push(row[1]);
+                })
+                const units = {!! $units !!};
+                for (const id of ids) {
+                    const unit = units.find(unit => unit.id == id);
+
+                    const position = {
+                        lat: parseFloat(unit.latitude),
+                        lng: parseFloat(unit.longitude)
+                    };
+                    const checkbox = document.getElementsByName(`unit_ids[${id}]`)[0];
+                    const removeMarker = () => {
+                        const newMarker = [];
+
+                        for (const marker of markers) {
+                            const sameLat = marker.position.lat() === position.lat;
+                            const sameLng = marker.position.lng() === position.lng;
+
+                            if (sameLat && sameLng) {
+                                marker.setMap(null);
+                            } else {
+                                newMarker.push(marker);
+                            }
+                        }
+
+                        markers = newMarker;
+                    }
+                    const addMarker = () => {
+                        const marker = new google.maps.Marker({
+                            map,
+                            position
+                        });
+
+                        markers.push(marker);
+                    }
+
+                    if (!unit || !checkbox) return;
+
+                    if (checkbox.checked) {
+                        addMarker();
+                    } else {
+                        removeMarker();
+                    }
+                }
+            }
+
+            if (headboxId.checked) {
+                $('input[type="checkbox"]', unitPage).prop('checked', true);
+                table.page.len(-1).draw();
+                getallMarker();
+            } else {
+                $('input[type="checkbox"]', unitPage).prop('checked', false);
+                table.page.len(10).draw();
+                getallMarker();
             }
         }
     </script>
@@ -138,7 +204,9 @@
                                     {{-- or tickets-table --}}
                                     <thead>
                                         <tr>
-                                            <th><input type="checkbox" name="" id="checkbox"></th>
+                                            <th>
+                                                <input type="checkbox" name="" id="head-checkbox" onclick="checkall()">
+                                            </th>
                                             <th>Id</th>
                                             <th>Status</th>
                                             <th>Mobile #</th>
@@ -151,8 +219,9 @@
                                         @foreach ($units as $unit)
                                             <tr>
                                                 <td>
-                                                    <input type="checkbox" name="unit_ids[{{ $unit->id }}]"
-                                                        onchange="updateMarker({{ $unit->id }}); checkFields();">
+                                                    <input id="unit-id" type="checkbox" name="unit_ids[{{ $unit->id }}]"
+                                                        onchange="updateMarker({{ $unit->id }}); checkFields();"
+                                                        class="units-class">
                                                 </td>
                                                 <td> {{ $unit->id }} </td>
                                                 <td> {{ Str::ucfirst($unit->status) }} </td>
@@ -199,7 +268,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="text-md-end footer-links d-none d-sm-block">
-                        <a href="javascript:void(0);">PLMS-CLZ</a>
+                        <a href="/about">PLMS-CLZ</a>
                     </div>
                 </div>
             </div>
@@ -209,11 +278,6 @@
 
 @section('script')
     <script src="{{ mix('js/vendor.min.js') }}"></script>
-    <script src="{{ asset('libs/select2/js/select2.min.js') }}"></script>
-    <script src="{{ asset('libs/dropzone/min/dropzone.min.js') }}"></script>
-    <script src="{{ asset('libs/quill/quill.min.js') }}"></script>
-    <script src="{{ mix('js/pages/form-fileuploads.init.js') }}"></script>
-    <script src="{{ mix('js/pages/add-product.init.js') }}"></script>
     <script src="{{ asset('libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
     <script src="{{ asset('libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>

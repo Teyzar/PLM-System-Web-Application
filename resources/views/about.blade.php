@@ -31,9 +31,30 @@
                             <p class="waves-effect waves-light me-1"><i
                                     class="mdi mdi-email-outline me-1"></i>clzplms@gmail.com</p>
                         </div>
-
                 </div>
             </div>
         </div>
     </div>
+    @auth
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <script>
+                            document.write(new Date().getFullYear())
+                        </script> &copy; <span>Power Line Monitoring</span>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="text-md-end footer-links d-none d-sm-block">
+                            <a href="/about">PLMS-CLZ</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    @endauth
+@endsection
+
+@section('script')
+        <script src="{{mix('js/vendor.js')}}"></script>
 @endsection

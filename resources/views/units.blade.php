@@ -19,8 +19,7 @@
     <link href="{{ mix('css/units.css') }}" rel="stylesheet" type="text/css" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-    <script src="{{asset('libs/tippy.js/tippy.all.min.js')}}"></script>
-
+    <script src="{{ asset('libs/tippy.js/tippy.all.min.js') }}"></script>
 @endsection
 
 
@@ -79,7 +78,8 @@
                                             <button id="delbtn" class="btn border-0 deletebtn float-end p-0"
                                                 onclick="removeUnit({{ $unit->id }})" type="button"
                                                 data-bs-toggle="modal" data-bs-target="#modalRemove">
-                                                <i class="fe-trash fs-5 text-danger waves-effect waves-light" title="Remove" tabindex="0" data-plugin="tippy" data-tippy-placement="left"></i>
+                                                <i class="fe-trash fs-5 text-danger waves-effect waves-light" title="Remove"
+                                                    tabindex="0" data-plugin="tippy" data-tippy-placement="left"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -216,7 +216,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="text-md-end footer-links d-none d-sm-block">
-                        <a href="javascript:void(0);">PLMS-CLZ</a>
+                        <a href="/about">PLMS-CLZ</a>
                     </div>
                 </div>
             </div>
@@ -224,7 +224,7 @@
     </footer>
 
     @include('modals.units')
-
+@endsection
 @section('script')
     <script src="{{ mix('js/vendor.min.js') }}"></script>
     <script src="{{ asset('libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
@@ -242,5 +242,4 @@
     {{-- <script src="{{ mix('libs/datatables.net-select/js/dataTables.select.min.js') }}"></script> --}}
     {{-- <script src="{{ mix('libs/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js') }}"></script> --}}
     {{-- <script src="{{ mix('libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}"></script> --}}
-@endsection
 @endsection

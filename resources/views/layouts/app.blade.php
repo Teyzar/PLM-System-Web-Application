@@ -30,7 +30,7 @@
 
 </head>
 
-<body data-layout="" data-sidebar-width="boxed">
+<body>
     <div id="preloader">
         <div id="status">
             <div class="spinner">Loading...</div>

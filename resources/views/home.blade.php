@@ -83,10 +83,6 @@
     </style>
 @endsection
 
-@section('script')
-    <script src="{{ asset('js/vendor.min.js') }}"></script>
-@endsection
-
 @section('content')
     <div id="map" style="height: calc(100vh - 71px);"></div>
 
@@ -94,4 +90,8 @@
         src="https://maps.googleapis.com/maps/api/js?key={{ $apiKey }}&callback=initMap&v=weekly&libraries=visualization"
         async>
     </script>
+@endsection
+
+@section('script')
+    <script src="{{ asset('js/vendor.min.js') }}"></script>
 @endsection

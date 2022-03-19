@@ -13,11 +13,11 @@
 
 
 @section('content')
-
     <form method="POST" action="/dispatch" class="form-container" id="formid">
         @csrf
         <div class="container-fluid mt-4">
-            <h5 class="text-secondary text-uppercase bg-light justify-content-center d-flex p-2">To dispatch, please select both sides.</h5>
+            <h5 class="text-secondary text-uppercase bg-light justify-content-center d-flex p-2">To dispatch, please select
+                both sides.</h5>
             <div class="row">
                 <div class="col-xl-6">
                     <div class="card">
@@ -138,13 +138,13 @@
                 </div>
                 <div class="col-md-6">
                     <div class="text-md-end footer-links d-none d-sm-block">
-                        <a href="javascript:void(0);">PLMS-CLZ</a>
+                        <a href="/about">PLMS-CLZ</a>
                     </div>
                 </div>
             </div>
         </div>
     </footer>
-
+@endsection
 @section('script')
     <!-- Bootstrap Tables js -->
     <script src="{{ mix('js/vendor.min.js') }}"></script>
@@ -274,6 +274,4 @@
 
 
     {{-- <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script> --}}
-@endsection
-
 @endsection

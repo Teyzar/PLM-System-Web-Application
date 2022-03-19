@@ -83,7 +83,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="text-md-end footer-links d-none d-sm-block">
-                        <a href="javascript:void(0);">PLMS-CLZ</a>
+                        <a href="/about">PLMS-CLZ</a>
                     </div>
                 </div>
             </div>
@@ -97,7 +97,7 @@
     </style> --}}
 
     @include('modals.lineman')
-
+@endsection
 @section('script')
     <script src="{{ mix('js/vendor.min.js') }}"></script>
 
@@ -201,5 +201,4 @@
             });
         }
     </script>
-@endsection
 @endsection
