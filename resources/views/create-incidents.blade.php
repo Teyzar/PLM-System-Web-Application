@@ -24,9 +24,10 @@
             markers = [];
         }
 
-        function addMarker(position) {
+        function addMarker(position, label) {
             markers.push(new google.maps.Marker({
                 map,
+                label,
                 position,
                 collisionBehavior: google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL
             }));
@@ -62,7 +63,7 @@
             };
 
             if (checkbox.checked) {
-                addMarker(position);
+                addMarker(position, `${id}`);
             } else {
                 removeMarker(position);
             }
