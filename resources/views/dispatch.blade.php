@@ -16,8 +16,6 @@
     <form method="POST" action="/dispatch" class="form-container" id="formid">
         @csrf
         <div class="container-fluid mt-4">
-            <h5 class="text-secondary text-uppercase bg-light justify-content-center d-flex p-2">To dispatch, please select
-                both sides.</h5>
             <div class="row">
                 <div class="col-xl-6">
                     <div class="card">
@@ -123,7 +121,7 @@
                 </div>
             </div>
         </div>
-        <div class="d-flex justify-content-center pb-1">
+        <div class="d-flex justify-content-center" style="padding-bottom: 15%">
             <button id="btnDispatch" type="button" class="border-0 btn btn-success px-5" data-bs-toggle="modal"
                 data-bs-target="#modalConfirm">Dispatch</button>
         </div>

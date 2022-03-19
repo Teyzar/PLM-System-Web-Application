@@ -112,11 +112,11 @@
     <script src="{{ asset('libs/pdfmake/build/vfs_fonts.js') }}"></script>
     <script src="{{ mix('js/pages/datatables.init.js') }}"></script>
 
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             $('#success-alert-modal').modal('show');
         })
-    </script>
+    </script> --}}
     @if ($errors->has('email'))
         <script>
             $(document).ready(function() {
