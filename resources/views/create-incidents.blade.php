@@ -27,7 +27,8 @@
         function addMarker(position) {
             markers.push(new google.maps.Marker({
                 map,
-                position
+                position,
+                collisionBehavior: google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL
             }));
         }
 
@@ -196,7 +197,7 @@
                 <div class="col-lg-6">
                     <div class="card">
                         <div id="map" style="height: calc(75vh - 71px);"></div>
-                        <script src="https://maps.googleapis.com/maps/api/js?key={{ $apiKey }}&callback=initMap&v=weekly&libraries=visualization"
+                        <script src="https://maps.googleapis.com/maps/api/js?key={{ $apiKey }}&callback=initMap&v=beta&libraries=visualization"
                                                 async>
                         </script>
                     </div>
