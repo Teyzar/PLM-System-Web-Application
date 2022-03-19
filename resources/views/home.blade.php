@@ -20,7 +20,7 @@
             // Initialize heatmap layer
             heatmap = new google.maps.visualization.HeatmapLayer({
                 data: heatmapData,
-                radius: 12
+                radius: 16
             });
 
             // Link heatmap with map
