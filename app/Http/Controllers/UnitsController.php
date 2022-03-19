@@ -135,4 +135,18 @@ class UnitsController extends Controller
             return redirect()->back();
         }
     }
+
+    /**
+     * Sends a unit update request to a unit.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function refresh(Request $request, $id)
+    {
+        $unit = Unit::find($id);
+
+        dd($unit);
+    }
 }
