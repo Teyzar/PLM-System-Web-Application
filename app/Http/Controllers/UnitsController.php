@@ -29,7 +29,7 @@ class UnitsController extends Controller
      */
     public function index()
     {
-        $units = Unit::paginate(8);
+        $units = Unit::all();
 
         $count = $units->count();
 
@@ -147,6 +147,6 @@ class UnitsController extends Controller
     {
         $unit = Unit::find($id);
 
-        dd($unit);
+        return $unit;
     }
 }

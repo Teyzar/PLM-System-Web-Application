@@ -15,10 +15,16 @@
                             <i class="mdi mdi-sim px-1"></i>
                             Enter the unit's phone number:
                         </label>
+                        <div class="input-group input-group-merge">
+                            <input type="tel" class="form-control @error('phone_number') is-invalid @enderror"
+                                id="phone_number" name="phone_number" value="{{ old('phone_number') }}"
+                                placeholder="+639" required>
 
-                        <input type="tel" class="form-control @error('phone_number') is-invalid @enderror"
-                            id="phone_number" name="phone_number" value="{{ old('phone_number') }}" placeholder="+639"
-                            required>
+                            <button id="submitbtn" type="submit" class="input-group-text">
+                                <i class="mdi mdi-send"></i>
+                            </button>
+                        </div>
+                        {{-- <button id="submitbtn" type="submit" class="btn btn-warning float-end">Submit</button> --}}
 
                         @error('phone_number')
                             <span class="invalid-feedback" role="alert">
@@ -27,42 +33,24 @@
                         @enderror
                         <span class="text-danger" role="alert" id="p-message"></span>
                     </div>
-
-                    <div class="modal-footer d-block">
-                        <span id="processing" class="text-center d-flex justify-content-center fs-5"></span>
-                        <div id="bar" class="progress h-100">
-                            <div id="progress"
-                                class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
-                                role="progressbar" style="width: 0%" aria-valuenow="40" aria-valuemin="0"
-                                aria-valuemax="100">
-                                <span id="percent"></span>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-center align-items-center">
-                            <div id="steps-id" class="progresses">
-                                <div id="start" class="steps border"><span id="spinner1"
-                                        class=""></span></div> <span id="line1"
-                                    class="line border"></span>
-                                <div style="margin-top: 11%; position: absolute">
-                                    <span>start</span>
-                                </div>
-                                <div id="controller" class="steps border"> <span id="spinner2"
-                                        class="">2</span> </div> <span id="line2"
-                                    class="line border"></span>
-                                <div style="margin-top: 11%; position: absolute; padding-left: 30%">
-                                    <span>controller</span>
-                                </div>
-                                <div id="message" class="steps border"> <span id="spinner3"
-                                        class="">3</span> </div>
-                                <div style="margin-top: 11%; position: absolute; padding-left: 65%;">
-                                    <span>text</span>
-                                </div>
-
-                            </div>
-                        </div>
-                        <button id="submitbtn" type="submit" class="btn btn-warning float-end mt-3">Submit</button>
-                    </div>
                 </form>
+
+                <div class="modal-footer d-block text-center">
+                    <div id="process" class="justify-content-center d-flex pt-0"></div>
+
+                    <div class="justify-content-center d-flex">
+                        <div id="steps-id" class="progresses">
+                            <div id="start" class="steps border"><span id="spinner1" class=""><label
+                                        class="text-muted">1</label></span></div> <span id="line1"
+                                class="line border"></span>
+                            <div id="controller" class="steps border"> <span id="spinner2"
+                                    class=""><label class="text-muted">2</label></span> </div>
+                            <span id="line2" class="line border"></span>
+                            <div id="message" class="steps border"> <span id="spinner3" class=""><label
+                                        class="text-muted">3</label></span> </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
