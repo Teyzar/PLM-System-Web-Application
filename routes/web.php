@@ -36,12 +36,12 @@ Route::get('/about', function() {
 
 Route::resource('/dispatch', DispatchController::class)->only(['index', 'store']);
 
-Route::resource('/incidents', IncidentsController::class)->only(['index', 'create', 'store']);
+Route::resource('/incidents', IncidentsController::class)->only(['index', 'create', 'store', 'destroy']);
 
 Route::resource('/lineman', LinemanController::class)->except(['create', 'edit']);
 Route::post('/lineman/{id}/reset', [LinemanController::class, 'reset'])->name('lineman.reset');
 
 Route::resource('/units', UnitsController::class)->except(['show', 'edit', 'update']);
-Route::post('/units/{id}/refresh', [UnitsController::class, 'refresh'])->name('unit.refresh');
+Route::get('/units/{id}/refresh', [UnitsController::class, 'refresh'])->name('unit.refresh');
 
 Route::resource('/user', UserController::class)->except(['show', 'edit', 'update']);
