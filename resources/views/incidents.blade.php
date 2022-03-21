@@ -7,11 +7,9 @@
 @section('content')
     <div class="container-fluid pt-3 mb-5">
         <div class="row">
-
-            {{-- {{ dd($incidents->info()) }} --}}
             @foreach ($incidents as $incident)
                 <div class="col-lg-12">
-                    <div class="card project-box">
+                    <div class="card">
                         <div class="card-body shadow">
                             @auth
                                 <div class="dropdown float-end">
@@ -22,17 +20,18 @@
                                     <div class="dropdown-menu dropdown-menu-end">
                                         <a class="dropdown-item text-info" href="#"><i
                                                 class="fe-edit pe-1"></i><span>Edit</span></a>
-                                        <a class="dropdown-item text-danger" href="#"><i
-                                                class="fe-delete pe-1"></i><span>Remove</span></a>
+                                        <a class="dropdown-item text-danger" type="button" onclick="passID({{ $incident->id }})"
+                                            data-bs-toggle="modal" data-bs-target="#RemoveIncident">
+                                            <i class="fe-delete pe-1"></i><span>Remove</span></a>
                                     </div>
                                 </div> <!-- end dropdown -->
                             @endauth
                             <h5 class="mt-0"><span
-                                    class="text-dark fs-4">{{ \Carbon\Carbon::parse($incident->created_at)->toDayDateTimeString() }}</span>
+                                    class="fw-bold fs-5">{{ \Carbon\Carbon::parse($incident->created_at)->toDayDateTimeString() }}</span>
                             </h5>
                             <hr>
                             @foreach ($incident->info()->get() as $info)
-                                <span class="text-uppercase fw-bolder h5 mt-0">{{ $info->title }}</span> <i
+                                <span class="text-capitalize fw-bolder h5 mt-0">{{ $info->title }}</span> <i
                                     class="fe-minus"></i>
                                 <span class="">{{ $info->description }}</span>
                                 <p class="mt-2"><span
@@ -65,8 +64,15 @@
             </div>
         </footer>
     @endauth
+    @include('modals.incidents')
 @endsection
 
 @section('script')
     <script src="{{ asset('js/vendor.min.js') }}"></script>
+    <script>
+        function passID(id) {
+            console.log(id);
+            $('#incident-form').attr('action', `/incidents/${id}`);
+        }
+    </script>
 @endsection

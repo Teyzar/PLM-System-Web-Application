@@ -111,13 +111,23 @@
                             <div class="row">
                                 <div class="container-fluid">
                                     <div class="mb-3">
-                                        <label for="projectname" class="form-label">
+                                        {{-- <label for="projectname" class="form-label">
                                             Title
                                             <span class="text-danger"> *</span>
                                         </label>
                                         <input id="title" name="title" type="text"
                                             class="form-control @error('title') is-invalid @enderror"
-                                            placeholder="Enter Title" oninput="checkFields()" required>
+                                            placeholder="Enter Title" oninput="checkFields()" required> --}}
+
+                                        <label for="project-priority" class="form-label">Title <span
+                                                class="text-danger"> *</span></label>
+
+                                        <select id="title" class="form-control" data-toggle="select2" data-width="100%" onselect="checkFields()" name="title">
+                                            <option value="" >...</option>
+                                            <option value="investigating">Investigating</option>
+                                            <option value="fixing">Fixing</option>
+                                            <option value="resolved">Resolved</option>
+                                        </select>
 
                                         @error('title')
                                             <span class="invalid-feedback" role="alert">

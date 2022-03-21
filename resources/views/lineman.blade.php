@@ -89,14 +89,6 @@
             </div>
         </div>
     </footer>
-    {{-- <style>
-        body {
-            overflow-y: hidden;
-        }
-
-    </style> --}}
-
-    @include('modals.lineman')
 @endsection
 @section('script')
     <script src="{{ mix('js/vendor.min.js') }}"></script>
@@ -201,4 +193,6 @@
             });
         }
     </script>
+
+    @include('modals.lineman')
 @endsection

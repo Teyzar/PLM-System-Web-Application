@@ -95,8 +95,8 @@
                     </div>
 
                     <div class="modal-footer d-block d-flex align-items-center justify-content-center border-1">
-                        <a type="button" class="btn btn-dark w-75" data-bs-toggle="modal" data-bs-target="#modalConfirm"
-                            onclick="closeModal()">
+                        <a type="button" class="btn btn-dark w-75" onclick="openConfirmation()" data-bs-dismiss="modal"
+                            aria-label="Close">
                             {{ __('Save') }}
                         </a>
                     </div>
@@ -104,6 +104,11 @@
             </div>
         </div>
     </div>
+    <script>
+        function openConfirmation() {
+            $('#modalConfirm').modal('show');
+        }
+    </script>
     <div class="modal fade" id="modalConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -120,7 +125,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                         aria-label="Close">Close</button>
-                    <button type="submit" class="btn btn-dark" onclick="">Save changes</button>
+                    <button type="submit" class="btn btn-success">Save changes</button>
                 </div>
             </div>
         </div>

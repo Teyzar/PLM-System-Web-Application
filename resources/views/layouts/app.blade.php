@@ -155,6 +155,7 @@
                                 About Us
                             </a>
                         </li>
+
                     @endauth
                 </ul>
             </div>
@@ -217,7 +218,6 @@
                                     let open = false;
 
                                     div.addEventListener('click', function() {
-                                        console.log(open);
                                         if (open) {
                                             icon.className = 'menu-arrow';
                                         } else {
@@ -300,27 +300,27 @@
                     </div>
 
                     <!-- size -->
-                    @auth
-                        <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">Left Sidebar Size</h6>
 
-                        <div class="form-check form-switch mb-1">
-                            <input type="checkbox" class="form-check-input" name="leftsidebar-size" value="default"
-                                id="default-size-check" checked />
-                            <label class="form-check-label" for="default-size-check">Default</label>
-                        </div>
+                    <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">Left Sidebar Size</h6>
 
-                        <div class="form-check form-switch mb-1">
-                            <input type="checkbox" class="form-check-input" name="leftsidebar-size" value="condensed"
-                                id="condensed-check" />
-                            <label class="form-check-label" for="condensed-check">Condensed <small>(Extra Small
-                                    size)</small></label>
-                        </div>
+                    <div class="form-check form-switch mb-1">
+                        <input type="checkbox" class="form-check-input" name="leftsidebar-size" value="default"
+                            id="default-size-check" checked />
+                        <label class="form-check-label" for="default-size-check">Default</label>
+                    </div>
 
-                        <div class="d-grid mt-4">
-                            <button class="btn btn-primary" id="resetBtn">Reset to Default</button>
-                        </div>
+                    <div class="form-check form-switch mb-1">
+                        <input type="checkbox" class="form-check-input" name="leftsidebar-size" value="condensed"
+                            id="condensed-check" />
+                        <label class="form-check-label" for="condensed-check">Condensed <small>(Extra Small
+                                size)</small></label>
+                    </div>
 
-                    @endauth
+                    <div class="d-grid mt-4">
+                        <button class="btn btn-primary" id="resetBtn">Reset to Default</button>
+                    </div>
+
+
                 </div>
 
             </div>
@@ -331,6 +331,7 @@
     <div class="rightbar-overlay"></div>
 
     <script src="{{ mix('js/button-theme-settings.js') }}"></script>
+
     <script src="{{ mix('js/vendor.min.js') }}"></script>
     <script src="{{ asset('libs/moment/min/moment.min.js') }}"></script>
     <script src="{{ mix('js/app.min.js') }}"></script>

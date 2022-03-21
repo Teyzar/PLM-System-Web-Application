@@ -6,11 +6,11 @@
 
 
 @section('content')
-    <div class="container-fluid" style="padding-top: 10%">
+    <div class="container-fluid" style="padding-top: 8%">
         <div class="row">
             <div class="col-12">
                 <div class="text-center">
-                    <i class="mdi mdi-comment-question-outline fs-1"></i>
+                    <i class="mdi mdi-comment-question-outline" style="font-size: 100px"></i>
                     <h1 class="mb-3 text-warning">What is Power Line Monitoring System ?</h3>
                         <p class="fs-4"> <span class="fw-bolder">Power Line Monitoring System </span>is a
                             system
