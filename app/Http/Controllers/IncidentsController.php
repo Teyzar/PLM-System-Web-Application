@@ -73,4 +73,10 @@ class IncidentsController extends Controller
 
         return redirect()->back();
     }
+
+    public function destroy($id) {
+        $destroy = Incident::where('id', $id)->delete();
+
+        return redirect()->back();
+    }
 }
