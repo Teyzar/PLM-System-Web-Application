@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\HeatmapUpdate;
+use App\Events\UnitUpdate;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 
@@ -64,6 +65,7 @@ class UnitsApiController extends Controller
             'longitude' => doubleval($longitude)
         ]);
 
+        event(new UnitUpdate($unit));
         event(new HeatmapUpdate($unit));
 
         return $unit;
