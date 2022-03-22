@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Incident;
+use App\Models\IncidentInfo;
 use App\Models\Unit;
 
 use Illuminate\Http\Request;
@@ -28,7 +29,9 @@ class IncidentsController extends Controller
     {
         $incidents = Incident::all();
 
-        return view('incidents', ['incidents' => $incidents]);
+        // $info = $incidents->info()->all();
+
+        return view('incidents', ['incidents', $incidents]);
     }
 
     /**
@@ -74,9 +77,58 @@ class IncidentsController extends Controller
         return redirect()->back();
     }
 
-    public function destroy($id) {
+    public function destroy($id)
+    {
         $destroy = Incident::where('id', $id)->delete();
 
         return redirect()->back();
+    }
+
+    public function edit($id)
+    {
+        $incident = Incident::find($id);
+
+        $info = $incident->info()->get();
+
+        return $info;
+    }
+
+    public function update(Request $request, $id)
+    {
+
+        $incident = Incident::find($id);
+
+        $infos = $incident->info()->get();
+
+        $i = 0;
+        foreach ($infos as $info) {
+            $incident->info()->where('id', $info->id)->update([
+                'title' => $request->title[$i],
+                'description' => $request->description[$i]
+            ]);
+            $i++;
+        }
+
+
+        $info = $incident->info()->get();
+
+        return $info;
+    }
+
+    public function add(Request $request, $id)
+    {
+        $fields = $request->validate([
+            'title' => 'required|string|min:1',
+            'description' => 'required|string|min:1'
+        ]);
+
+        $incident = Incident::find($id);
+
+        $info = $incident->info()->create([
+            'title' => $fields['title'],
+            'description' => $fields['description']
+        ]);
+
+        return $info;
     }
 }
