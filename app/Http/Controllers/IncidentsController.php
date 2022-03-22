@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Incident;
-use App\Models\IncidentInfo;
 use App\Models\Unit;
 
 use Illuminate\Http\Request;
@@ -27,11 +26,9 @@ class IncidentsController extends Controller
      */
     public function index()
     {
-        $incidents = Incident::all();
-
-        // $info = $incidents->info()->all();
-
-        return view('incidents', ['incidents', $incidents]);
+        return view('incidents', [
+            'incidents' => Incident::all()
+        ]);
     }
 
     /**
