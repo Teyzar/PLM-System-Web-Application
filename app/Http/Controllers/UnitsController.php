@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UnitRefreshUpdate;
 use App\Events\UnitRegisterUpdate;
 use App\Models\Unit;
 use Illuminate\Http\Request;
@@ -136,7 +137,56 @@ class UnitsController extends Controller
     public function refresh(Request $request, $id)
     {
         $unit = Unit::find($id);
+        $messageSent = false;
+        $controllerConnected = false;
 
-        return $unit;
+        if (!$unit) return abort(400);
+
+        try {
+            $mqtt = MQTT::connection();
+
+            $mqtt->subscribe('PLMS-ControllerResponse-CLZ', function (string $topic, string $message) use (&$mqtt, &$controllerConnected, &$messageSent) {
+                if ($message == "ControllerConnected") {
+                    $controllerConnected = true;
+                    event(new UnitRefreshUpdate("controller 1"));
+                }
+
+                if ($message == "MessageSent") {
+                    $messageSent = true;
+
+                    event(new UnitRefreshUpdate("message 1"));
+
+                    $mqtt->interrupt();
+                }
+            });
+
+            $mqtt->registerLoopEventHandler(
+                function (MqttClient $client, float $elapsedTime) use (&$controllerConnected, &$messageSent) {
+                    // Controller must be connected within 10 seconds
+                    if ($elapsedTime > 10 && !$controllerConnected) {
+                        event(new UnitRefreshUpdate("controller 0"));
+
+                        $client->interrupt();
+                    }
+
+                    // Controller must be able to send the command to the unit within 20 seconds
+                    if ($elapsedTime > 25 && !$messageSent) {
+                        event(new UnitRefreshUpdate("message 0"));
+
+                        $client->interrupt();
+                    }
+                }
+            );
+
+            $mqtt->publish('PLMS-ControllerCommands-CLZ', "UnitUpdate\n" . $unit->phone_number);
+
+            event(new UnitRefreshUpdate("published"));
+
+            $mqtt->loop();
+
+            $mqtt->disconnect();
+        } catch (MqttClientException $error) {
+            event(new UnitRefreshUpdate($error->__toString()));
+        }
     }
 }
