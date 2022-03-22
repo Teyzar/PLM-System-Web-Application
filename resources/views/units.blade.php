@@ -1,7 +1,5 @@
 @extends('layouts.app')
 
-
-
 @section('head')
     <link href="{{ asset('libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet"
         type="text/css" />
@@ -10,18 +8,11 @@
     <link href="{{ asset('libs/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css') }}" rel="stylesheet"
         type="text/css" />
     <link href="{{ mix('css/config/bootstrap.min.css') }}" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
-
-
-    <!-- App css -->
-    {{-- <link href="{{ mix('css/config/bootstrap.min.css') }}" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
-    <link href="{{ mix('css/config/app.min.css') }}" rel="stylesheet" type="text/css" id="app-default-stylesheet" /> --}}
-
     <link href="{{ mix('css/units.css') }}" rel="stylesheet" type="text/css" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="{{ asset('libs/tippy.js/tippy.all.min.js') }}"></script>
 @endsection
-
 
 @section('content')
     <div class="container-fluid mt-4">
@@ -53,27 +44,14 @@
                                 <tbody>
                                     @foreach ($units as $unit)
                                         <tr>
-                                            <td>
-                                                {{ $unit->id }}
-                                            </td>
-                                            <td id="status{{ $unit->id }}" class="text-capitalize">
+                                            <td> {{ $unit->id }} </td>
+                                            <td id="{{ $unit->id }}.status" class="text-capitalize">
                                                 {{ $unit->status }}
                                             </td>
-                                            <td>
-                                                {{ $unit->phone_number }}
-                                            </td>
-
-                                            <td id="long{{ $unit->id }}">
-                                                {{ $unit->longitude }}
-                                            </td>
-
-                                            <td id="lat{{ $unit->id }}">
-                                                {{ $unit->latitude }}
-                                            </td>
-
-                                            <td>
-                                                {{ $unit->updated_at }}
-                                            </td>
+                                            <td> {{ $unit->phone_number }} </td>
+                                            <td id="{{ $unit->id }}.longitude"> {{ $unit->longitude }} </td>
+                                            <td id="{{ $unit->id }}.latitude"> {{ $unit->latitude }} </td>
+                                            <td id="{{ $unit->id }}.updated_at"> {{ $unit->updated_at }} </td>
                                             <td>
                                                 <button type="button" class="btn border-0 float-end p-0">
                                                     <i id="ref-icon[{{ $unit->id }}]"
@@ -100,19 +78,19 @@
             </div>
         </div><!-- end col -->
 
-        <script src="{{mix('js/units.js')}}"></script>
+        <script src="{{ mix('js/units.js') }}"></script>
 
         <style>
             .fe-refresh-ccw {
                 transform: rotate(0deg);
             }
+
             .fe-refresh-ccw.rotate {
                 transform: rotate(-2160deg);
                 transition: transform 2s linear;
             }
 
         </style>
-
     </div>
     <footer class="footer">
         <div class="container-fluid">
@@ -133,6 +111,7 @@
 
     @include('modals.units')
 @endsection
+
 @section('script')
     <script src="{{ mix('js/vendor.min.js') }}"></script>
     <script src="{{ asset('libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
@@ -145,9 +124,24 @@
     <script src="{{ asset('libs/pdfmake/build/pdfmake.min.js') }}"></script>
     <script src="{{ asset('libs/pdfmake/build/vfs_fonts.js') }}"></script>
     <script src="{{ mix('js/pages/datatables.init.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            Echo.private("Units").listen("UnitUpdate", updateUnit);
+        });
 
-    {{-- <script src="{{ mix('libs/datatables.net-keytable/js/dataTables.keyTable.min.js') }}"></script> --}}
-    {{-- <script src="{{ mix('libs/datatables.net-select/js/dataTables.select.min.js') }}"></script> --}}
-    {{-- <script src="{{ mix('libs/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js') }}"></script> --}}
-    {{-- <script src="{{ mix('libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}"></script> --}}
+        async function updateUnit(data) {
+            const unit = data.unit;
+            const tableStatus = document.getElementById(`${unit.id}.status`);
+            const tableLatitude = document.getElementById(`${unit.id}.latitude`);
+            const tableLongitude = document.getElementById(`${unit.id}.longitude`);
+            const tableUpdatedAt = document.getElementById(`${unit.id}.updated_at`);
+
+            if (!tableStatus || !tableLatitude || !tableLongitude || !tableUpdatedAt) return;
+
+            tableStatus.textContent = `${unit.status}`;
+            tableLatitude.textContent = `${unit.latitude}`;
+            tableLongitude.textContent = `${unit.longitude}`;
+            tableUpdatedAt.textContent = `${unit.updated_at}`;
+        }
+    </script>
 @endsection
