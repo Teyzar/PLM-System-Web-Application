@@ -36,7 +36,8 @@ Route::get('/about', function() {
 
 Route::resource('/dispatch', DispatchController::class)->only(['index', 'store']);
 
-Route::resource('/incidents', IncidentsController::class)->only(['index', 'create', 'store', 'destroy']);
+Route::resource('/incidents', IncidentsController::class)->except('add');
+Route::post('/incidents/{id}/add', [IncidentsController::class, 'add'])->name('incidents.add');
 
 Route::resource('/lineman', LinemanController::class)->except(['create', 'edit']);
 Route::post('/lineman/{id}/reset', [LinemanController::class, 'reset'])->name('lineman.reset');
