@@ -59,8 +59,8 @@
                             <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light"
                                 data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false"
                                 aria-expanded="false">
-                                <img src="{{ mix('images/user-3.jpg') }}" alt="user-image" class="rounded-circle">
-                                <span class="pro-user-name ms-1">
+                                {{-- <img src="{{ mix('images/user-3.jpg') }}" alt="user-image" class="rounded-circle"> --}}
+                                <span class="ms-1">
                                     {{ ucwords(Auth::user()->name) }}<i class="mdi mdi-chevron-down"></i>
                                 </span>
                             </a>
