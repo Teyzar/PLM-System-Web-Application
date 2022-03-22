@@ -66,7 +66,7 @@ $(document).on('ready', function () {
         });
     });
 
-    Echo.channel("UnitRegister").listen("UnitRegisterUpdate", (data) => {
+    Echo.private("Units").listen("UnitRegisterUpdate", (data) => {
         switch (data.message) {
             case "start":
                 submitbtn.attr('disabled', true);

@@ -23,11 +23,6 @@ class UnitRegisterUpdate implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        return new Channel('UnitRegister');
-    }
-
-    public function broadcastWith()
-    {
-        return ['message' => $this->message];
+        return new PrivateChannel('Units');
     }
 }
