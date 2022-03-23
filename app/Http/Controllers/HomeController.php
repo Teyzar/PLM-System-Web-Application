@@ -15,7 +15,7 @@ class HomeController extends Controller
     {
         return view('home', [
             'apiKey' => env('MAPS_KEY', 'AIzaSyA2vqdxEToK1qKnxm14YrCwJ1xoLd1FcBU'),
-            'heatmapData' => Unit::all(['id', 'status', 'latitude', 'longitude'])->where('status', 'fault')->toJson()
+            'heatmapData' => json_encode(Unit::all(['id', 'status', 'latitude', 'longitude'])->where('status', 'fault')->toArray())
         ]);
     }
 }
