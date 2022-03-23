@@ -3,7 +3,7 @@
 @section('head')
     <script>
         let map, heatmap, heatmapData;
-        let _heatmapData = {!! $heatmapData !!};
+        let _heatmapData = @json($heatmapData);
         console.log(_heatmapData);
         _heatmapData = JSON.parse(_heatmapData);
         console.log(_heatmapData);
