@@ -3,10 +3,9 @@
 @section('head')
     <script>
         let map, heatmap, heatmapData;
-        let _heatmapData = {!! json_encode($heatmapData) !!};
+        let _heatmapData = {!! $heatmapData !!};
         console.log(_heatmapData);
-        // _heatmapData = _heatmapData;
-        // console.log(_heatmapData);
+        console.log(JSON.parse(_heatmapData));
 
         function initMap() {
             map = new google.maps.Map(document.getElementById("map"), {
