@@ -3,8 +3,11 @@
 @section('head')
     <script>
         let map, heatmap, heatmapData;
-        let _heatmapData = <?php print_r($heatmapData); ?>;
-        console.log(_heatmapData);
+        let _heatmapData = {!! $heatmapData !!};
+        if (!Array.isArray(_heatmapData)) {
+            console.log(_heatmapData.toString());
+            _heatmapData = [];
+        }
 
         function initMap() {
             map = new google.maps.Map(document.getElementById("map"), {
