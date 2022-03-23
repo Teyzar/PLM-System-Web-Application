@@ -54,9 +54,6 @@ function editIncident(id) {
                     const desc = $(`#input-description${info.id}`);
                     const title = $(`#title${info.id}`);
 
-                    const savebtn = $(`#savebtn${info.id}`);
-                    const cancelbtn = $(`#cancelbtn${info.id}`);
-
                     desc.html(info.description);
                     title.html(info.title + ' <i class="fe-minus"></i>');
                     savebtn.html('');
@@ -71,10 +68,10 @@ function editIncident(id) {
 function addIncident(id) {
     const incident = $(`#incident${id}`);
     const textarea = $(`#textarea${id}`);
-    const savebtn = $(`#savebtn${id}`);
+    const addbtn = $(`#savebtn${id}`);
     const cancelbtn = $(`#cancelbtn${id}`);
-    savebtn.html(
-        '<button type="submit" id="submit" class="btn btn-primary py-1 px-3 ms-1">Save</button>'
+    addbtn.html(
+        '<button type="submit" id="submit" class="btn btn-primary py-1 px-3 ms-1">Add</button>'
     );
     cancelbtn.html('<button type="button" class="btn btn-secondary py-1 px-2 ">Cancel</button>');
 
@@ -94,19 +91,19 @@ function addIncident(id) {
     form.attr('action', `incidents/${id}/add`);
 
     let disId = id;
-    const infobody = $(`#info-body${id}`);
 
 
     cancelbtn.on('click', function () {
         incident.html('');
         textarea.html('');
-        savebtn.html('');
+        addbtn.html('');
         cancelbtn.html('');
 
     });
+    const infobody = $(`#info-body${id}`);
+
 
     $('form').on('submit', function (event) {
-
         event.preventDefault();
         var $this = $(this);
 
@@ -116,24 +113,36 @@ function addIncident(id) {
             data: $this.serialize(),
             dataType: 'json',
             success: function (result) {
+                const date = new Date(result.created_at);
 
+                const str_date = date.toLocaleString('en-US', {
+                    weekday: 'short', // long, short, narrow
+                    day: 'numeric', // numeric, 2-digit
+                    year: 'numeric', // numeric, 2-digit
+                    month: 'short', // numeric, 2-digit, long, short, narrow
+                    hour: 'numeric', // numeric, 2-digit
+                    minute: 'numeric', // numeric, 2-digit
+                });
 
                 infobody.html(`
                 <div class="col-8">
-                    <span id="title${result.id}"
-                        class="text-capitalize fw-bolder h5 mt-0">${result.title}<i
+                    <span class="text-capitalize fw-bolder h5 mt-0">${result.title}<i
                             class="fe-minus"></i></span>
-                    <span id="input-description${result.id}"
-                        class="">${result.description}</span></div>
-                    <p class="mt-2"><span
-                            class="text-muted">${result.created_at}</span>
-                    </p>
-
+                    <span class="">${result.description}</span>
+                </div>
+                <p class="mt-2"><span
+                    class="text-muted">${str_date}</span>
+                </p>
                 `);
+                addbtn.html('');
+                cancelbtn.html('');
+                incident.html('');
+                textarea.html('');
             },
-            error: function (err) {
-                console.log(err);
-            }
         });
     });
+}
+
+function passID(id) {
+    $('#incident-form').attr('action', `/incidents/${id}`);
 }

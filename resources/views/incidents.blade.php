@@ -39,16 +39,18 @@
                             <hr>
                             <form id="forms-id" action="/incidents/{{ $incident->id }}" method="POST">
                                 @csrf
-                                @foreach ($incident->info()->get() as $info)
-                                    <div id="info-body{{$info->id}}">
-                                        <div class="col-8">
-                                            <span id="title{{ $info->id }}"
-                                                class="text-capitalize fw-bolder h5 mt-0">{{ $info->title }} <i
-                                                    class="fe-minus"></i></span>
-                                            <span id="input-description{{ $info->id }}"
-                                                class="">{{ $info->description }}</span>
-                                        </div>
+                                <div id="info-body{{ $incident->id }}"></div>
+
+                                @foreach ($incident->info()->orderBy('id', 'desc')->get()
+        as $info)
+                                    <div class="col-8">
+                                        <span id="title{{ $info->id }}"
+                                            class="text-capitalize fw-bolder h5 mt-0">{{ $info->title }} <i
+                                                class="fe-minus"></i></span>
+                                        <span id="input-description{{ $info->id }}"
+                                            class="">{{ $info->description }}</span>
                                     </div>
+
 
                                     <p class="mt-2"><span
                                             class="text-muted">{{ \Carbon\Carbon::parse($info->created_at)->toDayDateTimeString() }}</span>
@@ -93,10 +95,4 @@
 
 @section('script')
     <script src="{{ asset('js/vendor.min.js') }}"></script>
-    <script>
-        function passID(id) {
-            console.log(id);
-            $('#incident-form').attr('action', `/incidents/${id}`);
-        }
-    </script>
 @endsection

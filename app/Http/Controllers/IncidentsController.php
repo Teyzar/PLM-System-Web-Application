@@ -27,7 +27,7 @@ class IncidentsController extends Controller
     public function index()
     {
         return view('incidents', [
-            'incidents' => Incident::all()
+            'incidents' => Incident::orderBy('created_at', 'desc')->get()
         ]);
     }
 
