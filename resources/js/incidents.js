@@ -96,6 +96,15 @@ function addIncident(id) {
     let disId = id;
     const infobody = $(`#info-body${id}`);
 
+
+    cancelbtn.on('click', function () {
+        incident.html('');
+        textarea.html('');
+        savebtn.html('');
+        cancelbtn.html('');
+
+    });
+
     $('form').on('submit', function (event) {
 
         event.preventDefault();
@@ -107,6 +116,7 @@ function addIncident(id) {
             data: $this.serialize(),
             dataType: 'json',
             success: function (result) {
+
 
                 infobody.html(`
                 <div class="col-8">
@@ -120,10 +130,6 @@ function addIncident(id) {
                     </p>
 
                 `);
-                incident.html('');
-                textarea.html('');
-                savebtn.html('');
-                cancelbtn.html('');
             },
             error: function (err) {
                 console.log(err);

@@ -36,7 +36,7 @@
 
             // Link heatmap with map
             heatmap.setMap(map);
-            for (const data of _heatmapData) {
+            for (const data of {!!$heatmapData!!}) {
                 heatmapData.push({
                     id: data.id,
                     weight: 1,
