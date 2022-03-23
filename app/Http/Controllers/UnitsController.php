@@ -142,6 +142,9 @@ class UnitsController extends Controller
 
         if (!$unit) return abort(400);
 
+        event(new UnitRefreshUpdate("start"));
+
+
         try {
             $mqtt = MQTT::connection();
 

@@ -51,13 +51,15 @@
                                             <td> {{ $unit->phone_number }} </td>
                                             <td id="{{ $unit->id }}.longitude"> {{ $unit->longitude }} </td>
                                             <td id="{{ $unit->id }}.latitude"> {{ $unit->latitude }} </td>
-                                            <td id="{{ $unit->id }}.updated_at"> {{ $unit->updated_at }} </td>
+                                            <td id="{{ $unit->id }}.updated_at">
+                                                {{ \Carbon\Carbon::parse($unit->updated_at)->toDayDateTimeString() }}
+                                            </td>
                                             <td>
                                                 <button type="button" class="btn border-0 float-end p-0">
                                                     <i id="ref-icon[{{ $unit->id }}]"
                                                         class="fe-refresh-ccw text-success fs-5" title="Refresh"
                                                         tabindex="0" data-plugin="tippy" data-tippy-placement="top"
-                                                        onclick="updateUnit({{ $unit->id }})"></i>
+                                                        onclick="refreshUnit({{ $unit->id }})"></i>
                                                 </button>
                                             </td>
                                             <td>
@@ -77,7 +79,6 @@
                 </div>
             </div>
         </div><!-- end col -->
-
         <script src="{{ mix('js/units.js') }}"></script>
 
         <style>
@@ -91,6 +92,7 @@
             }
 
         </style>
+
     </div>
     <footer class="footer">
         <div class="container-fluid">
@@ -124,24 +126,4 @@
     <script src="{{ asset('libs/pdfmake/build/pdfmake.min.js') }}"></script>
     <script src="{{ asset('libs/pdfmake/build/vfs_fonts.js') }}"></script>
     <script src="{{ mix('js/pages/datatables.init.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            Echo.private("Units").listen("UnitUpdate", updateUnit);
-        });
-
-        async function updateUnit(data) {
-            const unit = data.unit;
-            const tableStatus = document.getElementById(`${unit.id}.status`);
-            const tableLatitude = document.getElementById(`${unit.id}.latitude`);
-            const tableLongitude = document.getElementById(`${unit.id}.longitude`);
-            const tableUpdatedAt = document.getElementById(`${unit.id}.updated_at`);
-
-            if (!tableStatus || !tableLatitude || !tableLongitude || !tableUpdatedAt) return;
-
-            tableStatus.textContent = `${unit.status}`;
-            tableLatitude.textContent = `${unit.latitude}`;
-            tableLongitude.textContent = `${unit.longitude}`;
-            tableUpdatedAt.textContent = `${unit.updated_at}`;
-        }
-    </script>
 @endsection

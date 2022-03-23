@@ -1,3 +1,5 @@
+
+
 <div class="modal fade pt-5" id="store-unit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -82,4 +84,31 @@
             </div>
         </div>
     </div>
+</div>
+
+<div id="refreshModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-top">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="d-flex justify-content-center">
+                    <span class="text-danger" role="alert" id="post-message"></span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div id="process2" class="justify-content-center d-flex pt-0"></div>
+                <div class="justify-content-center d-flex">
+                    <div id="steps-id2" class="progresses">
+                        <div id="start2" class="steps border"><span id="s1" class=""><label
+                                    class="text-muted">1</label></span></div> <span id="line1"
+                            class="line border"></span>
+                        <div id="controller2" class="steps border"> <span id="s2" class=""><label
+                                    class="text-muted">2</label></span> </div>
+                        <span id="line2" class="line border"></span>
+                        <div id="message2" class="steps border"> <span id="s3" class=""><label
+                                    class="text-muted">3</label></span> </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
 </div>
