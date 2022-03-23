@@ -3,9 +3,7 @@
 @section('head')
     <script>
         let map, heatmap, heatmapData;
-        const _heatmapData = {!! $heatmapData !!};
-
-        console.log(_heatmapData);
+        const _heatmapData = <?php echo $heatmapData; ?> ?? [];
 
         function initMap() {
             map = new google.maps.Map(document.getElementById("map"), {
@@ -38,7 +36,7 @@
             // Link heatmap with map
             heatmap.setMap(map);
 
-            for (const data of [..._heatmapData]) {
+            for (const data of _heatmapData) {
                 heatmapData.push({
                     id: data.id,
                     weight: 1,
