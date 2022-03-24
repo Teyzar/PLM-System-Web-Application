@@ -95,7 +95,7 @@ class IncidentsController extends Controller
 
         $incident = Incident::find($id);
 
-        $infos = $incident->info()->get();
+        $infos = $incident->info()->orderBy('created_at', 'desc')->get();
 
         $i = 0;
         foreach ($infos as $info) {
@@ -107,7 +107,7 @@ class IncidentsController extends Controller
         }
 
 
-        $info = $incident->info()->get();
+        $info = $incident->info()->orderBy('created_at', 'desc')->get();
 
         return $info;
     }

@@ -6,6 +6,20 @@
 
 @section('content')
     <div class="container-fluid pt-3 mb-5">
+
+        @if (count($incidents) <= 0)
+            <div class="container-fluid">
+
+                <div class="justify-content-center d-flex">
+                    <i class="fe-calendar fs-1 text-dark"></i>
+                </div>
+                <div class="justify-content-center d-flex">
+
+                    <span class="h4 text-primary">There's no publish incidents yet.</span>
+                </div>
+
+            </div>
+        @endif
         <div class="row">
             @foreach ($incidents as $incident)
                 <div class="col-lg-12">
@@ -41,7 +55,7 @@
                                 @csrf
                                 <div id="info-body{{ $incident->id }}"></div>
 
-                                @foreach ($incident->info()->orderBy('id', 'desc')->get()
+                                @foreach ($incident->info()->orderBy('created_at', 'desc')->get()
         as $info)
                                     <div class="col-8">
                                         <span id="title{{ $info->id }}"
