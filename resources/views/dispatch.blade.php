@@ -43,7 +43,7 @@
                                             @foreach ($units as $unit)
                                                 <tr class="" id="trunit">
                                                     <td><input id="unitid" class="form-check-input cb-units" type="checkbox"
-                                                            name="unit_no[{{ $unit->id }}]"></td>
+                                                            name="unit_ids[{{ $unit->id }}]"></td>
                                                     <td>{{ $unit->id }}</td>
                                                     <td>{{ $unit->status }}</td>
                                                     <td>{{ $unit->phone_number }}</td>
@@ -86,7 +86,7 @@
                                                 <tr id="trlineman">
                                                     <td>
                                                         <input id="linemanid" class="form-check-input cb-lineman"
-                                                            type="checkbox" name="lineman_no[{{ $lineman->id }}]">
+                                                            type="checkbox" name="lineman_ids[{{ $lineman->id }}]">
                                                     </td>
                                                     <td>{{ ucwords($lineman->name) }}</td>
                                                     <td>{{ $lineman->email }}</td>
