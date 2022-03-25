@@ -84,21 +84,19 @@
     </div>
 </div>
 
-<div id="refreshModal" class="modal fade pt-5" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+<div id="refreshModal" class="modal fade" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
     role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content shadow">
             <div class="modal-header">
-                <button id="close-btn" type="button" class="btn-close btn-danger" data-bs-dismiss="modal" aria-label="Close">
+                <button id="close-btn" type="button" class="btn-close btn-danger" data-bs-dismiss="modal"
+                    aria-label="Close">
                     <span aria-hidden="true"></span>
                 </button>
-                <div class="d-flex justify-content-center">
-                    <span class="text-danger" role="alert" id="post-message"></span>
-                </div>
             </div>
             <div class="modal-body">
-                <div id="process2" class="justify-content-center d-flex pt-0"></div>
-                <div class="justify-content-center d-flex">
+                <div id="process2" class="justify-content-center d-flex pt-0 mb-4"></div>
+                <div class="justify-content-center d-flex mb-4">
                     <div id="steps-id2" class="progresses">
                         <div id="start2" class="steps border"><span id="s1" class=""><label
                                     class="text-muted">1</label></span></div> <span id="line-1"
