@@ -49,8 +49,8 @@ class DispatchController extends Controller
             'unit_ids' => 'required|array|min:1',
         ]);
 
-        $linemen = Lineman::all()->whereIn('id', array_keys($fields['lineman_ids']));
-        $units = Unit::all()->whereIn('id', array_keys($fields['unit_ids']));
+        $linemen = Lineman::whereIn('id', array_keys($fields['lineman_ids']))->get();
+        $units = Unit::whereIn('id', array_keys($fields['unit_ids']))->get();
 
         Notification::send($linemen, new Dispatch($units));
 
