@@ -188,6 +188,10 @@ function refreshUnit(id) {
 
     pmessage.html('');
 
+
+    $('#refreshModal').modal('show');
+
+
     Echo.private("Units").listen("UnitRefreshUpdate", (data) => {
         console.log(data.message);
         switch (data.message) {
@@ -195,7 +199,7 @@ function refreshUnit(id) {
                 $('#refreshModal').modal('show');
 
                 processing.html(
-                    '<label class="fs-5 pb-2 fw-bold text-success">Processing...</label>');
+                    '<label class="fs-4 pb-2 fw-bold text-success">Processing...</label>');
 
                 controller.css('background', 'white');
                 spinner1.html(`<div class="spinner-border text-secondary" role="status" style="margin-top: 2px">
@@ -217,7 +221,7 @@ function refreshUnit(id) {
                     '<i class="mdi mdi-check"></i>');
                 line2.css('background-color', '#63d19e');
                 processing.html(
-                    '<label class="fs-5 pb-2 text-success">Connected to Controller</label>'
+                    '<label class="fs-4 pb-2 text-success">Connected to Controller</label>'
                 );
 
                 spinner3.html(`<div class="spinner-border text-secondary" role="status" style="margin-top: 2px">
@@ -227,7 +231,7 @@ function refreshUnit(id) {
             case "controller 0":
                 closebtn.show();
                 processing.html(
-                    '<label class="fs-5 pb-2 text-danger">There was an error connecting to controller..</label>'
+                    '<label class="fs-4 pb-2 text-danger">There was an error connecting to controller..</label>'
                 );
 
                 controller.css('background', '#f1556c');
@@ -238,10 +242,12 @@ function refreshUnit(id) {
 
                 break;
             case "message 1":
-                $('#refreshModal').modal('hide');
+                setTimeout(() => {
+                    $('#refreshModal').modal('hide');
+                }, 2000);
                 message.css('background', '#63d19e');
                 processing.html(
-                    '<label class="fs-5 pb-2 text-success">Unit Registered Succesfully</label>'
+                    '<label class="fs-4 pb-2 text-success">Unit Registered Succesfully</label>'
                 );
                 spinner3.html(
                     '<i class="mdi mdi-check fs-5"></i>');
@@ -251,7 +257,7 @@ function refreshUnit(id) {
                 closebtn.show();
                 message.css('background', '#f1556c');
                 processing.html(
-                    '<label class="fs-5 pb-2 text-danger">There was an error during sending SMS</label>'
+                    '<label class="fs-4 pb-2 text-danger">There was an error during sending SMS</label>'
                 );
                 spinner3.html(
                     '<i class="mdi mdi-alert-rhombus fs-4"></i>');
@@ -275,6 +281,17 @@ $(document).on('ready', function () {
 });
 async function updateUnit(data) {
     const unit = data.unit;
+
+    const date = new Date(unit.updated_at);
+
+    const updated_at = date.toLocaleString('en-US', {
+        weekday: 'short', // long, short, narrow
+        day: 'numeric', // numeric, 2-digit
+        year: 'numeric', // numeric, 2-digit
+        month: 'short', // numeric, 2-digit, long, short, narrow
+        hour: 'numeric', // numeric, 2-digit
+        minute: 'numeric', // numeric, 2-digit
+    });
     const tableStatus = document.getElementById(`${unit.id}.status`);
     const tableLatitude = document.getElementById(`${unit.id}.latitude`);
     const tableLongitude = document.getElementById(`${unit.id}.longitude`);
@@ -283,5 +300,5 @@ async function updateUnit(data) {
     tableStatus.textContent = `${unit.status}`;
     tableLatitude.textContent = `${unit.latitude}`;
     tableLongitude.textContent = `${unit.longitude}`;
-    tableUpdatedAt.textContent = `${unit.updated_at}`;
+    tableUpdatedAt.textContent = `${updated_at}`;
 }
