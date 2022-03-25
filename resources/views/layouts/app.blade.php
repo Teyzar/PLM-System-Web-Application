@@ -26,6 +26,8 @@
 
     <script src="{{ mix('js/app.js') }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 </head>
 
 <body>
@@ -36,6 +38,8 @@
     </div>
 
     @include('sweetalert::alert')
+
+
 
     <div id="wrapper">
         <!-- Topbar Start -->
@@ -335,6 +339,34 @@
     <script src="{{ mix('js/vendor.min.js') }}"></script>
     <script src="{{ asset('libs/moment/min/moment.min.js') }}"></script>
     <script src="{{ mix('js/app.min.js') }}"></script>
+
+    <script>
+        function toasterOptions() {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": true,
+                "positionClass": "toast-bottom-right",
+                "preventDuplicates": true,
+                "onclick": false,
+                "showDuration": "100",
+                "hideDuration": false,
+                "timeOut": false,
+                "extendedTimeOut": false,
+                "showEasing": "swing",
+                "hideEasing": false,
+            };
+        };
+
+
+        toasterOptions();
+        Echo.private("Units").listen("UnitUpdate", (data) => {
+            if (data.unit.status = "fault") {
+                toastr.error("Power outage detected! Unit ID: " + data.unit.id);
+            }
+        })
+    </script>
 
     @yield('script')
 
