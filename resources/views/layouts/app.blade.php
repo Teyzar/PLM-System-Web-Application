@@ -362,9 +362,10 @@
 
         toasterOptions();
         Echo.private("Units").listen("UnitUpdate", (data) => {
-            if (data.unit.status = "fault") {
+            if (data.unit.status === "fault") {
                 toastr.error("Power outage detected! Unit ID: " + data.unit.id);
             }
+
         })
     </script>
 

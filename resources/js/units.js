@@ -275,30 +275,3 @@ function refreshUnit(id) {
         dataType: 'json',
     });
 }
-
-$(document).on('ready', function () {
-    Echo.private("Units").listen("UnitUpdate", updateUnit);
-});
-async function updateUnit(data) {
-    const unit = data.unit;
-
-    const date = new Date(unit.updated_at);
-
-    const updated_at = date.toLocaleString('en-US', {
-        weekday: 'short', // long, short, narrow
-        day: 'numeric', // numeric, 2-digit
-        year: 'numeric', // numeric, 2-digit
-        month: 'short', // numeric, 2-digit, long, short, narrow
-        hour: 'numeric', // numeric, 2-digit
-        minute: 'numeric', // numeric, 2-digit
-    });
-    const tableStatus = document.getElementById(`${unit.id}.status`);
-    const tableLatitude = document.getElementById(`${unit.id}.latitude`);
-    const tableLongitude = document.getElementById(`${unit.id}.longitude`);
-    const tableUpdatedAt = document.getElementById(`${unit.id}.updated_at`);
-    if (!tableStatus || !tableLatitude || !tableLongitude || !tableUpdatedAt) return;
-    tableStatus.textContent = `${unit.status}`;
-    tableLatitude.textContent = `${unit.latitude}`;
-    tableLongitude.textContent = `${unit.longitude}`;
-    tableUpdatedAt.textContent = `${updated_at}`;
-}
