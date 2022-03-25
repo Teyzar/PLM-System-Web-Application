@@ -41,7 +41,7 @@ class LinemanApiController extends Controller
         $lineman->fcm_token = $fields['fcm_token'];
         $lineman->update();
 
-        return ['message' => 'FCM Token successfully updated.'];
+        return $lineman;
     }
 
     /**
