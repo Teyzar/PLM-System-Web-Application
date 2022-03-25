@@ -364,6 +364,8 @@
         Echo.private("Units").listen("UnitUpdate", (data) => {
             if (data.unit.status === "fault") {
                 toastr.error("Power outage detected! Unit ID: " + data.unit.id);
+            } else if (data.unit.status === "normal") {
+                toastr.success("Unit ID: " + data.unit.id + " resolved!");
             }
 
         })
