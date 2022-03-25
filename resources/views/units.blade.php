@@ -135,6 +135,7 @@
 
             const date = new Date(unit.updated_at);
 
+            let comma = 0;
             const updated_at = date.toLocaleString('en-US', {
                 weekday: 'short', // long, short, narrow
                 day: 'numeric', // numeric, 2-digit
@@ -142,7 +143,14 @@
                 month: 'short', // numeric, 2-digit, long, short, narrow
                 hour: 'numeric', // numeric, 2-digit
                 minute: 'numeric', // numeric, 2-digit
-            });
+            }).split('').map((x) => {
+                if (x == ',') {
+                    comma++;
+                    if (comma == 3) return '';
+                }
+
+                return x;
+            }).join('');
             const tableStatus = document.getElementById(`${unit.id}.status`);
             const tableLatitude = document.getElementById(`${unit.id}.latitude`);
             const tableLongitude = document.getElementById(`${unit.id}.longitude`);
