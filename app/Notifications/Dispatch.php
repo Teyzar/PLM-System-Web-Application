@@ -32,7 +32,7 @@ class Dispatch extends Notification
 
         return (new FirebaseMessage)
             ->withTitle('Dispatch Notification')
-            ->withBody('Assigned to ' . $units_count . ' location' . $units_count > 1 ? 's' : '')
-            ->withPriority('high')->asMessage($lineman->fcmTokens);
+            ->withBody('Assigned to ' . $units_count . ' location' . ($units_count > 1 ? 's' : ''))
+            ->withPriority('high')->asNotification([$lineman->fcm_token]);
     }
 }
