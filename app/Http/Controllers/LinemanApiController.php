@@ -39,11 +39,11 @@ class LinemanApiController extends Controller
         if (!$lineman) abort(404);
 
         $hasChanges = false;
-        if (!is_null($fields['fcm_token'])) {
+        if (array_key_exists('fcm_token', $fields)) {
             $lineman->fcm_token = $fields['fcm_token'];
             $hasChanges = true;
         }
-        if (!is_null($fields['password'])) {
+        if (array_key_exists('password', $fields)) {
             $lineman->password = Hash::make($fields['password']);
             $hasChanges = true;
         }
