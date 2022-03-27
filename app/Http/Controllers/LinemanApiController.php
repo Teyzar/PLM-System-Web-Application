@@ -31,14 +31,24 @@ class LinemanApiController extends Controller
             return abort(401);
 
         $fields = $request->validate([
-            'fcm_token' => 'required|string'
+            'fcm_token' => 'string',
+            'password' => 'string|min:8'
         ]);
 
         $lineman = Lineman::find($id);
-
         if (!$lineman) abort(404);
 
-        $lineman->fcm_token = $fields['fcm_token'];
+        $hasChanges = false;
+        if ($fields['fcm_token']) {
+            $lineman->fcm_token = $fields['fcm_token'];
+            $hasChanges = true;
+        }
+        if ($fields['password']) {
+            $lineman->password = Hash::make($fields['password']);
+            $hasChanges = true;
+        }
+
+        if (!$hasChanges) abort(400);
         $lineman->update();
 
         return $lineman;
