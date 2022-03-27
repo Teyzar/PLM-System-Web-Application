@@ -27,67 +27,30 @@
             markers = [];
         }
 
-        function addMarker(position, label) {
-            markers.push(new google.maps.Marker({
-                map,
-                label,
-                position,
-                collisionBehavior: google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL
-            }));
-        }
-
-        function removeMarker(position) {
-            const newMarker = [];
-
-            for (const marker of markers) {
-                const sameLat = marker.position.lat() === position.lat;
-                const sameLng = marker.position.lng() === position.lng;
-
-                if (sameLat && sameLng) {
-                    marker.setMap(null);
-                } else {
-                    newMarker.push(marker);
-                }
-            }
-
-            markers = newMarker;
-        }
-        var currentValue = 0;
-
         function updateMarker(units, id) {
             var checkbox = document.getElementsByClassName(`radio[${id}]`)[0];
 
-            // console.log(checkbox.value);
-            // let new_value = id;
-            // console.log('New value: ' + new_value);
-
-
-
-            // console.log('current: ' + currentValue);
-
-            // console.log('current value : ' + currentValue == id);
-
-            // console.log('new value : ' + currentValue !== new_value);
-
-            // const find = units.find(u => u.pivot.incident_id === currentValue);
-            // console.log(find);
-
-            for (const unit of units) {
-                const position = {
-                    lat: parseFloat(unit.latitude),
-                    lng: parseFloat(unit.longitude)
-                };
-                addMarker(position, `${unit.id}`);
-                currentValue = id;
+            for (const marker of markers) {
+                marker.setMap(null);
             }
 
+            markers = [];
 
-
+            for (const unit of units) {
+                markers.push(new google.maps.Marker({
+                    map,
+                    label: `${unit.id}`,
+                    position: {
+                        lat: parseFloat(unit.latitude),
+                        lng: parseFloat(unit.longitude)
+                    },
+                    collisionBehavior: google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL
+                }));
+            }
         }
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 @endsection
-
 
 @section('content')
     <div class="container-fluid mt-2">
