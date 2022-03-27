@@ -238,7 +238,7 @@
                             <li>
                                 <a href="/lineman">
                                     <i data-feather="users"></i>
-                                    <span> Accounts </span>
+                                    <span> Linemen </span>
                                 </a>
                             </li>
 
