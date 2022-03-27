@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Incident;
 use App\Models\Unit;
 use App\Models\Lineman;
 use App\Notifications\Dispatch;
@@ -27,13 +28,23 @@ class DispatchController extends Controller
      */
     public function index()
     {
-        $lineman = Lineman::all();
-        $unit = Unit::all();
+        $incidents = Incident::where('resolved', false)->get();
+
+
+
 
         return view('dispatch', [
-            'linemans' => $lineman,
-            'units' => $unit
+            'incidents' => $incidents,
+            'apiKey' => env('MAPS_KEY', 'AIzaSyA2vqdxEToK1qKnxm14YrCwJ1xoLd1FcBU'),
+            'units' => Unit::where('status', 'fault')->get()
         ]);
+        // $lineman = Lineman::all();
+        // $unit = Unit::all();
+
+        // return view('dispatch', [
+        //     'linemans' => $lineman,
+        //     'units' => $unit
+        // ]);
     }
 
     /**

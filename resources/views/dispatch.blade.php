@@ -2,274 +2,214 @@
 
 @section('head')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <link href="{{ asset('libs/bootstrap-table/bootstrap-table.min.css') }}" rel="stylesheet" type="text/css" />
 
-    <link href="{{ asset('libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet"
+    {{-- <link href="{{ asset('libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet"
         type="text/css" />
     <link href="{{ asset('libs/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css') }}" rel="stylesheet"
         type="text/css" />
     <link href="{{ asset('libs/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css') }}" rel="stylesheet"
-        type="text/css" />
+        type="text/css" /> --}}
+
+    <script>
+        let map, markers;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 15,
+                center: {
+                    'lat': 10.95583493620157,
+                    'lng': 123.30611654802884
+                },
+                mapTypeId: "roadmap"
+            });
+
+            markers = [];
+        }
+
+        function addMarker(position, label) {
+            markers.push(new google.maps.Marker({
+                map,
+                label,
+                position,
+                collisionBehavior: google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL
+            }));
+        }
+
+        function removeMarker(position) {
+            const newMarker = [];
+
+            for (const marker of markers) {
+                const sameLat = marker.position.lat() === position.lat;
+                const sameLng = marker.position.lng() === position.lng;
+
+                if (sameLat && sameLng) {
+                    marker.setMap(null);
+                } else {
+                    newMarker.push(marker);
+                }
+            }
+
+            markers = newMarker;
+        }
+        var currentValue = 0;
+
+        function updateMarker(units, id) {
+            var checkbox = document.getElementsByClassName(`radio[${id}]`)[0];
+
+            // console.log(checkbox.value);
+            // let new_value = id;
+            // console.log('New value: ' + new_value);
+
+
+
+            // console.log('current: ' + currentValue);
+
+            // console.log('current value : ' + currentValue == id);
+
+            // console.log('new value : ' + currentValue !== new_value);
+
+            // const find = units.find(u => u.pivot.incident_id === currentValue);
+            // console.log(find);
+
+            for (const unit of units) {
+                const position = {
+                    lat: parseFloat(unit.latitude),
+                    lng: parseFloat(unit.longitude)
+                };
+                addMarker(position, `${unit.id}`);
+                currentValue = id;
+            }
+
+
+
+        }
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 @endsection
 
 
 @section('content')
-    <form method="POST" action="/dispatch" class="form-container" id="formid">
-        @csrf
-        <div class="container-fluid mt-4">
-            <div class="row">
-                <div class="col-xl-6">
-                    <div class="card">
-                        <div class="card-body">
+    <div class="container-fluid mt-2">
+        <div class="row">
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="header-title">Radio Select</h4>
+                        <p class="sub-header">
+                            Example of radio select.
+                        </p>
 
-                            <h4 class="header-title mb-0">Units</h4>
+                        <table data-toggle="table" data-page-size="10" data-buttons-class="xs btn-light"
+                            data-pagination="true" class="table-bordered">
+                            <thead class="table-light">
+                                <tr class="text-center">
+                                    <th></th>
+                                    <th>Incident ID</th>
+                                    <th>Number of Units</th>
+                                    <th>Date Created</th>
+                                </tr>
+                            </thead>
 
-                            <div id="cardCollpase5" class="collapse pt-3 show">
-                                <div class="table-responsive">
-                                    <table id="table" class="table dt-responsive nowrap w-100">
-                                        <thead>
-                                            <tr>
-                                                <th><input name="all" id="checkall-units" class="form-check-input"
-                                                        type="checkbox"></th>
-                                                <th>Id</th>
-                                                <th>Status</th>
-                                                <th>Mobile #</th>
-                                                <th>Longitude</th>
-                                                <th>Latitude</th>
-                                            </tr>
-                                        </thead>
+                            <tbody>
+                                @foreach ($incidents as $incident)
+                                    <form name="myForm">
+                                        <tr class="text-center">
+                                            <td>
 
-
-                                        <tbody>
-                                            @foreach ($units as $unit)
-                                                <tr class="" id="trunit">
-                                                    <td><input id="unitid" class="form-check-input cb-units" type="checkbox"
-                                                            name="unit_no[{{ $unit->id }}]"></td>
-                                                    <td>{{ $unit->id }}</td>
-                                                    <td>{{ $unit->status }}</td>
-                                                    <td>{{ $unit->phone_number }}</td>
-                                                    <td>{{ $unit->longitude }}</td>
-                                                    <td>{{ $unit->latitude }}</td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div> <!-- end table responsive-->
-                            </div> <!-- collapsed end -->
-                        </div> <!-- end card-body -->
-                    </div> <!-- end card-->
-                </div>
-
-                <div class="col-xl-6">
-                    <div class="card">
-                        <div class="card-body">
-
-                            <h4 class="header-title mb-0">Lineman</h4>
-
-                            <div id="cardCollpase5" class="collapse pt-3 show">
-                                <div class="table-responsive">
-                                    <table id="table2" class="table dt-responsive nowrap w-100">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    <input name="all" id="checkall-lineman" class="form-check-input"
-                                                        type="checkbox">
-                                                </th>
-                                                <th>Name</th>
-                                                <th>E-mail</th>
-                                                <th>Designation</th>
-                                            </tr>
-                                        </thead>
+                                                <input type="radio" id="radio{{ $incident->id }}" name="radio"
+                                                    class="radio[{{ $incident->id }}]" value="{{ $incident->id }}"
+                                                    onchange="updateMarker({{ $incident->units()->get() }}, {{ $incident->id }})">
 
 
-                                        <tbody>
-                                            @foreach ($linemans as $lineman)
-                                                <tr id="trlineman">
-                                                    <td>
-                                                        <input id="linemanid" class="form-check-input cb-lineman"
-                                                            type="checkbox" name="lineman_no[{{ $lineman->id }}]">
-                                                    </td>
-                                                    <td>{{ ucwords($lineman->name) }}</td>
-                                                    <td>{{ $lineman->email }}</td>
-                                                    <td>{{ ucwords($lineman->barangay) }}</td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div> <!-- end table responsive-->
-                            </div> <!-- collapsed end -->
-                        </div> <!-- end card-body -->
-                    </div> <!-- end card-->
-                </div> <!-- end col -->
-            </div>
-        </div>
+                                            </td>
+                                            <td>
+                                                {{ $incident->id }}
+                                            </td>
+                                            <td>
+                                                {{ count($incident->units()->get()) }}
 
-        <div class="modal fade" id="modalConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content inner-menu shadow">
-                    <div class="modal-header">
-                        <h6 class="modal-title" id="exampleModalLabel">Confirmation</h6>
-                    </div>
-                    <div class="modal-body text-center p-4">
-                        To dispatch, select <span class="text-success">Yes.</span>
-                    </div>
-                    <div class="modal-footer border">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                            aria-label="Close">Close</button>
-                        <button type="submit" class="btn btn-success" onclick="allPage()">Yes</button>
+                                            </td>
+                                            <td>
+                                                {{ $incident->created_at }}
+                                            </td>
+                                        </tr>
+                                    </form>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        {{-- <table class="table table-hover m-0 table-cente#f1556c dt-responsive nowrap w-100"
+                            id="basic-datatable">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">
+                                        &nbsp;
+                                    </th>
+                                    <th class="text-center">
+                                        Incident ID
+                                    </th>
+                                    <th class="text-center">
+                                        Number of Units
+                                    </th>
+                                    <th class="text-center">
+                                        Date Created
+                                    </th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+                                @foreach ($incidents as $incident)
+                                    <tr>
+                                        <td class="text-center">
+                                            <input type="radio" onclick="updateMarker({{ $incident->units()->get() }})">
+                                        </td>
+                                        <td class="text-center">
+                                            {{ $incident->id }}
+                                        </td>
+                                        <td class="text-center">
+                                            {{ count($incident->units()->get()) }}
+
+                                        </td>
+                                        <td class="text-center">
+                                            {{ $incident->created_at }}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table> --}}
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="d-flex justify-content-center" style="padding-bottom: 15%">
-            <button id="btnDispatch" type="button" class="border-0 btn btn-success px-5" data-bs-toggle="modal"
-                data-bs-target="#modalConfirm">Dispatch</button>
-        </div>
-    </form>
-    <footer class="footer">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-6">
-                    <script>
-                        document.write(new Date().getFullYear())
-                    </script> &copy; <span>Power Line Monitoring</span>
-                </div>
-                <div class="col-md-6">
-                    <div class="text-md-end footer-links d-none d-sm-block">
-                        <a href="/about">PLMS-CLZ</a>
-                    </div>
+            <div class="col-6">
+                <div class="card">
+                    <div id="map" style="height: calc(75vh - 71px);"></div>
+                    <script src="https://maps.googleapis.com/maps/api/js?key={{ $apiKey }}&callback=initMap&v=beta&libraries=visualization"
+                                        async>
+                    </script>
                 </div>
             </div>
+            <div class="justify-content-center d-flex mt-3">
+                <button class="btn btn-primary px-3 py-1">Next</button>
+
+            </div>
         </div>
-    </footer>
+    </div>
 @endsection
 @section('script')
-    <!-- Bootstrap Tables js -->
     <script src="{{ mix('js/vendor.min.js') }}"></script>
-
-    <script src="{{ asset('libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    {{-- <script src="{{ asset('libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
     <script src="{{ asset('libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('libs/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('libs/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('libs/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('libs/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('libs/pdfmake/build/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('libs/pdfmake/build/vfs_fonts.js') }}"></script>
+    <script src="{{ mix('js/pages/datatables.init.js') }}"></script> --}}
 
 
-
-
-    <script>
-        $("form").bind("keypress", function(e) {
-            if (e.keyCode == 13) {
-                return false;
-            }
-        });
-
-        function allPage() {
-            var linemanTable = $('#table2').DataTable();
-            var unitTable = $('#table').DataTable();
-            linemanTable.page.len(-1).draw();
-            unitTable.page.len(-1).draw();
-        }
-
-        function selectRow(row) {
-            var firstInput = row.getElementsByTagName('input')[0];
-            firstInput.checked = !firstInput.checked;
-        }
-
-        $(document).ready(function() {
-
-            document.getElementById('btnDispatch').disabled = true;
-
-            var unitTable = $('#table').DataTable({
-                "lengthMenu": [
-                    [10, 20, 50, -1],
-                    [10, 20, 50, "All"]
-                ],
-                'columnDefs': [{
-                    'targets': [0],
-                    'orderable': false, // orderable false
-                }]
-            });
-            var linemanTable = $('#table2').DataTable({
-                "lengthMenu": [
-                    [10, 20, 50, -1],
-                    [10, 20, 50, "All"]
-                ],
-                'columnDefs': [{
-                    'targets': [0],
-                    'orderable': false, // orderable false
-                }]
-            });
-
-            var LinemanPages = linemanTable.cells().nodes();
-            var UnitPages = unitTable.cells().nodes();
-            $('#checkall-lineman').change(function() {
-                if ($(this).hasClass('cb-lineman')) {
-                    $('input[type="checkbox"]', LinemanPages).prop('checked', false).css({
-                        "transition": "0.3s all ease-in-out",
-                    });
-
-                } else {
-                    $('input[type="checkbox"]', LinemanPages).prop('checked', true).css({
-                        "transition": "0.3s all ease-in-out",
-                    });
-                }
-                $(this).toggleClass('cb-lineman');
-            });
-
-            $('#checkall-units').change(function() {
-                if ($(this).hasClass('cb-units')) {
-                    $('input[type="checkbox"]', UnitPages).prop('checked', false).css({
-                        "transition": "0.3s all ease-in-out",
-                    });
-                } else {
-                    $('input[type="checkbox"]', UnitPages).prop('checked', true).css({
-                        "transition": "0.3s all ease-in-out",
-                    });
-                }
-                $(this).toggleClass('cb-units');
-            });
-        });
-
-        $("#checkall-units, #checkall-lineman").on('click', function() {
-            var allunit = $('#checkall-units:checked').val();
-            var alllineman = $('#checkall-lineman:checked').val();
-
-            if (allunit == "on" && alllineman == "on") {
-                document.getElementById('btnDispatch').disabled = false;
-            } else {
-                document.getElementById('btnDispatch').disabled = true;
-            }
-        });
-        $("#checkall-units, .cb-lineman").on('click', function() {
-            var allunit = $('#checkall-units:checked').val();
-            var lineman = $('.cb-lineman:checked').val();
-
-            if (allunit == "on" && lineman == "on") {
-                document.getElementById('btnDispatch').disabled = false;
-            } else {
-                document.getElementById('btnDispatch').disabled = true;
-            }
-        });
-        $("#checkall-lineman, .cb-units").on('click', function() {
-            var alllineman = $('#checkall-lineman:checked').val();
-            var unit = $('.cb-units:checked').val();
-
-            if (alllineman == "on" && unit == "on") {
-                document.getElementById('btnDispatch').disabled = false;
-            } else {
-                document.getElementById('btnDispatch').disabled = true;
-            }
-        });
-        $(".cb-units, .cb-lineman").on('click', function() {
-            var lineman = $('.cb-lineman:checked').val();
-            var unit = $('.cb-units:checked').val();
-            if (lineman == "on" && unit == "on") {
-                document.getElementById('btnDispatch').disabled = false;
-            } else {
-                document.getElementById('btnDispatch').disabled = true;
-            }
-        });
-    </script>
-
-
-
-    {{-- <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script> --}}
+    <script src="{{ asset('libs/bootstrap-table/bootstrap-table.min.js') }}"></script>
+    <script src="{{ mix('js/pages/bootstrap-tables.init.js') }}"></script>
 @endsection

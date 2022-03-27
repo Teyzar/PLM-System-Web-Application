@@ -15,7 +15,7 @@
                 </div>
                 <div class="justify-content-center d-flex">
 
-                    <span class="h4 text-primary">There's no publish incidents yet.</span>
+                    <span class="h4 text-primary">No published incidents.</span>
                 </div>
 
             </div>

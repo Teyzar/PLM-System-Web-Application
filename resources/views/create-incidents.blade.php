@@ -125,8 +125,7 @@
                                         <select id="title" class="form-control" data-toggle="select2" data-width="100%" onselect="checkFields()" name="title">
                                             <option value="" >...</option>
                                             <option value="investigating">Investigating</option>
-                                            <option value="fixing">Fixing</option>
-                                            <option value="resolved">Resolved</option>
+                                            <option value="fixing">Update</option>
                                         </select>
 
                                         @error('title')
@@ -167,12 +166,11 @@
                                     <thead>
                                         <tr>
                                             <th>
-                                                <input type="checkbox" name="" id="head-checkbox"
-                                                    onclick="checkall(); checkFields();">
+                                                {{-- <input type="hidden" class="checkbox"> --}}
                                             </th>
-                                            <th>Id</th>
+                                            <th>ID</th>
                                             <th>Status</th>
-                                            <th>Mobile #</th>
+                                            <th>Mobile Number</th>
                                             <th>Longitude</th>
                                             <th>Latitude</th>
                                         </tr>

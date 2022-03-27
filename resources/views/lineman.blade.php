@@ -20,7 +20,7 @@
                         data-bs-toggle="modal" data-bs-target="#modalRegisterForm" data-toggle="tooltip">
                         <i class="fe-user-plus pe-1"></i> Register
                     </button>
-                    <h4 class="header-title mb-4">Accounts</h4>
+                    <h4 class="header-title mb-4">Linemen Accounts</h4>
 
                     <div class="table-responsive">
                         <table class="table table-hover dt-responsive nowrap w-100" id="datatable-buttons">
@@ -89,6 +89,26 @@
             </div>
         </div>
     </footer>
+    <style>
+        @media pdf {
+            tr>th:last-of-type {
+                display: none;
+            }
+
+            tr>td:last-of-type {
+                display: none;
+            }
+        }
+        @media print {
+            tr>th:last-of-type {
+                display: none;
+            }
+
+            tr>td:last-of-type {
+                display: none;
+            }
+        }
+    </style>
 @endsection
 @section('script')
     <script src="{{ mix('js/vendor.min.js') }}"></script>
