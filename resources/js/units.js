@@ -1,3 +1,5 @@
+let timestamp = localStorage.getItem('timestamp');
+
 $(document).on('ready', function () {
     var submitbtn = $('#submitbtn');
     var phone_num = $('#phone_number');
@@ -151,12 +153,15 @@ function removeUnit(id) {
 
 function refreshUnit(id) {
     var refresh = document.getElementById(`ref-icon[${id}]`);
+
+    var refreshbtn = document.getElementById(`refreshbtn[${id}]`);
+    refreshbtn.disabled = true;
+
     refresh.className = "fe-refresh-ccw text-success fs-5 rotate";
     setTimeout(() => {
         refresh.className = "fe-refresh-ccw text-success fs-5";
     }, 1000);
 
-    //
     var processing = $('#process2');
     var closebtn = $('#close-btn');
     var spinner1 = $('#s1');
@@ -188,9 +193,7 @@ function refreshUnit(id) {
 
     pmessage.html('');
 
-
     $('#refreshModal').modal('show');
-
 
     Echo.private("Units").listen("UnitRefreshUpdate", (data) => {
         console.log(data.message);
@@ -245,9 +248,10 @@ function refreshUnit(id) {
                 setTimeout(() => {
                     $('#refreshModal').modal('hide');
                 }, 2000);
+
                 message.css('background', '#63d19e');
                 processing.html(
-                    '<label class="fs-4 pb-2 text-success">Unit Registered Succesfully</label>'
+                    '<label class="fs-4 pb-2 text-success">Request Sent!</label>'
                 );
                 spinner3.html(
                     '<i class="mdi mdi-check fs-5"></i>');
@@ -257,7 +261,7 @@ function refreshUnit(id) {
                 closebtn.show();
                 message.css('background', '#f1556c');
                 processing.html(
-                    '<label class="fs-4 pb-2 text-danger">There was an error during sending SMS</label>'
+                    '<label class="fs-4 pb-2 text-danger">There was an error in sending request</label>'
                 );
                 spinner3.html(
                     '<i class="mdi mdi-alert-rhombus fs-4"></i>');
@@ -267,7 +271,6 @@ function refreshUnit(id) {
         }
     });
 
-
     $.ajax({
         type: 'get',
         url: `/units/${id}/refresh`,
@@ -275,3 +278,4 @@ function refreshUnit(id) {
         dataType: 'json',
     });
 }
+
