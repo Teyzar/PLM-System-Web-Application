@@ -72,12 +72,11 @@
         <div class="container-fluid mt-2">
             <div class="card" style="margin-bottom: 6%">
                 <div class="card-body">
-                    <h4 class="header-title mb-3"> Dispatch</h4>
                     <div class="row">
                         <div class="col-xl-6">
                             <h4 class="header-title">Incidents</h4>
                             <p class="sub-header">
-                                Please select a incident.
+                                Please select an incident.
                             </p>
 
                             <table data-toggle="table" data-page-size="10" data-buttons-class="xs btn-light"
@@ -149,45 +148,8 @@
 @endsection
 @section('script')
     <script src="{{ mix('js/vendor.min.js') }}"></script>
-    <script src="{{ asset('libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
     <script src="{{ asset('libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('libs/bootstrap-table/bootstrap-table.min.js') }}"></script>
-
-
     <script src="{{ mix('js/pages/bootstrap-tables.init.js') }}"></script>
 
-    <script>
-        // function allPage() {
-        //     var linemanTable = $('#table2').DataTable();
-        //     var unitTable = $('#table').DataTable();
-        //     linemanTable.page.len(-1).draw();
-        //     unitTable.page.len(-1).draw();
-        // }
-
-        // function selectRow(row) {
-        //     var firstInput = row.getElementsByTagName('input')[0];
-        //     firstInput.checked = !firstInput.checked;
-        // }
-
-        $(document).ready(function() {
-            var linemanTable = $('#tickets-table').DataTable();
-
-            var LinemanPages = linemanTable.cells().nodes();
-
-            $('#checkall-lineman').change(function() {
-                if ($(this).hasClass('cb-lineman')) {
-                    $('input[type="checkbox"]', LinemanPages).prop('checked', false).css({
-                        "transition": "0.3s all ease-in-out",
-                    });
-
-                } else {
-                    $('input[type="checkbox"]', LinemanPages).prop('checked', true).css({
-                        "transition": "0.3s all ease-in-out",
-                    });
-                }
-                $(this).toggleClass('cb-lineman');
-            });
-        });
-    </script>
 @endsection

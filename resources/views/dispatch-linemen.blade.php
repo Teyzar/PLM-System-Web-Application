@@ -42,7 +42,7 @@
         <div class="container-fluid mt-2">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="header-title mb-3">Kindly select a linemen to dispatch.</h4>
+                    <h4 class="header-title mb-3">Linemen</h4>
 
                     <div class="table-responsive">
                         <table class="table table-hover dt-responsive nowrap w-100 table-bordered" id="tickets-table">
@@ -74,8 +74,27 @@
                     </div>
                 </div>
             </div>
-            <div class="justify-content-center d-flex" style="margin-bottom: 6%">
-                <button id="btnDispatch" type="submit" class="btn btn-primary px-5 py-1" disabled>Dispatch</a>
+            <div class="modal fade" id="modalConfirm" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content inner-menu shadow">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                        </div>
+                        <div class="modal-body text-center p-3">
+                            To dispatch, select <span class="text-success">Yes.</span>
+                        </div>
+                        <div class="modal-footer border">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                aria-label="Close">Close</button>
+                            <button type="submit" class="btn btn-success" onclick="openAllpage()">Yes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="justify-content-center d-flex" style="margin-bottom: 7%">
+                <button id="btnDispatch" type="button" class="btn btn-primary px-5 py-1" data-bs-toggle="modal"
+                    data-bs-target="#modalConfirm" disabled>Dispatch</a>
             </div>
         </div>
     </form>
@@ -106,6 +125,10 @@
     <script src="{{ mix('js/pages/tickets.js') }}"></script>
 
     <script>
+        function openAllpage() {
+            var linemanTable = $('#tickets-table').DataTable();
+            linemanTable.page.len(-1).draw();
+        }
         $(document).ready(function() {
             var linemanTable = $('#tickets-table').DataTable();
 
