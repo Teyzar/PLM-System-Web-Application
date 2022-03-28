@@ -100,4 +100,19 @@ class LinemanApiController extends Controller
 
         return ['message' => 'Logged out!'];
     }
+
+    public function incidents(Request $request, $id)
+    {
+        $lineman = Lineman::find($id);
+
+        if (!$lineman) abort(404);
+
+        $incidents = $lineman->incidents()->where('resolved', false)->with([
+            'info' => function ($query) {
+                $query->latest();
+            },
+        ])->get();
+
+        return $incidents;
+    }
 }
