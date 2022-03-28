@@ -55,11 +55,13 @@
                                                 {{ \Carbon\Carbon::parse($unit->updated_at)->toDayDateTimeString() }}
                                             </td>
                                             <td>
-                                                <button type="button" class="btn border-0 float-end p-0">
+                                                <button type="button" class="btn border-0 float-end p-0"
+                                                    id="refreshbtn[{{ $unit->id }}]"
+                                                    onclick="refreshUnit({{ $unit->id }});">
                                                     <i id="ref-icon[{{ $unit->id }}]"
                                                         class="fe-refresh-ccw text-success fs-5" title="Refresh"
                                                         tabindex="0" data-plugin="tippy" data-tippy-placement="top"
-                                                        onclick="refreshUnit({{ $unit->id }})"></i>
+                                                        type="button"></i>
                                                 </button>
                                             </td>
                                             <td>
@@ -127,6 +129,8 @@
     <script src="{{ asset('libs/pdfmake/build/vfs_fonts.js') }}"></script>
     <script src="{{ mix('js/pages/datatables.init.js') }}"></script>
     <script>
+        let timestamp = localStorage.getItem('timestamp');
+
         $(document).ready(function() {
             Echo.private("Units").listen("UnitUpdate", updateUnit);
         });

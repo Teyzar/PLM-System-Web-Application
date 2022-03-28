@@ -95,8 +95,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div id="process2" class="justify-content-center d-flex pt-0 mb-4"></div>
-                <div class="justify-content-center d-flex mb-4">
+                <div id="process2" class="justify-content-center d-flex pt-0 mb-2"></div>
+                <div class="justify-content-center d-flex mb-2">
                     <div id="steps-id2" class="progresses">
                         <div id="start2" class="steps border"><span id="s1" class=""><label
                                     class="text-muted">1</label></span></div> <span id="line-1"
