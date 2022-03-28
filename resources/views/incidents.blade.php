@@ -47,9 +47,9 @@
                             @endauth
                             <a href="#" class="text-muted">
                                 <h5 class="mt-0"><span
-                                        class="fw-bold fs-5">{{ \Carbon\Carbon::parse($incident->created_at)->toDayDateTimeString() }}</span>
+                                        class="text-secondary">{{ \Carbon\Carbon::parse($incident->created_at)->toDayDateTimeString() }}</span>
+                                </h5>
                             </a>
-                            </h5>
                             <hr>
                             <form id="forms-id" action="/incidents/{{ $incident->id }}" method="POST">
                                 @csrf
