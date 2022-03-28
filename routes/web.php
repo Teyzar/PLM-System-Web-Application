@@ -34,7 +34,10 @@ Route::get('/about', function() {
 
 
 
-Route::resource('/dispatch', DispatchController::class)->only(['index', 'store']);
+Route::resource('/dispatch', DispatchController::class)->only(['index']);
+Route::get('/incidents/{id}/dispatch', [DispatchController::class, '_dispatch'])->name('incidents.dispatch');
+Route::post('/incidents/{id}/dispatch', [DispatchController::class, 'store'])->name('dispatch.store');
+
 
 Route::resource('/incidents', IncidentsController::class)->except('add');
 Route::post('/incidents/{id}/add', [IncidentsController::class, 'add'])->name('incidents.add');
