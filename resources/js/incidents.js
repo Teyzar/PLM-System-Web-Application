@@ -17,7 +17,7 @@ function editIncident(id) {
                 title.html(`<select id="select-title" class="form-control mb-2" data-width="10%" data-toggle="select2" name="title[]">
                 <option class="text-scondary fw-bolder">${dis_title}</option>
                 <option value="investigating">Investigating</option>
-                <option value="fixing">Fixing</option>
+                <option value="update">Update</option>
                 <option value="resolved">Resolved</option>
                 </select>`);
                 desc.html(
@@ -49,7 +49,6 @@ function editIncident(id) {
             method: "PUT",
             data: $this.serialize(),
             success: function (result) {
-                console.log(result);
                 for (const info of result) {
                     const desc = $(`#input-description${info.id}`);
                     const title = $(`#title${info.id}`);
@@ -58,9 +57,10 @@ function editIncident(id) {
                     title.html(info.title + ' <i class="fe-minus"></i>');
                     savebtn.html('');
                     cancelbtn.html('');
+
                 }
 
-            }
+            },
         });
     });
 }
@@ -80,7 +80,7 @@ function addIncident(id) {
                 <select id="title" class="form-control" data-toggle="select2" name="title" required>
                     <option value="" class="text-scondary fw-bolder">Title</option>
                     <option value="investigating">Investigating</option>
-                    <option value="fixing">Fixing</option>
+                    <option value="update">Update</option>
                     <option value="resolved">Resolved</option>
                 </select>`);
 
