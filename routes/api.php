@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::resource('/lineman', LinemanApiController::class, ['as' => 'api'])->only(['update']);
 Route::post('/lineman/login', [LinemanApiController::class, 'login'])->name('api.lineman.login');
+Route::post('/lineman/logout', [LinemanApiController::class, 'logout'])->name('api.lineman.logout');
 
 Route::resource('/units', UnitsApiController::class, ['as' => 'api'])->only(['update']);
 
