@@ -30,21 +30,17 @@ class DispatchController extends Controller
     {
         $incidents = Incident::where('resolved', false)->get();
 
+        $linemen = Lineman::all();
+
 
 
 
         return view('dispatch', [
             'incidents' => $incidents,
             'apiKey' => env('MAPS_KEY', 'AIzaSyA2vqdxEToK1qKnxm14YrCwJ1xoLd1FcBU'),
-            'units' => Unit::where('status', 'fault')->get()
+            'units' => Unit::where('status', 'fault')->get(),
+            'linemen' => $linemen
         ]);
-        // $lineman = Lineman::all();
-        // $unit = Unit::all();
-
-        // return view('dispatch', [
-        //     'linemans' => $lineman,
-        //     'units' => $unit
-        // ]);
     }
 
     /**
@@ -53,18 +49,40 @@ class DispatchController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+
+    public function _dispatch(Request $request, $id)
     {
+        $incident = Incident::find($id);
+
+        $assigned_linemen = $incident->linemen()->get();
+
+
+        $linemen = Lineman::all();
+
+        return view('dispatch-linemen', [
+            'linemen' => $linemen,
+            'incident_id' => $id,
+            'assigned_linemen' => $assigned_linemen
+        ]);
+    }
+    public function store(Request $request, $id)
+    {
+
         $fields = $request->validate([
             'lineman_ids' => 'required|array|min:1',
-            'unit_ids' => 'required|array|min:1',
         ]);
 
+
+        $incident = Incident::find($id);
+
         $linemen = Lineman::whereIn('id', array_keys($fields['lineman_ids']))->get();
-        $units = Unit::whereIn('id', array_keys($fields['unit_ids']))->get();
+
+        $incident->linemen()->syncWithoutDetaching(array_keys($fields['lineman_ids']));
+
+        $units = $incident->units()->get();
 
         Notification::send($linemen, new Dispatch($units));
 
-        return redirect()->back();
+        return redirect('/dispatch');
     }
 }
