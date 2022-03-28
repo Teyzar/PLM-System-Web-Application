@@ -12,9 +12,9 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid mt-4">
+    <div class="container-fluid mt-2">
         <div class="col-12">
-            <div class="card">
+            <div class="card" style="margin-bottom: 6%">
                 <div class="card-body">
                     <button type="button" class="btn btn-sm btn-blue waves-effect waves-light float-end fs-5"
                         data-bs-toggle="modal" data-bs-target="#modalRegisterForm" data-toggle="tooltip">
