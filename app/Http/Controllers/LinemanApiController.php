@@ -19,6 +19,16 @@ class LinemanApiController extends Controller
     }
 
     /**
+     * Show the currently logged in lineman.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        return $request->user();
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
