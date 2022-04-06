@@ -70,4 +70,9 @@ class UnitsApiController extends Controller
 
         return $unit;
     }
+
+    public function heatmap(Request $request)
+    {
+        return Unit::where('status', 'fault')->get(['id', 'status', 'latitude', 'longitude']);
+    }
 }
