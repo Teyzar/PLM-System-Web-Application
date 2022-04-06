@@ -24,6 +24,7 @@ Route::post('/lineman/login', [LinemanApiController::class, 'login'])->name('api
 Route::post('/lineman/logout', [LinemanApiController::class, 'logout'])->name('api.lineman.logout');
 
 Route::resource('/units', UnitsApiController::class, ['as' => 'api'])->only(['update']);
+Route::get('/units/heatmap', [UnitsApiController::class, 'heatmap'])->name('api.units.heatmap');
 
 Route::resource('/user', UserApiController::class, ['as' => 'api'])->only(['index']);
 Route::post('/user/login', [UserApiController::class, 'login'])->name('api.user.login');
