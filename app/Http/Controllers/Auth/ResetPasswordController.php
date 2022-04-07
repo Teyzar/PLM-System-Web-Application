@@ -1,13 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
 namespace Illuminate\Foundation\Auth;
-
-
-use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Auth\ResetsPasswords;
-
 
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\JsonResponse;
@@ -19,22 +12,9 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
 
-class ResetPasswordController extends Controller
+trait ResetsPasswords
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Password Reset Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller is responsible for handling password reset requests
-    | and uses a simple trait to include this behavior. You're free to
-    | explore this trait and override any methods you wish to tweak.
-    |
-    */
-
-    use ResetsPasswords;
-
-    // use RedirectsUsers;
+    use RedirectsUsers;
 
     /**
      * Display the password reset view for the given token.
@@ -67,8 +47,7 @@ class ResetPasswordController extends Controller
         // will update the password on an actual user model and persist it to the
         // database. Otherwise we will parse the error and return the response.
         $response = $this->broker()->reset(
-            $this->credentials($request),
-            function ($user, $password) {
+            $this->credentials($request), function ($user, $password) {
                 $this->resetPassword($user, $password);
             }
         );
@@ -77,8 +56,8 @@ class ResetPasswordController extends Controller
         // the application's home authenticated view. If there is an error we can
         // redirect them back to where they came from with their error message.
         return $response == Password::PASSWORD_RESET
-            ? $this->sendResetResponse($request, $response)
-            : $this->sendResetFailedResponse($request, $response);
+                    ? $this->sendResetResponse($request, $response)
+                    : $this->sendResetFailedResponse($request, $response);
     }
 
     /**
@@ -114,10 +93,7 @@ class ResetPasswordController extends Controller
     protected function credentials(Request $request)
     {
         return $request->only(
-            'email',
-            'password',
-            'password_confirmation',
-            'token'
+            'email', 'password', 'password_confirmation', 'token'
         );
     }
 
@@ -128,18 +104,18 @@ class ResetPasswordController extends Controller
      * @param  string  $password
      * @return void
      */
-    // protected function resetPassword($user, $password)
-    // {
-    //     $this->setUserPassword($user, $password);
+    protected function resetPassword($user, $password)
+    {
+        $this->setUserPassword($user, $password);
 
-    //     $user->setRememberToken(Str::random(60));
+        $user->setRememberToken(Str::random(60));
 
-    //     $user->save();
+        $user->save();
 
-    //     event(new PasswordReset($user));
+        event(new PasswordReset($user));
 
-    //     $this->guard()->login($user);
-    // }
+        $this->guard()->login($user);
+    }
 
     /**
      * Set the user's password.
@@ -167,7 +143,7 @@ class ResetPasswordController extends Controller
         }
 
         return redirect($this->redirectPath())
-            ->with('status', trans($response));
+                            ->with('status', trans($response));
     }
 
     /**
@@ -186,8 +162,8 @@ class ResetPasswordController extends Controller
         }
 
         return redirect()->back()
-            ->withInput($request->only('email'))
-            ->withErrors(['email' => trans($response)]);
+                    ->withInput($request->only('email'))
+                    ->withErrors(['email' => trans($response)]);
     }
 
     /**
@@ -209,11 +185,4 @@ class ResetPasswordController extends Controller
     {
         return Auth::guard();
     }
-
-    /**
-     * Where to redirect users after resetting their password.
-     *
-     * @var string
-     */
-    protected $redirectTo = RouteServiceProvider::HOME;
 }
