@@ -15,7 +15,7 @@ class UserApiController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth:sanctum', 'ability:accessUser'])->except(['login']);
+        $this->middleware(['auth:sanctum', 'ability:accessUser'])->except(['login', 'register']);
     }
 
     /**
