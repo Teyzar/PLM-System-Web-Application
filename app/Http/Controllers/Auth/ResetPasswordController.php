@@ -104,18 +104,18 @@ trait ResetsPasswords
      * @param  string  $password
      * @return void
      */
-    protected function resetPassword($user, $password)
-    {
-        $this->setUserPassword($user, $password);
+    // protected function resetPassword($user, $password)
+    // {
+    //     $this->setUserPassword($user, $password);
 
-        $user->setRememberToken(Str::random(60));
+    //     $user->setRememberToken(Str::random(60));
 
-        $user->save();
+    //     $user->save();
 
-        event(new PasswordReset($user));
+    //     event(new PasswordReset($user));
 
-        $this->guard()->login($user);
-    }
+    //     $this->guard()->login($user);
+    // }
 
     /**
      * Set the user's password.
