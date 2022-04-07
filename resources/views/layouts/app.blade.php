@@ -340,36 +340,36 @@
     <script src="{{ asset('libs/moment/min/moment.min.js') }}"></script>
     <script src="{{ mix('js/app.min.js') }}"></script>
 
-    <script>
-        function toasterOptions() {
-            toastr.options = {
-                "closeButton": true,
-                "debug": false,
-                "newestOnTop": false,
-                "progressBar": true,
-                "positionClass": "toast-bottom-right",
-                "preventDuplicates": true,
-                "onclick": false,
-                "showDuration": "100",
-                "hideDuration": false,
-                "timeOut": false,
-                "extendedTimeOut": false,
-                "showEasing": "swing",
-                "hideEasing": false,
+    @auth
+        <script>
+            function toasterOptions() {
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": true,
+                    "positionClass": "toast-bottom-right",
+                    "preventDuplicates": true,
+                    "onclick": false,
+                    "showDuration": "100",
+                    "hideDuration": false,
+                    "timeOut": false,
+                    "extendedTimeOut": false,
+                    "showEasing": "swing",
+                    "hideEasing": false,
+                };
             };
-        };
 
-
-        toasterOptions();
-        Echo.private("Units").listen("UnitUpdate", (data) => {
-            if (data.unit.status === "fault") {
-                toastr.error("Power outage detected! Unit ID: " + data.unit.id);
-            } else if (data.unit.status === "normal") {
-                toastr.success("Unit ID: " + data.unit.id + " resolved!");
-            }
-
-        })
-    </script>
+            toasterOptions();
+            Echo.private("Units").listen("UnitUpdate", (data) => {
+                if (data.unit.status === "fault") {
+                    toastr.error("Power outage detected! Unit ID: " + data.unit.id);
+                } else if (data.unit.status === "normal") {
+                    toastr.success("Power restored! Unit ID: " + data.unit.id);
+                }
+            })
+        </script>
+    @endauth
 
     @yield('script')
 
