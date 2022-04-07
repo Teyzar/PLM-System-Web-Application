@@ -30,6 +30,7 @@
                                     <th>Name</th>
                                     <th>E-mail</th>
                                     <th>Designation</th>
+                                    <th>Contact no.</th>
                                     <th>Registration</th>
                                     <th>Action</th>
                                 </tr>
@@ -41,6 +42,7 @@
                                         <td class="text-capitalize">{{ $lineman->name }}</td>
                                         <td>{{ $lineman->email }}</td>
                                         <td class="text-capitalize">{{ $lineman->barangay }}</td>
+                                        <td class="text-capitalize">{{ $lineman->contact_no }}</td>
                                         <td>{{ \Carbon\Carbon::parse($lineman->created_at)->toDayDateTimeString() }}</td>
 
                                         <td>
@@ -129,7 +131,7 @@
             $('#success-alert-modal').modal('show');
         })
     </script> --}}
-    @if ($errors->has('email'))
+    @if ($errors->has('email') || $errors->has('contact_no'))
         <script>
             $(document).ready(function() {
                 $('#modalRegisterForm').modal('show');
@@ -207,6 +209,7 @@
                     $('input#updatename').val(data.name);
                     $('input#updatebarangay').val(data.barangay);
                     $('input#updateemail').val(data.email);
+                    $('input#updatecontact_no').val(data.contact_no);
                     $('#modalEditForm').attr('action', `lineman/${data.id}`);
                 },
                 error: (err) => console.error(err)

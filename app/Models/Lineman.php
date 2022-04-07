@@ -18,6 +18,7 @@ class Lineman extends Model
         'email',
         'password',
         'barangay',
+        'contact_no',
         'fcm_token'
     ];
 

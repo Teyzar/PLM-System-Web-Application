@@ -39,6 +39,16 @@
                             value="{{ old('barangay') }}" required>
                     </div>
 
+                    <div class="mb-3">
+                        <label class="form-label opacity-100">Contact Number</label>
+                        <input type="text" class="form-control" id="contact_no" name="contact_no" placeholder="+639"
+                            value="{{ old('contact_no') }}" required>
+
+                        @if ($errors->has('contact_no'))
+                            <div class="error text-danger">{{ $errors->first('contact_no') }}</div>
+                        @endif
+                    </div>
+
                     <div class="modal-footer d-block d-flex align-items-center justify-content-center border-1">
                         <button type="submit" class="btn btn-warning w-75">Submit</button>
                     </div>
@@ -81,6 +91,18 @@
                             placeholder="Barangay" value="{{ old('updatebarangay') }}" required>
 
                         @error('updatebarangay')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Contact Number</label>
+                        <input type="text" class="form-control" id="updatecontact_no" name="updatecontact_no"
+                            placeholder="+639" value="{{ old('updatecontact_no') }}" required>
+
+                        @error('updatecontact_no')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>

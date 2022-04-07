@@ -51,7 +51,8 @@ class LinemanController extends Controller
         $rules = [
             'name' => 'required',
             'email'    => 'required|email|unique:linemen',
-            'barangay' => 'required'
+            'barangay' => 'required',
+            'contact_no' => 'required|starts_with:+639|min:13|max:13'
         ];
 
         $validation = Validator::make($request->all(), $rules);
@@ -64,6 +65,7 @@ class LinemanController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'barangay' => $request->barangay,
+            'contact_no' => $request->contact_no,
             'password' => Hash::make("plmsystem")
         ];
 
@@ -104,7 +106,8 @@ class LinemanController extends Controller
 
         $rules = [
             'updatename' => 'required',
-            'updatebarangay' => 'required'
+            'updatebarangay' => 'required',
+            'updatecontact_no' => 'required',
         ];
 
         $validation = Validator::make($request->all(), $rules);
@@ -116,6 +119,8 @@ class LinemanController extends Controller
         $lineman->name = $request->input('updatename');
         $lineman->email = $request->input('updateemail');
         $lineman->barangay = $request->input('updatebarangay');
+        $lineman->contact_no = $request->input('updatecontact_no');
+
 
         $lineman->update();
 
