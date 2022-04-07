@@ -129,8 +129,6 @@
     <script src="{{ asset('libs/pdfmake/build/vfs_fonts.js') }}"></script>
     <script src="{{ mix('js/pages/datatables.init.js') }}"></script>
     <script>
-        let timestamp = localStorage.getItem('timestamp');
-
         $(document).ready(function() {
             Echo.private("Units").listen("UnitUpdate", updateUnit);
         });
