@@ -28,4 +28,5 @@ Route::get('/units/heatmap', [UnitsApiController::class, 'heatmap'])->name('api.
 
 Route::resource('/user', UserApiController::class, ['as' => 'api'])->only(['index']);
 Route::post('/user/login', [UserApiController::class, 'login'])->name('api.user.login');
+Route::post('/user/register', [UserApiController::class, 'register'])->name('api.user.register');
 Route::post('/user/logout', [UserApiController::class, 'logout'])->name('api.user.logout');
