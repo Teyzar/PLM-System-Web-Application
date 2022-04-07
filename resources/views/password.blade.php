@@ -61,11 +61,14 @@
                             </div>
 
                             <div class="form-group">
-                                <a class="btn btn-success btn-lg float-end py-1 px-3 fs-5 mt-2" data-bs-toggle="modal"
+                                {{-- <a class="btn btn-success btn-lg float-end py-1 px-3 fs-5 mt-2" data-bs-toggle="modal"
                                     data-bs-target="#modalConfirm" type="submit">
-                                    <i class="mdi mdi-content-save-move pe-1"></i>
+
                                     Save
-                                </a>
+                                </a> --}}
+                                <button type="submit" class="btn btn-primary mt-1 float-end"><i
+                                        class="mdi mdi-content-save-move pe-1"></i>Save changes</button>
+
                             </div>
                             @include('modals.password')
                         </form>
@@ -78,7 +81,9 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-6">
-                    <script>document.write(new Date().getFullYear())</script> &copy; <span>Power Line Monitoring</span>
+                    <script>
+                        document.write(new Date().getFullYear())
+                    </script> &copy; <span>Power Line Monitoring</span>
                 </div>
                 <div class="col-md-6">
                     <div class="text-md-end footer-links d-none d-sm-block">
