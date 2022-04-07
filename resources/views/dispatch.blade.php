@@ -107,7 +107,7 @@
 
                                             </td>
                                             <td>
-                                                {{ $incident->created_at }}
+                                                {{Carbon\Carbon::parse($incident->created_at)->toDayDateTimeString()}}
                                             </td>
                                         </tr>
                                     @endforeach
@@ -148,7 +148,6 @@
 @endsection
 @section('script')
     <script src="{{ mix('js/vendor.min.js') }}"></script>
-    <script src="{{ asset('libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('libs/bootstrap-table/bootstrap-table.min.js') }}"></script>
     <script src="{{ mix('js/pages/bootstrap-tables.init.js') }}"></script>
 
