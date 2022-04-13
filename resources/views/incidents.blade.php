@@ -22,6 +22,8 @@
         @endif
         <div class="row">
             @foreach ($incidents as $incident)
+                <span class="anchor" id="{{ $incident->id }}"></span>
+
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body shadow">
@@ -45,29 +47,40 @@
                                     </div>
                                 </div> <!-- end dropdown -->
                             @endauth
-                            <a href="#" class="text-muted">
-                                <h5 class="mt-0"><span
-                                        class="text-secondary">{{ \Carbon\Carbon::parse($incident->created_at)->toDayDateTimeString() }}</span>
+
+                            <a href="#{{ $incident->id }}" class="text-muted">
+                                <h5 class="mt-0">
+                                    <span class="text-secondary">
+                                        {{ \Carbon\Carbon::parse($incident->created_at)->toDayDateTimeString() }}
+                                    </span>
                                 </h5>
                             </a>
+
                             <hr>
+
                             <form id="forms-id" action="/incidents/{{ $incident->id }}" method="POST">
                                 @csrf
                                 <div id="info-body{{ $incident->id }}"></div>
 
-                                @foreach ($incident->info()->orderBy('created_at', 'desc')->get()
-        as $info)
+                                @foreach ($incident->info as $info)
+                                    <span class="anchor" id="{{ $incident->id }}-{{ $info->id }}"></span>
+
                                     <div class="col-8">
-                                        <span id="title{{ $info->id }}"
-                                            class="text-capitalize fw-bolder h5 mt-0">{{ $info->title }} <i
-                                                class="fe-minus"></i></span>
-                                        <span id="input-description{{ $info->id }}"
-                                            class="">{{ $info->description }}</span>
+                                        <a href="#{{ $incident->id }}-{{ $info->id }}" class="text-muted">
+                                            <span id="title{{ $info->id }}" class="text-capitalize fw-bolder h5 mt-0">
+                                                {{ $info->title }}
+                                                <i class="fe-minus"></i>
+                                            </span>
+                                        </a>
+                                        <span id="input-description{{ $info->id }}" class="">
+                                            {{ $info->description }}
+                                        </span>
                                     </div>
 
-
-                                    <p class="mt-2"><span
-                                            class="text-muted">{{ \Carbon\Carbon::parse($info->created_at)->toDayDateTimeString() }}</span>
+                                    <p class="mt-2">
+                                        <span class="text-muted">
+                                            {{ \Carbon\Carbon::parse($info->created_at)->toDayDateTimeString() }}
+                                        </span>
                                     </p>
                                 @endforeach
 
