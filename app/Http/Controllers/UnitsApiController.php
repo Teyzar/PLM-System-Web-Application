@@ -72,7 +72,7 @@ class UnitsApiController extends Controller
         ]);
 
         // Update incident if resolved
-        $incident = $unit->incidents()->orderBy('created_at', 'desc')->first();
+        $incident = $unit->latestIncident();
 
         if ($incident) {
             $units = $incident->units()->where('status', 'fault')->get();
