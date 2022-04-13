@@ -46,6 +46,7 @@ Route::resource('/lineman', LinemanController::class)->except(['create', 'edit']
 Route::post('/lineman/{id}/reset', [LinemanController::class, 'reset'])->name('lineman.reset');
 
 Route::resource('/units', UnitsController::class)->except(['show', 'edit', 'update']);
+Route::get('/units/{id}/logs', [UnitsController::class, 'logs'])->name('unit.logs');
 Route::get('/units/{id}/refresh', [UnitsController::class, 'refresh'])->name('unit.refresh');
 
 Route::resource('/user', UserController::class)->except(['show', 'edit', 'update']);
