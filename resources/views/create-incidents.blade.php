@@ -11,13 +11,15 @@
     <script>
         let map, markers;
 
+        var cadiz = {
+            'lat': 10.95583493620157,
+            'lng': 123.30611654802884
+        };
+
         function initMap() {
             map = new google.maps.Map(document.getElementById("map"), {
                 zoom: 15,
-                center: {
-                    'lat': 10.95583493620157,
-                    'lng': 123.30611654802884
-                },
+                center: cadiz,
                 mapTypeId: "roadmap"
             });
 
@@ -62,9 +64,12 @@
                 lng: parseFloat(unit.longitude)
             };
 
+
             if (checkbox.checked) {
+                map.setCenter(position);
                 addMarker(position, `${id}`);
             } else {
+                map.setCenter(cadiz);
                 removeMarker(position);
             }
         }
@@ -122,8 +127,9 @@
                                         <label for="project-priority" class="form-label">Title <span
                                                 class="text-danger"> *</span></label>
 
-                                        <select id="title" class="form-control" data-toggle="select2" data-width="100%" onselect="checkFields()" name="title">
-                                            <option value="" >...</option>
+                                        <select id="title" class="form-control" data-toggle="select2" data-width="100%"
+                                            onselect="checkFields()" name="title">
+                                            <option value="">...</option>
                                             <option value="investigating">Investigating</option>
                                             <option value="fixing">Update</option>
                                         </select>
