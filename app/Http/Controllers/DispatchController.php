@@ -32,9 +32,7 @@ class DispatchController extends Controller
             'apiKey' => env('MAPS_KEY', 'AIzaSyA2vqdxEToK1qKnxm14YrCwJ1xoLd1FcBU'),
             'incidents' => Incident::where('resolved', false)->get(),
             'linemen' => Lineman::all(),
-            'units' => Unit::all()->filter(function ($unit) {
-                return $unit->status == 'fault';
-            }),
+            'units' => Unit::where('status', 'fault')->get(),
         ]);
     }
 
