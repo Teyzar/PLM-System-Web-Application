@@ -38,6 +38,7 @@
                                     <th width="20%">Updated&nbsp;Last</th>
                                     <th width="1%">&nbsp;</th>
                                     <th width="1%">&nbsp;</th>
+                                    <th width="1%">&nbsp;</th>
                                 </tr>
                             </thead>
                             <div class="card">
@@ -53,6 +54,13 @@
                                             <td id="{{ $unit->id }}.latitude"> {{ $unit->latitude }} </td>
                                             <td id="{{ $unit->id }}.updated_at">
                                                 {{ \Carbon\Carbon::parse($unit->updated_at)->toDayDateTimeString() }}
+                                            </td>
+                                            <td>
+                                                <a href="/units/{{ $unit->id }}/logs" type="button"
+                                                    class="btn border-0 float-end p-0">
+                                                    <i class="mdi mdi-format-list-bulleted fs-5" title="Logs" tabindex="0"
+                                                        data-plugin="tippy" data-tippy-placement="top"></i>
+                                                </a>
                                             </td>
                                             <td>
                                                 <button type="button" class="btn border-0 float-end p-0"
