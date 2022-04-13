@@ -12,11 +12,22 @@ class Unit extends Model
     use HasFactory;
 
     protected $fillable = [
-        'status',
         'latitude',
         'longitude',
         'phone_number',
     ];
+
+    protected $append = ['status'];
+
+    public function getStatusAttribute()
+    {
+        return $this->hasOne(UnitLog::class)->latestOfMany()->first()->status;
+    }
+
+    public function logs()
+    {
+        return $this->hasMany(UnitLog::class);
+    }
 
     public function incidents()
     {
