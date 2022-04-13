@@ -201,6 +201,8 @@ class UnitsController extends Controller
 
         if (!$unit) abort(404);
 
-        return $unit->logs()->orderBy('created_at', 'desc')->get();
+        $logs = $unit->logs()->orderBy('created_at', 'desc')->get();
+
+        return view('logs')->with(['logs' => $logs, 'id' => $id]);
     }
 }
