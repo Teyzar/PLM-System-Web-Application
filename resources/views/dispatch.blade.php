@@ -40,9 +40,6 @@
                 nxtbtn.disabled = true;
             }
 
-
-
-
             for (const marker of markers) {
                 marker.setMap(null);
             }
@@ -50,6 +47,14 @@
             markers = [];
 
             for (const unit of units) {
+
+                var position = {
+                    lat: parseFloat(unit.latitude),
+                    lng: parseFloat(unit.longitude)
+                };
+
+
+                map.setCenter(position);
                 markers.push(new google.maps.Marker({
                     map,
                     label: `${unit.id}`,
@@ -107,7 +112,7 @@
 
                                             </td>
                                             <td>
-                                                {{Carbon\Carbon::parse($incident->created_at)->toDayDateTimeString()}}
+                                                {{ Carbon\Carbon::parse($incident->created_at)->toDayDateTimeString() }}
                                             </td>
                                         </tr>
                                     @endforeach
@@ -150,5 +155,4 @@
     <script src="{{ mix('js/vendor.min.js') }}"></script>
     <script src="{{ asset('libs/bootstrap-table/bootstrap-table.min.js') }}"></script>
     <script src="{{ mix('js/pages/bootstrap-tables.init.js') }}"></script>
-
 @endsection
