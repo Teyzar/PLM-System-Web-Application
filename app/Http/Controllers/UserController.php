@@ -78,7 +78,7 @@ class UserController extends Controller
         $disUser->password = $hash;
         $disUser->save();
 
-        toast('Password successfully changed!', 'success');
+        // toast('Password successfully changed!', 'success');
 
         Auth::logout();
         Session::flush();
