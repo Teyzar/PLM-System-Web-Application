@@ -66,10 +66,10 @@
 
 
             if (checkbox.checked) {
-                map.setCenter(position);
+                map.panTo(position);
                 addMarker(position, `${id}`);
             } else {
-                map.setCenter(cadiz);
+                map.panTo(cadiz);
                 removeMarker(position);
             }
         }

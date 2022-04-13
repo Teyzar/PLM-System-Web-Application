@@ -53,8 +53,7 @@
                     lng: parseFloat(unit.longitude)
                 };
 
-
-                map.setCenter(position);
+                map.panTo(position);
                 markers.push(new google.maps.Marker({
                     map,
                     label: `${unit.id}`,
