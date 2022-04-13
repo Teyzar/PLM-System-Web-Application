@@ -195,9 +195,9 @@ class UnitsController extends Controller
         }
     }
 
-    public function logs(Request $request, $phone_number)
+    public function logs(Request $request, $id)
     {
-        $unit = Unit::where('phone_number', $phone_number)->first();
+        $unit = Unit::find($id);
 
         if (!$unit) abort(404);
 
