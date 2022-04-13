@@ -21,3 +21,7 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 Broadcast::channel('Units', function ($user) {
     return User::find($user->id);
 });
+
+Broadcast::channel('Incidents', function ($user) {
+    return User::find($user->id);
+});
