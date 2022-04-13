@@ -71,8 +71,9 @@ class UnitsController extends Controller
                     $messageSent = true;
 
                     Unit::create([
-                        'status' => "Pending",
                         'phone_number' => $validated["phone_number"]
+                    ])->logs()->create([
+                        'status' => 'pending'
                     ]);
 
                     event(new UnitRegisterUpdate("message 1"));

@@ -15,7 +15,6 @@ class CreateUnitsTable extends Migration
     {
         Schema::create('units', function (Blueprint $table) {
             $table->id();
-            $table->string('status');
             $table->double('latitude')->nullable();
             $table->double('longitude')->nullable();
             $table->string('phone_number')->unique();

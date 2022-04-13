@@ -28,18 +28,13 @@ class DispatchController extends Controller
      */
     public function index()
     {
-        $incidents = Incident::where('resolved', false)->get();
-
-        $linemen = Lineman::all();
-
-
-
-
         return view('dispatch', [
-            'incidents' => $incidents,
             'apiKey' => env('MAPS_KEY', 'AIzaSyA2vqdxEToK1qKnxm14YrCwJ1xoLd1FcBU'),
-            'units' => Unit::where('status', 'fault')->get(),
-            'linemen' => $linemen
+            'incidents' => Incident::where('resolved', false)->get(),
+            'linemen' => Lineman::all(),
+            'units' => Unit::all()->filter(function ($unit) {
+                return $unit->status == 'fault';
+            }),
         ]);
     }
 

@@ -40,6 +40,10 @@ class UnitsApiController extends Controller
 
         if (!$unit) return abort(404);
 
+        $unit->logs()->create([
+            'status' => $fields['status'],
+        ]);
+
         // Parse GPRMC NMEA Data
         list($id, $utc, $posStatus, $lat, $latDir, $lng, $lngDir, $gndSpeed, $trkTrue, $date, $magVar, $magVarDir) = explode(',', $fields['location']);
 
@@ -60,7 +64,6 @@ class UnitsApiController extends Controller
         if ($lngDir == 'W') $longitude *= -1;
 
         $unit->update([
-            'status' => $fields['status'],
             'latitude' => doubleval($latitude),
             'longitude' => doubleval($longitude)
         ]);
@@ -73,6 +76,8 @@ class UnitsApiController extends Controller
 
     public function heatmap(Request $request)
     {
-        return Unit::where('status', 'fault')->get(['id', 'status', 'latitude', 'longitude']);
+        return Unit::all(['id', 'latitude', 'longitude'])->filter(function ($unit) {
+            return $unit->status == 'fault';
+        });
     }
 }

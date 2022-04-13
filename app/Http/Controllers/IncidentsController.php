@@ -40,7 +40,9 @@ class IncidentsController extends Controller
     {
         return view('create-incidents', [
             'apiKey' => env('MAPS_KEY', 'AIzaSyA2vqdxEToK1qKnxm14YrCwJ1xoLd1FcBU'),
-            'units' => Unit::where('status', 'fault')->get()
+            'units' => Unit::all()->filter(function ($unit) {
+                return $unit->status == 'fault';
+            })
         ]);
     }
 
@@ -68,7 +70,10 @@ class IncidentsController extends Controller
             'description' => $fields['description']
         ]);
 
-        $units = Unit::whereIn('id', array_keys($fields['unit_ids']))->where('status', 'fault')->get();
+        $units = Unit::whereIn('id', array_keys($fields['unit_ids']))->filter(function ($unit) {
+            return $unit->status == 'fault';
+        });
+
         $incident->units()->sync(array_column($units->toArray(), 'id'));
 
         return redirect()->back();
