@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\HeatmapUpdate;
+use App\Events\IncidentUpdate;
 use App\Events\UnitUpdate;
 use App\Models\Unit;
 use Illuminate\Http\Request;
@@ -86,6 +87,8 @@ class UnitsApiController extends Controller
                 $incident->update([
                     'resolved' => true
                 ]);
+
+                event(new IncidentUpdate($incident));
             }
         }
 

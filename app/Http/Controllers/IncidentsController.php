@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\IncidentUpdate;
 use App\Models\Incident;
 use App\Models\Unit;
 
@@ -112,6 +113,8 @@ class IncidentsController extends Controller
 
         $info = $incident->info()->orderBy('created_at', 'desc')->get();
 
+        event(new IncidentUpdate($incident));
+
         return $info;
     }
 
@@ -128,6 +131,8 @@ class IncidentsController extends Controller
             'title' => $fields['title'],
             'description' => $fields['description']
         ]);
+
+        event(new IncidentUpdate($incident));
 
         return $info;
     }
