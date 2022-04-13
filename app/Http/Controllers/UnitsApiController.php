@@ -82,7 +82,7 @@ class UnitsApiController extends Controller
         if ($incident) {
             $units = $incident->units()->where('status', 'fault')->get();
 
-            if (count($units) == 0) {
+            if (count($units) == 0 && !$incident->resolved) {
                 $incident->info()->create([
                     'title' => 'Resolved',
                     'description' => 'This incident has been resolved.'
