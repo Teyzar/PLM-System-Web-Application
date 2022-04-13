@@ -72,6 +72,10 @@ class UnitsApiController extends Controller
             'status' => $fields['status'],
         ]);
 
+        // Broadcast events
+        event(new UnitUpdate($unit));
+        event(new HeatmapUpdate($unit));
+
         // Update incident if resolved
         $incident = $unit->latestIncident();
 
@@ -91,10 +95,6 @@ class UnitsApiController extends Controller
                 event(new IncidentUpdate($incident));
             }
         }
-
-        // Broadcast events
-        event(new UnitUpdate($unit));
-        event(new HeatmapUpdate($unit));
 
         return $unit;
     }
