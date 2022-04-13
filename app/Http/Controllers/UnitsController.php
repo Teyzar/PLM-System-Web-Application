@@ -193,4 +193,13 @@ class UnitsController extends Controller
             event(new UnitRefreshUpdate($error->__toString()));
         }
     }
+
+    public function logs(Request $request, $phone_number)
+    {
+        $unit = Unit::where('phone_number', $phone_number)->first();
+
+        if (!$unit) abort(404);
+
+        return $unit->logs()->orderBy('created_at', 'desc')->get();
+    }
 }
