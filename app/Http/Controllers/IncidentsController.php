@@ -40,7 +40,9 @@ class IncidentsController extends Controller
     {
         return view('create-incidents', [
             'apiKey' => env('MAPS_KEY', 'AIzaSyA2vqdxEToK1qKnxm14YrCwJ1xoLd1FcBU'),
-            'units' => Unit::where('status', 'fault')->get()
+            'units' => Unit::where('status', 'fault')->get()->filter(function ($unit) {
+                return $unit->isUntracked();
+            })
         ]);
     }
 
