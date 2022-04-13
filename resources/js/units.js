@@ -60,7 +60,7 @@ $(document).on('ready', function () {
                     pmessage.html(output);
                     spinner1.html('<label class="text-muted">1</label>');
                     submitbtn.html('<i class="mdi mdi-send"></i>');
-                    // submitbtn.attr('disabled', false);
+                    submitbtn.attr('disabled', false);
 
                     submitbtn.show();
                 }
