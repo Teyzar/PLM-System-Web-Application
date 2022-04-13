@@ -368,6 +368,10 @@
                     toastr.success("Power restored! Unit ID: " + data.unit.id);
                 }
             })
+
+            Echo.private("Incidents").listen("IncidentUpdate", (data) => {
+                toastr.info(`Incident Updated! Incident ID: ${data.incident.id}`);
+            })
         </script>
     @endauth
 
