@@ -362,15 +362,27 @@
             };
 
             Echo.private("Units").listen("UnitUpdate", (data) => {
+                const onclick = () => {
+                    window.location = `{{ url('/units/${data.unit.id}/logs') }}`;
+                }
+
                 if (data.unit.status === "fault") {
-                    toastr.error("Power outage detected! Unit ID: " + data.unit.id);
+                    toastr.error(`Unit ID: ${data.unit.id}`, 'Power Outage Detected!', {
+                        onclick
+                    });
                 } else if (data.unit.status === "normal") {
-                    toastr.success("Power restored! Unit ID: " + data.unit.id);
+                    toastr.success(`Unit ID: ${data.unit.id}`, 'Power Outage Restored!', {
+                        onclick
+                    });
                 }
             })
 
             Echo.private("Incidents").listen("IncidentUpdate", (data) => {
-                toastr.info(`Incident Updated! Incident ID: ${data.incident.id}`);
+                toastr.info(`Incident ID: ${data.incident.id}`, 'Incident Updated!', {
+                    onclick: () => {
+                        window.location = `{{ url('/incidents#${data.incident.id}') }}`;
+                    }
+                });
             })
         </script>
     @endauth
