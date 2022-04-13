@@ -342,25 +342,22 @@
 
     @auth
         <script>
-            function toasterOptions() {
-                toastr.options = {
-                    "closeButton": true,
-                    "debug": false,
-                    "newestOnTop": false,
-                    "progressBar": true,
-                    "positionClass": "toast-bottom-right",
-                    "preventDuplicates": true,
-                    "onclick": false,
-                    "showDuration": "100",
-                    "hideDuration": false,
-                    "timeOut": false,
-                    "extendedTimeOut": false,
-                    "showEasing": "swing",
-                    "hideEasing": false,
-                };
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": true,
+                "positionClass": "toast-bottom-right",
+                "preventDuplicates": true,
+                "onclick": false,
+                "showDuration": "100",
+                "hideDuration": false,
+                "timeOut": false,
+                "extendedTimeOut": false,
+                "showEasing": "swing",
+                "hideEasing": false,
             };
 
-            toasterOptions();
             Echo.private("Units").listen("UnitUpdate", (data) => {
                 if (data.unit.status === "fault") {
                     toastr.error("Power outage detected! Unit ID: " + data.unit.id);
