@@ -28,6 +28,20 @@ class Unit extends Model
         return $this->belongsToMany(Incident::class);
     }
 
+    public function latestIncident()
+    {
+        return $this->incidents()->orderBy('created_at', 'desc')->first();
+    }
+
+    public function isUntracked()
+    {
+        $latestIncident = $this->latestIncident();
+
+        if (!$latestIncident) return true;
+
+        return $latestIncident->resolved;
+    }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return Carbon::parse($date)->toDayDateTimeString();
