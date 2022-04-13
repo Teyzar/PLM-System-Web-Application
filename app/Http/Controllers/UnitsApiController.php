@@ -59,16 +59,37 @@ class UnitsApiController extends Controller
         $longitude = $longitude_degrees + $longitude_seconds;
         if ($lngDir == 'W') $longitude *= -1;
 
+        // Update unit
         $unit->update([
             'status' => $fields['status'],
             'latitude' => doubleval($latitude),
             'longitude' => doubleval($longitude)
         ]);
 
+        // Log changes
         $unit->logs()->create([
             'status' => $fields['status'],
         ]);
 
+        // Update incident if resolved
+        $incident = $unit->incidents()->orderBy('created_at', 'desc')->first();
+
+        if ($incident) {
+            $units = $incident->units()->where('status', 'fault')->get();
+
+            if (count($units) == 0) {
+                $incident->info()->create([
+                    'title' => 'Resolved',
+                    'description' => 'This incident has been resolved.'
+                ]);
+
+                $incident->update([
+                    'resolved' => true
+                ]);
+            }
+        }
+
+        // Broadcast events
         event(new UnitUpdate($unit));
         event(new HeatmapUpdate($unit));
 
