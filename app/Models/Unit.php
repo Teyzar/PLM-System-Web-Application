@@ -16,7 +16,6 @@ class Unit extends Model
         'latitude',
         'longitude',
         'phone_number',
-        'formatted_address',
     ];
 
     public function logs()
