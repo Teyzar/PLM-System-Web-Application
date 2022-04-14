@@ -18,6 +18,8 @@ class Unit extends Model
         'phone_number',
     ];
 
+    protected $appends = ['formatted_address'];
+
     public function logs()
     {
         return $this->hasMany(UnitLog::class);
@@ -40,6 +42,29 @@ class Unit extends Model
         if (!$latestIncident) return true;
 
         return $latestIncident->resolved;
+    }
+
+    public function address()
+    {
+        return $this->hasOne(UnitAddress::class);
+    }
+
+    public function getFormattedAddressAttribute()
+    {
+        $address = $this->address()->first();
+
+        if (!$address) return;
+
+        $locations = collect([
+            $address->street,
+            $address->barangay,
+            $address->city,
+            $address->region
+        ])->filter(function ($attribute) {
+            return $attribute;
+        })->toArray();
+
+        return implode(', ', $locations);
     }
 
     protected function serializeDate(DateTimeInterface $date)
