@@ -2,14 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ConsoleMessage;
 use App\Events\HeatmapUpdate;
 use App\Events\IncidentUpdate;
 use App\Events\UnitUpdate;
 use App\Models\Unit;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\RequestOptions;
 use Illuminate\Http\Request;
 
 class UnitsApiController extends Controller
 {
+    protected $client;
+
     /**
      * Create a new controller instance.
      *
@@ -18,6 +24,10 @@ class UnitsApiController extends Controller
     public function __construct()
     {
         $this->middleware(['auth:sanctum', 'ability:accessUnits']);
+
+        $this->client = new Client([
+            'base_uri' => 'https://maps.googleapis.com',
+        ]);
     }
 
     /**
@@ -60,11 +70,31 @@ class UnitsApiController extends Controller
         $longitude = $longitude_degrees + $longitude_seconds;
         if ($lngDir == 'W') $longitude *= -1;
 
+        $formatted_address = "Latitude: " . $latitude . " | Longitude: " . $longitude;
+
+        try {
+            $response = $this->client->request('GET', '/maps/api/geocode/json', [
+                'query' => [
+                    'latlng' => '10.667254166667,123.02259783333',
+                    'key' => env('MAPS_KEY', 'AIzaSyA2vqdxEToK1qKnxm14YrCwJ1xoLd1FcBU')
+                ]
+            ]);
+
+            $data = json_decode($response->getBody()->getContents());
+
+            if ($data->status == 'OK' && count($data->results) > 0) {
+                $formatted_address = $data->results[0]->formatted_address;
+            }
+        } catch (GuzzleException $error) {
+            event(new ConsoleMessage($error, true));
+        }
+
         // Update unit
         $unit->update([
             'status' => $fields['status'],
             'latitude' => doubleval($latitude),
-            'longitude' => doubleval($longitude)
+            'longitude' => doubleval($longitude),
+            'formatted_address' => $formatted_address
         ]);
 
         // Log changes
