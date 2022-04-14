@@ -16,8 +16,11 @@ class CreateUnitLogsTable extends Migration
         Schema::create('unit_logs', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('unit_id');
+
             $table->string('status');
             $table->timestamps();
+
+            $table->foreign('unit_id')->references('id')->on('units')->onDelete('cascade');
         });
     }
 

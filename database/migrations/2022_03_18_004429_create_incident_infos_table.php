@@ -15,10 +15,13 @@ class CreateIncidentInfosTable extends Migration
     {
         Schema::create('incident_infos', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('incident_id');
+
             $table->text('title');
             $table->text('description');
-            $table->bigInteger('incident_id');
             $table->timestamps();
+
+            $table->foreign('incident_id')->references('id')->on('incidents')->onDelete('cascade');
         });
     }
 

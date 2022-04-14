@@ -16,6 +16,7 @@ class CreateIncidentLinemanTable extends Migration
         Schema::create('incident_lineman', function (Blueprint $table) {
             $table->bigInteger('incident_id');
             $table->bigInteger('lineman_id');
+
             $table->foreign('incident_id')->references('id')->on('incidents')->onDelete('cascade');
             $table->foreign('lineman_id')->references('id')->on('linemen')->onDelete('cascade');
         });

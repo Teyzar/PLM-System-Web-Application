@@ -16,6 +16,7 @@ class CreateIncidentUnitTable extends Migration
         Schema::create('incident_unit', function (Blueprint $table) {
             $table->bigInteger('incident_id');
             $table->bigInteger('unit_id');
+
             $table->foreign('incident_id')->references('id')->on('incidents')->onDelete('cascade');
             $table->foreign('unit_id')->references('id')->on('units')->onDelete('cascade');
         });
