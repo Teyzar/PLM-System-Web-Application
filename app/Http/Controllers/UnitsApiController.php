@@ -82,12 +82,41 @@ class UnitsApiController extends Controller
 
             $data = json_decode($response->getBody()->getContents());
 
-            $geodata = collect($data->results)->filter(function ($result) {
-                return in_array('premise', $result->types) && $result->geometry->location_type == 'ROOFTOP';
-            })->first();
 
-            if ($data->status == 'OK' && $geodata) {
-                $formatted_address = $geodata->formatted_address;
+            if ($data->status == 'OK' && count($data->results) > 0) {
+                $results = collect($data->results);
+
+                function getComponent($components, $type)
+                {
+                    return $components->filter(function ($component) use ($type) {
+                        return in_array($type, $component->types);
+                    })->map(function ($component) {
+                        return $component->long_name;
+                    })->first();
+                }
+
+                $components = collect();
+
+                $address = $results->map(function ($result) {
+                    return collect($result->address_components);
+                });
+
+                foreach ($address as $_components) {
+                    foreach ($_components as $_component) {
+                        $components->add($_component);
+                    }
+                }
+
+                $locations = collect([
+                    getComponent($components, 'route') ?? 'Unnamed Road',
+                    getComponent($components, 'administrative_area_level_5'),
+                    getComponent($components, 'administrative_area_level_3'),
+                    getComponent($components, 'administrative_area_level_2')
+                ])->filter(function ($location) {
+                    return $location;
+                })->toArray();
+
+                if (count($locations) > 2) $formatted_address = implode(', ', $locations);
             }
         } catch (GuzzleException $error) {
             event(new ConsoleMessage($error, true));
