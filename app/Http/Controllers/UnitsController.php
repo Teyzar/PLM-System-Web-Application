@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ConsoleMessage;
 use App\Events\UnitRefreshUpdate;
 use App\Events\UnitRegisterUpdate;
 use App\Models\Unit;
@@ -109,7 +110,7 @@ class UnitsController extends Controller
 
             $mqtt->disconnect();
         } catch (MqttClientException $error) {
-            event(new UnitRegisterUpdate($error->__toString()));
+            event(new ConsoleMessage($error, true));
         }
     }
 
@@ -191,7 +192,7 @@ class UnitsController extends Controller
 
             $mqtt->disconnect();
         } catch (MqttClientException $error) {
-            event(new UnitRefreshUpdate($error->__toString()));
+            event(new ConsoleMessage($error, true));
         }
     }
 
