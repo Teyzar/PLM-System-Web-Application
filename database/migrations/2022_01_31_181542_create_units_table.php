@@ -18,6 +18,7 @@ class CreateUnitsTable extends Migration
             $table->string('status');
             $table->double('latitude')->nullable();
             $table->double('longitude')->nullable();
+            $table->text('formatted_address')->nullable();
             $table->string('phone_number')->unique();
             $table->timestamps();
         });
