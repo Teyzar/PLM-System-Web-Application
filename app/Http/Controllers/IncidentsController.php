@@ -39,11 +39,15 @@ class IncidentsController extends Controller
      */
     public function create()
     {
+        $unit_ids = Unit::where('status', 'fault')->get()->filter(function ($unit) {
+            return $unit->isUntracked();
+        })->map(function ($unit) {
+            return $unit->id;
+        })->toArray();
+
         return view('create-incidents', [
             'apiKey' => env('MAPS_KEY', 'AIzaSyA2vqdxEToK1qKnxm14YrCwJ1xoLd1FcBU'),
-            'units' => Unit::where('status', 'fault')->get()->filter(function ($unit) {
-                return $unit->isUntracked();
-            })->toArray()
+            'units' => Unit::whereIn('id', $unit_ids)->get()
         ]);
     }
 
