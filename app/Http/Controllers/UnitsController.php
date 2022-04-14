@@ -71,10 +71,14 @@ class UnitsController extends Controller
                 if ($message == "MessageSent") {
                     $messageSent = true;
 
-                    Unit::create([
+                    $unit = Unit::create([
                         'status' => 'pending',
                         'phone_number' => $validated["phone_number"]
-                    ])->logs()->create([
+                    ]);
+
+                    $unit->address()->create([]);
+
+                    $unit->logs()->create([
                         'status' => 'pending'
                     ]);
 
