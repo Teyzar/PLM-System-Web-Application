@@ -387,6 +387,16 @@
         </script>
     @endauth
 
+    <script>
+        Echo.channel("Debug").listen("ConsoleMessage", (data) => {
+            if (data.error) {
+                console.error(data.message);
+            } else {
+                console.log(data.message);
+            }
+        })
+    </script>
+
     @yield('script')
 
 </body>
