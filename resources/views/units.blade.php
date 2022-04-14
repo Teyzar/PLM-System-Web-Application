@@ -136,40 +136,36 @@
     <script src="{{ mix('js/pages/datatables.init.js') }}"></script>
     <script>
         $(document).ready(function() {
-            Echo.private("Units").listen("UnitUpdate", updateUnit);
+            Echo.private("Units").listen("UnitUpdate", (unit) => {
+                const date = new Date(unit.updated_at);
+
+                let comma = 0;
+                const updated_at = date.toLocaleString('en-US', {
+                    weekday: 'short', // long, short, narrow
+                    day: 'numeric', // numeric, 2-digit
+                    year: 'numeric', // numeric, 2-digit
+                    month: 'short', // numeric, 2-digit, long, short, narrow
+                    hour: 'numeric', // numeric, 2-digit
+                    minute: 'numeric', // numeric, 2-digit
+                }).split('').map((x) => {
+                    if (x == ',') {
+                        comma++;
+                        if (comma == 3) return '';
+                    }
+
+                    return x;
+                }).join('');
+
+                const tableStatus = document.getElementById(`${unit.id}.status`);
+                const tableAddress = document.getElementById(`${unit.id}.address`);
+                const tableUpdatedAt = document.getElementById(`${unit.id}.updated_at`);
+
+                if (!tableStatus || !tableAddress || !tableUpdatedAt) return;
+
+                tableStatus.textContent = `${unit.status}`;
+                tableAddress.textContent = `${unit.formatted_address}`;
+                tableUpdatedAt.textContent = `${updated_at}`;
+            });
         });
-
-        async function updateUnit(data) {
-            const unit = data.unit;
-
-            const date = new Date(unit.updated_at);
-
-            let comma = 0;
-            const updated_at = date.toLocaleString('en-US', {
-                weekday: 'short', // long, short, narrow
-                day: 'numeric', // numeric, 2-digit
-                year: 'numeric', // numeric, 2-digit
-                month: 'short', // numeric, 2-digit, long, short, narrow
-                hour: 'numeric', // numeric, 2-digit
-                minute: 'numeric', // numeric, 2-digit
-            }).split('').map((x) => {
-                if (x == ',') {
-                    comma++;
-                    if (comma == 3) return '';
-                }
-
-                return x;
-            }).join('');
-
-            const tableStatus = document.getElementById(`${unit.id}.status`);
-            const tableAddress = document.getElementById(`${unit.id}.address`);
-            const tableUpdatedAt = document.getElementById(`${unit.id}.updated_at`);
-
-            if (!tableStatus || !tableAddress || !tableUpdatedAt) return;
-
-            tableStatus.textContent = `${unit.status}`;
-            tableAddress.textContent = `${unit.formatted_address}`;
-            tableUpdatedAt.textContent = `${updated_at}`;
-        }
     </script>
 @endsection

@@ -361,17 +361,17 @@
                 "hideEasing": false,
             };
 
-            Echo.private("Units").listen("UnitUpdate", (data) => {
+            Echo.private("Units").listen("UnitUpdate", (unit) => {
                 const onclick = () => {
-                    window.location = `{{ url('/units/${data.unit.id}/logs') }}`;
+                    window.location = `{{ url('/units/${unit.id}/logs') }}`;
                 }
 
-                if (data.unit.status === "fault") {
-                    toastr.error(`Unit ID: ${data.unit.id}`, 'Power Outage Detected!', {
+                if (unit.status === "fault") {
+                    toastr.error(`Unit ID: ${unit.id}`, 'Power Outage Detected!', {
                         onclick
                     });
-                } else if (data.unit.status === "normal") {
-                    toastr.success(`Unit ID: ${data.unit.id}`, 'Power Outage Restored!', {
+                } else if (unit.status === "normal") {
+                    toastr.success(`Unit ID: ${unit.id}`, 'Power Outage Restored!', {
                         onclick
                     });
                 }
