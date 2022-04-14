@@ -75,7 +75,7 @@ class UnitsApiController extends Controller
         try {
             $response = $this->client->request('GET', '/maps/api/geocode/json', [
                 'query' => [
-                    'latlng' => '10.667254166667,123.02259783333',
+                    'latlng' => "$latitude,$longitude",
                     'key' => env('MAPS_KEY', 'AIzaSyA2vqdxEToK1qKnxm14YrCwJ1xoLd1FcBU')
                 ]
             ]);
