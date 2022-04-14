@@ -43,7 +43,7 @@ class IncidentsController extends Controller
             'apiKey' => env('MAPS_KEY', 'AIzaSyA2vqdxEToK1qKnxm14YrCwJ1xoLd1FcBU'),
             'units' => Unit::where('status', 'fault')->get()->filter(function ($unit) {
                 return $unit->isUntracked();
-            })->toJson()
+            })->toArray()
         ]);
     }
 
