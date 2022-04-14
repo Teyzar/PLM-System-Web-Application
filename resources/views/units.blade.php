@@ -30,11 +30,11 @@
                             {{-- or tickets-table --}}
                             <thead>
                                 <tr>
-                                    <th width="10%">ID</th>
-                                    <th width="15%">Status</th>
-                                    <th width="20%">Mobile #</th>
+                                    <th width="5%">ID</th>
+                                    <th width="10%">Status</th>
+                                    <th width="15%">Mobile #</th>
                                     <th>Address</th>
-                                    <th width="25%">Updated&nbsp;Last</th>
+                                    <th width="15%">Updated&nbsp;Last</th>
                                     <th width="1%">&nbsp;</th>
                                     <th width="1%">&nbsp;</th>
                                     <th width="1%">&nbsp;</th>
