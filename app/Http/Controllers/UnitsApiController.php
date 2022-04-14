@@ -70,8 +70,6 @@ class UnitsApiController extends Controller
         $longitude = $longitude_degrees + $longitude_seconds;
         if ($lngDir == 'W') $longitude *= -1;
 
-        $formatted_address = "Latitude: " . $latitude . " | Longitude: " . $longitude;
-
         try {
             $response = $this->client->request('GET', '/maps/api/geocode/json', [
                 'query' => [
@@ -81,7 +79,6 @@ class UnitsApiController extends Controller
             ]);
 
             $data = json_decode($response->getBody()->getContents());
-
 
             if ($data->status == 'OK' && count($data->results) > 0) {
                 $results = collect($data->results);
@@ -107,16 +104,12 @@ class UnitsApiController extends Controller
                     }
                 }
 
-                $locations = collect([
-                    getComponent($components, 'route') ?? 'Unnamed Road',
-                    getComponent($components, 'administrative_area_level_5'),
-                    getComponent($components, 'administrative_area_level_3'),
-                    getComponent($components, 'administrative_area_level_2')
-                ])->filter(function ($location) {
-                    return $location;
-                })->toArray();
-
-                if (count($locations) > 2) $formatted_address = implode(', ', $locations);
+                $unit->address()->update([
+                    'street' => getComponent($components, 'route'),
+                    'barangay' => getComponent($components, 'administrative_area_level_5'),
+                    'city' => getComponent($components, 'administrative_area_level_3'),
+                    'region' => getComponent($components, 'administrative_area_level_2'),
+                ]);
             }
         } catch (GuzzleException $error) {
             event(new ConsoleMessage($error, true));
@@ -127,7 +120,6 @@ class UnitsApiController extends Controller
             'status' => $fields['status'],
             'latitude' => doubleval($latitude),
             'longitude' => doubleval($longitude),
-            'formatted_address' => $formatted_address
         ]);
 
         // Log changes
