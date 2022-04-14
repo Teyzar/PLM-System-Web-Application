@@ -15,7 +15,7 @@ class UnitUpdate implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $unit;
+    private $unit;
 
     /**
      * Create a new event instance.
@@ -35,5 +35,15 @@ class UnitUpdate implements ShouldBroadcast
     public function broadcastOn()
     {
         return new PrivateChannel('Units');
+    }
+
+    public function broadcastWith()
+    {
+        return [
+            'id' => $this->unit->id,
+            'status' => $this->unit->status,
+            'formatted_address' => $this->unit->formatted_address,
+            'updated_at' => $this->unit->updated_at,
+        ];
     }
 }
