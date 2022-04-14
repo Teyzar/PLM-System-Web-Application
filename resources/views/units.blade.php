@@ -30,12 +30,11 @@
                             {{-- or tickets-table --}}
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Status</th>
-                                    <th>Mobile #</th>
-                                    <th>Longitude</th>
-                                    <th>Latitude</th>
-                                    <th width="20%">Updated&nbsp;Last</th>
+                                    <th width="10%">ID</th>
+                                    <th width="15%">Status</th>
+                                    <th width="20%">Mobile #</th>
+                                    <th>Address</th>
+                                    <th width="25%">Updated&nbsp;Last</th>
                                     <th width="1%">&nbsp;</th>
                                     <th width="1%">&nbsp;</th>
                                     <th width="1%">&nbsp;</th>
@@ -50,8 +49,7 @@
                                                 {{ $unit->status }}
                                             </td>
                                             <td> {{ $unit->phone_number }} </td>
-                                            <td id="{{ $unit->id }}.longitude"> {{ $unit->longitude }} </td>
-                                            <td id="{{ $unit->id }}.latitude"> {{ $unit->latitude }} </td>
+                                            <td id="{{ $unit->id }}.address"> {{ $unit->formatted_address }} </td>
                                             <td id="{{ $unit->id }}.updated_at">
                                                 {{ \Carbon\Carbon::parse($unit->updated_at)->toDayDateTimeString() }}
                                             </td>
@@ -140,6 +138,7 @@
         $(document).ready(function() {
             Echo.private("Units").listen("UnitUpdate", updateUnit);
         });
+
         async function updateUnit(data) {
             const unit = data.unit;
 
@@ -161,14 +160,15 @@
 
                 return x;
             }).join('');
+
             const tableStatus = document.getElementById(`${unit.id}.status`);
-            const tableLatitude = document.getElementById(`${unit.id}.latitude`);
-            const tableLongitude = document.getElementById(`${unit.id}.longitude`);
+            const tableAddress = document.getElementById(`${unit.id}.address`);
             const tableUpdatedAt = document.getElementById(`${unit.id}.updated_at`);
-            if (!tableStatus || !tableLatitude || !tableLongitude || !tableUpdatedAt) return;
+
+            if (!tableStatus || !tableAddress || !tableUpdatedAt) return;
+
             tableStatus.textContent = `${unit.status}`;
-            tableLatitude.textContent = `${unit.latitude}`;
-            tableLongitude.textContent = `${unit.longitude}`;
+            tableAddress.textContent = `${unit.formatted_address}`;
             tableUpdatedAt.textContent = `${updated_at}`;
         }
     </script>
