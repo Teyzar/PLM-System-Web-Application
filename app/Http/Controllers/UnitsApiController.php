@@ -82,8 +82,12 @@ class UnitsApiController extends Controller
 
             $data = json_decode($response->getBody()->getContents());
 
-            if ($data->status == 'OK' && count($data->results) > 0) {
-                $formatted_address = $data->results[0]->formatted_address;
+            $geodata = collect($data->results)->filter(function ($result) {
+                return in_array('premise', $result->types) && $result->geometry->location_type == 'ROOFTOP';
+            })->first();
+
+            if ($data->status == 'OK' && $geodata) {
+                $formatted_address = $geodata->formatted_address;
             }
         } catch (GuzzleException $error) {
             event(new ConsoleMessage($error, true));
