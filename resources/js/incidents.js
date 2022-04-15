@@ -1,4 +1,6 @@
 function editIncident(id) {
+
+    $(`#dotIcon${id}`).hide();
     const cancelbtn = $(`#cancelbtn${id}`);
     $.ajax({
         type: 'get',
@@ -13,10 +15,12 @@ function editIncident(id) {
                 cancelbtn.on('click', function () {
                     editIcon.html('');
                     cancelbtn.html('');
+                    $(`#dotIcon${id}`).show();
+
                 });
 
-                editIcon.html(`<a href="#" onclick="modal(${info.incident_id}, ${info.id})"class="btn btn-info">Edit</a>`);
-                cancelbtn.html('<button type="button" class="btn btn-secondary py-1 px-2">Cancel</button>');
+                editIcon.html(`<a href="#" onclick="modal(${info.incident_id}, ${info.id})"><i class="mdi mdi-playlist-edit fs-3"></i></a>`);
+                cancelbtn.html('<button type="button" class="btn btn-danger btn-close py-1 px-2"></button>');
 
             }
         }
@@ -45,35 +49,59 @@ function modal(incidentId, infoId) {
     });
     $('#modalEditInfo').modal('show');
 
-    $('#formUpdateInfo').attr('action', `incidents/${incidentId}/${infoId}`)
+    $('#formUpdateInfo').attr('action', `incidents/${incidentId}/${infoId}`);
 
-    $('#formUpdateInfo').on('submit', function (event) {
-        event.preventDefault();
-
-        $.ajax({
-            url: $(this).prop('action'),
-            type: "PUT",
-            data: $(this).serialize(),
-            success: function (result) {
-                $('#modalEditInfo').modal('hide');
-
-                for (const info of result) {
-                    const desc = $(`#input-description${info.id}`);
-                    const title = $(`#title${info.id}`);
-
-                    title.html(info.title + ' <i class="fe-minus"></i>');
-                    desc.html(info.description);
-                }
-
-            },
-            error: function (err) {
-                console.log(err);
-            }
-        });
+    $('#formUpdateInfo').on('click', function() {
+        $('#modalEditInfo').modal('hide');
     });
+
+    // $('#formUpdateInfo').on('submit', function (event) {
+    //     event.preventDefault();
+
+    //     $.ajax({
+    //         url: $(this).prop('action'),
+    //         type: "PUT",
+    //         data: $(this).serialize(),
+    //         success: function (result) {
+    //             $('#modalEditInfo').modal('hide');
+
+    //             for (const info of result) {
+    //                 closeIcons(info.incident_id);
+    //                 const desc = $(`#input-description${info.id}`);
+    //                 const title = $(`#title${info.id}`);
+    //                 title.html(info.title + ' <i class="fe-minus"></i>');
+    //                 desc.html(info.description);
+
+    //             }
+
+    //         },
+    //         error: function (err) {
+    //             console.log(err);
+    //         }
+    //     });
+    // });
 
 
 }
+
+// function closeIcons(id) {
+//     const cancelbtn = $(`#cancelbtn${id}`);
+//     cancelbtn.html('');
+//     $(`#dotIcon${id}`).show();
+
+//     $.ajax({
+//         type: 'get',
+//         url: `incidents/${id}/edit`,
+//         data: $(this).serialize(),
+//         success: function (data) {
+//             for (const info of data) {
+//                 const editIcon = $(`#_editIcon${info.id}`);
+
+//                 editIcon.html('');
+//             }
+//         }
+//     });
+// }
 
 function addIncident(id) {
 
