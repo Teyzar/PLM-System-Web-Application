@@ -15,6 +15,11 @@ class Incident extends Model
         'resolved'
     ];
 
+    protected $appends = [
+        'info',
+        'locations'
+    ];
+
     public function info()
     {
         return $this->hasMany(IncidentInfo::class);
