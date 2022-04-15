@@ -20,11 +20,6 @@ class Incident extends Model
         return $this->hasMany(IncidentInfo::class);
     }
 
-    public function getInfoAttribute()
-    {
-        return $this->info()->orderBy('created_at', 'desc')->get();
-    }
-
     public function units()
     {
         return $this->belongsToMany(Unit::class);
@@ -33,6 +28,13 @@ class Incident extends Model
     public function linemen()
     {
         return $this->belongsToMany(Lineman::class);
+    }
+
+    public function getInfoAttribute()
+    {
+        return $this->info()->orderBy('created_at', 'desc')->get([
+            'id', 'title', 'description', 'created_at', 'updated_at'
+        ]);
     }
 
     protected function serializeDate(DateTimeInterface $date)
