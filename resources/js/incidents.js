@@ -1,7 +1,5 @@
 function editIncident(id) {
-    const savebtn = $(`#savebtn${id}`);
     const cancelbtn = $(`#cancelbtn${id}`);
-
     $.ajax({
         type: 'get',
         url: `incidents/${id}/edit`,
@@ -9,99 +7,83 @@ function editIncident(id) {
         success: function (data) {
 
             for (const info of data) {
-                const dis_title = info.title.charAt(0).toUpperCase() + info.title.slice(1);
-                const title = $(`#title${info.id}`);
-                const desc = $(`#input-description${info.id}`);
+                const editIcon = $(`#_editIcon${info.id}`);
 
-
-                title.html(`<select id="select-title" class="form-control mb-2" data-width="10%" data-toggle="select2" name="title[]">
-                <option class="text-scondary fw-bolder">${dis_title}</option>
-                <option value="investigating">Investigating</option>
-                <option value="update">Update</option>
-                <option value="resolved">Resolved</option>
-                </select>`);
-                desc.html(
-                    `<textarea id="description" type="text" name="description[]" class="form-control w-50 d-flex" rows="5" required>${info.description}</textarea>`
-                );
-                savebtn.html(
-                    '<button type="submit" id="submit" class="btn btn-primary py-1 px-3 ms-1">Save</button>'
-                );
-                cancelbtn.html('<button type="button" class="btn btn-secondary py-1 px-2 ">Cancel</button>');
 
                 cancelbtn.on('click', function () {
-                    savebtn.html('');
+                    editIcon.html('');
                     cancelbtn.html('');
-                    title.html(info.title + ' <i class="fe-minus"></i>');
-                    desc.html(desc.text());
                 });
+
+                editIcon.html(`<a href="#" onclick="modal(${info.incident_id}, ${info.id})"class="btn btn-info">Edit</a>`);
+                cancelbtn.html('<button type="button" class="btn btn-secondary py-1 px-2">Cancel</button>');
+
             }
         }
     });
+}
 
+function modal(incidentId, infoId) {
 
+    $.ajax({
+        type: 'get',
+        url: `incidents/${infoId}/info`,
+        data: $(this).serialize(),
+        success: function (data) {
+            const infoID = $('#infoID');
+            const option = $('#default');
+            const description = $('#description');
 
-    $('form').on('submit', function (event) {
+            for (const info of data) {
+                const dis_title = info.title.charAt(0).toUpperCase() + info.title.slice(1);
+                infoID.html('ID: ' + info.id);
+                option.html(dis_title);
+                option.val(dis_title);
+                description.html(info.description);
+            }
+        }
+    });
+    $('#modalEditInfo').modal('show');
+
+    $('#formUpdateInfo').attr('action', `incidents/${incidentId}/${infoId}`)
+
+    $('#formUpdateInfo').on('submit', function (event) {
         event.preventDefault();
-        var $this = $(this);
 
         $.ajax({
-            url: $this.prop('action'),
-            method: "PUT",
-            data: $this.serialize(),
+            url: $(this).prop('action'),
+            type: "PUT",
+            data: $(this).serialize(),
             success: function (result) {
+                $('#modalEditInfo').modal('hide');
+
                 for (const info of result) {
                     const desc = $(`#input-description${info.id}`);
                     const title = $(`#title${info.id}`);
 
-                    desc.html(info.description);
                     title.html(info.title + ' <i class="fe-minus"></i>');
-                    savebtn.html('');
-                    cancelbtn.html('');
-
+                    desc.html(info.description);
                 }
 
             },
+            error: function (err) {
+                console.log(err);
+            }
         });
     });
+
+
 }
 
 function addIncident(id) {
-    const incident = $(`#incident${id}`);
-    const textarea = $(`#textarea${id}`);
-    const addbtn = $(`#savebtn${id}`);
-    const cancelbtn = $(`#cancelbtn${id}`);
-    addbtn.html(
-        '<button type="submit" id="submit" class="btn btn-primary py-1 px-3 ms-1">Add</button>'
-    );
-    cancelbtn.html('<button type="button" class="btn btn-secondary py-1 px-2 ">Cancel</button>');
 
+    $("#modalAddInfo").modal('show');
 
-    incident.html(`
-                <select id="title" class="form-control" data-toggle="select2" name="title" required>
-                    <option value="" class="text-scondary fw-bolder">Title</option>
-                    <option value="investigating">Investigating</option>
-                    <option value="update">Update</option>
-                    <option value="resolved">Resolved</option>
-                </select>`);
+    $('#incidentID').html('Incident ID: ' + id);
 
-    textarea.html(`
-        <textarea id="description" name="description" class="form-control" rows="5" placeholder="Enter some brief description about the report" required></textarea>`);
-    var form = $('form');
+    $('#formAddInfo').attr('action', `incidents/${id}/add`);
 
-    form.attr('action', `incidents/${id}/add`);
-
-    let disId = id;
-
-
-    cancelbtn.on('click', function () {
-        incident.html('');
-        textarea.html('');
-        addbtn.html('');
-        cancelbtn.html('');
-
-    });
     const infobody = $(`#info-body${id}`);
-
 
     $('form').on('submit', function (event) {
         event.preventDefault();
@@ -109,10 +91,12 @@ function addIncident(id) {
 
         $.ajax({
             method: "POST",
-            url: `incidents/${disId}/add`,
+            url: $(this).prop('action'),
             data: $this.serialize(),
             dataType: 'json',
             success: function (result) {
+                $("#modalAddInfo").modal('hide');
+
                 const date = new Date(result.created_at);
 
                 const str_date = date.toLocaleString('en-US', {
@@ -134,10 +118,6 @@ function addIncident(id) {
                     class="text-muted">${str_date}</span>
                 </p>
                 `);
-                addbtn.html('');
-                cancelbtn.html('');
-                incident.html('');
-                textarea.html('');
             },
         });
     });
