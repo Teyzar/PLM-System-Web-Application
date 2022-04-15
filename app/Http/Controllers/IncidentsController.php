@@ -8,6 +8,7 @@ use App\Models\IncidentInfo;
 use App\Models\Unit;
 
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class IncidentsController extends Controller
 {
@@ -128,8 +129,9 @@ class IncidentsController extends Controller
         // $info = $incident->info()->orderBy('created_at', 'desc')->get();
 
         event(new IncidentUpdate($incident));
+        Alert::success("Incident ID: $incidentId", 'Incident Updated!');
 
-        return $info;
+        return redirect()->back();
     }
 
     public function add(Request $request, $id)
