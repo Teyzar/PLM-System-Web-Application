@@ -38,7 +38,7 @@
                                         <tr>
                                             <td> {{ $log->id }} </td>
                                             <td class="text-capitalize"> {{ $log->status }} </td>
-                                            <td> {{ $log->created_at }} </td>
+                                            <td> {{ \Carbon\Carbon::parse($log->created_at)->toDayDateTimeString() }} </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
