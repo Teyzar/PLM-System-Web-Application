@@ -2,6 +2,8 @@
 
 @section('head')
     {{-- <link rel="stylesheet" href="{{ mix('css/incidents.css') }}"> --}}
+    <script src="{{ asset('libs/tippy.js/tippy.all.min.js') }}"></script>
+
 @endsection
 
 @section('content')
@@ -28,10 +30,14 @@
                         <div class="card-body shadow">
                             @auth
                                 <div class="dropdown float-end">
-                                    <a href="#" class="dropdown-toggle card-drop arrow-none" data-bs-toggle="dropdown"
-                                        aria-expanded="false">
+
+                                    <a id="dotIcon{{ $incident->id }}" href="#" class="dropdown-toggle card-drop arrow-none"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="mdi mdi-dots-horizontal m-0 text-muted h3"></i>
                                     </a>
+                                    <div id="cancelbtn{{ $incident->id }}"></div>
+
+
                                     <div class="dropdown-menu dropdown-menu-end">
                                         <a class="dropdown-item text-success" href="#"
                                             onclick="addIncident({{ $incident->id }})"><i
@@ -62,8 +68,7 @@
                             @foreach ($incident->info as $info)
                                 <span class="anchor" id="{{ $incident->id }}-{{ $info->id }}"></span>
 
-                                <div class="col-8">
-                                    <span id="_editIcon{{ $info->id }}"></span>
+                                <div>
                                     <a href="#{{ $incident->id }}-{{ $info->id }}" class="text-muted">
                                         <span id="title{{ $info->id }}" class="text-capitalize fw-bolder h5 mt-0">
                                             {{ $info->title }}
@@ -73,6 +78,7 @@
                                     <span id="input-description{{ $info->id }}" class="">
                                         {{ $info->description }}
                                     </span>
+                                    <div id="_editIcon{{ $info->id }}" class="float-end"></div>
                                 </div>
 
                                 <p class="mt-2">
@@ -86,14 +92,12 @@
                             <div id="textarea{{ $incident->id }}" class="col-9 mb-3"></div>
 
                             <div id="savebtn{{ $incident->id }}" class="float-end"></div>
-                            <div id="cancelbtn{{ $incident->id }}" class="float-end"></div>
 
-                            <br>
                             <hr>
 
-
                             <span class="text-capitalize fw-bold h5 mt-0">
-                                Areas Affected:
+                                Areas Affected: <a href="" class="text-info"><i type="button" class="fe-map fs-5" title="View Map" tabindex="0"
+                                data-plugin="tippy" data-tippy-placement="right"></i></a>
                             </span>
 
                             <ul>

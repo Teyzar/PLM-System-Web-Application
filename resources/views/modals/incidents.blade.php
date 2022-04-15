@@ -36,6 +36,7 @@
             <div class="modal-body">
                 <form id="formUpdateInfo" action="" method="POST">
                     @csrf
+                    @method('PUT')
                     <select id="select-title" class="form-control mb-2" data-width="10%" data-toggle="select2"
                         name="title" required>
                         <option value="" class="text-scondary fw-bolder" id="default"></option>
