@@ -107,14 +107,9 @@
                                             </span>
                                         </a>
 
-                                        @foreach ($location['barangays'] as $brgyIndex => $barangay)
-                                            <small class="">
-                                                @if ($brgyIndex > 0)
-                                                    ,
-                                                @endif
-                                                {{ $barangay }}
-                                            </small>
-                                        @endforeach
+                                        <span class="fs-6">
+                                            {{ implode(', ', $location['barangays']->toArray()) }}
+                                        </span>
                                     </li>
                                 @endforeach
                             </ul>
