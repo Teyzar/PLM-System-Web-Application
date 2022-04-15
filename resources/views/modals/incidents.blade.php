@@ -24,3 +24,57 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade pt-5" id="modalEditInfo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="infoID"></h5>
+                <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formUpdateInfo" action="" method="POST">
+                    @csrf
+                    <select id="select-title" class="form-control mb-2" data-width="10%" data-toggle="select2"
+                        name="title" required>
+                        <option value="" class="text-scondary fw-bolder" id="default"></option>
+                        <option value="investigating">Investigating</option>
+                        <option value="update">Update</option>
+                    </select>
+                    <textarea id="description" type="text" name="description" class="form-control d-flex" rows="5" required></textarea>
+                    <div class="modal-footer d-block d-flex align-items-center justify-content-center border-1">
+                        <button type="submit" class="btn btn-info w-75">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade pt-5" id="modalAddInfo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="incidentID"></h5>
+                <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formAddInfo" action="" method="POST">
+                    @csrf
+                    <select id="title" class="form-control mb-2" data-toggle="select2" name="title" required>
+                        <option value="" class="text-scondary fw-bolder">Title</option>
+                        <option value="investigating">Investigating</option>
+                        <option value="update">Update</option>
+                    </select>
+                    <textarea id="description" name="description" class="form-control" rows="5"
+                        placeholder="Enter some brief description about the report" required></textarea>
+                    <div class="modal-footer d-block d-flex align-items-center justify-content-center border-1">
+                        <button type="submit" class="btn btn-success w-75">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
