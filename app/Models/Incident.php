@@ -37,6 +37,22 @@ class Incident extends Model
         ]);
     }
 
+    public function getLocationsAttribute()
+    {
+        $locations = $this->units()->with('address')->get()->map(function ($unit) {
+            return $unit->address()->first();
+        })->mapToGroups(function ($item) {
+            return [$item['city'] => $item['barangay']];
+        })->map(function ($barangays, $city) {
+            return [
+                'city' => $city,
+                'barangays' => $barangays
+            ];
+        })->sort();
+
+        return array_values($locations->toArray());
+    }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return Carbon::parse($date)->toDayDateTimeString();
