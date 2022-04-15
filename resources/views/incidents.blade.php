@@ -90,6 +90,34 @@
                                 <div id="savebtn{{ $incident->id }}" class="float-end"></div>
                                 <div id="cancelbtn{{ $incident->id }}" class="float-end"></div>
                             </form>
+
+                            <hr>
+
+                            <span class="text-capitalize fw-bold h5 mt-0">
+                                Areas Affected:
+                            </span>
+
+                            <ul>
+                                @foreach ($incident->locations as $location)
+                                    <li>
+                                        <a class="text-muted">
+                                            <span class="text-capitalize h6">
+                                                {{ $location['city'] }}
+                                                <i class="fe-minus"></i>
+                                            </span>
+                                        </a>
+
+                                        @foreach ($location['barangays'] as $brgyIndex => $barangay)
+                                            <small class="">
+                                                @if ($brgyIndex > 0)
+                                                    ,
+                                                @endif
+                                                {{ $barangay }}
+                                            </small>
+                                        @endforeach
+                                    </li>
+                                @endforeach
+                            </ul>
                         </div>
                     </div> <!-- end card box-->
                 </div><!-- end col-->
