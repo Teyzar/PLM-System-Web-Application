@@ -51,7 +51,7 @@ function modal(incidentId, infoId) {
 
     $('#formUpdateInfo').attr('action', `incidents/${incidentId}/${infoId}`);
 
-    $('#formUpdateInfo').on('click', function() {
+    $('#formUpdateInfo').on('submit', function() {
         $('#modalEditInfo').modal('hide');
     });
 
