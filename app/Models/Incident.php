@@ -51,7 +51,7 @@ class Incident extends Model
         })->map(function ($barangays, $city) {
             return [
                 'city' => $city,
-                'barangays' => $barangays
+                'barangays' => collect($barangays)->unique()
             ];
         })->sort();
 
