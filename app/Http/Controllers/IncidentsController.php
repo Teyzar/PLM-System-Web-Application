@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\IncidentUpdate;
 use App\Models\Incident;
+use App\Models\IncidentInfo;
 use App\Models\Unit;
 
 use Illuminate\Http\Request;
@@ -98,24 +99,33 @@ class IncidentsController extends Controller
         return $info;
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $incidentId, $infoId)
     {
 
-        $incident = Incident::find($id);
-
-        $infos = $incident->info()->orderBy('created_at', 'desc')->get();
-
-        $i = 0;
-        foreach ($infos as $info) {
-            $incident->info()->where('id', $info->id)->update([
-                'title' => $request->title[$i],
-                'description' => $request->description[$i]
-            ]);
-            $i++;
-        }
+        $incident = Incident::find($incidentId);
 
 
-        $info = $incident->info()->orderBy('created_at', 'desc')->get();
+        // $info = $incident->info()->where('id', $infoId)->get();
+
+        // $infos = $incident->info()->orderBy('created_at', 'desc')->get();
+        $info  = $incident->info()->where('id', $infoId)->update([
+            'title' => $request->title,
+            'description' => $request->description
+        ]);
+
+        $info = $incident->info()->where('id', $infoId)->get();
+
+        // $i = 0;
+        // foreach ($infos as $info) {
+        //     $incident->info()->where('id', $info->id)->update([
+        //         'title' => $request->title[$i],
+        //         'description' => $request->description[$i]
+        //     ]);
+        //     $i++;
+        // }
+
+
+        // $info = $incident->info()->orderBy('created_at', 'desc')->get();
 
         event(new IncidentUpdate($incident));
 
@@ -137,6 +147,15 @@ class IncidentsController extends Controller
         ]);
 
         event(new IncidentUpdate($incident));
+
+        return $info;
+    }
+
+    public function info($id)
+    {
+        $incident = Incident::all();
+
+        $info = IncidentInfo::where('id', $id)->get();
 
         return $info;
     }
