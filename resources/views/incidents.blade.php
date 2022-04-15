@@ -23,7 +23,6 @@
         <div class="row">
             @foreach ($incidents as $incident)
                 <span class="anchor" id="{{ $incident->id }}"></span>
-
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body shadow">
@@ -36,10 +35,10 @@
                                     <div class="dropdown-menu dropdown-menu-end">
                                         <a class="dropdown-item text-success" href="#"
                                             onclick="addIncident({{ $incident->id }})"><i
-                                                class="mdi mdi-plus-box fs-5 pe-1"></i><span>Add</span></a>
+                                                class="mdi mdi-plus-box fs-5 pe-1"></i><span>Add Info</span></a>
                                         <a class="dropdown-item text-info" href="#"
                                             onclick="editIncident({{ $incident->id }})"><i
-                                                class="fe-edit pe-1"></i><span>Edit</span></a>
+                                                class="fe-edit pe-1"></i><span>Edit Info</span></a>
                                         <a class="dropdown-item text-danger" type="button"
                                             onclick="passID({{ $incident->id }})" data-bs-toggle="modal"
                                             data-bs-target="#RemoveIncident">
@@ -58,40 +57,40 @@
 
                             <hr>
 
-                            <form id="forms-id" action="/incidents/{{ $incident->id }}" method="POST">
-                                @csrf
-                                <div id="info-body{{ $incident->id }}"></div>
+                            <div id="info-body{{ $incident->id }}"></div>
 
-                                @foreach ($incident->info as $info)
-                                    <span class="anchor" id="{{ $incident->id }}-{{ $info->id }}"></span>
+                            @foreach ($incident->info as $info)
+                                <span class="anchor" id="{{ $incident->id }}-{{ $info->id }}"></span>
 
-                                    <div class="col-8">
-                                        <a href="#{{ $incident->id }}-{{ $info->id }}" class="text-muted">
-                                            <span id="title{{ $info->id }}" class="text-capitalize fw-bolder h5 mt-0">
-                                                {{ $info->title }}
-                                                <i class="fe-minus"></i>
-                                            </span>
-                                        </a>
-                                        <span id="input-description{{ $info->id }}" class="">
-                                            {{ $info->description }}
+                                <div class="col-8">
+                                    <span id="_editIcon{{ $info->id }}"></span>
+                                    <a href="#{{ $incident->id }}-{{ $info->id }}" class="text-muted">
+                                        <span id="title{{ $info->id }}" class="text-capitalize fw-bolder h5 mt-0">
+                                            {{ $info->title }}
+                                            <i class="fe-minus"></i>
                                         </span>
-                                    </div>
+                                    </a>
+                                    <span id="input-description{{ $info->id }}" class="">
+                                        {{ $info->description }}
+                                    </span>
+                                </div>
 
-                                    <p class="mt-2">
-                                        <span class="text-muted">
-                                            {{ \Carbon\Carbon::parse($info->created_at)->toDayDateTimeString() }}
-                                        </span>
-                                    </p>
-                                @endforeach
+                                <p class="mt-2">
+                                    <span class="text-muted">
+                                        {{ \Carbon\Carbon::parse($info->created_at)->toDayDateTimeString() }}
+                                    </span>
+                                </p>
+                            @endforeach
 
-                                <div id="incident{{ $incident->id }}" class="col-9 mb-3"></div>
-                                <div id="textarea{{ $incident->id }}" class="col-9 mb-3"></div>
+                            <div id="incident{{ $incident->id }}" class="col-9 mb-3"></div>
+                            <div id="textarea{{ $incident->id }}" class="col-9 mb-3"></div>
 
-                                <div id="savebtn{{ $incident->id }}" class="float-end"></div>
-                                <div id="cancelbtn{{ $incident->id }}" class="float-end"></div>
-                            </form>
+                            <div id="savebtn{{ $incident->id }}" class="float-end"></div>
+                            <div id="cancelbtn{{ $incident->id }}" class="float-end"></div>
 
+                            <br>
                             <hr>
+
 
                             <span class="text-capitalize fw-bold h5 mt-0">
                                 Areas Affected:
