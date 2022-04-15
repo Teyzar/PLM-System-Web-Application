@@ -39,8 +39,13 @@ Route::get('/incidents/{id}/dispatch', [DispatchController::class, '_dispatch'])
 Route::post('/incidents/{id}/dispatch', [DispatchController::class, 'store'])->name('dispatch.store');
 
 
-Route::resource('/incidents', IncidentsController::class)->except('add');
+Route::resource('/incidents', IncidentsController::class)->except(['add', 'info', 'update']);
 Route::post('/incidents/{id}/add', [IncidentsController::class, 'add'])->name('incidents.add');
+Route::get('/incidents/{id}/info', [IncidentsController::class, 'info'])->name('incidents.info');
+Route::put('/incidents/{incidentId}/{infoId}', [IncidentsController::class, 'update'])->name('incidents.update');
+
+
+
 
 Route::resource('/lineman', LinemanController::class)->except(['create', 'edit']);
 Route::post('/lineman/{id}/reset', [LinemanController::class, 'reset'])->name('lineman.reset');
