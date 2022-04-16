@@ -265,10 +265,12 @@
                             </table>
                         </div>
                         <div class="col-lg-6">
-                            <div id="map" style="height: calc(75vh - 71px);" class="mb-3"></div>
-                            <script src="https://maps.googleapis.com/maps/api/js?key={{ $apiKey }}&callback=initMap&v=beta&libraries=visualization"
-                                                        async>
-                            </script>
+                            <div class="card">
+                                <div id="map" style="height: calc(75vh - 71px);" class="mb-3"></div>
+                                <script src="https://maps.googleapis.com/maps/api/js?key={{ $apiKey }}&callback=initMap&v=beta&libraries=visualization"
+                                                                async>
+                                </script>
+                            </div>
                         </div>
                     </div>
                     <div class="justify-content-center d-flex mt-3">
