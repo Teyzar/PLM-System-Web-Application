@@ -21,24 +21,29 @@
             markers = [];
         }
 
-        function addMarker(position, label) {
-            markers.push(new google.maps.Marker({
-                map,
-                label,
-                position,
-                collisionBehavior: google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL
-            }));
-        }
-
-        function areas(units) {
+        function updateMarkers(units) {
+            const infoWindow = new google.maps.InfoWindow();
 
             for (const unit of units) {
                 const position = {
                     lat: parseFloat(unit.latitude),
                     lng: parseFloat(unit.longitude)
                 };
+
+                const marker = new google.maps.Marker({
+                    map,
+                    position,
+                    label: `${unit.id}`,
+                    collisionBehavior: google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL
+                });
+
+                marker.addListener("click", () => {
+                    infoWindow.setContent(`${unit.formatted_address}`);
+                    infoWindow.open(map, marker);
+                });
+
+                markers.push(marker);
                 map.panTo(position);
-                addMarker(position, `${unit.id}`);
             }
         }
     </script>
@@ -123,7 +128,7 @@
                             <hr>
 
                             <span class="text-capitalize fw-bold h5 mt-0">
-                                Areas Affected: <a type="button" onclick="areas({{ $incident->units }})"
+                                Areas Affected: <a type="button" onclick="updateMarkers({{ $incident->units }})"
                                     data-bs-toggle="modal" data-bs-target="#map-modal" class="text-info"><i
                                         type="button" class="fe-map fs-5" title="View Map" tabindex="0"
                                         data-plugin="tippy" data-tippy-placement="right"></i></a>
