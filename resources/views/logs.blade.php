@@ -11,6 +11,8 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="{{ asset('libs/tippy.js/tippy.all.min.js') }}"></script>
+    <link href="https://nightly.datatables.net/buttons/css/buttons.dataTables.css?_=c6b24f8a56e04fcee6105a02f4027462.css"
+        rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -20,14 +22,13 @@
                 <div class="card-body">
                     <h3 class="header-title mb-2"><label>Logs: Unit {{ $id }}</label></h3>
                     <div class="table-responsive">
-                        <table class="table table-hover table-bordered m-0 dt-responsive nowrap w-100"
-                            id="datatable-buttons">
+                        <table class="table table-hover table-bordered m-0 dt-responsive nowrap w-100" id="table">
                             {{-- or tickets-table --}}
                             <thead>
                                 <tr>
-                                    <th width="15%">ID</th>
-                                    <th width="15%">Status</th>
-                                    <th width="15%">Date Created</th>
+                                    <th width="20%">ID</th>
+                                    <th width="20%">Status</th>
+                                    <th width="20%">Date Created</th>
 
                                 </tr>
                             </thead>
@@ -38,7 +39,8 @@
                                         <tr>
                                             <td> {{ $log->id }} </td>
                                             <td class="text-capitalize"> {{ $log->status }} </td>
-                                            <td> {{ \Carbon\Carbon::parse($log->created_at)->toDayDateTimeString() }} </td>
+                                            <td> {{ \Carbon\Carbon::parse($log->created_at)->toDayDateTimeString() }}
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -78,5 +80,31 @@
     <script src="{{ asset('libs/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('libs/pdfmake/build/pdfmake.min.js') }}"></script>
     <script src="{{ asset('libs/pdfmake/build/vfs_fonts.js') }}"></script>
-    <script src="{{ mix('js/pages/datatables.init.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#table').DataTable({
+                dom: 'Bfrtip',
+                ordering: false,
+                buttons: [{
+                        extend: "copy",
+                        className: "btn-light mb-1"
+                    },
+                    {
+                        extend: "print",
+                        className: "btn-light mb-1",
+                    }
+                ],
+                language: {
+                    paginate: {
+                        previous: "<i class='mdi mdi-chevron-left'>",
+                        next: "<i class='mdi mdi-chevron-right'>"
+                    }
+                },
+                drawCallback: function() {
+                    $(".dataTables_paginate > .pagination").addClass("pagination-rounded")
+                }
+            });
+        });
+    </script>
 @endsection
