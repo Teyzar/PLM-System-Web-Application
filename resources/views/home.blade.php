@@ -2,17 +2,21 @@
 
 @section('head')
     <script>
-        let map, heatmap, heatmapData;
+        let map, heatmap, heatmapData, bounds, toUpdate = 0;
+
+        const cadiz = {
+            'lat': 10.95583493620157,
+            'lng': 123.30611654802884
+        };
 
         function initMap() {
             map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 16,
-                center: {
-                    'lat': 10.95583493620157,
-                    'lng': 123.30611654802884
-                },
+                zoom: 14,
+                center: cadiz,
                 mapTypeId: "roadmap"
             });
+
+            bounds = new google.maps.LatLngBounds();
 
             // Initialize heatmap data
             heatmapData = new google.maps.MVCArray();
@@ -35,11 +39,41 @@
             // Link heatmap with map
             heatmap.setMap(map);
             for (const data of {!! $heatmapData !!}) {
-                heatmapData.push({
+                const value = {
                     id: data.id,
                     weight: 1,
                     location: new google.maps.LatLng(data.latitude, data.longitude)
-                });
+                };
+
+                heatmapData.push(value);
+                bounds.extend(value.location);
+            }
+
+            google.maps.event.addListener(map, 'bounds_changed', () => {
+                if (toUpdate == 2) {
+                    if (map.getZoom() > 15) {
+                        map.setZoom(15);
+                    }
+
+                    toUpdate = 0;
+                }
+            });
+
+            google.maps.event.addListener(map, 'idle', () => {
+                if (toUpdate == 1) {
+                    window.setTimeout(() => {
+                        map.fitBounds(bounds);
+                    }, 1000);
+
+                    toUpdate = 2;
+                }
+            });
+
+            if (heatmapData.length > 1) {
+                toUpdate = 1;
+            } else {
+                map.panTo(heatmapData.length > 0 ? bounds.getCenter() : cadiz);
+                map.setZoom(15);
             }
 
             Echo.channel("Home").listen("HeatmapUpdate", updateHeatmap);
@@ -226,6 +260,20 @@
 
                 // Push the new data
                 heatmapData.push(value);
+            }
+
+            bounds = new google.maps.LatLngBounds();
+
+            for (const data of heatmapData.getArray()) {
+                bounds.extend(data.location);
+            }
+
+            if (heatmapData.length > 1) {
+                toUpdate = 2;
+                map.fitBounds(bounds);
+            } else {
+                map.panTo(heatmapData.length > 0 ? bounds.getCenter() : cadiz);
+                map.setZoom(15);
             }
         }
     </script>
