@@ -2,7 +2,6 @@
 
 
 @section('head')
-    {{-- <link rel="stylesheet" href="{{ mix('css/incidents.css') }}"> --}}
     <script src="{{ asset('libs/tippy.js/tippy.all.min.js') }}"></script>
     <script>
         let map, markers;
@@ -29,15 +28,9 @@
                 position,
                 collisionBehavior: google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL
             }));
-            google.maps.event.addListener(markers, "click", function(event) {
-                toggleBounce()
-                showInfo(position);
-            });
         }
 
-
         function areas(units) {
-            console.log(units);
 
             for (const unit of units) {
                 const position = {
@@ -48,64 +41,19 @@
                 addMarker(position, `${unit.id}`);
             }
         }
-
-        function showInfo(latlng) {
-            console.log(latlng);
-            geocoder.geocode({
-                'latLng': latlng
-            }, function(results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    if (results[1]) {
-                        // here assign the data to asp lables
-                        document.getElementById('<%=addressStandNo.ClientID %>').value = results[1]
-                            .formatted_address;
-                    } else {
-                        alert('No results found');
-                    }
-                } else {
-                    alert('Geocoder failed due to: ' + status);
-                }
-            });
-        }
-
-        // function updateMarker(id) {
-
-        //     const unit = units.find(unit => unit.id == id);
-        //     const checkbox = document.getElementsByName(`unit_ids[${id}]`)[0];
-
-        //     if (!unit || !checkbox) return;
-
-        //     const position = {
-        //         lat: parseFloat(unit.latitude),
-        //         lng: parseFloat(unit.longitude)
-        //     };
-
-
-        //     if (checkbox.checked) {
-        //         map.panTo(position);
-        //         addMarker(position, `${id}`);
-        //     } else {
-        //         map.panTo(cadiz);
-        //         removeMarker(position);
-        //     }
-        // }
     </script>
 @endsection
 
 @section('content')
     <div class="container-fluid pt-3 mb-5">
-
         @if (count($incidents) <= 0)
             <div class="container-fluid">
-
                 <div class="justify-content-center d-flex">
                     <i class="fe-calendar fs-1 text-dark"></i>
                 </div>
                 <div class="justify-content-center d-flex">
-
                     <span class="h4 text-primary">No published incidents.</span>
                 </div>
-
             </div>
         @endif
         <div class="row">
@@ -149,8 +97,6 @@
 
                             <hr>
 
-                            <div id="info-body{{ $incident->id }}"></div>
-
                             @foreach ($incident->info as $info)
                                 <span class="anchor" id="{{ $incident->id }}-{{ $info->id }}"></span>
 
@@ -173,11 +119,6 @@
                                     </span>
                                 </p>
                             @endforeach
-
-                            <div id="incident{{ $incident->id }}" class="col-9 mb-3"></div>
-                            <div id="textarea{{ $incident->id }}" class="col-9 mb-3"></div>
-
-                            <div id="savebtn{{ $incident->id }}" class="float-end"></div>
 
                             <hr>
 
