@@ -79,3 +79,17 @@
         </div>
     </div>
 </div>
+
+<div id="map-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fullWidthModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-full-width">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div id="map" style="height: calc(100vh - 100px);"></div>
+                <script src="https://maps.googleapis.com/maps/api/js?key={{ $apiKey }}&callback=initMap&v=beta&libraries=visualization"
+                                async>
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
