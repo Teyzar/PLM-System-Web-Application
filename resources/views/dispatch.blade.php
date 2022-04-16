@@ -12,15 +12,17 @@
         type="text/css" />
 
     <script>
-        let map, markers;
+        let map, markers, bounds;
+
+        const cadiz = {
+            'lat': 10.95583493620157,
+            'lng': 123.30611654802884
+        };
 
         function initMap() {
             map = new google.maps.Map(document.getElementById("map"), {
                 zoom: 15,
-                center: {
-                    'lat': 10.95583493620157,
-                    'lng': 123.30611654802884
-                },
+                center: cadiz,
                 mapTypeId: "roadmap"
             });
 
@@ -192,23 +194,34 @@
 
             markers = [];
 
+            bounds = new google.maps.LatLngBounds();
+
             for (const unit of units) {
-
-                var position = {
-                    lat: parseFloat(unit.latitude),
-                    lng: parseFloat(unit.longitude)
-                };
-
-                map.panTo(position);
-                markers.push(new google.maps.Marker({
+                const marker = new google.maps.Marker({
                     map,
                     label: `${unit.id}`,
-                    position: {
-                        lat: parseFloat(unit.latitude),
-                        lng: parseFloat(unit.longitude)
-                    },
-                    collisionBehavior: google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL
-                }));
+                    collisionBehavior: google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL,
+                    position: new google.maps.LatLng(parseFloat(unit.latitude), parseFloat(unit.longitude)),
+                });
+
+                markers.push(marker);
+                bounds.extend(marker.getPosition());
+            }
+
+            map.setZoom(15);
+            map.setCenter(units.length > 0 ? bounds.getCenter() : cadiz);
+
+            if (units.length > 1) {
+                google.maps.event.addListenerOnce(map, 'bounds_changed', () => {
+                    const zoom = map.getZoom() - 1;
+                    map.setZoom(zoom > 15 ? 15 : zoom);
+                });
+
+                google.maps.event.addListenerOnce(map, 'idle', () => {
+                    window.setTimeout(() => {
+                        map.fitBounds(bounds);
+                    }, 1000);
+                });
             }
         }
     </script>
