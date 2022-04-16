@@ -1,9 +1,95 @@
 @extends('layouts.app')
 
+
 @section('head')
     {{-- <link rel="stylesheet" href="{{ mix('css/incidents.css') }}"> --}}
     <script src="{{ asset('libs/tippy.js/tippy.all.min.js') }}"></script>
+    <script>
+        let map, markers;
 
+        var cadiz = {
+            'lat': 10.95583493620157,
+            'lng': 123.30611654802884
+        };
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 15,
+                center: cadiz,
+                mapTypeId: "roadmap"
+            });
+
+            markers = [];
+        }
+
+        function addMarker(position, label) {
+            markers.push(new google.maps.Marker({
+                map,
+                label,
+                position,
+                collisionBehavior: google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL
+            }));
+            google.maps.event.addListener(markers, "click", function(event) {
+                toggleBounce()
+                showInfo(position);
+            });
+        }
+
+
+        function areas(units) {
+            console.log(units);
+
+            for (const unit of units) {
+                const position = {
+                    lat: parseFloat(unit.latitude),
+                    lng: parseFloat(unit.longitude)
+                };
+                map.panTo(position);
+                addMarker(position, `${unit.id}`);
+            }
+        }
+
+        function showInfo(latlng) {
+            console.log(latlng);
+            geocoder.geocode({
+                'latLng': latlng
+            }, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    if (results[1]) {
+                        // here assign the data to asp lables
+                        document.getElementById('<%=addressStandNo.ClientID %>').value = results[1]
+                            .formatted_address;
+                    } else {
+                        alert('No results found');
+                    }
+                } else {
+                    alert('Geocoder failed due to: ' + status);
+                }
+            });
+        }
+
+        // function updateMarker(id) {
+
+        //     const unit = units.find(unit => unit.id == id);
+        //     const checkbox = document.getElementsByName(`unit_ids[${id}]`)[0];
+
+        //     if (!unit || !checkbox) return;
+
+        //     const position = {
+        //         lat: parseFloat(unit.latitude),
+        //         lng: parseFloat(unit.longitude)
+        //     };
+
+
+        //     if (checkbox.checked) {
+        //         map.panTo(position);
+        //         addMarker(position, `${id}`);
+        //     } else {
+        //         map.panTo(cadiz);
+        //         removeMarker(position);
+        //     }
+        // }
+    </script>
 @endsection
 
 @section('content')
@@ -96,10 +182,11 @@
                             <hr>
 
                             <span class="text-capitalize fw-bold h5 mt-0">
-                                Areas Affected: <a href="" class="text-info"><i type="button" class="fe-map fs-5" title="View Map" tabindex="0"
-                                data-plugin="tippy" data-tippy-placement="right"></i></a>
+                                Areas Affected: <a type="button" onclick="areas({{ $incident->units }})"
+                                    data-bs-toggle="modal" data-bs-target="#map-modal" class="text-info"><i
+                                        type="button" class="fe-map fs-5" title="View Map" tabindex="0"
+                                        data-plugin="tippy" data-tippy-placement="right"></i></a>
                             </span>
-
                             <ul>
                                 @foreach ($incident->locations as $location)
                                     <li>
