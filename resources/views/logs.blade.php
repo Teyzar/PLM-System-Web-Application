@@ -22,7 +22,7 @@
                 <div class="card-body">
                     <h3 class="header-title mb-2"><label>Logs: Unit {{ $id }}</label></h3>
                     <div class="table-responsive">
-                        <table class="table table-hover table-bordered m-0 dt-responsive nowrap w-100" id="table">
+                        <table class="table table-bordered m-0 dt-responsive nowrap w-100" id="table">
                             {{-- or tickets-table --}}
                             <thead>
                                 <tr>
