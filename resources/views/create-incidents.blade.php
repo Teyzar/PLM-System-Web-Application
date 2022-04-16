@@ -9,9 +9,9 @@
         type="text/css" />
 
     <script>
-        let map, markers;
+        let map, markers, bounds, toUpdate = 0;
 
-        var cadiz = {
+        const cadiz = {
             'lat': 10.95583493620157,
             'lng': 123.30611654802884
         };
@@ -24,6 +24,28 @@
             });
 
             markers = [];
+
+            bounds = new google.maps.LatLngBounds();
+
+            google.maps.event.addListener(map, 'bounds_changed', () => {
+                if (toUpdate == 2) {
+                    if (map.getZoom() > 15) {
+                        map.setZoom(15);
+                    }
+
+                    toUpdate = 0;
+                }
+            });
+
+            google.maps.event.addListener(map, 'idle', () => {
+                if (toUpdate == 1) {
+                    window.setTimeout(() => {
+
+                    }, 1000);
+
+                    toUpdate = 2;
+                }
+            });
 
             const darkMode = localStorage.getItem('darkMode');
             const darkModeButton = document.querySelector('#dark-mode-check');
@@ -210,13 +232,24 @@
                 lng: parseFloat(unit.longitude)
             };
 
-
             if (checkbox.checked) {
-                map.panTo(position);
                 addMarker(position, `${id}`);
             } else {
-                map.panTo(cadiz);
                 removeMarker(position);
+            }
+
+            bounds = new google.maps.LatLngBounds();
+
+            for (const marker of markers) {
+                bounds.extend(marker.getPosition());
+            }
+
+            if (markers.length > 1) {
+                toUpdate = 2;
+                map.fitBounds(bounds);
+            } else {
+                map.panTo(markers.length > 0 ? bounds.getCenter() : cadiz);
+                map.setZoom(15);
             }
         }
 
