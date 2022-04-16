@@ -36,7 +36,6 @@
             <div class="modal-body">
                 <form id="formUpdateInfo" action="" method="POST">
                     @csrf
-                    @method('PUT')
                     <select id="select-title" class="form-control mb-2" data-width="10%" data-toggle="select2"
                         name="title" required>
                         <option value="" class="text-scondary fw-bolder" id="default"></option>
@@ -45,7 +44,7 @@
                     </select>
                     <textarea id="description" type="text" name="description" class="form-control d-flex" rows="5" required></textarea>
                     <div class="modal-footer d-block d-flex align-items-center justify-content-center border-1">
-                        <button type="submit" class="btn btn-info w-75">Save</button>
+                        <button id="editinfobtn" type="submit" class="btn btn-info w-75">Save</button>
                     </div>
                 </form>
             </div>
@@ -72,7 +71,7 @@
                     <textarea id="description" name="description" class="form-control" rows="5"
                         placeholder="Enter some brief description about the report" required></textarea>
                     <div class="modal-footer d-block d-flex align-items-center justify-content-center border-1">
-                        <button type="submit" class="btn btn-success w-75">Add</button>
+                        <button id="addinfobtn" type="submit" class="btn btn-success w-75">Add</button>
                     </div>
                 </form>
             </div>
