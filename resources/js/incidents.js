@@ -1,6 +1,7 @@
 function editIncident(id) {
 
     $(`#dotIcon${id}`).hide();
+
     const cancelbtn = $(`#cancelbtn${id}`);
     $.ajax({
         type: 'get',
@@ -11,7 +12,6 @@ function editIncident(id) {
             for (const info of data) {
                 const editIcon = $(`#_editIcon${info.id}`);
 
-
                 cancelbtn.on('click', function () {
                     editIcon.html('');
                     cancelbtn.html('');
@@ -21,7 +21,6 @@ function editIncident(id) {
 
                 editIcon.html(`<a href="#" onclick="modal(${info.incident_id}, ${info.id})"><i class="mdi mdi-playlist-edit fs-3"></i></a>`);
                 cancelbtn.html('<button type="button" class="btn btn-danger btn-close py-1 px-2"></button>');
-
             }
         }
     });
@@ -48,74 +47,44 @@ function modal(incidentId, infoId) {
         }
     });
     $('#modalEditInfo').modal('show');
-
     $('#formUpdateInfo').attr('action', `incidents/${incidentId}/${infoId}`);
 
-    $('#formUpdateInfo').on('submit', function() {
-        $('#modalEditInfo').modal('hide');
+    $('#formUpdateInfo').on('submit', function (event) {
+        event.preventDefault();
+        $('#editinfobtn').attr('disabled', true);
+
+        setTimeout(() => {
+            $('#editinfobtn').attr('disabled', false);
+        }, 2000);
+
+        $.ajax({
+            url: $(this).prop('action'),
+            method: "PUT",
+            data: $(this).serialize(),
+            success: function (data) {
+                $('#modalEditInfo').modal('hide');
+
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
+            }
+        })
     });
-
-    // $('#formUpdateInfo').on('submit', function (event) {
-    //     event.preventDefault();
-
-    //     $.ajax({
-    //         url: $(this).prop('action'),
-    //         type: "PUT",
-    //         data: $(this).serialize(),
-    //         success: function (result) {
-    //             $('#modalEditInfo').modal('hide');
-
-    //             for (const info of result) {
-    //                 closeIcons(info.incident_id);
-    //                 const desc = $(`#input-description${info.id}`);
-    //                 const title = $(`#title${info.id}`);
-    //                 title.html(info.title + ' <i class="fe-minus"></i>');
-    //                 desc.html(info.description);
-
-    //             }
-
-    //         },
-    //         error: function (err) {
-    //             console.log(err);
-    //         }
-    //     });
-    // });
-
-
 }
 
-// function closeIcons(id) {
-//     const cancelbtn = $(`#cancelbtn${id}`);
-//     cancelbtn.html('');
-//     $(`#dotIcon${id}`).show();
-
-//     $.ajax({
-//         type: 'get',
-//         url: `incidents/${id}/edit`,
-//         data: $(this).serialize(),
-//         success: function (data) {
-//             for (const info of data) {
-//                 const editIcon = $(`#_editIcon${info.id}`);
-
-//                 editIcon.html('');
-//             }
-//         }
-//     });
-// }
-
 function addIncident(id) {
-
     $("#modalAddInfo").modal('show');
-
     $('#incidentID').html('Incident ID: ' + id);
-
     $('#formAddInfo').attr('action', `incidents/${id}/add`);
-
-    const infobody = $(`#info-body${id}`);
 
     $('#formAddInfo').on('submit', function (event) {
         event.preventDefault();
         var $this = $(this);
+        $('#addinfobtn').attr('disabled', true);
+
+        setTimeout(() => {
+            $('#addinfobtn').attr('disabled', false);
+        }, 2000);
 
         $.ajax({
             method: "POST",
@@ -125,27 +94,9 @@ function addIncident(id) {
             success: function (result) {
                 $("#modalAddInfo").modal('hide');
 
-                const date = new Date(result.created_at);
-
-                const str_date = date.toLocaleString('en-US', {
-                    weekday: 'short', // long, short, narrow
-                    day: 'numeric', // numeric, 2-digit
-                    year: 'numeric', // numeric, 2-digit
-                    month: 'short', // numeric, 2-digit, long, short, narrow
-                    hour: 'numeric', // numeric, 2-digit
-                    minute: 'numeric', // numeric, 2-digit
-                });
-
-                infobody.html(`
-                <div class="col-8">
-                    <span class="text-capitalize fw-bolder h5 mt-0">${result.title}<i
-                            class="fe-minus"></i></span>
-                    <span class="">${result.description}</span>
-                </div>
-                <p class="mt-2"><span
-                    class="text-muted">${str_date}</span>
-                </p>
-                `);
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
             },
         });
     });
