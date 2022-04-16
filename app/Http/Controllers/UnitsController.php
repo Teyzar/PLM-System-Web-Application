@@ -54,7 +54,7 @@ class UnitsController extends Controller
         $messageSent = false;
 
         $validated = $request->validate([
-            'phone_number' => 'required|starts_with:+639|min:13|max:13|unique:units',
+            'phone_number' => 'required|regex:/^[+0-9]+$/|starts_with:+639|min:13|max:13|unique:units',
         ]);
 
         event(new UnitRegisterUpdate("start"));
