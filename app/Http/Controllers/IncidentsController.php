@@ -30,6 +30,7 @@ class IncidentsController extends Controller
     public function index()
     {
         return view('incidents', [
+            'apiKey' => env('MAPS_KEY', 'AIzaSyA2vqdxEToK1qKnxm14YrCwJ1xoLd1FcBU'),
             'incidents' => Incident::orderBy('created_at', 'desc')->get()
         ]);
     }
