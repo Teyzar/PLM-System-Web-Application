@@ -2,6 +2,7 @@
 
 
 @section('head')
+
     <script src="{{ asset('libs/tippy.js/tippy.all.min.js') }}"></script>
     <script>
         let map, markers, bounds, infoWindow;
@@ -216,7 +217,7 @@
 @section('content')
     <div class="container-fluid pt-3 mb-5">
         @if (count($incidents) <= 0)
-            <div class="container-fluid">
+            <div class="container-fluid" style="margin-top: 17%">
                 <div class="justify-content-center d-flex">
                     <i class="fe-calendar fs-1 text-dark"></i>
                 </div>
