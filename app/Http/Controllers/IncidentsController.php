@@ -106,10 +106,6 @@ class IncidentsController extends Controller
 
         $incident = Incident::find($incidentId);
 
-
-        // $info = $incident->info()->where('id', $infoId)->get();
-
-        // $infos = $incident->info()->orderBy('created_at', 'desc')->get();
         $info  = $incident->info()->where('id', $infoId)->update([
             'title' => $request->title,
             'description' => $request->description
@@ -117,22 +113,9 @@ class IncidentsController extends Controller
 
         $info = $incident->info()->where('id', $infoId)->get();
 
-        // $i = 0;
-        // foreach ($infos as $info) {
-        //     $incident->info()->where('id', $info->id)->update([
-        //         'title' => $request->title[$i],
-        //         'description' => $request->description[$i]
-        //     ]);
-        //     $i++;
-        // }
-
-
-        // $info = $incident->info()->orderBy('created_at', 'desc')->get();
-
         event(new IncidentUpdate($incident));
-        Alert::success("Incident ID: $incidentId", 'Incident Updated!');
 
-        return redirect()->back();
+        return $info;
     }
 
     public function add(Request $request, $id)
@@ -156,8 +139,6 @@ class IncidentsController extends Controller
 
     public function info($id)
     {
-        $incident = Incident::all();
-
         $info = IncidentInfo::where('id', $id)->get();
 
         return $info;
