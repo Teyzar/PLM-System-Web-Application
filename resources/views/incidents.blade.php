@@ -43,10 +43,14 @@
                 // Set CSS for the control interior
                 controlText.style.color = "rgb(25,25,25)";
                 controlText.style.padding = "4px";
-                controlText.innerHTML = `
-                    <i type="button" class="mdi mdi-close fs-3" data-bs-dismiss="modal"></i>
-                `;
+                controlText.innerHTML = `<i class="mdi mdi-close fs-3"></i>`;
                 controlUI.appendChild(controlText);
+
+                controlUI.addEventListener("click", () => {
+                    $('#map-modal').modal('hide');
+                    $('body').removeClass('modal-open');
+                    $('.modal-backdrop').remove();
+                });
 
                 map.controls[google.maps.ControlPosition.TOP_RIGHT].push(controlDiv);
             });
@@ -79,8 +83,10 @@
                 bounds.extend(marker.getPosition());
             }
 
+            setTimeout(() => {
             map.setZoom(15);
             map.setCenter(units.length > 0 ? bounds.getCenter() : cadiz);
+            }, 1000);
 
             if (units.length > 1) {
                 google.maps.event.addListenerOnce(map, 'bounds_changed', () => {
