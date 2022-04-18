@@ -31,7 +31,7 @@
                 controlUI.style.backgroundColor = "#fff";
                 controlUI.style.border = "2px solid #fff";
                 controlUI.style.borderRadius = "3px";
-                controlUI.style.boxShadow = "0 2px 6px rgba(0,0,0,.2)";
+                controlUI.style.boxShadow = "0 2px 6px rgba(0,0,0,.1)";
                 controlUI.style.cursor = "pointer";
                 controlUI.style.marginTop = "10px";
                 controlUI.style.marginRight = "10px";
@@ -84,8 +84,8 @@
             }
 
             setTimeout(() => {
-            map.setZoom(15);
-            map.setCenter(units.length > 0 ? bounds.getCenter() : cadiz);
+                map.setZoom(15);
+                map.setCenter(units.length > 0 ? bounds.getCenter() : cadiz);
             }, 1000);
 
             if (units.length > 1) {
