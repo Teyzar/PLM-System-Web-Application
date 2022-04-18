@@ -21,6 +21,34 @@
                 });
 
                 markers = [];
+
+                // Close button
+                const controlDiv = document.createElement("div");
+                const controlUI = document.createElement("div");
+                const controlText = document.createElement("div");
+
+                // Set CSS for the control border.
+                controlUI.style.backgroundColor = "#fff";
+                controlUI.style.border = "2px solid #fff";
+                controlUI.style.borderRadius = "3px";
+                controlUI.style.boxShadow = "0 2px 6px rgba(0,0,0,.2)";
+                controlUI.style.cursor = "pointer";
+                controlUI.style.marginTop = "10px";
+                controlUI.style.marginRight = "10px";
+                controlUI.style.width = "40px";
+                controlUI.style.textAlign = "center";
+                controlUI.title = "Close";
+                controlDiv.appendChild(controlUI);
+
+                // Set CSS for the control interior
+                controlText.style.color = "rgb(25,25,25)";
+                controlText.style.padding = "4px";
+                controlText.innerHTML = `
+                    <i type="button" class="mdi mdi-close fs-3" data-bs-dismiss="modal"></i>
+                `;
+                controlUI.appendChild(controlText);
+
+                map.controls[google.maps.ControlPosition.TOP_RIGHT].push(controlDiv);
             });
         }
 
