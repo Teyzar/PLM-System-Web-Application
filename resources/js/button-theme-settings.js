@@ -150,13 +150,14 @@ if (darkMode === "enabled") {
     enableDarkmode();
 }
 
-darkModeButton.addEventListener('click', () => {
+darkModeButton?.addEventListener('click', () => {
     darkMode = localStorage.getItem("darkMode");
     if (darkMode !== "enabled") {
         enableDarkmode();
     }
 });
-lightModeButton.addEventListener('click', () => {
+
+lightModeButton?.addEventListener('click', () => {
     darkMode = localStorage.getItem("darkMode");
     if (darkMode == "enabled") {
         enableLightMode();
@@ -192,14 +193,16 @@ const enableDefault = () => {
 if (condensed == "enabled") {
     enableCondensed();
 }
-condensedBtn.addEventListener('click', () => {
+
+condensedBtn?.addEventListener('click', () => {
     condensed = localStorage.getItem('condensed');
 
     if (condensed !== "enabled") {
         enableCondensed();
     }
-})
-defaultBtn.addEventListener('click', () => {
+});
+
+defaultBtn?.addEventListener('click', () => {
     condensed = localStorage.getItem('condensed');
     if (condensed == "enabled") {
         enableDefault();
@@ -209,8 +212,7 @@ defaultBtn.addEventListener('click', () => {
 
 const resetBtn = document.querySelector('#resetBtn');
 
-resetBtn.addEventListener('click', () => {
-
+resetBtn?.addEventListener('click', () => {
     body.setAttribute('data-layout', '');
     localStorage.setItem('darkMode', "disabled");
     localStorage.setItem('condensed', "disabled");
