@@ -37,16 +37,6 @@
                     toUpdate = 0;
                 }
             });
-
-            google.maps.event.addListener(map, 'idle', () => {
-                if (toUpdate == 1) {
-                    window.setTimeout(() => {
-
-                    }, 1000);
-
-                    toUpdate = 2;
-                }
-            });
         }
 
         function addMarker(position, label) {
