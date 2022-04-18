@@ -17,25 +17,27 @@
         };
 
         function initMap() {
-            map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 15,
-                center: cadiz,
-                mapTypeId: "roadmap",
-                styles: darkMode === "enabled" ? mapDark : mapLight,
-            });
+            $(document).ready(() => {
+                map = new google.maps.Map(document.getElementById("map"), {
+                    zoom: 15,
+                    center: cadiz,
+                    mapTypeId: "roadmap",
+                    styles: darkMode === "enabled" ? mapDark : mapLight,
+                });
 
-            markers = [];
+                markers = [];
 
-            bounds = new google.maps.LatLngBounds();
+                bounds = new google.maps.LatLngBounds();
 
-            google.maps.event.addListener(map, 'bounds_changed', () => {
-                if (toUpdate == 2) {
-                    if (map.getZoom() > 15) {
-                        map.setZoom(15);
+                google.maps.event.addListener(map, 'bounds_changed', () => {
+                    if (toUpdate == 2) {
+                        if (map.getZoom() > 15) {
+                            map.setZoom(15);
+                        }
+
+                        toUpdate = 0;
                     }
-
-                    toUpdate = 0;
-                }
+                });
             });
         }
 

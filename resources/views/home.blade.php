@@ -10,74 +10,76 @@
         };
 
         function initMap() {
-            map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 14,
-                center: cadiz,
-                mapTypeId: "roadmap",
-                styles: darkMode === "enabled" ? mapDark : mapLight,
-            });
+            $(document).ready(() => {
+                map = new google.maps.Map(document.getElementById("map"), {
+                    zoom: 14,
+                    center: cadiz,
+                    mapTypeId: "roadmap",
+                    styles: darkMode === "enabled" ? mapDark : mapLight,
+                });
 
-            bounds = new google.maps.LatLngBounds();
+                bounds = new google.maps.LatLngBounds();
 
-            // Initialize heatmap data
-            heatmapData = new google.maps.MVCArray();
+                // Initialize heatmap data
+                heatmapData = new google.maps.MVCArray();
 
-            // Initialize heatmap layer
-            heatmap = new google.maps.visualization.HeatmapLayer({
-                data: heatmapData,
-                radius: 50,
-                gradient: [
-                    "rgba(0, 0, 0, 0)",
-                    "rgba(255, 0, 0, 0.6)",
-                    "rgba(255, 0, 0, 0.7)",
-                    "rgba(255, 0, 0, 0.8)",
-                    "rgba(255, 0, 0, 0.9)",
-                    "rgba(255, 0, 0, 1)"
-                ],
-                maxIntentsity: 1
-            });
+                // Initialize heatmap layer
+                heatmap = new google.maps.visualization.HeatmapLayer({
+                    data: heatmapData,
+                    radius: 50,
+                    gradient: [
+                        "rgba(0, 0, 0, 0)",
+                        "rgba(255, 0, 0, 0.6)",
+                        "rgba(255, 0, 0, 0.7)",
+                        "rgba(255, 0, 0, 0.8)",
+                        "rgba(255, 0, 0, 0.9)",
+                        "rgba(255, 0, 0, 1)"
+                    ],
+                    maxIntentsity: 1
+                });
 
-            // Link heatmap with map
-            heatmap.setMap(map);
-            for (const data of {!! $heatmapData !!}) {
-                const value = {
-                    id: data.id,
-                    weight: 1,
-                    location: new google.maps.LatLng(data.latitude, data.longitude)
-                };
+                // Link heatmap with map
+                heatmap.setMap(map);
+                for (const data of {!! $heatmapData !!}) {
+                    const value = {
+                        id: data.id,
+                        weight: 1,
+                        location: new google.maps.LatLng(data.latitude, data.longitude)
+                    };
 
-                heatmapData.push(value);
-                bounds.extend(value.location);
-            }
+                    heatmapData.push(value);
+                    bounds.extend(value.location);
+                }
 
-            google.maps.event.addListener(map, 'bounds_changed', () => {
-                if (toUpdate == 2) {
-                    if (map.getZoom() > 15) {
-                        map.setZoom(15);
+                google.maps.event.addListener(map, 'bounds_changed', () => {
+                    if (toUpdate == 2) {
+                        if (map.getZoom() > 15) {
+                            map.setZoom(15);
+                        }
+
+                        toUpdate = 0;
                     }
+                });
 
-                    toUpdate = 0;
+                google.maps.event.addListener(map, 'idle', () => {
+                    if (toUpdate == 1) {
+                        window.setTimeout(() => {
+                            map.fitBounds(bounds);
+                        }, 1000);
+
+                        toUpdate = 2;
+                    }
+                });
+
+                if (heatmapData.length > 1) {
+                    toUpdate = 1;
+                } else {
+                    map.panTo(heatmapData.length > 0 ? bounds.getCenter() : cadiz);
+                    map.setZoom(15);
                 }
+
+                Echo.channel("Home").listen("HeatmapUpdate", updateHeatmap);
             });
-
-            google.maps.event.addListener(map, 'idle', () => {
-                if (toUpdate == 1) {
-                    window.setTimeout(() => {
-                        map.fitBounds(bounds);
-                    }, 1000);
-
-                    toUpdate = 2;
-                }
-            });
-
-            if (heatmapData.length > 1) {
-                toUpdate = 1;
-            } else {
-                map.panTo(heatmapData.length > 0 ? bounds.getCenter() : cadiz);
-                map.setZoom(15);
-            }
-
-            Echo.channel("Home").listen("HeatmapUpdate", updateHeatmap);
         }
         async function updateHeatmap(data) {
             if (data.status == "normal") {

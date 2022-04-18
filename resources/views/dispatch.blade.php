@@ -20,14 +20,16 @@
         };
 
         function initMap() {
-            map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 15,
-                center: cadiz,
-                mapTypeId: "roadmap",
-                styles: darkMode === "enabled" ? mapDark : mapLight,
-            });
+            $(document).ready(() => {
+                map = new google.maps.Map(document.getElementById("map"), {
+                    zoom: 15,
+                    center: cadiz,
+                    mapTypeId: "roadmap",
+                    styles: darkMode === "enabled" ? mapDark : mapLight,
+                });
 
-            markers = [];
+                markers = [];
+            });
         }
 
 
