@@ -6,6 +6,7 @@ use App\Events\ConsoleMessage;
 use App\Events\HeatmapUpdate;
 use App\Events\IncidentUpdate;
 use App\Events\UnitUpdate;
+use App\Models\Incident;
 use App\Models\Unit;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
@@ -131,13 +132,12 @@ class UnitsApiController extends Controller
         event(new UnitUpdate($unit));
         event(new HeatmapUpdate($unit));
 
-        // Update incident if resolved
+        // Get unit's latest incident
         $incident = $unit->latestIncident();
 
-        if ($incident) {
-            $units = $incident->units()->where('status', 'fault')->get();
-
-            if (count($units) == 0 && !$incident->resolved) {
+        if ($fields['status'] == 'normal' && $incident && !$incident->resolved) {
+            // Resolve incident if all units are normal
+            if (count($incident->units()->where('status', 'fault')->get()) == 0) {
                 $incident->info()->create([
                     'title' => 'Resolved',
                     'description' => 'This incident has been resolved.'
@@ -149,6 +149,40 @@ class UnitsApiController extends Controller
 
                 event(new IncidentUpdate($incident));
             }
+        } else if ($fields['status'] == 'fault') {
+            // Get recent incident
+            $incident = Incident::query()->latest()->firstOrCreate([
+                'resolved' => false,
+            ]);
+
+            // Get unit address
+            $unitAddress = $unit->address()->first();
+
+            // Check if incident has info
+            if (count($incident->info()->get()) > 0) {
+                // Get matching locations
+                $locations = collect($incident->locations)->where('city', $unitAddress->city)->filter(function ($location) use ($unitAddress) {
+                    return $location['barangays']->contains($unitAddress->barangay);
+                });
+
+                // Check if location is not yet added in the incident
+                if (count($locations) == 0) {
+                    // Create incident info update for current location
+                    $incident->info()->create([
+                        'title' => 'Update',
+                        'description' => "We have also detected a power outage at $unitAddress->barangay."
+                    ]);
+                }
+            } else {
+                // Create incident info
+                $incident->info()->create([
+                    'title' => 'Investigating',
+                    'description' => "We have detected a power outage at $unitAddress->barangay."
+                ]);
+            }
+
+            // Attach unit to incident
+            $incident->units()->attach($unit->id);
         }
 
         return $unit;
