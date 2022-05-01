@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\IncidentsApiController;
 use App\Http\Controllers\LinemanApiController;
 use App\Http\Controllers\UnitsApiController;
 use App\Http\Controllers\UserApiController;
@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/incidents/{id}/units', [IncidentsApiController::class, 'units'])->name('api.incident.units');
 
 Route::resource('/lineman', LinemanApiController::class, ['as' => 'api'])->only(['index', 'update']);
 Route::get('/lineman/{id}/incidents', [LinemanApiController::class, 'incidents'])->name('api.lineman.incidents');
