@@ -92,7 +92,12 @@ class LinemanApiController extends Controller
         }
 
         $lineman->token = $lineman
-            ->createToken('linemanToken', ['accessLineman', 'editLineman' . $lineman->id, 'accessUnits'])
+            ->createToken('linemanToken', [
+                'accessLineman',
+                'editLineman' . $lineman->id,
+                'accessUnits',
+                'accessIncidents',
+            ])
             ->plainTextToken;
 
         return $lineman;
