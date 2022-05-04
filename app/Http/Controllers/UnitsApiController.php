@@ -176,7 +176,7 @@ class UnitsApiController extends Controller
             } else {
                 // Create incident info
                 $incident->info()->create([
-                    'title' => 'Investigating',
+                    'title' => 'Outage Detected',
                     'description' => "We have detected a power outage at $unitAddress->barangay."
                 ]);
             }
