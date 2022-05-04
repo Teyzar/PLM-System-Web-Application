@@ -39,7 +39,6 @@
                     <select id="select-title" class="form-control mb-2" data-width="10%" data-toggle="select2"
                         name="title" required>
                         <option value="" class="text-scondary fw-bolder" id="default"></option>
-                        <option value="investigating">Investigating</option>
                         <option value="update">Update</option>
                     </select>
                     <textarea id="description" type="text" name="description" class="form-control d-flex" rows="5" required></textarea>
@@ -65,7 +64,6 @@
                     @csrf
                     <select id="title" class="form-control mb-2" data-toggle="select2" name="title" required>
                         <option value="" class="text-scondary fw-bolder">Title</option>
-                        <option value="investigating">Investigating</option>
                         <option value="update">Update</option>
                     </select>
                     <textarea id="description" name="description" class="form-control" rows="5"
