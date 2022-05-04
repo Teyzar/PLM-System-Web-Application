@@ -182,13 +182,11 @@
                                 </a>
                             </li>
                             <li>
-                                <a type="button" id="toggle-btn" data-toggle="collapse" data-target="#sidebarEmail"
-                                    aria-expanded="false">
+                                <a href="/incidents" id="toggle-btn">
                                     <i data-feather="clipboard"></i>
                                     <span> Incidents </span>
-                                    <span id="icon" class="menu-arrow"></span>
                                 </a>
-                                <div id="sidebarEmail" class="collapse">
+                                {{-- <div id="sidebarEmail" class="collapse">
                                     <ul class="nav-second-level">
                                         <li>
                                             <a href="/incidents">
@@ -204,7 +202,7 @@
                                             </a>
                                         </li>
                                     </ul>
-                                </div>
+                                </div> --}}
                             </li>
                             <style>
                                 .menu-arrow {
