@@ -30,30 +30,46 @@
                             {{-- or tickets-table --}}
                             <thead>
                                 <tr>
-                                    <th width="5%">ID</th>
-                                    <th width="10%">Status</th>
-                                    <th width="15%">Mobile #</th>
+                                    <th>ID</th>
+                                    <th>Status</th>
+                                    <th>Mobile #</th>
                                     <th>Address</th>
-                                    <th width="15%">Updated&nbsp;Last</th>
-                                    <th width="1%">&nbsp;</th>
-                                    <th width="1%">&nbsp;</th>
-                                    <th width="1%">&nbsp;</th>
+                                    <th>Last&nbsp;Updated</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
-                            <div class="card">
-                                <tbody>
-                                    @foreach ($units as $unit)
-                                        <tr>
-                                            <td> {{ $unit->id }} </td>
-                                            <td id="{{ $unit->id }}.status" class="text-capitalize">
-                                                {{ $unit->status }}
-                                            </td>
-                                            <td> {{ $unit->phone_number }} </td>
-                                            <td id="{{ $unit->id }}.address"> {{ $unit->formatted_address }} </td>
-                                            <td id="{{ $unit->id }}.updated_at">
-                                                {{ \Carbon\Carbon::parse($unit->updated_at)->toDayDateTimeString() }}
-                                            </td>
-                                            <td>
+
+                            <tbody>
+                                @foreach ($units as $unit)
+                                    <tr>
+                                        <td> {{ $unit->id }} </td>
+                                        <td id="{{ $unit->id }}.status" class="text-capitalize">
+                                            {{ $unit->status }}
+                                        </td>
+                                        <td> {{ $unit->phone_number }} </td>
+                                        <td id="{{ $unit->id }}.address"> {{ $unit->formatted_address }} </td>
+                                        <td id="{{ $unit->id }}.updated_at">
+                                            {{ \Carbon\Carbon::parse($unit->updated_at)->toDayDateTimeString() }}
+                                        </td>
+                                        <td>
+                                            <div class="btn-group dropdown">
+                                                <a href="" class="btn btn-light btn-sm" data-bs-toggle="dropdown"
+                                                    aria-expanded="false"><i class="mdi mdi-dots-horizontal"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <a class="dropdown-item" href="/units/{{ $unit->id }}/logs"><i
+                                                            class="mdi mdi-format-list-bulleted me-2 text-muted font-18 vertical-middle"></i>Logs</a>
+                                                    <a id="refreshbtn[{{ $unit->id }}]"
+                                                        onclick="refreshUnit({{ $unit->id }});" class="dropdown-item"
+                                                        type="button"><i id="ref-icon[{{ $unit->id }}]"
+                                                            class="fe-refresh-ccw text-muted me-2 font-18 vertical-middle"></i>Refresh</a>
+                                                    <a id="delbtn" class="dropdown-item"
+                                                        onclick="removeUnit({{ $unit->id }})" type="button"
+                                                        data-bs-toggle="modal" data-bs-target="#modalRemove"><i
+                                                            class="fe-trash text-muted me-2 font-18 vertical-middle"></i>Remove</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        {{-- <td>
                                                 <a href="/units/{{ $unit->id }}/logs" type="button"
                                                     class="btn border-0 float-end p-0">
                                                     <i class="mdi mdi-format-list-bulleted fs-5" title="Logs" tabindex="0"
@@ -77,11 +93,10 @@
                                                     <i class="fe-trash text-danger fs-5" title="Remove" tabindex="0"
                                                         data-plugin="tippy" data-tippy-placement="top"></i>
                                                 </button>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </div>
+                                            </td> --}}
+                                    </tr>
+                                @endforeach
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -118,6 +133,28 @@
             </div>
         </div>
     </footer>
+    <style>
+        @media pdf {
+            tr>th:last-of-type {
+                display: none;
+            }
+
+            tr>td:last-of-type {
+                display: none;
+            }
+        }
+
+        @media print {
+            tr>th:last-of-type {
+                display: none;
+            }
+
+            tr>td:last-of-type {
+                display: none;
+            }
+        }
+
+    </style>
 
     @include('modals.units')
 @endsection
