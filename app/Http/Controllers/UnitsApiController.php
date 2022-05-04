@@ -169,7 +169,7 @@ class UnitsApiController extends Controller
                 if (count($locations) == 0) {
                     // Create incident info update for current location
                     $incident->info()->create([
-                        'title' => 'Update',
+                        'title' => 'Outage Detected',
                         'description' => "We have also detected a power outage at $unitAddress->barangay."
                     ]);
                 }
