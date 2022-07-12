@@ -1,5 +1,5 @@
-<p align="center">
-    # <label> GPS-Assisted Power Line Monitoring System </label>
+# <p align="center">
+    <label> GPS-Assisted Power Line Monitoring System </label>
 </p>
 
 ## About
