@@ -14,7 +14,7 @@ class HomeController extends Controller
     public function index()
     {
         return view('home', [
-            'apiKey' => env('MAPS_KEY', 'AIzaSyA2vqdxEToK1qKnxm14YrCwJ1xoLd1FcBU'),
+            'apiKey' => env('MAPS_KEY', ''),
             'heatmapData' => Unit::where('status', 'fault')->get(['id', 'status', 'latitude', 'longitude'])
         ]);
     }
