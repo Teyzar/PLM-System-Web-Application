@@ -29,7 +29,7 @@ class DispatchController extends Controller
     public function index()
     {
         return view('dispatch', [
-            'apiKey' => env('MAPS_KEY', 'AIzaSyA2vqdxEToK1qKnxm14YrCwJ1xoLd1FcBU'),
+            'apiKey' => env('MAPS_KEY', ''),
             'incidents' => Incident::where('resolved', false)->get(),
             'linemen' => Lineman::all(),
             'units' => Unit::where('status', 'fault')->get(),
